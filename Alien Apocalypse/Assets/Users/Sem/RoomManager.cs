@@ -18,9 +18,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         Debug.Log("Connected to Server");
-
         PhotonNetwork.JoinLobby();
-
     }
 
     public override void OnJoinedLobby()
@@ -29,10 +27,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("Connected and in lobby");
         PhotonNetwork.JoinOrCreateRoom("test", null, null); 
     }
+
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
         Debug.Log("We're in a room!");
         PhotonNetwork.Instantiate(player.name, spawnPoint.position, Quaternion.identity);
+        player.GetComponent<PlayerSetup>().IsLocalPlayer();
     }
 }
