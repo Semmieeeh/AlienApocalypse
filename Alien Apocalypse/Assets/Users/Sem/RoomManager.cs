@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public GameObject player;
+    public GameObject prefab;
     [Space]
     public Transform spawnPoint;
     void Start()
@@ -32,7 +32,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         Debug.Log("We're in a room!");
-        PhotonNetwork.Instantiate(player.name, spawnPoint.position, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate(prefab.name, spawnPoint.position, Quaternion.identity);
         player.GetComponent<PlayerSetup>().IsLocalPlayer();
     }
 }
