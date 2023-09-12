@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class SecondarySlot : MonoBehaviour
 {
-    public Weapon secondaryWeapon;
+    [SerializeField]
+    private Weapon weapon;
 }

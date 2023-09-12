@@ -5,23 +5,11 @@ using UnityEngine;
 public class PrimarySlot : MonoBehaviour
 {
     [SerializeField]
-    private Weapon primaryWeapon;
+    private Weapon weapon;
 
-    public Weapon PrimaryWeapon
+    private void Update()
     {
-        get
-        {
-            return primaryWeapon;
-        }
-
-        private set
-        {
-            primaryWeapon = value;
-        }
-    }
-
-    public void SetPrimaryWeapon(Weapon weapon)
-    {
-        PrimaryWeapon = weapon;
+        if(Input.GetButton("Fire1"))
+            weapon.Shooting();
     }
 }
