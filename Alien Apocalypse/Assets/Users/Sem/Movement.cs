@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class Movement : MonoBehaviour
     private bool grounded = false;
     private Vector2 input;
     private Rigidbody rb;
+    public float damage = 25;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,24 @@ public class Movement : MonoBehaviour
         input.Normalize();
         sprinting = Input.GetButton("Sprint");
         jumping = Input.GetButton("Jump");
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Fire();
+        }
+    }
+    public void Fire()
+    {
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        RaycastHit hit;
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, 100f))
+        {
+            if (hit.transform.gameObject.GetComponent<EnemyHealth>())
+            {
+                hit.transform.gameObject.GetComponent<PhotonView>().RPC("EnemyTakeDamage", RpcTarget.All, damage);
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)

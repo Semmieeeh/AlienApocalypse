@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class EnemyWalkScript : MonoBehaviour
 {
     public GameObject waypoints;
@@ -29,7 +30,7 @@ public class EnemyWalkScript : MonoBehaviour
             
             
             desiredPos = currentTarget.position;
-            Vector3 newPos = Vector3.Lerp(myPos, desiredPos, 5f *Time.deltaTime);
+            Vector3 newPos = Vector3.Lerp(myPos, desiredPos, Time.deltaTime /2);
             transform.position = newPos;
         }
         else if(Vector3.Distance(transform.position, currentTarget.position) < 2)

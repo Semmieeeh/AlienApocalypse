@@ -93,7 +93,7 @@ public class RoomList : MonoBehaviourPunCallbacks
         {
             GameObject roomItem = Instantiate(roomlistButton, roomlistParent);
             roomItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = room.Name;
-            roomItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = room.PlayerCount + "/2";
+            roomItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.PlayerCount + "/2";
 
             roomItem.GetComponent<RoomItemButton>().roomName = room.Name;
         }
