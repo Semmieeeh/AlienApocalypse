@@ -14,7 +14,7 @@ public class RoomList : MonoBehaviourPunCallbacks
     public GameObject roomlistButton;
     public GameObject roomManagerGameObject;
     public RoomManager roomManager;
-    private List<RoomInfo> rooms = new List<RoomInfo>();
+    public List<RoomInfo> rooms = new List<RoomInfo>();
     public void Awake()
     {
         instance = this;

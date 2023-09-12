@@ -8,12 +8,14 @@ public class PlayerSetup : MonoBehaviour
 {
     public Movement movement;
     public GameObject cam;
-    public string nickname;
+    public GameObject nicknameTextObject;
+    public string nickname = "Unnamed";
     public TextMeshPro nicknameText;
     public void IsLocalPlayer()
     {
         movement.enabled = true;
         cam.SetActive(true);
+        nicknameTextObject.SetActive(false);
     }
 
     [PunRPC]

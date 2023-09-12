@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public GameObject prefab;
+    public GameObject enemy;
     [Space]
     public Transform spawnPoint;
     [Space]
@@ -14,6 +16,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public GameObject connectingUI;
     public GameObject nicknameUI;
     public string roomNameToJoin = "Test";
+    public bool spawnedEnemy = false;
+    public RoomList roomList;
 
     private string nickname = "Unnamed";
     void Start()
@@ -41,6 +45,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
         roomCam.SetActive(false);
         SpawnPlayer();
         
+        
+        
     }
 
     public void SpawnPlayer()
@@ -49,4 +55,5 @@ public class RoomManager : MonoBehaviourPunCallbacks
         player.GetComponent<PlayerSetup>().IsLocalPlayer();
         player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.AllBuffered, nickname);
     }
+    
 }

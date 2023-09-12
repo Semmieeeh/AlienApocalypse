@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 5499567613354690634}
   - component: {fileID: 7312094853775289656}
   - component: {fileID: 2250266809816395897}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 2244604093788367537}
   cam: {fileID: 5814974756449214472}
+  nicknameTextObject: {fileID: 4393911565963097315}
   nickname: 
   nicknameText: {fileID: 8667598502479019792}
 --- !u!1 &4393911565963097315
