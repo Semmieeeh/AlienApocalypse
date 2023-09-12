@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    public EnemyManager instance;
     public float health;
     public float maxHealth = 100;
     public float minHealth = 0;
+    public int identity;
 
     private void Start()
     {
         health = maxHealth;
+        instance = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
     }
 
     
@@ -23,7 +26,10 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log("Took damage!");
         if (health <= minHealth)
         {
-            Destroy(gameObject);
+            instance.enemies.Remove(instance.enemies[identity]);
+            instance.ReassignIdentities();
+            PhotonNetwork.Destroy(gameObject);
+            
         }
     }
 }

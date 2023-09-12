@@ -45,6 +45,7 @@ public class Movement : MonoBehaviour
         {
             if (hit.transform.gameObject.GetComponent<EnemyHealth>())
             {
+                EnemyHealth e = hit.transform.gameObject.GetComponent<EnemyHealth>();
                 hit.transform.gameObject.GetComponent<PhotonView>().RPC("EnemyTakeDamage", RpcTarget.All, damage);
             }
         }
