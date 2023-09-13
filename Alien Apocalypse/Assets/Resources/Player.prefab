@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLeft: 0
   wr: {fileID: 0}
+  m: {fileID: 0}
 --- !u!1 &3499518522902536197
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +173,6 @@ GameObject:
   - component: {fileID: 5499567613354690634}
   - component: {fileID: 2250266809816395897}
   - component: {fileID: 7459202917420253673}
-  - component: {fileID: 3810175591608310993}
   - component: {fileID: 2244604093788367537}
   - component: {fileID: 524192621365327585}
   - component: {fileID: -1250591203663142154}
@@ -398,27 +398,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.2964477, z: 0.1}
   m_Center: {x: 0, y: -0.95292854, z: 0}
---- !u!65 &3810175591608310993
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3688399010723760847}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.52, y: 0.110000014, z: 0.95}
-  m_Center: {x: 0, y: -0.32589203, z: -0.53}
 --- !u!114 &2244604093788367537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,3 +1057,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLeft: 1
   wr: {fileID: 0}
+  m: {fileID: 0}
