@@ -37,24 +37,27 @@ public class WallRunning : MonoBehaviour
         if (onWall == true)
         {
 
-            if (m.sprinting)
+            if(m.rb != null)
             {
-                Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
-                m.rb.velocity = rbVel;
-            }
+                if (m.sprinting)
+                {
+                    Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
+                    m.rb.velocity = rbVel;
+                }
 
-            if (m.sprinting && m.input.magnitude > 0.5f)
-            {
-                Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunAscendGravity, m.rb.velocity.z);
-                m.rb.velocity = rbVel;
+                if (m.sprinting && m.input.magnitude > 0.5f)
+                {
+                    Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunAscendGravity, m.rb.velocity.z);
+                    m.rb.velocity = rbVel;
 
-            }
-            if (wallJumping && canWallJump == true)
-            {
-                m.rb.velocity = new Vector3(m.rb.velocity.x, m.jumpHeight, m.rb.velocity.z);
-                wallCooldown = 1;
-                canWallJump = false;
+                }
+                if (wallJumping && canWallJump == true)
+                {
+                    m.rb.velocity = new Vector3(m.rb.velocity.x, m.jumpHeight, m.rb.velocity.z);
+                    wallCooldown = 1;
+                    canWallJump = false;
 
+                }
             }
 
         }
