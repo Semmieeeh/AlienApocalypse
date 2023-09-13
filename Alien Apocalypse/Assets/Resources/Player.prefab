@@ -160,8 +160,8 @@ Rigidbody:
   m_GameObject: {fileID: 3688399010723760847}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 0.1
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -193,6 +193,7 @@ MonoBehaviour:
   walkSpeed: 20
   sprintSpeed: 33
   maxVelocityChange: 20
+  turnSpeed: 0
   jumpHeight: 8
   wallrunGravity: -2
   wallrunAscendGravity: -2
@@ -206,6 +207,9 @@ MonoBehaviour:
   curFov: 0
   normalFov: 0
   maxFov: 0
+  canDash: 0
+  dashCooldown: 0
+  maxDashCooldown: 3
   airMultiplier: 1
   cameraPivot: {fileID: 0}
 --- !u!114 &2800145930804961252

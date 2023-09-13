@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -9,6 +10,7 @@ public class Movement : MonoBehaviour
     public float walkSpeed = 20f;
     public float sprintSpeed = 30f;
     public float maxVelocityChange = 20f;
+    public float turnSpeed;
 
     [Header("Wall Jumping")]
     public float jumpHeight = 3f;
@@ -31,7 +33,9 @@ public class Movement : MonoBehaviour
     public float curFov;
     public float normalFov;
     public float maxFov;
-    
+    public bool canDash;
+    public float dashCooldown;
+    public float maxDashCooldown;
     public float airMultiplier = 1f;
     public GameObject cameraPivot;
     
@@ -47,6 +51,12 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(rb.velocity.magnitude);
+        dashCooldown -= Time.deltaTime;
+        if(Input.GetKeyDown(KeyCode.LeftAlt) )
+        {
+            Dash();
+        }
         wallCooldown -= Time.deltaTime;
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         input.Normalize();
@@ -219,6 +229,17 @@ public class Movement : MonoBehaviour
         grounded = false;
         onWall = false;
     }
+
+    public void Dash()
+    {
+        if(dashCooldown <= 0)
+        {
+            float velBeforeStop = rb.velocity.magnitude;
+            rb.velocity = Vector3.zero;
+            rb.AddForce(Camera.main.transform.forward * velBeforeStop* 1.3f, ForceMode.Impulse);
+            dashCooldown = maxDashCooldown;
+        }
+    }
     Vector3 CalculateMovement(float speed)
     {
         Vector3 targetVelocity = new Vector3(input.x, 0, input.y);
@@ -232,7 +253,12 @@ public class Movement : MonoBehaviour
             velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange,maxVelocityChange);
             velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
             velocityChange.y = 0;
+
+            Vector3 turnTorque = Vector3.up * turnSpeed * input.x * Mathf.Sign(input.y);
+            rb.AddTorque(turnTorque);
             return velocityChange;
+
+            
         }
         else
         {
