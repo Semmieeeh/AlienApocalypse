@@ -45,7 +45,6 @@ public class Movement : MonoBehaviour
         {
             rb = GetComponent<Rigidbody>();
         }
-
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         input.Normalize();
         sprinting = Input.GetButton("Sprint");

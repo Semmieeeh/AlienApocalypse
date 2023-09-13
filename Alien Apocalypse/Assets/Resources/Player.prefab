@@ -303,7 +303,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &2800145930804961252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,8 +457,8 @@ MonoBehaviour:
   m: {fileID: 2244604093788367537}
   collider1: {fileID: 2188091285665461106}
   collider2: {fileID: 7225230665184488143}
-  wallrunGravity: -2
-  wallrunAscendGravity: -2
+  wallrunGravity: 0
+  wallrunAscendGravity: 0
   onWall: 0
   wallJumping: 0
   jumpedOnWall: 0
@@ -470,6 +470,8 @@ MonoBehaviour:
   rotateAmount: 20
   normalRotation: 0
   anim: {fileID: 3159323601601247536}
+  wallrunningActive: 0
+  startingMass: 0
 --- !u!114 &5724214824412920034
 MonoBehaviour:
   m_ObjectHideFlags: 0

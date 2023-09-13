@@ -22,15 +22,22 @@ public class WallRunning : MonoBehaviour
     public float rotateAmount = 20;
     public float normalRotation;
     public Animator anim;
+    public bool wallrunningActive;
+    public float startingMass;
     void Start()
     {
         wallCooldown = 1;
         normalRotation = Camera.main.transform.rotation.z;
+        startingMass = wallrunGravity;
         
     }
     private void Update()
     {
         WallRun();
+        if(wallrunningActive == true)
+        {
+            wallrunGravity -= 1f * Time.deltaTime;
+        }
     }
     void FixedUpdate()
     {
@@ -47,7 +54,7 @@ public class WallRunning : MonoBehaviour
 
                 if (m.sprinting && m.input.magnitude > 0.5f)
                 {
-                    Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunAscendGravity, m.rb.velocity.z);
+                    Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
                     m.rb.velocity = rbVel;
 
                 }
@@ -61,9 +68,8 @@ public class WallRunning : MonoBehaviour
             }
 
         }
-
-
         onWall = false;
+        
         RotateCameraOnCollision();
         
         
@@ -76,10 +82,14 @@ public class WallRunning : MonoBehaviour
             if(m.grounded == false)
             {
                 anim.SetInteger("RunDirection", 2);
+                wallrunningActive = true;
+
             }
             else
             {
                 anim.SetInteger("RunDirection", 0);
+                wallrunningActive = false;
+                wallrunGravity = startingMass;
             }
             Debug.Log("Hit Left collider");
 
@@ -89,10 +99,14 @@ public class WallRunning : MonoBehaviour
             if (m.grounded == false)
             {
                 anim.SetInteger("RunDirection", 1);
+                wallrunningActive = true;
+                
             }
             else
             {
                 anim.SetInteger("RunDirection", 0);
+                wallrunningActive = false;
+                wallrunGravity = startingMass;
             }
             Debug.Log("Hit Right collider");
         }
@@ -101,6 +115,8 @@ public class WallRunning : MonoBehaviour
     public void OnTriggerExit(Collider other)
     {
         anim.SetInteger("RunDirection", 0);
+        wallrunningActive = false;
+        wallrunGravity = startingMass;
     }
     public void OnTriggerStay(Collider other)
     {
@@ -115,7 +131,7 @@ public class WallRunning : MonoBehaviour
         else
         {
             onWall = false;
-            
+            wallrunGravity = startingMass;
 
         }
     }
@@ -127,6 +143,7 @@ public class WallRunning : MonoBehaviour
         if (Input.GetButton("Jump") && onWall)
         {
             wallJumping = true;
+            wallrunGravity = startingMass;
         }
         else
         {
