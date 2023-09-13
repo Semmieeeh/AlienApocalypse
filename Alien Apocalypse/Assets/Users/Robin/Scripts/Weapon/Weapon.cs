@@ -12,9 +12,25 @@ public class Weapon : MonoBehaviour
     [Space]
     public string info;
 
+    [Space]
+    [Header("Position")]
+    public Vector3 localPlacmentPos;
+
+    public enum FirearmType
+    {
+        handgun,
+        shotgun,
+        assaultRifle
+    }
+
+    public Vector3 GetLocalPlacmentPos() => localPlacmentPos;
+
     public virtual void Shooting() { }
 
     public virtual void Meeling() { }
 
-    public virtual void Reloading() { }
+    public virtual IEnumerator Reloading()
+    {
+        yield return null;
+    }
 }

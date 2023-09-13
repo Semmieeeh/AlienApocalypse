@@ -5,24 +5,20 @@ using UnityEngine.Events;
 
 public class WeaponInputHandler : MonoBehaviour
 {
-    public UnityEvent primaryButton;
-    public UnityEvent secondaryButton;
+    public Weapon weapon1;
+
 
     void Start()
     {
-        
+        weapon1.transform.localPosition = weapon1.GetLocalPlacmentPos();
     }
 
     void Update()
     {
         if(Input.GetButton("Fire1"))
-        {
-            primaryButton?.Invoke();
-        }
-
-        if(Input.GetButton("Fire2"))
-        {
-            secondaryButton?.Invoke();
-        }
+            weapon1.Shooting();
+        
+        if(Input.GetKeyDown(KeyCode.R))
+            weapon1.StartCoroutine(weapon1.Reloading());
     }
 }

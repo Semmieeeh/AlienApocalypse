@@ -11,5 +11,8 @@ public class PrimarySlot : MonoBehaviour
     {
         if(Input.GetButton("Fire1"))
             weapon.Shooting();
+
+        if(Input.GetKeyDown(KeyCode.R))
+            StartCoroutine(weapon.Reloading());
     }
 }
