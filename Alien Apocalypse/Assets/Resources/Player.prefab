@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 2244604093788367537}
   - component: {fileID: 524192621365327585}
   - component: {fileID: -1250591203663142154}
+  - component: {fileID: 5724214824412920034}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -284,8 +285,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3688399010723760847}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0.1
+  m_Mass: 0.5
+  m_Drag: 1
   m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -300,7 +301,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &2800145930804961252
@@ -434,6 +435,9 @@ MonoBehaviour:
   sprintSpeed: 33
   maxVelocityChange: 20
   turnSpeed: 0
+  slowDownForce: 5
+  stopTime: 0
+  stopped: 0
   jumpHeight: 8
   sprinting: 0
   jumping: 0
@@ -487,6 +491,20 @@ MonoBehaviour:
   rotateAmount: 20
   normalRotation: 0
   anim: {fileID: 3159323601601247536}
+--- !u!114 &5724214824412920034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688399010723760847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0a021363716cc45a283e93be537290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slideDuration: 0
+  maxSlideDuration: 0
 --- !u!1 &4314946773288973168
 GameObject:
   m_ObjectHideFlags: 0

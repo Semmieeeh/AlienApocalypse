@@ -8,6 +8,9 @@ public class Movement : MonoBehaviour
     public float sprintSpeed = 30f;
     public float maxVelocityChange = 20f;
     public float turnSpeed;
+    public float slowDownForce;
+    public float stopTime;
+    public bool stopped;
 
     [Header("Wall Jumping")]
     public float jumpHeight = 3f;
@@ -49,8 +52,31 @@ public class Movement : MonoBehaviour
         {
             Fire();
         }
-    }
 
+
+        stopTime -= Time.deltaTime;
+        if (input.magnitude < 0.5f && grounded && stopped == false)
+        {
+            stopTime = 1;
+            stopped = true;
+        }
+           
+        if (stopTime > 0)
+        {
+            Vector3 oppositeForce = -rb.velocity.normalized * slowDownForce;
+            rb.AddForce(oppositeForce);
+        }
+
+        if(stopTime > 0 && rb.velocity.magnitude < 0.1f)
+        {
+            stopTime = 0;
+        }
+
+        if (stopTime > 0 && rb.velocity.magnitude > 0.1f && stopped == false)
+        {
+            stopTime = 0;
+        }
+    }
     private void FovChange()
     {
         if (sprinting && input.magnitude > 0.5f)
@@ -103,12 +129,14 @@ public class Movement : MonoBehaviour
             else if (input.magnitude > 0.5f)
             {
                 rb.AddForce(CalculateMovement(sprinting ? sprintSpeed : walkSpeed), ForceMode.Force);
+                stopped = false;
             }
         }
 
         if (!grounded && input.magnitude > 0.5f)
         {
             rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * airMultiplier : walkSpeed * airMultiplier), ForceMode.Force);
+            stopped = false;
         }
 
         grounded = false;
