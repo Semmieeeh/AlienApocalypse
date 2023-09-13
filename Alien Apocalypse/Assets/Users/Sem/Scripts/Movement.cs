@@ -5,36 +5,126 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float walkSpeed = 8f;
-    public float sprintSpeed = 14f;
-    public float maxVelocityChange = 10f;
-    public float jumpHeight = 5f;
+    [Header("Speed modifiers")]
+    public float walkSpeed = 20f;
+    public float sprintSpeed = 30f;
+    public float maxVelocityChange = 20f;
 
+    [Header("Wall Jumping")]
+    public float jumpHeight = 3f;
+    public bool onWall;
     private bool sprinting;
     private bool jumping;
-    private bool grounded = false;
+    public bool wallJumping;
+    public bool jumpedOnWall;
+    public float wallCooldown;
+    public bool canWallJump;
+    [Header("Ground check")]
+    public bool grounded = false;
     private Vector2 input;
     private Rigidbody rb;
     public float damage = 25;
+
+    [Header("Field of view")]
+    public float curFov;
+    public float normalFov;
+    public float maxFov;
+    public float airMultiplier = 1f;
+    public GameObject cameraPivot;
     
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        normalFov = Camera.main.fieldOfView;
+        maxFov = Camera.main.fieldOfView + 10;
+        wallCooldown = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
+        wallCooldown -= Time.deltaTime;
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         input.Normalize();
         sprinting = Input.GetButton("Sprint");
-        jumping = Input.GetButton("Jump");
+        if(Input.GetButton("Jump") && !onWall)
+        {
+            jumping = true;
+        }
+        else
+        {
+            jumping = false;
+        }
+
+        if (Input.GetButton("Jump") && onWall)
+        {
+            wallJumping = true;
+        }
+        else
+        {
+            wallJumping = false;
+        }
+
 
 
         if (Input.GetMouseButtonDown(0))
         {
             Fire();
+        }
+        
+        if(input.magnitude > 0.5f)
+        {
+            if (sprinting)
+            {
+
+                if (Camera.main.fieldOfView != maxFov)
+                {
+                    Camera.main.fieldOfView += 200 * Time.deltaTime;
+
+                }
+
+            }
+            if (!sprinting)
+            {
+                if (Camera.main.fieldOfView != normalFov)
+                {
+                    Camera.main.fieldOfView -= 200 * Time.deltaTime;
+                }
+            }
+        }
+        if (sprinting && input.magnitude <0.5f)
+        {
+            if (Camera.main.fieldOfView != normalFov)
+            {
+                Camera.main.fieldOfView -= 200 * Time.deltaTime;
+            }
+        }
+        if (sprinting && input.magnitude > 0.5f)
+        {
+            if (Camera.main.fieldOfView != normalFov)
+            {
+                Camera.main.fieldOfView -= 200 * Time.deltaTime;
+            }
+        }
+
+
+
+        curFov = Camera.main.fieldOfView;
+        if (Camera.main.fieldOfView >= maxFov)
+        {
+            Camera.main.fieldOfView = maxFov;
+        }
+
+        if (Camera.main.fieldOfView <= normalFov)
+        {
+            Camera.main.fieldOfView = normalFov;
+        }
+
+
+        if(wallCooldown <= 0)
+        {
+            canWallJump = true;
         }
     }
     public void Fire()
@@ -53,7 +143,27 @@ public class Movement : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        grounded = true;
+        if(other.gameObject.tag == "Ground")
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
+
+        if(grounded == false && other.gameObject.tag == "Wall")
+        {
+            if(canWallJump == true)
+            {
+                onWall = true;
+            }
+        }
+        else
+        {
+            onWall = false;
+        }
+        
     }
     private void FixedUpdate()
     {
@@ -73,10 +183,38 @@ public class Movement : MonoBehaviour
         {
             if (input.magnitude > 0.5f)
             {
-                rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * 0.2f : walkSpeed * 0.2f), ForceMode.Force);
+                rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * airMultiplier : walkSpeed * airMultiplier), ForceMode.Force );
             }
         }
+        
+
+        if (onWall == true)
+        {
+
+            if (sprinting)
+            {
+                Vector3 rbVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                rb.velocity = rbVel;
+                
+            }
+
+            if (sprinting && input.magnitude >0.5f)
+            {
+                Vector3 rbVel = new Vector3(rb.velocity.x, 1, rb.velocity.z);
+                rb.velocity = rbVel;
+
+            }
+            if (wallJumping && canWallJump == true)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
+                wallCooldown = 1;
+                canWallJump = false;
+                
+            }
+
+        }
         grounded = false;
+        onWall = false;
     }
     Vector3 CalculateMovement(float speed)
     {

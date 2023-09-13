@@ -26,14 +26,12 @@ public class EnemyManager : MonoBehaviour
     public float spawnSpeed;
     public float waveStartTime;
     public float waveCooldown;
-    private float minTimePassed;
     public bool wavesStarted;
 
     private void Start()
     {
         instance = this;
         spawnPoint = GameObject.Find("SpawnPoint").transform;
-        minTimePassed = 0;
         waveStartTime = 10;
         waveCooldown = 10;
         waveSize = 5;
