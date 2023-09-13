@@ -36,7 +36,7 @@ public class WallRunning : MonoBehaviour
         WallRun();
         if(wallrunningActive == true)
         {
-            wallrunGravity -= 1f * Time.deltaTime;
+            wallrunGravity -= 2f * Time.deltaTime;
         }
     }
     void FixedUpdate()
@@ -89,7 +89,7 @@ public class WallRunning : MonoBehaviour
             {
                 anim.SetInteger("RunDirection", 0);
                 wallrunningActive = false;
-                wallrunGravity = startingMass;
+                wallrunGravity = startingMass;  
             }
             Debug.Log("Hit Left collider");
 
