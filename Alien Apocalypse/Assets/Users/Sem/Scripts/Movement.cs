@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
 
     [Header("Wall Jumping")]
     public float jumpHeight = 3f;
+    public float wallrunGravity;
+    public float wallrunAscendGravity;
     public bool onWall;
     private bool sprinting;
     private bool jumping;
@@ -29,6 +31,7 @@ public class Movement : MonoBehaviour
     public float curFov;
     public float normalFov;
     public float maxFov;
+    
     public float airMultiplier = 1f;
     public GameObject cameraPivot;
     
@@ -193,14 +196,14 @@ public class Movement : MonoBehaviour
 
             if (sprinting)
             {
-                Vector3 rbVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                Vector3 rbVel = new Vector3(rb.velocity.x, wallrunGravity, rb.velocity.z);
                 rb.velocity = rbVel;
                 
             }
 
             if (sprinting && input.magnitude >0.5f)
             {
-                Vector3 rbVel = new Vector3(rb.velocity.x, 1, rb.velocity.z);
+                Vector3 rbVel = new Vector3(rb.velocity.x, wallrunAscendGravity, rb.velocity.z);
                 rb.velocity = rbVel;
 
             }
