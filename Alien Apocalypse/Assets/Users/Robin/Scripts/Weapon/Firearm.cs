@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Firearm : Weapon
 {
+    [Space]
+    [Header("Type")]
+    public FirearmType firearmType;
+
     [Space]
     [Header("Shooting")]
     public float baseDamage;
     public float baseFireRate;
     public bool isAutomatic;
     public bool isBurst;
-    float timeSinceLastShot = 0;
+    float timeSinceLastShot;
 
     [Space]
     [Header("Ammo")]
@@ -24,26 +29,72 @@ public class Firearm : Weapon
     public bool isReloading;
 
     [Space]
-    [Header("Bullet")]
-    public GameObject bulletPrefab;
-    public float baseBulletSpeed;
+    [Header("Projectile")]
+    public GameObject projectilePrefab;
+    public Transform muzzle;
+    public float baseProjectileSpeed;
 
-    //[Space]
-    //[Header("Modified Values")]
+    [Space]
+    [Header("Raycast")]
+    public Transform playerCamera;
+    public float raycastDistance;
+    public Vector3 raycastHitPoint;
+    RaycastHit hit;
 
-    bool CanShoot() => !isReloading && Time.time > (1 / (baseFireRate / 60)) + timeSinceLastShot;
+    [Space]
+    [Header("Firearm Events")]
+    public FireArmEvents events;
+
+
+    bool CanShoot() => !isReloading && currentAmmo > 0 && Time.time > (1 / (baseFireRate / 60)) + timeSinceLastShot;
 
     public override void Shooting()
     {
         if(CanShoot())
         {
-            Debug.Log("Shooting");
+            events.onShooting?.Invoke();
+
+            if(Physics.Raycast(playerCamera.position, playerCamera.forward, out hit, raycastDistance))
+                raycastHitPoint = hit.point;
+            else
+                raycastHitPoint = playerCamera.position + playerCamera.forward * raycastDistance;
+
+            //Debug.Log(raycastHitPoint);
+
+            GameObject projectile = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+
+            if(projectile.TryGetComponent<Projectile>(out Projectile projectileScript))
+            {
+                projectileScript.InitializeProjectile(baseDamage, baseProjectileSpeed, projectile.transform.position, raycastHitPoint);
+                projectileScript.onHit = events.onHitEnemy;
+            }
+
+            currentAmmo--;
             timeSinceLastShot = Time.time;
         }
     }
 
-    public override void Reloading()
+    public override IEnumerator Reloading()
     {
-        
+        events.onStartReloading?.Invoke();
+
+        isReloading = true;
+
+        yield return new WaitForSeconds(baseReloadTime);
+
+        currentAmmo = baseMaxAmmo;
+        isReloading = false;
+
+        events.onEndReloading?.Invoke();
     }
+}
+
+[System.Serializable]
+public class FireArmEvents
+{
+    public UnityEvent onShooting;
+    public UnityEvent onHitEnemy;
+    public UnityEvent onKillEnemy;
+    public UnityEvent onStartReloading;
+    public UnityEvent onEndReloading;
 }
