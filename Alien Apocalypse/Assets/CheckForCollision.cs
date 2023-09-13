@@ -6,22 +6,24 @@ public class CheckForCollision : MonoBehaviour
 {
     public bool isLeft;
     public WallRunning wr;
+    public Movement m;
     private void Update()
     {
-        if(wr == null)
+        if(wr == null || m == null)
         {
             wr = GetComponentInParent<WallRunning>();
+            m = GetComponentInParent<Movement>();
         }
     }
 
     public void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "Wall" && isLeft == true)
+        if(other.gameObject.tag == "Wall" && isLeft == true && m.grounded == false)
         {
             wr.hitLeft = true;
         }
 
-        if (other.gameObject.tag == "Wall" && isLeft == false)
+        if (other.gameObject.tag == "Wall" && isLeft == false && m.grounded == false)
         {
             wr.hitRight = true;
         }

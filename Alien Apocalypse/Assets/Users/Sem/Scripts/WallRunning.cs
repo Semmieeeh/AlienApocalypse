@@ -70,13 +70,27 @@ public class WallRunning : MonoBehaviour
     {
         if (hitLeft)
         {
-            anim.SetInteger("RunDirection", 2);
+            if(m.grounded == false)
+            {
+                anim.SetInteger("RunDirection", 2);
+            }
+            else
+            {
+                anim.SetInteger("RunDirection", 0);
+            }
             Debug.Log("Hit Left collider");
 
         }
         else if(hitRight)
         {
-            anim.SetInteger("RunDirection", 1);
+            if (m.grounded == false)
+            {
+                anim.SetInteger("RunDirection", 1);
+            }
+            else
+            {
+                anim.SetInteger("RunDirection", 0);
+            }
             Debug.Log("Hit Right collider");
         }
     }
