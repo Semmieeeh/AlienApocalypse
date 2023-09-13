@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3688399010723760847, guid: 87a90f7e41cf9ec4bb56356e940f36e8, type: 3}
-  enemy: {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
+  enemyManager: {fileID: 2735682329253181900, guid: 3f762e3f41c28ec45a0017bfaa6d4e8f, type: 3}
   spawnPoint: {fileID: 1556382560}
   roomCam: {fileID: 1384269536}
   connectingUI: {fileID: 1381798699}
@@ -2102,54 +2102,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1563693878}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &667062393
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 667062395}
-  - component: {fileID: 667062394}
-  m_Layer: 0
-  m_Name: EnemyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &667062394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667062393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cc1b550b551d474580bda4428edb2a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canSpawn: 1
-  enemy: {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
-  spawnPoint: {fileID: 1556382560}
-  enemies: []
---- !u!4 &667062395
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667062393}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.544598, y: 11.188254, z: 14.36358}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &695782451
 GameObject:
@@ -5542,5 +5494,4 @@ SceneRoots:
   - {fileID: 178232828}
   - {fileID: 1049571351}
   - {fileID: 1563693878}
-  - {fileID: 667062395}
   - {fileID: 1709125005}

@@ -9,15 +9,12 @@ public class EnemyHealth : MonoBehaviour
     public float health;
     public float maxHealth = 100;
     public float minHealth = 0;
-    public int identity;
-
     private void Start()
     {
         health = maxHealth;
-        instance = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
     }
-
     
+
 
     [PunRPC]
     public void EnemyTakeDamage(float value)
@@ -26,9 +23,7 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log("Took damage!");
         if (health <= minHealth)
         {
-            instance.enemies.Remove(instance.enemies[identity]);
-            instance.ReassignIdentities();
-            PhotonNetwork.Destroy(gameObject);
+            Destroy(gameObject);
             
         }
     }

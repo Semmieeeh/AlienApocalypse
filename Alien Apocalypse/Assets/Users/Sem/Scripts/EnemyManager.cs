@@ -9,37 +9,78 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
     public bool canSpawn = true;
-    public GameObject enemy;
+    public GameObject[] enemiesToSpawn;
+    public int enemyIndex;
+    public int check;
     public Transform spawnPoint;
 
     public List<EnemyHealth> enemies = new List<EnemyHealth>();
 
+    [Space]
+    [Header("Wave info")]
+    public int waveSize;
+    public int maxWaveSize = 120;
+    public float wavesCompleted;
+    public float waveTimeLimit;
+    public float timePassed;
+    public float spawnSpeed;
+    public float waveStartTime;
+    public float waveCooldown;
+    private float minTimePassed;
+    public bool wavesStarted;
+
     private void Start()
     {
         instance = this;
+        spawnPoint = GameObject.Find("SpawnPoint").transform;
+        minTimePassed = 0;
+        waveStartTime = 10;
+        waveCooldown = 10;
+        waveSize = 5;
+        spawnSpeed = 1;
+        
     }
 
     public void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        // Track time passed
+        timePassed += Time.deltaTime;
+        if(wavesStarted == false && PhotonNetwork.CurrentRoom.PlayerCount >1)
         {
-            if (canSpawn == true && PhotonNetwork.CurrentRoom.PlayerCount >0)
+            if (PhotonNetwork.IsMasterClient)
             {
-                GameObject enemyObj = PhotonNetwork.Instantiate(enemy.name, spawnPoint.position, Quaternion.identity);
-                
-                enemies.Add(enemyObj.GetComponent<EnemyHealth>());
-                enemyObj.GetComponent<EnemyHealth>().identity = enemies.Count - 1;
-                canSpawn = false;
+                StartCoroutine(StartEnemyWaves());
+                wavesStarted = true;
             }
         }
-
-        
     }
-    public void ReassignIdentities()
+
+    private IEnumerator StartEnemyWaves()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        while (true)
         {
-            enemies[i].identity = i;
+            yield return new WaitForSeconds(waveStartTime);
+            for (int i = 0; i < waveSize * PhotonNetwork.CurrentRoom.PlayerCount; i++)
+            {
+                SpawnEnemies(1);
+                yield return new WaitForSeconds(spawnSpeed);
+            }
+            yield return new WaitForSeconds(waveCooldown);
+            waveSize += 5;
+            timePassed = 0;
         }
     }
+
+    private void SpawnEnemies(int enemyCount)
+    {
+        for (int i = 0; i < enemyCount; i++)
+        {
+            enemyIndex = Random.Range(0, enemiesToSpawn.Length);
+            GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, spawnPoint.position, Quaternion.identity);
+            EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
+
+            enemyHealth.instance = this;
+        }
+    }
+
 }
