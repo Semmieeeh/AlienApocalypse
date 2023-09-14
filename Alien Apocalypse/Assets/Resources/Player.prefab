@@ -677,6 +677,7 @@ GameObject:
   - component: {fileID: 524192621365327585}
   - component: {fileID: -1250591203663142154}
   - component: {fileID: 5724214824412920034}
+  - component: {fileID: 5236304906674374272}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -947,6 +948,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dashCooldown: 0
+  unlockedSkill: 0
+  dashAmount: 0
+  multiplier: 0
 --- !u!114 &-1250591203663142154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,10 +967,8 @@ MonoBehaviour:
   collider1: {fileID: 2188091285665461106}
   collider2: {fileID: 7225230665184488143}
   wallrunGravity: 0
-  wallrunAscendGravity: 0
   onWall: 0
   wallJumping: 0
-  jumpedOnWall: 0
   wallCooldown: 0
   canWallJump: 0
   hitLeft: 0
@@ -978,6 +980,7 @@ MonoBehaviour:
   wallrunningActive: 0
   startingMass: 0
   unlockedSkill: 0
+  multiplier: 0
 --- !u!114 &5724214824412920034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -993,6 +996,18 @@ MonoBehaviour:
   slideDuration: 0
   maxSlideDuration: 0
   unlockedAbility: 0
+--- !u!114 &5236304906674374272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3688399010723760847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548a74bc32fd4634185579e88bb36f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3903755089514991456
 GameObject:
   m_ObjectHideFlags: 0

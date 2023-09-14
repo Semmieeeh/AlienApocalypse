@@ -7,17 +7,26 @@ public class DashAbility : MonoBehaviour
     Rigidbody rb;
     public float dashCooldown;
     private float maxDashCooldown;
+    public bool unlockedSkill;
+    public float dashAmount;
+    public float multiplier;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         maxDashCooldown = 3;
+        dashAmount = 10;
+        multiplier = 1;
     }
     void Update()
     {
-        dashCooldown -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        
+        if(unlockedSkill == true)
         {
-            Dash();
+            dashCooldown -= Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.LeftAlt))
+            {
+                Dash();
+            }
         }
     }
 
@@ -25,9 +34,18 @@ public class DashAbility : MonoBehaviour
     {
         if (dashCooldown <= 0)
         {
+            if(rb.velocity.magnitude < 5)
+            {
+                dashAmount = 20 * multiplier;
+            }
+            else
+            {
+                dashAmount = 10 * multiplier;
+            }
+
             float velBeforeStop = rb.velocity.magnitude;
             rb.velocity = Vector3.zero;
-            rb.AddForce(Camera.main.transform.forward * velBeforeStop * 1.3f, ForceMode.Impulse);
+            rb.AddForce(Camera.main.transform.forward * (velBeforeStop + dashAmount), ForceMode.Impulse);
             dashCooldown = maxDashCooldown;
         }
     }

@@ -10,6 +10,7 @@ public class EnemyHealth : MonoBehaviour
     public float maxHealth = 100;
     public float minHealth = 0;
     public GameObject gettingShotBy;
+    public string unlocksSkill;
 
     private void Start()
     {
@@ -25,8 +26,18 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log("Took damage!");
         if (health <= minHealth)
         {
+            if (unlocksSkill == "Wallrunning")
+            {
+                gettingShotBy.GetComponent<WallRunning>().unlockedSkill = true;
+            }
+
+            if (unlocksSkill == "Dash")
+            {
+                gettingShotBy.GetComponent<DashAbility>().unlockedSkill = true;
+            }
+
             Destroy(gameObject);
-            gettingShotBy.GetComponent<WallRunning>().unlockedSkill = true;
+            
         }
     }
 }

@@ -11,6 +11,7 @@ public class EnemyWalkScript : MonoBehaviour
     public int i;
     private Vector3 myPos;
     private Vector3 desiredPos;
+    public float moveSpeed;
     private void Start()
     {
         waypoints = GameObject.Find("Waypoints");
@@ -30,7 +31,7 @@ public class EnemyWalkScript : MonoBehaviour
             
             
             desiredPos = currentTarget.position;
-            Vector3 newPos = Vector3.Lerp(myPos, desiredPos, Time.deltaTime /2);
+            Vector3 newPos = Vector3.Lerp(myPos, desiredPos, moveSpeed * Time.deltaTime /2 );
             transform.position = newPos;
         }
         else if(Vector3.Distance(transform.position, currentTarget.position) < 2)

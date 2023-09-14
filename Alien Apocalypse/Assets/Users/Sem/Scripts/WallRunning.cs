@@ -10,10 +10,8 @@ public class WallRunning : MonoBehaviour
     public Collider collider1;
     public Collider collider2;
     public float wallrunGravity;
-    public float wallrunAscendGravity;
     public bool onWall;
     public bool wallJumping;
-    public bool jumpedOnWall;
     public float wallCooldown;
     public bool canWallJump;
     public bool hitLeft;
@@ -25,20 +23,15 @@ public class WallRunning : MonoBehaviour
     public bool wallrunningActive;
     public float startingMass;
     public bool unlockedSkill;
+    public float multiplier;
     void Start()
     {
         wallCooldown = 1;
         normalRotation = Camera.main.transform.rotation.z;
         startingMass = wallrunGravity;
         m.wallrunUnlocked = true;
+        multiplier = 1;
         
-    }
-    private void OnEnable()
-    {
-        wallCooldown = 1;
-        normalRotation = Camera.main.transform.rotation.z;
-        startingMass = wallrunGravity;
-        m.wallrunUnlocked = true;
     }
     private void Update()
     {
@@ -51,7 +44,7 @@ public class WallRunning : MonoBehaviour
             }
             if (wallrunningActive == true)
             {
-                wallrunGravity -= 2f * Time.deltaTime;
+                wallrunGravity -= 2f * multiplier * Time.deltaTime;
             }
             m.wallRunning = wallrunningActive;
             WallRun();

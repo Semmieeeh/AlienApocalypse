@@ -49,10 +49,13 @@ MonoBehaviour:
   canSpawn: 1
   enemiesToSpawn:
   - {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
+  - {fileID: 7615457011079691944, guid: 73a9ede7184b70b44ace88f2a4241387, type: 3}
   enemyIndex: 0
   check: 0
   spawnPoint: {fileID: 0}
-  enemies: []
+  enemies:
+  - {fileID: 0}
+  - {fileID: 0}
   waveSize: 0
   maxWaveSize: 120
   wavesCompleted: 0

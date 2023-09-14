@@ -73,11 +73,12 @@ public class EnemyManager : MonoBehaviour
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            enemyIndex = Random.Range(0, enemiesToSpawn.Length);
+            
+            enemyIndex = Random.Range(0, enemiesToSpawn.Length);            
             GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, spawnPoint.position, Quaternion.identity);
             EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
 
-            enemyHealth.instance = this;
+            enemyHealth.instance = this;           
         }
     }
 

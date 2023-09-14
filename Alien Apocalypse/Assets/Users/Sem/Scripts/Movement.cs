@@ -38,7 +38,6 @@ public class Movement : MonoBehaviour
     public bool wallrunUnlocked;
     public bool wallRunning;
     public bool dashUnlocked;
-
     public float fallingspeedThreshold;
     private void Start()
     {
@@ -67,20 +66,24 @@ public class Movement : MonoBehaviour
         }
 
 
+        StopWhenNoInput();
+    }
+    public void StopWhenNoInput()
+    {
         stopTime -= Time.deltaTime;
         if (input.magnitude < 0.5f && grounded && stopped == false)
         {
             stopTime = 1;
             stopped = true;
         }
-           
+
         if (stopTime > 0)
         {
             Vector3 oppositeForce = -rb.velocity.normalized * slowDownForce;
             rb.AddForce(oppositeForce);
         }
 
-        if(stopTime > 0 && rb.velocity.magnitude < 0.1f)
+        if (stopTime > 0 && rb.velocity.magnitude < 0.1f)
         {
             stopTime = 0;
         }
@@ -121,7 +124,7 @@ public class Movement : MonoBehaviour
         {
             if (hit.transform.gameObject.GetComponent<EnemyHealth>())
             {
-                hit.transform.gameObject.GetComponent<EnemyHealth>().gettingShotBy = gameObject;
+                hit.transform.gameObject.GetComponent<EnemyHealth>().gettingShotBy = gameObject;    
                 hit.transform.gameObject.GetComponent<PhotonView>().RPC("EnemyTakeDamage", RpcTarget.All, damage);
             }
         }
@@ -155,7 +158,7 @@ public class Movement : MonoBehaviour
         bool isFalling;
         if(wallrunUnlocked == true)
         {
-            if (rb.velocity.y < 0.5f && wallRunning == false)
+            if (rb.velocity.y < -0.5f && wallRunning == false)
             {
                 Vector3 extraForceDirection = Vector3.down;
                 rb.AddForce(extraForceDirection * 5, ForceMode.Acceleration);
@@ -164,7 +167,7 @@ public class Movement : MonoBehaviour
         }
         else if(wallrunUnlocked == false)
         {
-            if (rb.velocity.y < 0.5f)
+            if (rb.velocity.y < -0.5f)
             {
                 Vector3 extraForceDirection = Vector3.down;
                 rb.AddForce(extraForceDirection * 5, ForceMode.Acceleration);
