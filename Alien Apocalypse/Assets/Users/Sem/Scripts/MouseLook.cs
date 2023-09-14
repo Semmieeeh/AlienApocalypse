@@ -8,10 +8,10 @@ public class MouseLook : MonoBehaviour
     public Vector2 clampInDegrees = new Vector2(360, 180);
     public bool lockCursor = true;
     [Space]
-    private Vector2 sensitivity = new Vector2(2, 2);
+    private Vector2 sensitivity;
     [Space]
     public Vector2 smoothing = new Vector2(3, 3);
-
+    public float sens;
     [Header("First Person")]
     public GameObject characterBody;
 
@@ -32,7 +32,7 @@ public class MouseLook : MonoBehaviour
 
         // Set target direction to the camera's initial orientation.
         targetDirection = transform.localRotation.eulerAngles;
-
+        sensitivity = new Vector2 (sens, sens);
         // Set target direction for the character body to its inital state.
         if (characterBody)
             targetCharacterDirection = characterBody.transform.localRotation.eulerAngles;

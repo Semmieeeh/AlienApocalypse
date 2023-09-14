@@ -38,7 +38,7 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
         maxFov = Camera.main.fieldOfView + 10;
-        PhotonNetwork.SerializationRate = 20;
+        PhotonNetwork.SerializationRate = 30;
     }
 
     private void Update()
