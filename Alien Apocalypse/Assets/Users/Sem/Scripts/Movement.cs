@@ -174,7 +174,6 @@ public class Movement : MonoBehaviour
             }
             
         }
-        Debug.Log(rb.velocity.y);
 
         grounded = false;
     }

@@ -36,6 +36,11 @@ public class EnemyHealth : MonoBehaviour
                 gettingShotBy.GetComponent<DashAbility>().unlockedSkill = true;
             }
 
+            if(unlocksSkill == "GrapplingHook")
+            {
+                gettingShotBy.GetComponent<Grappling>().unlockedSkill = true;
+            }
+
             Destroy(gameObject);
             
         }

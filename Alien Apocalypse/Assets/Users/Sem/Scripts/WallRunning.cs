@@ -1,29 +1,37 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.LightAnchor;
 
 public class WallRunning : MonoBehaviour
 {
+    [Header("References")]
     public Movement m;
-    public Collider collider1;
-    public Collider collider2;
+    public Animator anim;
+    public GameObject cameraPivot;
+
+    [Header("Wall Running Settings")]
     public float wallrunGravity;
-    public bool onWall;
-    public bool wallJumping;
     public float wallCooldown;
     public bool canWallJump;
-    public bool hitLeft;
-    public bool hitRight;
-    public GameObject cameraPivot;
-    public float rotateAmount = 20;
-    public float normalRotation;
-    public Animator anim;
     public bool wallrunningActive;
     public float startingMass;
     public bool unlockedSkill;
     public float multiplier;
+
+    [Header("Wall Collision")]
+    public Collider collider1;
+    public Collider collider2;
+    public bool hitLeft;
+    public bool hitRight;
+
+    [Header("Wall Jump")]
+    public float rotateAmount = 20;
+
+    [Header("State")]
+    public bool onWall;
+    public bool wallJumping;
+
+    private float normalRotation;
+
     void Start()
     {
         wallCooldown = 1;
@@ -31,18 +39,18 @@ public class WallRunning : MonoBehaviour
         startingMass = wallrunGravity;
         m.wallrunUnlocked = true;
         multiplier = 1;
-        
     }
+
     private void Update()
     {
-
-        if (unlockedSkill == true)
+        if (unlockedSkill)
         {
+            wallCooldown -= Time.deltaTime;
             if (m == null)
             {
                 m = GetComponent<Movement>();
             }
-            if (wallrunningActive == true)
+            if (wallrunningActive)
             {
                 wallrunGravity -= 2f * multiplier * Time.deltaTime;
             }
@@ -50,53 +58,45 @@ public class WallRunning : MonoBehaviour
             WallRun();
         }
     }
+
     void FixedUpdate()
     {
-        if(unlockedSkill == true)
+        if (unlockedSkill)
         {
-            if (onWall == true)
+            if (onWall)
             {
-
-                if (m.rb != null)
+                if (m.rb != null && m.sprinting)
                 {
-                    if (m.sprinting)
+                    Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
+                    m.rb.velocity = rbVel;
+
+                    if (m.input.magnitude > 0.5f)
                     {
-                        Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
                         m.rb.velocity = rbVel;
                     }
-
-                    if (m.sprinting && m.input.magnitude > 0.5f)
-                    {
-                        Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
-                        m.rb.velocity = rbVel;
-
-                    }
-                    if (wallJumping && canWallJump == true)
+                    if (wallJumping && canWallJump)
                     {
                         m.rb.velocity = new Vector3(m.rb.velocity.x, m.jumpHeight, m.rb.velocity.z);
                         wallCooldown = 1;
                         canWallJump = false;
-
                     }
                 }
-
             }
             onWall = false;
             RotateCameraOnCollision();
-        }             
+        }
     }
 
     public void RotateCameraOnCollision()
     {
-        if(m!= null)
+        if (m != null)
         {
-            if (hitLeft)
+            if (hitLeft || hitRight)
             {
                 if (m.grounded == false)
                 {
-                    anim.SetInteger("RunDirection", 2);
+                    anim.SetInteger("RunDirection", hitLeft ? 2 : 1);
                     wallrunningActive = true;
-
                 }
                 else
                 {
@@ -104,24 +104,7 @@ public class WallRunning : MonoBehaviour
                     wallrunningActive = false;
                     wallrunGravity = startingMass;
                 }
-                Debug.Log("Hit Left collider");
-
-            }
-            else if (hitRight)
-            {
-                if (m.grounded == false)
-                {
-                    anim.SetInteger("RunDirection", 1);
-                    wallrunningActive = true;
-
-                }
-                else
-                {
-                    anim.SetInteger("RunDirection", 0);
-                    wallrunningActive = false;
-                    wallrunGravity = startingMass;
-                }
-                Debug.Log("Hit Right collider");
+                Debug.Log(hitLeft ? "Hit Left collider" : "Hit Right collider");
             }
         }
     }
@@ -135,31 +118,27 @@ public class WallRunning : MonoBehaviour
             wallrunGravity = startingMass;
         }
     }
+
     public void OnTriggerStay(Collider other)
     {
-
-        if (unlockedSkill)
+        if (unlockedSkill && !m.grounded && other.gameObject.tag == "Wall")
         {
-            if (m.grounded == false && other.gameObject.tag == "Wall")
+            if (canWallJump)
             {
-                if (canWallJump == true)
-                {
-                    onWall = true;
-                }
+                onWall = true;
             }
             else
             {
                 onWall = false;
                 wallrunGravity = startingMass;
-
             }
         }
     }
 
-
     public void WallRun()
     {
-        wallCooldown -= Time.deltaTime;
+        
+
         if (Input.GetButton("Jump") && onWall)
         {
             wallJumping = true;
