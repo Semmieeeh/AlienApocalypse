@@ -9,6 +9,8 @@ public class EnemyHealth : MonoBehaviour
     public float health;
     public float maxHealth = 100;
     public float minHealth = 0;
+    public GameObject gettingShotBy;
+
     private void Start()
     {
         health = maxHealth;
@@ -24,7 +26,7 @@ public class EnemyHealth : MonoBehaviour
         if (health <= minHealth)
         {
             Destroy(gameObject);
-            
+            gettingShotBy.GetComponent<WallRunning>().unlockedSkill = true;
         }
     }
 }

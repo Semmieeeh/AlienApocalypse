@@ -24,6 +24,7 @@ public class WallRunning : MonoBehaviour
     public Animator anim;
     public bool wallrunningActive;
     public float startingMass;
+    public bool unlockedSkill;
     void Start()
     {
         wallCooldown = 1;
@@ -32,109 +33,133 @@ public class WallRunning : MonoBehaviour
         m.wallrunUnlocked = true;
         
     }
+    private void OnEnable()
+    {
+        wallCooldown = 1;
+        normalRotation = Camera.main.transform.rotation.z;
+        startingMass = wallrunGravity;
+        m.wallrunUnlocked = true;
+    }
     private void Update()
     {
-        WallRun();
-        if(wallrunningActive == true)
+
+        if (unlockedSkill == true)
         {
-            wallrunGravity -= 2f * Time.deltaTime;
+            if (m == null)
+            {
+                m = GetComponent<Movement>();
+            }
+            if (wallrunningActive == true)
+            {
+                wallrunGravity -= 2f * Time.deltaTime;
+            }
+            m.wallRunning = wallrunningActive;
+            WallRun();
         }
-        m.wallRunning = wallrunningActive;
     }
     void FixedUpdate()
     {
-        if (onWall == true)
+        if(unlockedSkill == true)
         {
-
-            if(m.rb != null)
+            if (onWall == true)
             {
-                if (m.sprinting)
+
+                if (m.rb != null)
                 {
-                    Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
-                    m.rb.velocity = rbVel;
+                    if (m.sprinting)
+                    {
+                        Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
+                        m.rb.velocity = rbVel;
+                    }
+
+                    if (m.sprinting && m.input.magnitude > 0.5f)
+                    {
+                        Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
+                        m.rb.velocity = rbVel;
+
+                    }
+                    if (wallJumping && canWallJump == true)
+                    {
+                        m.rb.velocity = new Vector3(m.rb.velocity.x, m.jumpHeight, m.rb.velocity.z);
+                        wallCooldown = 1;
+                        canWallJump = false;
+
+                    }
                 }
 
-                if (m.sprinting && m.input.magnitude > 0.5f)
-                {
-                    Vector3 rbVel = new Vector3(m.rb.velocity.x, wallrunGravity, m.rb.velocity.z);
-                    m.rb.velocity = rbVel;
-
-                }
-                if (wallJumping && canWallJump == true)
-                {
-                    m.rb.velocity = new Vector3(m.rb.velocity.x, m.jumpHeight, m.rb.velocity.z);
-                    wallCooldown = 1;
-                    canWallJump = false;
-
-                }
             }
-
-        }
-        onWall = false;
-        
-        RotateCameraOnCollision();
-        
-        
+            onWall = false;
+            RotateCameraOnCollision();
+        }             
     }
 
     public void RotateCameraOnCollision()
     {
-        if (hitLeft)
+        if(m!= null)
         {
-            if(m.grounded == false)
+            if (hitLeft)
             {
-                anim.SetInteger("RunDirection", 2);
-                wallrunningActive = true;
+                if (m.grounded == false)
+                {
+                    anim.SetInteger("RunDirection", 2);
+                    wallrunningActive = true;
+
+                }
+                else
+                {
+                    anim.SetInteger("RunDirection", 0);
+                    wallrunningActive = false;
+                    wallrunGravity = startingMass;
+                }
+                Debug.Log("Hit Left collider");
 
             }
-            else
+            else if (hitRight)
             {
-                anim.SetInteger("RunDirection", 0);
-                wallrunningActive = false;
-                wallrunGravity = startingMass;  
-            }
-            Debug.Log("Hit Left collider");
+                if (m.grounded == false)
+                {
+                    anim.SetInteger("RunDirection", 1);
+                    wallrunningActive = true;
 
-        }
-        else if(hitRight)
-        {
-            if (m.grounded == false)
-            {
-                anim.SetInteger("RunDirection", 1);
-                wallrunningActive = true;
-                
+                }
+                else
+                {
+                    anim.SetInteger("RunDirection", 0);
+                    wallrunningActive = false;
+                    wallrunGravity = startingMass;
+                }
+                Debug.Log("Hit Right collider");
             }
-            else
-            {
-                anim.SetInteger("RunDirection", 0);
-                wallrunningActive = false;
-                wallrunGravity = startingMass;
-            }
-            Debug.Log("Hit Right collider");
         }
     }
 
     public void OnTriggerExit(Collider other)
     {
-        anim.SetInteger("RunDirection", 0);
-        wallrunningActive = false;
-        wallrunGravity = startingMass;
+        if (unlockedSkill)
+        {
+            anim.SetInteger("RunDirection", 0);
+            wallrunningActive = false;
+            wallrunGravity = startingMass;
+        }
     }
     public void OnTriggerStay(Collider other)
     {
 
-        if (m.grounded == false && other.gameObject.tag == "Wall")
+        if (unlockedSkill)
         {
-            if (canWallJump == true)
+            if (m.grounded == false && other.gameObject.tag == "Wall")
             {
-                onWall = true;
+                if (canWallJump == true)
+                {
+                    onWall = true;
+                }
             }
-        }
-        else
-        {
-            onWall = false;
-            wallrunGravity = startingMass;
+            else
+            {
+                onWall = false;
+                wallrunGravity = startingMass;
 
+            }
         }
     }
 

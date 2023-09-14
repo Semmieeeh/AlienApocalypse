@@ -121,6 +121,7 @@ public class Movement : MonoBehaviour
         {
             if (hit.transform.gameObject.GetComponent<EnemyHealth>())
             {
+                hit.transform.gameObject.GetComponent<EnemyHealth>().gettingShotBy = gameObject;
                 hit.transform.gameObject.GetComponent<PhotonView>().RPC("EnemyTakeDamage", RpcTarget.All, damage);
             }
         }

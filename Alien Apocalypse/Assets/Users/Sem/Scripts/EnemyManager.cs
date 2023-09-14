@@ -43,7 +43,7 @@ public class EnemyManager : MonoBehaviour
     {
         // Track time passed
         timePassed += Time.deltaTime;
-        if(wavesStarted == false && PhotonNetwork.CurrentRoom.PlayerCount >1)
+        if(wavesStarted == false && PhotonNetwork.CurrentRoom.PlayerCount >0)
         {
             if (PhotonNetwork.IsMasterClient)
             {

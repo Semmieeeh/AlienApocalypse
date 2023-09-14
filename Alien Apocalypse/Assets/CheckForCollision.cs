@@ -18,7 +18,7 @@ public class CheckForCollision : MonoBehaviour
 
     public void OnTriggerStay(Collider other)
     {
-        if(wr != null)
+        if(wr != null && m != null)
         {
             if (other.gameObject.tag == "Wall" && isLeft == true && m.grounded == false)
             {
