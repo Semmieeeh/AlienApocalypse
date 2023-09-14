@@ -21,7 +21,13 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
     // Update is called once per frame
     void Update()
     {
-        m = GetComponent<Movement>();
+
+        if (photonView.IsMine)
+        {
+            return;
+        }
+
+        
         if (!photonView.IsMine && GetComponent<Movement>() != null)
         {
             Destroy(GetComponent<Movement>());
