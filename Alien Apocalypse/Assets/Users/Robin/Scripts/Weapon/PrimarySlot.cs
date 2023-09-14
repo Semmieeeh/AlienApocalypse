@@ -9,10 +9,12 @@ public class PrimarySlot : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButton("Fire1"))
-            weapon.Shooting();
+        //if(Input.GetButton("Fire1"))
+        //    weapon.Shooting(1);
+        //else if(Input.GetButtonUp("Fire1"))
+        //    weapon.Shooting(0);
 
-        if(Input.GetKeyDown(KeyCode.R))
-            StartCoroutine(weapon.Reloading());
+        //if(Input.GetKeyDown(KeyCode.R))
+        //    StartCoroutine(weapon.Reloading());
     }
 }

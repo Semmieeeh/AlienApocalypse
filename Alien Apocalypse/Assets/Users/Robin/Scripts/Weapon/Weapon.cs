@@ -29,8 +29,13 @@ public class Weapon : MonoBehaviour
 
     public virtual void Meeling() { }
 
+
     public virtual IEnumerator Reloading()
     {
         yield return null;
     }
+
+    public virtual void OnButtonUp() { }
+
+    public virtual void Sway(Vector2 mouseInput) { }
 }

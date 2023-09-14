@@ -8,11 +8,13 @@ public class Projectile : MonoBehaviour
     [Header("Projectile Data")]
     public float projectileDamage;
     public float projectileSpeed;
-    public Vector3 lastPos;
-    public Vector3 hitPoint;
+
+    Vector3 lastPos;
+    Vector3 hitPoint;
     RaycastHit hit;
 
     public UnityEvent onHit;
+    public UnityEvent onKill;
 
     void Update()
     {
@@ -37,5 +39,11 @@ public class Projectile : MonoBehaviour
         this.projectileSpeed = projectileSpeed;
         this.lastPos = lastPos;
         this.hitPoint = hitPoint;
+    }
+
+    public void InitialzieEvent(UnityEvent onHit, UnityEvent onKill)
+    {
+        this.onHit = onHit;
+        this.onKill = onKill;
     }
 }
