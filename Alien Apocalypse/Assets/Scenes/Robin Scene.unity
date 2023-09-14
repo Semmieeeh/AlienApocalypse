@@ -753,23 +753,35 @@ MonoBehaviour:
   info: 
   localPlacmentPos: {x: 0, y: 0, z: 0}
   firearmType: 0
+  fireType: 0
   baseDamage: 0
+  baseSingleShotCooldown: 0
+  baseBurstAmount: 0
+  baseTimeBetweenBurst: 0
+  baseBurstCooldown: 0
   baseFireRate: 180
-  isAutomatic: 0
-  isBurst: 0
   currentAmmo: 30
   baseMaxAmmo: 30
   totalAmmo: 0
   baseReloadTime: 1.5
-  isReloading: 0
   projectilePrefab: {fileID: 0}
   muzzle: {fileID: 0}
   baseProjectileSpeed: 0
   playerCamera: {fileID: 0}
   raycastDistance: 0
-  raycastHitPoint: {x: 0, y: 0, z: 0}
+  swayClamp: 0
+  smoothing: 0
   events:
     onShooting:
+      m_PersistentCalls:
+        m_Calls: []
+    onSingleShot:
+      m_PersistentCalls:
+        m_Calls: []
+    onBurst:
+      m_PersistentCalls:
+        m_Calls: []
+    onAutomatic:
       m_PersistentCalls:
         m_Calls: []
     onHitEnemy:
@@ -963,24 +975,36 @@ MonoBehaviour:
   name: 
   info: 
   localPlacmentPos: {x: 0.1, y: -0.084, z: 0.231}
-  firearmType: 0
+  firearmType: 2
+  fireType: 2
   baseDamage: 10
+  baseSingleShotCooldown: 0
+  baseBurstAmount: 3
+  baseTimeBetweenBurst: 0.1
+  baseBurstCooldown: 0.5
   baseFireRate: 600
-  isAutomatic: 0
-  isBurst: 0
   currentAmmo: 60
   baseMaxAmmo: 60
   totalAmmo: 0
   baseReloadTime: 1
-  isReloading: 0
   projectilePrefab: {fileID: 8310482809795752245, guid: 0f4ae3b2ff2cdf8439e7b232772dd2b9, type: 3}
   muzzle: {fileID: 479324361}
   baseProjectileSpeed: 30
   playerCamera: {fileID: 961739753}
   raycastDistance: 1000
-  raycastHitPoint: {x: 0, y: 0, z: 0}
+  swayClamp: 0.015
+  smoothing: 3
   events:
     onShooting:
+      m_PersistentCalls:
+        m_Calls: []
+    onSingleShot:
+      m_PersistentCalls:
+        m_Calls: []
+    onBurst:
+      m_PersistentCalls:
+        m_Calls: []
+    onAutomatic:
       m_PersistentCalls:
         m_Calls: []
     onHitEnemy:
