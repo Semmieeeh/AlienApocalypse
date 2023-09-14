@@ -6,14 +6,20 @@ public class UIEnemyHitsTest : MonoBehaviour
 {
     public UIEnemyHits hits;
 
-    public bool test;
+    public bool hit,headShot;
 
     private void Update()
     {
-        if (test)
+        if (hit)
         {
             hits.EnemyHit();
-            test = false;
+            hit = false;
+        }
+
+        if (headShot)
+        {
+            hits.EnemyHeadShotHit();    
+            headShot = false;
         }
     }
 }
