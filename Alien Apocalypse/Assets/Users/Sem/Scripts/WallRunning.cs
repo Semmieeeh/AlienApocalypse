@@ -113,12 +113,18 @@ public class WallRunning : MonoBehaviour
     {
         if (unlockedSkill)
         {
-            anim.SetInteger("RunDirection", 0);
+            Invoke("CheckForAnimationCancel", 0.2f);
             wallrunningActive = false;
             wallrunGravity = startingMass;
         }
     }
-
+    public void CheckForAnimationCancel()
+    {
+        if(onWall == false)
+        {
+            anim.SetInteger("RunDirection", 0);
+        }
+    }
     public void OnTriggerStay(Collider other)
     {
         if (unlockedSkill && !m.grounded && other.gameObject.tag == "Wall")
