@@ -827,8 +827,8 @@ Camera:
   m_GameObject: {fileID: 1975309377}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.13374868, g: 0.14410429, b: 0.16037738, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1045,8 +1045,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6779212289115818020, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7440413780669764054}
   m_SourcePrefab: {fileID: 100100000, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
+--- !u!1 &7440413780669764052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6779212289115818020, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
+  m_PrefabInstance: {fileID: 7440413780669764051}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7440413780669764053 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1332451557265625175, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
+  m_PrefabInstance: {fileID: 7440413780669764051}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440413780669764052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f83cb85f4d6ffb40962ab9c8f259060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7440413780669764054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440413780669764052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e240402d1f1b8db46a8b5a5689d8e141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hits: {fileID: 7440413780669764053}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
