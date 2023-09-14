@@ -12,6 +12,7 @@ public class Movement : MonoBehaviour
     public float stopTime;
     public bool stopped;
 
+
     [Header("Wall Jumping")]
     public float jumpHeight = 3f;
 
@@ -37,6 +38,7 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
         maxFov = Camera.main.fieldOfView + 10;
+        PhotonNetwork.SerializationRate = 20;
     }
 
     private void Update()
