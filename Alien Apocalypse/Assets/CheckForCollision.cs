@@ -18,21 +18,27 @@ public class CheckForCollision : MonoBehaviour
 
     public void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "Wall" && isLeft == true && m.grounded == false)
+        if(wr != null)
         {
-            wr.hitLeft = true;
-        }
+            if (other.gameObject.tag == "Wall" && isLeft == true && m.grounded == false)
+            {
+                wr.hitLeft = true;
+            }
 
-        if (other.gameObject.tag == "Wall" && isLeft == false && m.grounded == false)
-        {
-            wr.hitRight = true;
+            if (other.gameObject.tag == "Wall" && isLeft == false && m.grounded == false)
+            {
+                wr.hitRight = true;
+            }
         }
         
     }
     public void FixedUpdate()
     {
-        wr.hitRight = false;
-        wr.hitLeft = false;
+        if(wr!= null)
+        {
+            wr.hitRight = false;
+            wr.hitLeft = false;
+        }
     }
 
 

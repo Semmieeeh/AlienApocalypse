@@ -29,6 +29,7 @@ public class WallRunning : MonoBehaviour
         wallCooldown = 1;
         normalRotation = Camera.main.transform.rotation.z;
         startingMass = wallrunGravity;
+        m.wallrunUnlocked = true;
         
     }
     private void Update()
@@ -38,6 +39,7 @@ public class WallRunning : MonoBehaviour
         {
             wallrunGravity -= 2f * Time.deltaTime;
         }
+        m.wallRunning = wallrunningActive;
     }
     void FixedUpdate()
     {

@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &915649711113150596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4936036572592102992}
+  - component: {fileID: 1134194869631993014}
+  m_Layer: 3
+  m_Name: CameraPivotPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4936036572592102992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915649711113150596}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4581595857608698632}
+  m_Father: {fileID: 1595255689619525474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1134194869631993014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915649711113150596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cbd9374a96779429b942c33dba9ae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobbingSpeed: 0
+  bobbingAmount: 0.02
+  player: {fileID: 3688399010723760847}
+  horizontal: 0
+  vertical: 0
+  speed: 0
+  baseBobbingSpeed: 1
 --- !u!1 &935747976392240616
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +231,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4581595857608698632}
+  - {fileID: 4936036572592102992}
   m_Father: {fileID: 2072680722099446252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1410542737307944621
@@ -645,11 +697,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6372244031198217879}
+  - {fileID: 6780667890028029793}
   - {fileID: 2072680722099446252}
   - {fileID: 6862469151432340097}
   - {fileID: 8384016805777604134}
-  - {fileID: 6372244031198217879}
-  - {fileID: 6780667890028029793}
   - {fileID: 6173785830998289497}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -878,6 +930,10 @@ MonoBehaviour:
   maxFov: 0
   airMultiplier: 1
   cameraPivot: {fileID: 0}
+  wallrunUnlocked: 0
+  wallRunning: 0
+  dashUnlocked: 0
+  fallingspeedThreshold: 0
 --- !u!114 &524192621365327585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1577,7 +1633,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1595255689619525474}
+  m_Father: {fileID: 4936036572592102992}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &4240978247083968717
 Camera:

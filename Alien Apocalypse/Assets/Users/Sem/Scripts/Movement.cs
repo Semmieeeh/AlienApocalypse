@@ -1,4 +1,6 @@
 using Photon.Pun;
+using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -33,12 +35,17 @@ public class Movement : MonoBehaviour
     public float airMultiplier = 1f;
     public GameObject cameraPivot;
 
+    public bool wallrunUnlocked;
+    public bool wallRunning;
+    public bool dashUnlocked;
+
+    public float fallingspeedThreshold;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
         maxFov = Camera.main.fieldOfView + 10;
-        PhotonNetwork.SerializationRate = 30;
+        PhotonNetwork.SerializationRate = 20;
     }
 
     private void Update()
@@ -144,6 +151,26 @@ public class Movement : MonoBehaviour
             rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * airMultiplier : walkSpeed * airMultiplier), ForceMode.Force);
             stopped = false;
         }
+        bool isFalling;
+        if(wallrunUnlocked == true)
+        {
+            if (rb.velocity.y < 0.5f && wallRunning == false)
+            {
+                Vector3 extraForceDirection = Vector3.down;
+                rb.AddForce(extraForceDirection * 5, ForceMode.Acceleration);
+            }
+            
+        }
+        else if(wallrunUnlocked == false)
+        {
+            if (rb.velocity.y < 0.5f)
+            {
+                Vector3 extraForceDirection = Vector3.down;
+                rb.AddForce(extraForceDirection * 5, ForceMode.Acceleration);
+            }
+            
+        }
+        Debug.Log(rb.velocity.y);
 
         grounded = false;
     }
