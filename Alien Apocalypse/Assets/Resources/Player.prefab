@@ -201,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4021154189148606574}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: GunTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 3267331908192867075}
   - component: {fileID: 2563907300207088379}
   - component: {fileID: 1042596084290298986}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -625,6 +625,7 @@ MonoBehaviour:
   nicknameTextObject: {fileID: 3179417339512017324}
   nickname: 
   nicknameText: {fileID: 5069951462272145098}
+  weapon: {fileID: 5703256293417429751}
 --- !u!65 &1952394895039047908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -701,7 +702,7 @@ MonoBehaviour:
   dashCooldown: 0
   unlockedSkill: 1
   dashAmount: 0
-  multiplier: 0
+  multiplier: 20
 --- !u!114 &5825469508023652735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,7 +1071,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 127
+    m_Bits: 895
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1198,7 +1199,7 @@ GameObject:
   - component: {fileID: 3696777177904889979}
   - component: {fileID: 8207689228973244765}
   - component: {fileID: 1548548753810158762}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: ArmPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1291,7 +1292,7 @@ GameObject:
   - component: {fileID: 5043165315430417992}
   - component: {fileID: 5013491772941250360}
   - component: {fileID: 5603662700397019883}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

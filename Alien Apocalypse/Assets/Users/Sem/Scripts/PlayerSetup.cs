@@ -12,10 +12,13 @@ public class PlayerSetup : MonoBehaviour
     public GameObject nicknameTextObject;
     public string nickname = "Unnamed";
     public TextMeshPro nicknameText;
+    public GameObject weapon;
     public void IsLocalPlayer()
     {
         movement.enabled = true;
         uiVanStefan.SetActive(true);
+        weapon.layer = 7;
+        gameObject.layer = 3;
         cam.GetComponent<Camera>().enabled = true;
         cam.GetComponent<MouseLook>().enabled = true;
         cam.GetComponent<AudioListener>().enabled = true;
