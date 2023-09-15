@@ -26,19 +26,22 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log("Took damage!");
         if (health <= minHealth)
         {
-            if (unlocksSkill == "Wallrunning")
+            if(gettingShotBy != null)
             {
-                gettingShotBy.GetComponent<WallRunning>().unlockedSkill = true;
-            }
+                if (unlocksSkill == "Wallrunning")
+                {
+                    gettingShotBy.GetComponent<WallRunning>().unlockedSkill = true;
+                }
 
-            if (unlocksSkill == "Dash")
-            {
-                gettingShotBy.GetComponent<DashAbility>().unlockedSkill = true;
-            }
+                if (unlocksSkill == "Dash")
+                {
+                    gettingShotBy.GetComponent<DashAbility>().unlockedSkill = true;
+                }
 
-            if(unlocksSkill == "GrapplingHook")
-            {
-                gettingShotBy.GetComponent<Grappling>().unlockedSkill = true;
+                if (unlocksSkill == "GrapplingHook")
+                {
+                    gettingShotBy.GetComponent<Grappling>().unlockedSkill = true;
+                }
             }
 
             Destroy(gameObject);
