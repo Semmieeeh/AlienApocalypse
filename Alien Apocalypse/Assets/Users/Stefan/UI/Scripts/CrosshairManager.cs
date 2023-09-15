@@ -69,6 +69,7 @@ public class CrosshairManager : MonoBehaviour
         }
     }
 
+    [SerializeField]
     Grappling grappling;
     public bool CanGrapple
     {

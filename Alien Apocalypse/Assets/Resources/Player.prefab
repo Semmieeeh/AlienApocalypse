@@ -312,15 +312,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1fc0fb0d426d144b012c76be193e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultColor: {r: 0, g: 0, b: 0, a: 0}
-  canGrappleColor: {r: 0, g: 0, b: 0, a: 0}
-  colorSmoothTime: 0
-  crosshairDot: {fileID: 1098393142578149610}
-  crosshairPolygon: {fileID: 7099576935553043053}
-  leftSide: {fileID: 8392576921514070298}
-  rightSide: {fileID: 3668752431499086367}
-  upSide: {fileID: 925450869872513354}
-  downSide: {fileID: 436637242850651914}
+  defaultColor: {r: 0.18039216, g: 1, b: 0.9686275, a: 1}
+  canGrappleColor: {r: 0.005835533, g: 1, b: 0, a: 1}
+  colorSmoothTime: 0.2
+  crosshairDot: {fileID: 0}
+  crosshairPolygon: {fileID: 0}
+  leftSide: {fileID: 0}
+  rightSide: {fileID: 0}
+  upSide: {fileID: 0}
+  downSide: {fileID: 0}
   leftOffset: {x: -289, y: 0, z: 0}
   rightOffset: {x: 266.5, y: 0, z: 0}
   upOffset: {x: 0, y: 154, z: 0}
@@ -402,6 +402,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   bloom: 1
   power: 1
+  grappling: {fileID: 3267331908192867075}
 --- !u!114 &1745728488404499083
 MonoBehaviour:
   m_ObjectHideFlags: 0
