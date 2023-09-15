@@ -14,7 +14,9 @@ public class PlayerSetup : MonoBehaviour
     public void IsLocalPlayer()
     {
         movement.enabled = true;
-        cam.SetActive(true);
+        cam.GetComponent<Camera>().enabled = true;
+        cam.GetComponent<MouseLook>().enabled = true;
+        cam.GetComponent<AudioListener>().enabled = true;
         nicknameTextObject.SetActive(false);
     }
 
