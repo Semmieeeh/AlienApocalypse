@@ -59,7 +59,7 @@ public class GrappleRope : MonoBehaviourPunCallbacks
     // Implement the UpdateRope and ClearRope methods to update the LineRenderer appropriately
     private void UpdateRope(Vector3 grapplePoint)
     {
-        if(lr == null)
+        if (lr == null)
         {
             return;
         }
@@ -98,6 +98,10 @@ public class GrappleRope : MonoBehaviourPunCallbacks
     private void ClearRope()
     {
         currentGrapplePosition = grapplingGun.gunTip.position;
+        if(spring == null || lr == null)
+        {
+            return;
+        }
         if (spring != null)
         {
             spring.Reset();
