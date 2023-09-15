@@ -542,7 +542,7 @@ Transform:
   m_GameObject: {fileID: 1413696320142564045}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.509, z: -0}
+  m_LocalPosition: {x: 0, y: -0.481, z: -0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2155,6 +2155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8211090386310956644}
   - component: {fileID: 3696777177904889979}
+  - component: {fileID: 8207689228973244765}
   - component: {fileID: 1548548753810158762}
   m_Layer: 0
   m_Name: ArmPivot
@@ -2200,6 +2201,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8207689228973244765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4896949093881474597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &1548548753810158762
 MonoBehaviour:
   m_ObjectHideFlags: 0
