@@ -7,6 +7,7 @@ using TMPro;
 public class PlayerSetup : MonoBehaviour
 {
     public Movement movement;
+    public GameObject uiVanStefan;
     public GameObject cam;
     public GameObject nicknameTextObject;
     public string nickname = "Unnamed";
@@ -14,6 +15,7 @@ public class PlayerSetup : MonoBehaviour
     public void IsLocalPlayer()
     {
         movement.enabled = true;
+        uiVanStefan.SetActive(true);
         cam.GetComponent<Camera>().enabled = true;
         cam.GetComponent<MouseLook>().enabled = true;
         cam.GetComponent<AudioListener>().enabled = true;
