@@ -18,7 +18,7 @@ public class UIEnemyHitsTest : MonoBehaviour
 
         if (headShot)
         {
-            hits.EnemyHeadShotHit();    
+            hits.EnemyKill();    
             headShot = false;
         }
     }

@@ -23,7 +23,7 @@ public class UIEnemyHits : MonoBehaviour
         }
     }
 
-    public void EnemyHeadShotHit()
+    public void EnemyKill()
     {
         foreach (Image image in imageRects)
         {

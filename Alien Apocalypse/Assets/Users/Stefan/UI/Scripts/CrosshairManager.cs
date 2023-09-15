@@ -78,7 +78,7 @@ public class CrosshairManager : MonoBehaviour
             if (grappling == null) grappling = FindObjectOfType<Grappling>();
             if(grappling == null) return false;
 
-            return grappling.canGrapple;
+            return grappling.canGrapple && grappling.inRange;
         }
     }
 
@@ -105,12 +105,12 @@ public class CrosshairManager : MonoBehaviour
 
 
         //Handle crosshair color depending if you can grapple
-        if (CanGrapple && targetCrosshairColor == defaultColor)
+        if (CanGrapple && targetCrosshairColor != canGrappleColor)
         {
             targetCrosshairColor = canGrappleColor;
             currentColorTime = 0;
         }
-        else if (CanGrapple == false && targetCrosshairColor == canGrappleColor)
+        else if (CanGrapple == false && targetCrosshairColor != defaultColor)
         {
             targetCrosshairColor = defaultColor;
             currentColorTime = 0;
@@ -120,6 +120,8 @@ public class CrosshairManager : MonoBehaviour
 
         crosshairPolygon.color = color;
         crosshairDot.color = color;
+
+        currentColorTime += Time.deltaTime;
     }
 
     void UpdateShootAnimation()

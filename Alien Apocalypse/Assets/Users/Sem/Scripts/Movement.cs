@@ -115,17 +115,43 @@ public class Movement : MonoBehaviour
         curFov = Camera.main.fieldOfView;
     }
 
+    [SerializeField]
+    CrosshairManager crosshair;
+
+    [SerializeField]
+    UIEnemyHits hits;
+
+    [SerializeField]
+    InformativePopupManager popups;
+
+    [SerializeField]
+    UIPointsManager points;
+
     public void Fire()
     {
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray.origin, ray.direction, out hit, 100f))
+        crosshair.Shoot();
+
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, 100000f))
         {
-            if (hit.transform.gameObject.GetComponent<EnemyHealth>())
+
+            if (hit.transform.TryGetComponent(out EnemyHealth enemy))
             {
-                hit.transform.gameObject.GetComponent<EnemyHealth>().gettingShotBy = gameObject;    
-                hit.transform.gameObject.GetComponent<PhotonView>().RPC("EnemyTakeDamage", RpcTarget.All, damage);
+                if(enemy.health - damage <= 0)
+                {
+                    hits.EnemyKill();
+                    popups.AddKillPopup();
+                    points.AddNotification(100, "Nice Kill");
+                }
+                else
+                {
+                    hits.EnemyHit();
+                }
+
+                enemy.gettingShotBy = gameObject;    
+                enemy.GetComponent<PhotonView>().RPC("EnemyTakeDamage", RpcTarget.All, damage);
             }
         }
     }
