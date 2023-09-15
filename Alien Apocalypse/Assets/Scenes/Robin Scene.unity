@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon1: {fileID: 2943620484674935499}
+  mainCam: {fileID: 961739752}
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +587,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -700,6 +701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18fcd5b5274038c46848c5c33cca1227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
   name: 
   info: 
   localPlacmentPos: {x: 0, y: 0, z: 0}
@@ -718,6 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a137a4a35eb72864b9e6612902d8b293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
   name: 
   info: 
   localPlacmentPos: {x: 0, y: 0, z: 0}
@@ -749,6 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f64d04b020cf645bd6bd7639a9f3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
   name: 
   info: 
   localPlacmentPos: {x: 0, y: 0, z: 0}
@@ -771,6 +775,11 @@ MonoBehaviour:
   raycastDistance: 0
   swayClamp: 0
   smoothing: 0
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0
+  snappiness: 0
+  returnSpeed: 0
   events:
     onShooting:
       m_PersistentCalls:
@@ -972,6 +981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6f64d04b020cf645bd6bd7639a9f3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 0}
   name: 
   info: 
   localPlacmentPos: {x: 0.1, y: -0.084, z: 0.231}
@@ -994,6 +1004,11 @@ MonoBehaviour:
   raycastDistance: 1000
   swayClamp: 0.015
   smoothing: 3
+  recoilX: -0.3
+  recoilY: 0.5
+  recoilZ: 0.15
+  snappiness: 6
+  returnSpeed: 2
   events:
     onShooting:
       m_PersistentCalls:
@@ -1133,7 +1148,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b99d3afc12439fe41be2331002ed0b35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1211,7 +1226,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b99d3afc12439fe41be2331002ed0b35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [Header("References")]
+    public Camera mainCam;
+
     [Header("General")]
     [Space]
     public new string name;
 
-    [TextArea(4,1)]
+    [TextArea(4, 1)]
     [Space]
     public string info;
 
@@ -24,6 +27,8 @@ public class Weapon : MonoBehaviour
     }
 
     public Vector3 GetLocalPlacmentPos() => localPlacmentPos;
+
+    public virtual void UpdateWeapon() { }
 
     public virtual void Shooting() { }
 

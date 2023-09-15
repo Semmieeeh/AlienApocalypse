@@ -70,9 +70,26 @@ public class Firearm : Weapon
     public float smoothing;
 
     [Space]
+    [Header("Recoil")]
+    public float recoilX;
+    public float recoilY;
+    public float recoilZ;
+    public float snappiness;
+    public float returnSpeed;
+    Vector3 currentRotation;
+    Vector3 targetRotation;
+
+    [Space]
     [Header("Firearm Events")]
     public FireArmEvents events;
 
+    public override void UpdateWeapon()
+    {
+        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+        currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
+
+        mainCam.transform.localRotation = Quaternion.Euler(currentRotation);
+    }
 
     bool CanShoot() => !isReloading && currentAmmo > 0;
 
@@ -127,21 +144,13 @@ public class Firearm : Weapon
         isSingleShoting = true;
         canSingleShoot = false;
 
+        Recoil();
+
         // OnSingleShot will be called every time a projectile is fired; FireType has to be SingelShot
         events.onSingleShot?.Invoke();
 
-        GameObject projectile = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+        InstantiateProjectile();
 
-        if(projectile.TryGetComponent<Projectile>(out Projectile projectileScript))
-        {
-            projectileScript.InitializeProjectile(baseDamage, baseProjectileSpeed, projectile.transform.position, raycastHitPoint);
-
-            // Gives the projectile the Events needed when Enemy is hit or killed
-            projectileScript.InitialzieEvent(events.onHitEnemy, events.onHitEnemy);
-        }
-
-        currentAmmo--;
-        
         yield return new WaitForSeconds(baseSingleShotCooldown);
         isSingleShoting = false;
     }
@@ -159,20 +168,13 @@ public class Firearm : Weapon
             if(currentAmmo <= 0)
                 break;
 
+            Recoil();
+
             // OnBurst will be called every time a projectile is fired; FireType has to be Burst
             events.onBurst?.Invoke();
 
-            GameObject projectile = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+            InstantiateProjectile();
 
-            if(projectile.TryGetComponent<Projectile>(out Projectile projectileScript))
-            {
-                projectileScript.InitializeProjectile(baseDamage, baseProjectileSpeed, projectile.transform.position, raycastHitPoint);
-
-                // Gives the projectile the Events needed when Enemy is hit or killed
-                projectileScript.InitialzieEvent(events.onHitEnemy, events.onHitEnemy);
-            }
-
-            currentAmmo--;
             yield return new WaitForSeconds(baseTimeBetweenBurst);
         }
 
@@ -184,20 +186,13 @@ public class Firearm : Weapon
 
     void AutomaticMode()
     {
+        Recoil();
+
         // OnAutomatic will be called every time a projectile is fired; The FireType has to be Automatic
         events.onAutomatic?.Invoke();
 
-        GameObject projectile = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+        InstantiateProjectile();
 
-        if(projectile.TryGetComponent<Projectile>(out Projectile projectileScript))
-        {
-            projectileScript.InitializeProjectile(baseDamage, baseProjectileSpeed, projectile.transform.position, raycastHitPoint);
-
-            // Gives the projectile the Events needed when Enemy is hit or killed
-            projectileScript.InitialzieEvent(events.onHitEnemy, events.onHitEnemy);
-        }
-
-        currentAmmo--;
         baseTimeSinceLastShot = Time.time;        
     }
 
@@ -227,6 +222,25 @@ public class Firearm : Weapon
         transform.localPosition = Vector3.Lerp(transform.localPosition, target + localPlacmentPos, Time.deltaTime * smoothing);
     }
 
+    void Recoil()
+    {
+        targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+    }
+
+    void InstantiateProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, muzzle.position, muzzle.rotation);
+
+        if(projectile.TryGetComponent<Projectile>(out Projectile projectileScript))
+        {
+            projectileScript.InitializeProjectile(baseDamage, baseProjectileSpeed, projectile.transform.position, raycastHitPoint);
+
+            // Gives the projectile the Events needed when Enemy is hit or killed
+            projectileScript.InitialzieEvent(events.onHitEnemy, events.onHitEnemy);
+        }
+
+        currentAmmo--;
+    }
 }
 
 [System.Serializable]
