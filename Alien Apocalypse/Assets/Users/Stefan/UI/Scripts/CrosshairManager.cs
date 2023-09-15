@@ -6,6 +6,17 @@ using UnityEngine.UI;
 public class CrosshairManager : MonoBehaviour
 {
     [SerializeField]
+    Color defaultColor, canGrappleColor;
+
+    Color targetCrosshairColor;
+    [SerializeField]
+    float colorSmoothTime;
+
+    float currentColorTime;
+
+
+
+    [SerializeField]
     Image crosshairDot;
 
     [SerializeField]
@@ -48,11 +59,25 @@ public class CrosshairManager : MonoBehaviour
 
     Vector3 startPolygonAngles, targetPolygonAngles;
 
+    
+
     float Progress
     {
         get
         {
             return Mathf.Clamp01(Mathf.InverseLerp(0, animationTime, currentAnimationTime));
+        }
+    }
+
+    Grappling grappling;
+    public bool CanGrapple
+    {
+        get
+        {
+            if (grappling == null) grappling = FindObjectOfType<Grappling>();
+            if(grappling == null) return false;
+
+            return grappling.canGrapple;
         }
     }
 
@@ -76,6 +101,24 @@ public class CrosshairManager : MonoBehaviour
         {
             active = false;
         }
+
+
+        //Handle crosshair color depending if you can grapple
+        if (CanGrapple && targetCrosshairColor == defaultColor)
+        {
+            targetCrosshairColor = canGrappleColor;
+            currentColorTime = 0;
+        }
+        else if (CanGrapple == false && targetCrosshairColor == canGrappleColor)
+        {
+            targetCrosshairColor = defaultColor;
+            currentColorTime = 0;
+        }
+
+        Color color = Color.Lerp(crosshairPolygon.color, targetCrosshairColor, Mathf.InverseLerp(0, colorSmoothTime, currentColorTime));
+
+        crosshairPolygon.color = color;
+        crosshairDot.color = color;
     }
 
     void UpdateShootAnimation()
