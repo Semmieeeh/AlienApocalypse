@@ -52,7 +52,10 @@ public class Grappling : MonoBehaviour
 
     void Update()
     {
-        inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
+        if(pv.IsMine && playerCam != null)
+        {
+            inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
+        }
         if (pv.IsMine)
         {
             if (pointingArm == true)
