@@ -19,6 +19,7 @@ public class PlayerSetup : MonoBehaviour
         cam.GetComponent<Camera>().enabled = true;
         cam.GetComponent<MouseLook>().enabled = true;
         cam.GetComponent<AudioListener>().enabled = true;
+        cam.GetComponent<MouseLook>().cam2.SetActive(true);
         nicknameTextObject.SetActive(false);
     }
 
