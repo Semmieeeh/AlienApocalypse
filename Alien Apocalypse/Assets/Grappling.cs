@@ -99,7 +99,6 @@ public class Grappling : MonoBehaviour
             }
             if (childOfPoint == null || grapplePointParent == null)
             {
-                Debug.Log("Enemy died");
                 StopGrapple();
             }
             if (childOfPoint == null)

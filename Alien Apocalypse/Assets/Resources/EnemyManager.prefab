@@ -49,22 +49,34 @@ MonoBehaviour:
   canSpawn: 1
   enemiesToSpawn:
   - {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
+  - {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
   - {fileID: 7615457011079691944, guid: 73a9ede7184b70b44ace88f2a4241387, type: 3}
+  - {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
+  - {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
+  - {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
+  - {fileID: 2379988138330668302, guid: da10ca0ee98e91843ae73539b885864f, type: 3}
+  - {fileID: 7615457011079691944, guid: 73a9ede7184b70b44ace88f2a4241387, type: 3}
+  - {fileID: 7615457011079691944, guid: 73a9ede7184b70b44ace88f2a4241387, type: 3}
+  - {fileID: 5347941464802969537, guid: 32e4aacee58a5ef408cb44ea6d4c215f, type: 3}
+  - {fileID: 5347941464802969537, guid: 32e4aacee58a5ef408cb44ea6d4c215f, type: 3}
+  - {fileID: 5347941464802969537, guid: 32e4aacee58a5ef408cb44ea6d4c215f, type: 3}
   enemyIndex: 0
   check: 0
   spawnPoint: {fileID: 0}
-  enemies:
-  - {fileID: 0}
-  - {fileID: 0}
+  enemies: []
   waveSize: 0
   maxWaveSize: 120
   wavesCompleted: 0
   waveTimeLimit: 0
   timePassed: 0
-  spawnSpeed: 0
-  waveStartTime: 0
-  waveCooldown: 0
+  spawnSpeed: 1
+  waveStartTime: 10
+  waveCooldown: 10
   wavesStarted: 0
+  isInCooldown: 0
+  waveStatusText: {fileID: 0}
+  waveStartTimeCounter: 0
+  cooldownCounter: 0
 --- !u!114 &7744569080803617684
 MonoBehaviour:
   m_ObjectHideFlags: 0

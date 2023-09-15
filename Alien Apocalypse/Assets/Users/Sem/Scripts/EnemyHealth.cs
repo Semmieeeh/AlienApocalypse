@@ -10,6 +10,7 @@ public class EnemyHealth : MonoBehaviour
     public float maxHealth = 100;
     public float minHealth = 0;
     public GameObject gettingShotBy;
+    public float xpAmount;
     public string unlocksSkill;
 
     private void Start()
@@ -28,17 +29,17 @@ public class EnemyHealth : MonoBehaviour
         {
             if(gettingShotBy != null)
             {
-                if (unlocksSkill == "Wallrunning")
+                if (unlocksSkill == "Wallrunning" && gettingShotBy != null)
                 {
                     gettingShotBy.GetComponent<WallRunning>().unlockedSkill = true;
                 }
 
-                if (unlocksSkill == "Dash")
+                if (unlocksSkill == "Dash" && gettingShotBy != null)
                 {
                     gettingShotBy.GetComponent<DashAbility>().unlockedSkill = true;
                 }
 
-                if (unlocksSkill == "GrapplingHook")
+                if (unlocksSkill == "GrapplingHook" && gettingShotBy != null)
                 {
                     gettingShotBy.GetComponent<Grappling>().unlockedSkill = true;
                 }

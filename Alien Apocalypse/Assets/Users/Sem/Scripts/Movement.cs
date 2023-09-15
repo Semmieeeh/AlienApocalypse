@@ -138,9 +138,11 @@ public class Movement : MonoBehaviour
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 100000f))
         {
 
-            if (hit.transform.TryGetComponent(out EnemyHealth enemy))
+            if (hit.transform.GetComponent<EnemyHealth>() !=null)
             {
-                if(enemy.health - damage <= 0)
+                EnemyHealth enemy = hit.transform.GetComponent<EnemyHealth>();
+                enemy.gettingShotBy = gameObject;
+                if (enemy.health - damage <= 0)
                 {
                     hits.EnemyKill();
                     popups.AddKillPopup();
@@ -151,7 +153,7 @@ public class Movement : MonoBehaviour
                     hits.EnemyHit();
                 }
 
-                enemy.gettingShotBy = gameObject;    
+                 
                 enemy.GetComponent<PhotonView>().RPC("EnemyTakeDamage", RpcTarget.All, damage);
             }
         }
