@@ -59,6 +59,10 @@ public class GrappleRope : MonoBehaviourPunCallbacks
     // Implement the UpdateRope and ClearRope methods to update the LineRenderer appropriately
     private void UpdateRope(Vector3 grapplePoint)
     {
+        if(lr == null)
+        {
+            return;
+        }
         if (lr.positionCount == 0)
         {
             spring.SetVelocity(velocity);
