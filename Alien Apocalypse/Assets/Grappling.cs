@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,71 +31,79 @@ public class Grappling : MonoBehaviour
     public GameObject armObj;
     public bool canGrapple;
     public Animator arm;
+    PhotonView pv;
     public void Start()
     {
-        playerCam = Camera.main.transform;
-        player = gameObject.transform;
-        idleStrength = 4; 
-        minDamperStrength = 1f;
-        maxAnimDuration = 0.5f;
-        animDuration = maxAnimDuration;
-        canGrapple = true;
+        pv = GetComponent<PhotonView>();
+        if (pv.IsMine)
+        {
+            playerCam = Camera.main.transform;
+            player = gameObject.transform;
+            idleStrength = 4;
+            minDamperStrength = 1f;
+            maxAnimDuration = 0.5f;
+            animDuration = maxAnimDuration;
+            canGrapple = true;
+        }
     }
 
 
 
     void Update()
     {
-        if(pointingArm == true)
+        if (pv.IsMine)
         {
-            armLowerTime -= Time.deltaTime;
-        }
-        if (Input.GetButton("Grapple") && isGrappling == false && pointingArm == false && canGrapple == true)
-        {
-            damperStrength = minDamperStrength;
-            grappleStrength = idleStrength;
-            LiftArm();
-            
-        }
-        if(!Input.GetButton("Grapple") && isGrappling == false && pointingArm == false && canGrapple == false)
-        {
-            canGrapple = true;
-        }
-        if(armLowerTime <= 0 && !Input.GetButton("Grapple") && isGrappling == false)
-        {
-            CheckForRayCast();
-            //StartGrapple();
-        }
-        if (isGrappling == false)
-        {
-            return;
-        }
-        else
-        {
-            if (joint != null)
+            if (pointingArm == true)
             {
-                joint.maxDistance -= retractionSpeed;
+                armLowerTime -= Time.deltaTime;
             }
-        }
-        if (isGrappling && Input.GetButtonDown("Grapple"))
-        {
-            StopGrapple();
-        }
-        else if(joint!=null&&isGrappling && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance)
-        {
-            StopGrapple();
-        }
-        if (childOfPoint == null)
-        {
-            return;
-        }
+            if (Input.GetButton("Grapple") && isGrappling == false && pointingArm == false && canGrapple == true)
+            {
+                damperStrength = minDamperStrength;
+                grappleStrength = idleStrength;
+                LiftArm();
+
+            }
+            if (!Input.GetButton("Grapple") && isGrappling == false && pointingArm == false && canGrapple == false)
+            {
+                canGrapple = true;
+            }
+            if (armLowerTime <= 0 && !Input.GetButton("Grapple") && isGrappling == false)
+            {
+                CheckForRayCast();
+                //StartGrapple();
+            }
+            if (isGrappling == false)
+            {
+                return;
+            }
+            else
+            {
+                if (joint != null)
+                {
+                    joint.maxDistance -= retractionSpeed;
+                }
+            }
+            if (isGrappling && Input.GetButtonDown("Grapple"))
+            {
+                StopGrapple();
+            }
+            else if (joint != null && isGrappling && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance)
+            {
+                StopGrapple();
+            }
+            if (childOfPoint == null)
+            {
+                return;
+            }
 
 
-        if (childOfPoint != null && grapplePointParent != null &&grapplePoint!=null && joint!=null)
-        {
-            childOfPoint.transform.parent = grapplePointParent.transform;
-            grapplePoint = childOfPoint.transform.position;
-            joint.connectedAnchor = grapplePoint;
+            if (childOfPoint != null && grapplePointParent != null && grapplePoint != null && joint != null)
+            {
+                childOfPoint.transform.parent = grapplePointParent.transform;
+                grapplePoint = childOfPoint.transform.position;
+                joint.connectedAnchor = grapplePoint;
+            }
         }
         
     }
@@ -145,7 +154,7 @@ public class Grappling : MonoBehaviour
 
             grapplePointParent = hit.transform.gameObject;
 
-
+            
             childOfPoint = Instantiate(grapplePointChild, grapplePoint, Quaternion.identity);
 
         }

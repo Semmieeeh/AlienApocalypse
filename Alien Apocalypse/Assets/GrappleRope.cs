@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class GrappleRope : MonoBehaviour
+public class GrappleRope : MonoBehaviourPunCallbacks
 {
     private Spring spring;
     private LineRenderer lr;
@@ -15,35 +14,51 @@ public class GrappleRope : MonoBehaviour
     public float waveCount;
     public float waveHeight;
     public AnimationCurve affectCurve;
+    PhotonView pv;
 
-    void Awake()
+    private void Start()
     {
+        pv = GetComponent<PhotonView>();
         lr = GetComponent<LineRenderer>();
         spring = new Spring();
         spring.SetTarget(0);
     }
 
-    //Called after Update
-    void LateUpdate()
+    private void Update()
     {
-        DrawRope();
-    }
-
-    void DrawRope()
-    {
-        //If not grappling, don't draw rope
-        if (!grapplingGun.IsGrappling())
+        if (!pv.IsMine)
         {
-            currentGrapplePosition = grapplingGun.gunTip.position;
-            if (spring != null)
-            {
-                spring.Reset();
-            }
-            if (lr.positionCount > 0)
-                lr.positionCount = 0;
             return;
         }
 
+        if (grapplingGun.isGrappling)
+        {
+            Vector3 grapplePoint = grapplingGun.GetGrapplePoint();
+            pv.RPC("DrawRopeRPC", RpcTarget.All, grapplePoint);
+        }
+        else
+        {
+            pv.RPC("ClearRopeRPC", RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    public void DrawRopeRPC(Vector3 grapplePoint)
+    {
+        // Handle rope drawing based on grapplePoint
+        UpdateRope(grapplePoint);
+    }
+
+    [PunRPC]
+    public void ClearRopeRPC()
+    {
+        // Clear the rope's appearance
+        ClearRope();
+    }
+
+    // Implement the UpdateRope and ClearRope methods to update the LineRenderer appropriately
+    private void UpdateRope(Vector3 grapplePoint)
+    {
         if (lr.positionCount == 0)
         {
             spring.SetVelocity(velocity);
@@ -54,7 +69,6 @@ public class GrappleRope : MonoBehaviour
         spring.SetStrength(strength);
         spring.Update(Time.deltaTime);
 
-        var grapplePoint = grapplingGun.GetGrapplePoint();
         var gunTipPosition = grapplingGun.gunTip.position;
         var up = Quaternion.LookRotation((grapplePoint - gunTipPosition).normalized) * Vector3.up;
 
@@ -66,7 +80,27 @@ public class GrappleRope : MonoBehaviour
             var offset = up * waveHeight * Mathf.Sin(delta * waveCount * Mathf.PI) * spring.Value *
                          affectCurve.Evaluate(delta);
 
-            lr.SetPosition(i, Vector3.Lerp(gunTipPosition, currentGrapplePosition, delta) + offset);
+            if (i < lr.positionCount)
+            {
+                lr.SetPosition(i, Vector3.Lerp(gunTipPosition, currentGrapplePosition, delta) + offset);
+            }
+            else
+            {
+                Debug.LogWarning("Attempted to set LineRenderer position outside of bounds.");
+            }
+        }
+    }
+
+    private void ClearRope()
+    {
+        currentGrapplePosition = grapplingGun.gunTip.position;
+        if (spring != null)
+        {
+            spring.Reset();
+        }
+        if (lr.positionCount > 0)
+        {
+            lr.positionCount = 0;
         }
     }
 }
