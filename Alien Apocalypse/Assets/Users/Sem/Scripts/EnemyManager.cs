@@ -4,6 +4,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 
 public class EnemyManager : MonoBehaviourPunCallbacks
 {
@@ -37,18 +38,23 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
     public void Start()
     {
-        instance = this;
-        spawnPoint = GameObject.Find("SpawnPoint").transform;
-        waveStartTime = 10;
-        waveSize = 5;
-
-        waveStartTimeCounter = waveStartTime;
-        cooldownCounter = waveCooldown;
-        if (photonView.IsMine)
+        if (PhotonNetwork.IsMasterClient)
         {
-            waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
+            instance = this;
+            spawnPoint = GameObject.Find("SpawnPoint").transform;
+            waveStartTime = 10;
+            waveSize = 5;
+
+            waveStartTimeCounter = waveStartTime;
+            cooldownCounter = waveCooldown;
+            if (photonView.IsMine)
+            {
+                waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
+            }
+            
         }
-        if(PhotonNetwork.CurrentRoom.PlayerCount > 0)
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 0)
         {
             wavesStarted = true;
             isInCooldown = true;
@@ -56,62 +62,94 @@ public class EnemyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void Update()
+    [PunRPC]
+    public void UpdateCooldownCounter(float newCooldown)
     {
-        cooldownCounter -= Time.deltaTime;
-        UpdateUIText();
+        cooldownCounter = newCooldown;
     }
-
-    public void UpdateUIText()
+    private float syncCooldownInterval = 0.1f; // Synchronize every 1 second
+    private float lastSyncTime;
+    public void Update()
     {
         if (photonView.IsMine)
         {
-            if (isInCooldown == true)
+            if (PhotonNetwork.IsMasterClient)
             {
-                waveStatusText.rectTransform.sizeDelta = new Vector2(250, 60);
-                waveStatusText.text = "Cooldown: " + cooldownCounter.ToString("F1");
-            }
+                cooldownCounter -= Time.deltaTime;
+                if (Time.time - lastSyncTime >= syncCooldownInterval)
+                {
+                    lastSyncTime = Time.time;
+                    photonView.RPC(nameof(UpdateCooldownCounter), RpcTarget.AllBuffered, cooldownCounter);
+                    
 
-            if(isInCooldown == false)
-            {
-                if(waveStatusText != null)
-                {
-                    waveStatusText.rectTransform.sizeDelta = new Vector2(300, 60);
-                    waveStatusText.text = "Wave Start: " + cooldownCounter.ToString("F1");
                 }
             }
-           
-            if(cooldownCounter <= 0 && enemiesSpawning == true)
+            photonView.RPC(nameof(UpdateUIText), RpcTarget.AllBuffered);
+        }
+        
+    }
+    [PunRPC]
+    public void UpdateUIText()
+    {
+        if (isInCooldown)
+        {
+            waveStatusText.rectTransform.sizeDelta = new Vector2(250, 60);
+            waveStatusText.text = "Cooldown: " + cooldownCounter.ToString("F1");
+        }
+        else
+        {
+            waveStatusText.rectTransform.sizeDelta = new Vector2(300, 60);
+            waveStatusText.text = "Wave Start: " + cooldownCounter.ToString("F1");
+        }
+
+        if (cooldownCounter <= 0 && enemiesSpawning == true)
+        {
+            if (waveStatusText != null)
             {
-                if (waveStatusText != null)
-                {
-                    waveStatusText.text = "Enemies Spawning";
-                }
+                waveStatusText.text = "Enemies Spawning";
             }
         }
     }
+    [PunRPC]
+    public void UpdateIsInCooldown(bool newValue)
+    {
+        isInCooldown = newValue;
 
+    }
+
+    [PunRPC]
+    public void UpdateIsInCooldownTwo(bool newValue)
+    {
+        enemiesSpawning = newValue;
+
+    }
 
     public IEnumerator StartEnemyWaves()
     {
         while (true)
         {
             isInCooldown = false;
+            photonView.RPC(nameof(UpdateIsInCooldown), RpcTarget.AllBuffered, isInCooldown);
             cooldownCounter = waveStartTime;
             enemiesSpawning = false;
+            photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
             yield return new WaitForSeconds(waveStartTime);
             
             for (int i = 0; i < waveSize; i++)
             {
                 SpawnEnemies(1);
                 enemiesSpawning = true;
+                photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
                 yield return new WaitForSeconds(spawnSpeed);
             }
 
             isInCooldown = true;
+            photonView.RPC(nameof(UpdateIsInCooldown), RpcTarget.AllBuffered, isInCooldown);
             enemiesSpawning = false;
+            photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
             cooldownCounter = waveCooldown;
             wavesCompleted++;
+            waveSize += 5;
             yield return new WaitForSeconds(waveCooldown);
             
             

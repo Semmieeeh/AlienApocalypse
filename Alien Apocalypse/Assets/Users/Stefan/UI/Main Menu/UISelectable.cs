@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using UnityEditor.UI;
 
 /// <summary>
 /// Derive from this class if you want to have UI objects with mouse/pointer interactions events
