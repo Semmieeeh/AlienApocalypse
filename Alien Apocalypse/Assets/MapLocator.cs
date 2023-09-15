@@ -4,31 +4,40 @@ using UnityEngine;
 
 public class MapLocator : MonoBehaviour
 {
-    public Transform icon;
+    public RectTransform uiElement;
+    public Camera worldCamera;
 
-    private Camera mainCamera;
+    private Vector3 worldCenterPosition;
 
     private void Start()
     {
-        mainCamera = Camera.main;
+        // Initialize the world center position to (0, 0, 0)
+        worldCenterPosition = Vector3.zero;
+        worldCamera = Camera.main;
     }
 
     private void Update()
     {
-        if (mainCamera == null)
-            return;
-
-        Vector3 cameraToIcon = icon.position - mainCamera.transform.position;
-        float dotProduct = Vector3.Dot(mainCamera.transform.forward, cameraToIcon);
-
-        if (dotProduct > 0)
+        // Ensure that the UI element and world camera are assigned
+        if (uiElement == null)
         {
-            icon.gameObject.SetActive(true);
-            icon.transform.position = mainCamera.WorldToScreenPoint(icon.position);
+            Debug.LogError("UI element or world camera not assigned.");
+            return;
+        }
+
+        // Calculate the screen position of the world center
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldCenterPosition);
+
+        // Check if the position is in front of the camera
+        if (Vector3.Dot((worldCenterPosition - worldCamera.transform.position).normalized, worldCamera.transform.forward) > 0)
+        {
+            // Set the UI element's anchored position to the screen position
+            uiElement.position = screenPosition;
         }
         else
         {
-            icon.gameObject.SetActive(false);
+            // If the position is behind the camera, set it outside the screen
+            uiElement.position = new Vector3(-1000, -1000, 0);
         }
     }
 }
