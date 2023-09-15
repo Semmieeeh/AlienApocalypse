@@ -42,7 +42,7 @@ public class Grappling : MonoBehaviour
             player = gameObject.transform;
             idleStrength = 4;
             minDamperStrength = 1f;
-            maxAnimDuration = 0.5f;
+            maxAnimDuration = 0.17f;
             animDuration = maxAnimDuration;
             canGrapple = true;
         }
@@ -97,6 +97,11 @@ public class Grappling : MonoBehaviour
             {
                 StopGrapple();
             }
+            if (childOfPoint == null || grapplePointParent == null)
+            {
+                Debug.Log("Enemy died");
+                StopGrapple();
+            }
             if (childOfPoint == null)
             {
                 return;
@@ -109,6 +114,7 @@ public class Grappling : MonoBehaviour
                 grapplePoint = childOfPoint.transform.position;
                 joint.connectedAnchor = grapplePoint;
             }
+            
         }
         
     }

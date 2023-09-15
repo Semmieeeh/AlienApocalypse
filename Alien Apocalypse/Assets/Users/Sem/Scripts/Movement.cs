@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     public float slowDownForce;
     public float stopTime;
     public bool stopped;
+    public float fallSpeed = 0;
 
 
     [Header("Wall Jumping")]
@@ -181,13 +182,22 @@ public class Movement : MonoBehaviour
             rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * airMultiplier : walkSpeed * airMultiplier), ForceMode.Force);
             stopped = false;
         }
-        bool isFalling;
-        if(wallrunUnlocked == true)
+        float maxSpeed = 75f;
+        if (wallrunUnlocked == true)
         {
             if (rb.velocity.y < -0.5f && wallRunning == false)
             {
+                fallSpeed += Time.deltaTime;
                 Vector3 extraForceDirection = Vector3.down;
-                rb.AddForce(extraForceDirection * 5, ForceMode.Acceleration);
+                if(rb.velocity.magnitude <= maxSpeed)
+                {
+                    rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
+                }
+            }
+            else
+            {
+                fallSpeed = 0;
+            
             }
             
         }
@@ -195,8 +205,16 @@ public class Movement : MonoBehaviour
         {
             if (rb.velocity.y < -0.5f)
             {
+                fallSpeed += Time.deltaTime;
                 Vector3 extraForceDirection = Vector3.down;
-                rb.AddForce(extraForceDirection * 5, ForceMode.Acceleration);
+                if (rb.velocity.magnitude <= maxSpeed)
+                {
+                    rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
+                }
+            }
+            else
+            {
+                fallSpeed = 0;
             }
             
         }

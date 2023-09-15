@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
     public static MouseLook instance;
 
     [Header("Settings")]
+    public GameObject cam2;
     public Vector2 clampInDegrees = new Vector2(360, 180);
     public bool lockCursor = true;
     [Space]
@@ -53,7 +55,7 @@ public class MouseLook : MonoBehaviour
     {
         var targetOrientation = Quaternion.Euler(targetDirection);
         var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
-
+        cam2.GetComponent<Camera>().fieldOfView = GetComponent<Camera>().fieldOfView;
         mouseDelta = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
         mouseDelta = Vector2.Scale(mouseDelta, new Vector2(sensitivity.x * smoothing.x, sensitivity.y * smoothing.y));

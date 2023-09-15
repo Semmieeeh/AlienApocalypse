@@ -104,7 +104,6 @@ public class WallRunning : MonoBehaviour
                     wallrunningActive = false;
                     wallrunGravity = startingMass;
                 }
-                Debug.Log(hitLeft ? "Hit Left collider" : "Hit Right collider");
             }
         }
     }
