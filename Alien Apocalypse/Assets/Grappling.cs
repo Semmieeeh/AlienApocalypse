@@ -32,6 +32,7 @@ public class Grappling : MonoBehaviour
     public bool canGrapple;
     public Animator arm;
     PhotonView pv;
+    public bool inRange;
     public void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -51,6 +52,7 @@ public class Grappling : MonoBehaviour
 
     void Update()
     {
+        inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
         if (pv.IsMine)
         {
             if (pointingArm == true)
