@@ -1860,57 +1860,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 53395683508182083, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: defaultColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: defaultColor.b
-      value: 0.9686275
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: defaultColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: defaultColor.r
-      value: 0.18039216
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: colorSmoothTime
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: canGrappleColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: canGrappleColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: canGrappleColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: canGrappleColor.r
-      value: 0.005835533
-      objectReference: {fileID: 0}
-    - target: {fileID: 3032622002485740906, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: active
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4295371461784496555, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
       propertyPath: m_Name
       value: Complete UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 4747420703594715854, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4967200332967160741, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1952,49 +1904,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7309705815162047977, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 16777215
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6779212289115818020, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7440413780669764054}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
---- !u!1 &7440413780669764052 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6779212289115818020, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-  m_PrefabInstance: {fileID: 7440413780669764051}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7440413780669764053 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1332451557265625175, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
-  m_PrefabInstance: {fileID: 7440413780669764051}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7440413780669764052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f83cb85f4d6ffb40962ab9c8f259060, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7440413780669764054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7440413780669764052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e240402d1f1b8db46a8b5a5689d8e141, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hits: {fileID: 7440413780669764053}
-  hit: 0
-  headShot: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
