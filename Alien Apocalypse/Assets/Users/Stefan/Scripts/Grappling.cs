@@ -94,12 +94,12 @@ public class Grappling : MonoBehaviourPunCallbacks
             if (isGrappling && Input.GetButtonDown("Grapple"))
             {
                 StopGrapple();
-                pv.RPC("SyncArmAnimation", RpcTarget.Others, 0); // Notify other players about the animation change
+                pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 0);
             }
             else if (joint != null && isGrappling && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance)
             {
                 StopGrapple();
-                pv.RPC("SyncArmAnimation", RpcTarget.Others, 0); // Notify other players about the animation change
+                pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 0);
             }
             if (childOfPoint == null || grapplePointParent == null)
             {
@@ -120,9 +120,8 @@ public class Grappling : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void SyncArmAnimation(int animationState)
+    public void SyncArmAnimation(int animationState)
     {
-        // Set the arm animation state based on 'animationState'
         arm.SetInteger("FireState", animationState);
     }
 
@@ -130,7 +129,7 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         arm.SetInteger("FireState", 1);
         pointingArm = true;
-        pv.RPC("SyncArmAnimation", RpcTarget.Others, 1); // Notify other players about the animation change
+        pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 1);
     }
 
     public void CheckForRayCast()
@@ -139,7 +138,7 @@ public class Grappling : MonoBehaviourPunCallbacks
         {
             StartGrapple();
             arm.SetInteger("FireState", 2);
-            pv.RPC("SyncArmAnimation", RpcTarget.Others, 2);
+            pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
         }
         else
         {
@@ -147,7 +146,7 @@ public class Grappling : MonoBehaviourPunCallbacks
             canGrapple = true;
             armLowerTime = maxAnimDuration;
             arm.SetInteger("FireState", 2);
-            pv.RPC("SyncArmAnimation", RpcTarget.Others, 2);
+            pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
         }
     }
 

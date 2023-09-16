@@ -703,8 +703,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2077308259622433637}
   - {fileID: 5804153661036704628}
-  - {fileID: 8207689228973244765}
-  - {fileID: 1548548753810158762}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 5603662700397019883}
   sceneViewId: 0
   InstantiationId: 0
@@ -1333,8 +1333,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8211090386310956644}
   - component: {fileID: 3696777177904889979}
-  - component: {fileID: 8207689228973244765}
-  - component: {fileID: 1548548753810158762}
   m_Layer: 9
   m_Name: ArmPivot
   m_TagString: Untagged
@@ -1379,43 +1377,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8207689228973244765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4896949093881474597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
---- !u!114 &1548548753810158762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4896949093881474597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 3
-    SynchronizeType: 0
-    Name: FireState
-  m_SynchronizeLayers:
-  - SynchronizeType: 0
-    LayerIndex: 0
 --- !u!1 &5703256293417429751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,7 +1477,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!1 &6159436972568402810
 GameObject:
   m_ObjectHideFlags: 0

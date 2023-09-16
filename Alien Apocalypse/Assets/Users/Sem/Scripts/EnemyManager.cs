@@ -32,12 +32,14 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     [Space]
     [Header("UI Element")]
     public TextMeshProUGUI waveStatusText;
+    public bool startedTheWaves;
 
     public float waveStartTimeCounter;
     public float cooldownCounter;
 
     public void Start()
     {
+        startedTheWaves = false;
         if (PhotonNetwork.IsMasterClient)
         {
             instance = this;
@@ -51,15 +53,17 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             {
                 waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
             }
-            
+            if (PhotonNetwork.CurrentRoom.PlayerCount > 0 && PhotonNetwork.IsMasterClient && startedTheWaves == false)
+            {
+                wavesStarted = true;
+                isInCooldown = true;
+                StartCoroutine(nameof(StartEnemyWaves));
+                startedTheWaves = false;
+            }
+
         }
 
-        if (PhotonNetwork.CurrentRoom.PlayerCount > 0)
-        {
-            wavesStarted = true;
-            isInCooldown = true;
-            StartCoroutine(nameof(StartEnemyWaves));
-        }
+        
     }
 
     [PunRPC]
@@ -71,8 +75,10 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     private float lastSyncTime;
     public void Update()
     {
+
         if (photonView.IsMine)
         {
+
             if (PhotonNetwork.IsMasterClient)
             {
                 cooldownCounter -= Time.deltaTime;
@@ -91,22 +97,25 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdateUIText()
     {
-        if (isInCooldown)
+        if(waveStatusText != null)
         {
-            waveStatusText.rectTransform.sizeDelta = new Vector2(250, 60);
-            waveStatusText.text = "Cooldown: " + cooldownCounter.ToString("F1");
-        }
-        else
-        {
-            waveStatusText.rectTransform.sizeDelta = new Vector2(300, 60);
-            waveStatusText.text = "Wave Start: " + cooldownCounter.ToString("F1");
-        }
-
-        if (cooldownCounter <= 0 && enemiesSpawning == true)
-        {
-            if (waveStatusText != null)
+            if (isInCooldown)
             {
-                waveStatusText.text = "Enemies Spawning";
+                waveStatusText.rectTransform.sizeDelta = new Vector2(250, 60);
+                waveStatusText.text = "Cooldown: " + cooldownCounter.ToString("F1");
+            }
+            else
+            {
+                waveStatusText.rectTransform.sizeDelta = new Vector2(300, 60);
+                waveStatusText.text = "Wave Start: " + cooldownCounter.ToString("F1");
+            }
+
+            if (cooldownCounter <= 0 && enemiesSpawning == true)
+            {
+                if (waveStatusText != null)
+                {
+                    waveStatusText.text = "Enemies Spawning";
+                }
             }
         }
     }
