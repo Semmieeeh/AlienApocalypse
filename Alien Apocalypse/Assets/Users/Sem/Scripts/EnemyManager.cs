@@ -67,7 +67,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     {
         cooldownCounter = newCooldown;
     }
-    private float syncCooldownInterval = 0.1f; // Synchronize every 1 second
+    private float syncCooldownInterval = 0.05f;
     private float lastSyncTime;
     public void Update()
     {

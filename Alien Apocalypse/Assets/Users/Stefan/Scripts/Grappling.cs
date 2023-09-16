@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grappling : MonoBehaviour
+public class Grappling : MonoBehaviourPunCallbacks
 {
     public bool unlockedSkill;
     private Vector3 grapplePoint;
@@ -33,9 +33,14 @@ public class Grappling : MonoBehaviour
     public Animator arm;
     PhotonView pv;
     public bool inRange;
-    public void Start()
+
+    private void Awake()
     {
         pv = GetComponent<PhotonView>();
+    }
+
+    public void Start()
+    {
         if (pv.IsMine)
         {
             playerCam = Camera.main.transform;
@@ -48,11 +53,9 @@ public class Grappling : MonoBehaviour
         }
     }
 
-
-
     void Update()
     {
-        if(pv.IsMine && playerCam != null)
+        if (pv.IsMine && playerCam != null)
         {
             inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
         }
@@ -67,7 +70,7 @@ public class Grappling : MonoBehaviour
                 damperStrength = minDamperStrength;
                 grappleStrength = idleStrength;
                 LiftArm();
-
+                pv.RPC("SyncArmAnimation", RpcTarget.Others, 1); // Notify other players about the animation change
             }
             if (!Input.GetButton("Grapple") && isGrappling == false && pointingArm == false && canGrapple == false)
             {
@@ -76,7 +79,6 @@ public class Grappling : MonoBehaviour
             if (armLowerTime <= 0 && !Input.GetButton("Grapple") && isGrappling == false)
             {
                 CheckForRayCast();
-                //StartGrapple();
             }
             if (isGrappling == false)
             {
@@ -92,10 +94,12 @@ public class Grappling : MonoBehaviour
             if (isGrappling && Input.GetButtonDown("Grapple"))
             {
                 StopGrapple();
+                pv.RPC("SyncArmAnimation", RpcTarget.Others, 0); // Notify other players about the animation change
             }
             else if (joint != null && isGrappling && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance)
             {
                 StopGrapple();
+                pv.RPC("SyncArmAnimation", RpcTarget.Others, 0); // Notify other players about the animation change
             }
             if (childOfPoint == null || grapplePointParent == null)
             {
@@ -106,48 +110,54 @@ public class Grappling : MonoBehaviour
                 return;
             }
 
-
             if (childOfPoint != null && grapplePointParent != null && grapplePoint != null && joint != null)
             {
                 childOfPoint.transform.parent = grapplePointParent.transform;
                 grapplePoint = childOfPoint.transform.position;
                 joint.connectedAnchor = grapplePoint;
             }
-            
         }
-        
     }
+
+    [PunRPC]
+    void SyncArmAnimation(int animationState)
+    {
+        // Set the arm animation state based on 'animationState'
+        arm.SetInteger("FireState", animationState);
+    }
+
     public void LiftArm()
     {
         arm.SetInteger("FireState", 1);
         pointingArm = true;
-        
+        pv.RPC("SyncArmAnimation", RpcTarget.Others, 1); // Notify other players about the animation change
     }
+
     public void CheckForRayCast()
     {
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
         {
             StartGrapple();
-
+            arm.SetInteger("FireState", 2);
+            pv.RPC("SyncArmAnimation", RpcTarget.Others, 2);
         }
-        else 
+        else
         {
             StopGrapple();
             canGrapple = true;
             armLowerTime = maxAnimDuration;
             arm.SetInteger("FireState", 2);
+            pv.RPC("SyncArmAnimation", RpcTarget.Others, 2);
         }
     }
 
     void StartGrapple()
     {
-
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
         {
             canGrapple = false;
             armLowerTime = maxAnimDuration;
             pointingArm = false;
-            arm.SetInteger("FireState", 2);
             isGrappling = true;
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();
@@ -157,24 +167,18 @@ public class Grappling : MonoBehaviour
             joint.maxDistance = distanceFromPoint * 0.8f;
             joint.minDistance = distanceFromPoint * 0f;
 
-
             joint.spring = grappleStrength;
             joint.damper = damperStrength;
             joint.massScale = 4.5f;
 
             grapplePointParent = hit.transform.gameObject;
 
-            
             childOfPoint = Instantiate(grapplePointChild, grapplePoint, Quaternion.identity);
-
         }
     }
 
-
-
     public void StopGrapple()
     {
-        
         if (joint != null)
         {
             Destroy(joint);
@@ -185,7 +189,7 @@ public class Grappling : MonoBehaviour
             Destroy(childOfPoint);
             childOfPoint = null;
         }
-        if(grapplePointParent != null)
+        if (grapplePointParent != null)
         {
             grapplePointParent = null;
         }
