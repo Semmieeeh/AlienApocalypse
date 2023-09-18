@@ -101,6 +101,7 @@ public class CrosshairManager : MonoBehaviour
         else
         {
             active = false;
+            ResetShootAnimation();
         }
 
 
@@ -127,6 +128,8 @@ public class CrosshairManager : MonoBehaviour
     void UpdateShootAnimation()
     {
         float sin = Mathf.Sin(Progress * 3);
+
+        sin = Mathf.Clamp01(sin);
 
         Vector3 dotScale = Vector3.one * dotSize.Evaluate(power) + Vector3.one * sin;
 
@@ -166,6 +169,23 @@ public class CrosshairManager : MonoBehaviour
         rightPos.x += sidesOffset.Evaluate(bloom) * sideOffsetMultiplier * sin;
 
         rightSide.transform.position = rightPos;
+
+    }
+
+    void ResetShootAnimation()
+    {
+        crosshairDot.transform.localScale = Vector3.one;
+        crosshairPolygon.transform.localScale = Vector3.one;
+
+        crosshairPolygon.transform.localEulerAngles = targetPolygonAngles;
+        
+        upSide.transform.position = upOffset;
+        
+        downSide.transform.position = downOffset;
+        
+        leftSide.transform.position = leftOffset;
+        
+        rightSide.transform.position = rightOffset;
 
     }
 
