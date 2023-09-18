@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct ColorBlock
 {
     public delegate void ColorChanged(Color color);
@@ -116,7 +117,7 @@ public struct ColorBlock
         // Selected
         // Default
 
-        if (selectable.Interactable)
+        if (!selectable.Interactable)
             return DisabledColor;
         if (selectable.TriesClicking)
             return ClickedColor;

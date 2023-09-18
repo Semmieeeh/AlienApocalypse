@@ -55,23 +55,12 @@ public class UIButton : UISelectable
     }
 
     [SerializeField]
-    Image m_iconSprite;
-
-    public Image IconSprite
-    {
-        get
-        {
-            if (m_iconSprite == null) m_iconSprite = transform.GetComponentInChildren<Image>();
-            return m_iconSprite;
-        }
-        set
-        {
-            m_iconSprite = value;
-        }
-    }
+    ColorBlock m_colorBlock;
 
     [SerializeField]
-    ColorBlock m_colorBlock;
+    Vector3 hoveredScale = Vector3.one;
+
+    Vector3 defaultScale;
 
     [SerializeField]
     private ButtonStyle m_theme;
@@ -103,19 +92,6 @@ public class UIButton : UISelectable
         }
     }
 
-
-    public Sprite Icon
-    {
-        get
-        {
-            return IconSprite.sprite;
-        }
-        set
-        {
-            if (value == IconSprite.sprite) return;
-            IconSprite.sprite = value;
-        }
-    }
 
     public string Text
     {
@@ -151,9 +127,14 @@ public class UIButton : UISelectable
         }
     }
 
-    [HideInInspector]
     public UnityEvent OnClickEvent;
 
+    protected override void Start()
+    {
+        base.Start();
+
+        defaultScale = transform.localScale;
+    }
     protected override void OnDisable()
     {
         base.OnEnable();
@@ -167,11 +148,14 @@ public class UIButton : UISelectable
     protected override void Awake()
     {
         m_colorBlock.onColorChangedEditor += SetColor;
+
     }
 
     private void Update()
     {
         SetColor();
+
+        transform.localScale = Hovered ? hoveredScale : defaultScale;
     }
 
     void SetColor()
@@ -180,7 +164,10 @@ public class UIButton : UISelectable
     }
     void SetColor(Color color)
     {
-        TextField.color = color;
+        if(TextField)
+            TextField.color = color;
+        if (Background)
+            Background.color = color;
     }
 
     private void OnTextUpdate()
@@ -237,9 +224,7 @@ public class UIButton : UISelectable
     public new void Reset()
     {
         Text = "Button";
-        IconSprite = null;
         Background = null;
-        Icon = null;
         TextField = null;
     }
 }
