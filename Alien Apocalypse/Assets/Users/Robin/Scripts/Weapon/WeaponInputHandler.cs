@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class WeaponInputHandler : MonoBehaviour
 {
-    public Weapon weapon1;
     public Camera mainCam;
+    public Weapon weapon1;
 
     void Start()
     {
