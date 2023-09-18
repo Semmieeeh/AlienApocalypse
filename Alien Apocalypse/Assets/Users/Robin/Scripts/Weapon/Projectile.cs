@@ -10,23 +10,32 @@ public class Projectile : MonoBehaviour
     public float projectileSpeed;
 
     Vector3 lastPos;
-    Vector3 hitPoint;
+    public Vector3 hitPoint;
     RaycastHit hit;
 
     public UnityEvent onHit;
     public UnityEvent onKill;
 
+    private void Start()
+    {
+        //Debug.Log("Projectile :" + hitPoint);
+        //Debug.Log("Rotation : " + transform.eulerAngles);
+    }
+
     void Update()
     {
         transform.LookAt(hitPoint);
-        transform.Translate(projectileSpeed * Time.deltaTime * transform.forward);
+        transform.Translate(projectileSpeed * Time.deltaTime * Vector3.forward);
 
         //Debug.Log($"CurrentPos = {transform.position} : LastPos = {lastPos}");
 
         if(Physics.Linecast(lastPos, transform.position, out hit))
         {
-            //Debug.Log("Destroy = " + hit.point);
-            onHit?.Invoke();
+            if(hit.transform.TryGetComponent<IDamagable>(out IDamagable damagable))
+            {
+                damagable.Damagable(projectileDamage, onKill, onHit);
+            }
+            
             Destroy(gameObject);
         }
 

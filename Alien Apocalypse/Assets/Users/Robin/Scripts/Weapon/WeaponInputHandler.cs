@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class WeaponInputHandler : MonoBehaviour
 {
     public Camera mainCam;
+    public GameObject recoil;
     public Weapon weapon1;
 
     void Start()
@@ -32,6 +33,8 @@ public class WeaponInputHandler : MonoBehaviour
 
     void SetWeapon()
     {
+        weapon1.StartWeapon();
         weapon1.mainCam = mainCam;
+        weapon1.recoil = recoil;
     }
 }

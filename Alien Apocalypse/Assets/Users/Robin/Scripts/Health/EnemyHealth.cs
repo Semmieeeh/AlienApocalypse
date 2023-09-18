@@ -1,9 +1,10 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using Photon.Pun;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
 {
     public EnemyManager instance;
     public float health;
@@ -14,20 +15,31 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
-    }  
+    }
+
+    
+    public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit)
+    {
+        photonView.RPC(nameof(Test), RpcTarget.All, damage);
+
+        if(health <= 0)
+        {
+            onKill.Invoke();
+        }
+        else
+        {
+            onHit.Invoke();
+        }
+    }
 
     [PunRPC]
-    public void EnemyTakeDamage(float value)
+    void Test(float damage)
     {
-        health -= value;
-        Debug.Log("Took damage!");
+        health -= damage;
 
-        if (health <= 0)
+        if(health <= 0)
         {
-
-
             Destroy(gameObject);
-            
         }
     }
 }

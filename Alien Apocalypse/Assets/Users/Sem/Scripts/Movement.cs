@@ -61,10 +61,10 @@ public class Movement : MonoBehaviour
 
         FovChange();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Fire();
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Fire();
+        //}
 
 
         StopWhenNoInput();
@@ -116,48 +116,6 @@ public class Movement : MonoBehaviour
         curFov = Camera.main.fieldOfView;
     }
 
-    [SerializeField]
-    CrosshairManager crosshair;
-
-    [SerializeField]
-    UIEnemyHits hits;
-
-    [SerializeField]
-    InformativePopupManager popups;
-
-    [SerializeField]
-    UIPointsManager points;
-
-    public void Fire()
-    {
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-        RaycastHit hit;
-
-        crosshair.Shoot();
-
-        if (Physics.Raycast(ray.origin, ray.direction, out hit, 100000f))
-        {
-
-            if (hit.transform.GetComponent<EnemyHealth>() !=null)
-            {
-                EnemyHealth enemy = hit.transform.GetComponent<EnemyHealth>();
-                enemy.gettingShotBy = gameObject;
-                if (enemy.health - damage <= 0)
-                {
-                    hits.EnemyKill();
-                    popups.AddKillPopup();
-                    points.AddNotification(100, "Nice Kill");
-                }
-                else
-                {
-                    hits.EnemyHit();
-                }
-
-                 
-                enemy.GetComponent<PhotonView>().RPC("EnemyTakeDamage", RpcTarget.All, damage);
-            }
-        }
-    }
 
     private void OnTriggerStay(Collider other)
     {

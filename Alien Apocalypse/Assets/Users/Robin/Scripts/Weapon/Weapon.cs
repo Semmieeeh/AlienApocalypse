@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
+[RequireComponent(typeof(PhotonView))]
+[RequireComponent(typeof(PhotonTransformView))]
 public class Weapon : MonoBehaviour
 {
     [Header("References")]
     public Camera mainCam;
+    public GameObject recoil;
+    public PhotonView pv;
 
     [Header("General")]
     [Space]
@@ -27,6 +32,8 @@ public class Weapon : MonoBehaviour
     }
 
     public Vector3 GetLocalPlacmentPos() => localPlacmentPos;
+
+    public virtual void StartWeapon() { }
 
     public virtual void UpdateWeapon() { }
 
