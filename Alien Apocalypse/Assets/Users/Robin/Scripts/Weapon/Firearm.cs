@@ -52,16 +52,16 @@ public class Firearm : Weapon
     public float baseReloadTime;
     bool isReloading;
 
-    [Space]
-    [Header("Projectile")]
-    public GameObject projectilePrefab;
-    public Transform muzzle;
-    public float baseProjectileSpeed;
+    //[Space]
+    //[Header("Projectile")]
+    //public GameObject projectilePrefab;
+    //public Transform muzzle;
+    //public float baseProjectileSpeed;
 
     [Space]
     [Header("Raycast")]
     public float raycastDistance;
-    public Vector3 raycastHitPoint;
+    //public Vector3 raycastHitPoint;
     RaycastHit hit;
 
     [Space]
@@ -85,7 +85,7 @@ public class Firearm : Weapon
 
     public override void StartWeapon()
     {
-        pv = GetComponent<PhotonView>();
+        //pv = GetComponent<PhotonView>();
     }
 
     public override void UpdateWeapon()
@@ -101,13 +101,8 @@ public class Firearm : Weapon
     public override void Shooting()
     {
         if(CanShoot())
-        {
-            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, raycastDistance))
-                raycastHitPoint = hit.point;
-            else
-                raycastHitPoint = mainCam.transform.position + mainCam.transform.forward * raycastDistance;
-
-            
+        {            
+            //raycastHitPoint = hit.point;
 
             // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
             events.onShooting?.Invoke();
@@ -154,7 +149,7 @@ public class Firearm : Weapon
         // OnSingleShot will be called every time a projectile is fired; FireType has to be SingelShot
         events.onSingleShot?.Invoke();
 
-        pv.RPC(nameof(InstantiateProjectile), RpcTarget.All);
+        Raycast();
 
         yield return new WaitForSeconds(baseSingleShotCooldown);
         isSingleShoting = false;
@@ -178,7 +173,7 @@ public class Firearm : Weapon
             // OnBurst will be called every time a projectile is fired; FireType has to be Burst
             events.onBurst?.Invoke();
 
-            pv.RPC(nameof(InstantiateProjectile), RpcTarget.All);
+            Raycast();
 
             yield return new WaitForSeconds(baseTimeBetweenBurst);
         }
@@ -196,7 +191,7 @@ public class Firearm : Weapon
         // OnAutomatic will be called every time a projectile is fired; The FireType has to be Automatic
         events.onAutomatic?.Invoke();
 
-        pv.RPC(nameof(InstantiateProjectile), RpcTarget.All);
+        Raycast();
 
         baseTimeSinceLastShot = Time.time;        
     }
@@ -232,21 +227,14 @@ public class Firearm : Weapon
         targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
     }
 
-    [PunRPC]
-    void InstantiateProjectile()
+    void Raycast()
     {
-
-        GameObject projectile = PhotonNetwork.Instantiate(projectilePrefab.name, muzzle.position, muzzle.rotation);
-
-        //Debug.Log("FireArm:" + raycastHitPoint);
-
-
-        if(projectile.TryGetComponent<Projectile>(out Projectile projectileScript))
+        if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, raycastDistance))
         {
-            projectileScript.InitializeProjectile(baseDamage, baseProjectileSpeed, projectile.transform.position, raycastHitPoint);
-
-            // Gives the projectile the Events needed when Enemy is hit or killed
-            projectileScript.InitialzieEvent(events.onHitEnemy, events.onHitEnemy);
+            if(hit.transform.TryGetComponent(out IDamagable damagable))
+            {
+                damagable.Damagable(baseDamage, events.onKillEnemy, events.onHitEnemy);               
+            }
         }
 
         currentAmmo--;

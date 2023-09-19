@@ -12,6 +12,9 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     public GameObject gettingShotBy;
     public float xpAmount;
 
+    UnityEvent onKill;
+    UnityEvent onHit;
+
     private void Start()
     {
         health = maxHealth;
@@ -20,26 +23,25 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     
     public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit)
     {
-        photonView.RPC(nameof(Test), RpcTarget.All, damage);
+        this.onKill = onKill;
+        this.onHit = onHit;
 
-        if(health <= 0)
-        {
-            onKill.Invoke();
-        }
-        else
-        {
-            onHit.Invoke();
-        }
+        photonView.RPC(nameof(SyncDamage), RpcTarget.All, damage);
     }
 
     [PunRPC]
-    void Test(float damage)
+    void SyncDamage(float damage)
     {
         health -= damage;
 
         if(health <= 0)
         {
+            onKill?.Invoke();
             Destroy(gameObject);
+        }
+        else
+        {
+            onHit?.Invoke();
         }
     }
 }

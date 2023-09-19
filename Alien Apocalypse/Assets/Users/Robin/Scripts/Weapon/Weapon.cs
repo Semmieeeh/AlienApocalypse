@@ -5,12 +5,11 @@ using Photon.Pun;
 
 [RequireComponent(typeof(PhotonView))]
 [RequireComponent(typeof(PhotonTransformView))]
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviourPunCallbacks
 {
     [Header("References")]
     public Camera mainCam;
     public GameObject recoil;
-    public PhotonView pv;
 
     [Header("General")]
     [Space]

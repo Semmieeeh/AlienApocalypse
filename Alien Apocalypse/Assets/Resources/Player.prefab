@@ -459,7 +459,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCam: {fileID: 0}
   recoil: {fileID: 0}
-  pv: {fileID: 708823967212921417}
   name: 
   info: 
   localPlacmentPos: {x: 0.1, y: -0.084, z: 0.231}
@@ -475,11 +474,7 @@ MonoBehaviour:
   baseMaxAmmo: 60
   totalAmmo: 0
   baseReloadTime: 1
-  projectilePrefab: {fileID: 8310482809795752245, guid: 0f4ae3b2ff2cdf8439e7b232772dd2b9, type: 3}
-  muzzle: {fileID: 5608886674486185883}
-  baseProjectileSpeed: 60
   raycastDistance: 1000
-  raycastHitPoint: {x: 0, y: 0, z: 0}
   swayClamp: 0.015
   smoothing: 3
   recoilX: -0.3
@@ -1833,7 +1828,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2613094647653782669}
   - component: {fileID: 7787047051649554545}
-  - component: {fileID: 5138331658964090902}
   m_Layer: 0
   m_Name: WeaponHolder
   m_TagString: Untagged
@@ -1872,18 +1866,6 @@ MonoBehaviour:
   mainCam: {fileID: 4937888206879629854}
   recoil: {fileID: 6159436972568402810}
   weapon1: {fileID: 8686671269669966442}
---- !u!114 &5138331658964090902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7109587351979437210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae378a9e540fe064987b6a222fb73e6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7262404458237172114
 GameObject:
   m_ObjectHideFlags: 0

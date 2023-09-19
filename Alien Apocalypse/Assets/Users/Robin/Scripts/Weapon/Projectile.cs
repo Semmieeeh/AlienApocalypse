@@ -33,7 +33,7 @@ public class Projectile : MonoBehaviour
         {
             if(hit.transform.TryGetComponent<IDamagable>(out IDamagable damagable))
             {
-                damagable.Damagable(projectileDamage, onKill, onHit);
+                //damagable.Damagable(projectileDamage);
             }
             
             Destroy(gameObject);
