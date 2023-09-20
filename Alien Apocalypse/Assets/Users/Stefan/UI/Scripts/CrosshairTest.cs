@@ -14,11 +14,11 @@ public class CrosshairTest : MonoBehaviour
 
     private void Update()
     {
-        if (shoot || Input.GetMouseButtonDown(0))
-        {
-            shoot = false;
-            Shoot();
-        }
+        //if (shoot || Input.GetMouseButtonDown(0))
+        //{
+        //    shoot = false;
+        //    Shoot();
+        //}
     }
     public void Shoot()
     {

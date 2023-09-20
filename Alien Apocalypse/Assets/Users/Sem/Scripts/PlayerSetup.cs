@@ -15,6 +15,7 @@ public class PlayerSetup : MonoBehaviour
     public TextMeshPro nicknameText;
     public EnemyManager enemy;
     public GameObject weapon;
+    public GameObject myWeapon;
     public void IsLocalPlayer()
     {
         movement.enabled = true;
@@ -22,6 +23,11 @@ public class PlayerSetup : MonoBehaviour
         uiVanStefan.SetActive(true);
         weapon.layer = 7;
         gameObject.layer = 3;
+        myWeapon.layer = 7;
+        for(int i = 0; i <myWeapon.transform.childCount; i++)
+        {
+            myWeapon.transform.GetChild(i).gameObject.layer = 7;
+        }
         cam.GetComponent<Camera>().enabled = true;
         cam.GetComponent<MouseLook>().enabled = true;
         cam.GetComponent<AudioListener>().enabled = true;
@@ -38,7 +44,7 @@ public class PlayerSetup : MonoBehaviour
     }
     public IEnumerator WaitForEnemyObj()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         if (GameObject.Find("EnemyManager(Clone)") != null)
         {
             enemy = GameObject.Find("EnemyManager(Clone)").gameObject.GetComponent<EnemyManager>();

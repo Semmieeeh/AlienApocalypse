@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 1850436502654514129}
   - component: {fileID: 7857764844635682109}
   - component: {fileID: 2078796295262899078}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,12 +283,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626599117591187554}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0.034350306, z: 0.10397956}
+  m_LocalRotation: {x: -0, y: 0.7071067, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0.034350276, z: -0.10397956}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6487748173705817609}
+  m_Father: {fileID: 1589294724402218960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7857764844635682109
 MeshFilter:
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 8686671269669966442}
   - component: {fileID: 708823967212921417}
   - component: {fileID: 1483449295582905340}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PumpShotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,6 +443,11 @@ Transform:
   m_Children:
   - {fileID: 6487748173705817609}
   - {fileID: 5608886674486185883}
+  - {fileID: 797259995003225136}
+  - {fileID: 4896185566485526737}
+  - {fileID: 3815966171437365979}
+  - {fileID: 1850436502654514129}
+  - {fileID: 2396185198333795627}
   m_Father: {fileID: 2613094647653782669}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8686671269669966442
@@ -485,7 +490,19 @@ MonoBehaviour:
   events:
     onShooting:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onSingleShot:
       m_PersistentCalls:
         m_Calls: []
@@ -1005,6 +1022,7 @@ MonoBehaviour:
   nicknameText: {fileID: 5069951462272145098}
   enemy: {fileID: 0}
   weapon: {fileID: 5703256293417429751}
+  myWeapon: {fileID: 935333802364182788}
 --- !u!65 &1952394895039047908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1541,7 +1559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5608886674486185883}
   - component: {fileID: 3220001269994913194}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1828,7 +1846,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2613094647653782669}
   - component: {fileID: 7787047051649554545}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WeaponHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1877,7 +1895,7 @@ GameObject:
   - component: {fileID: 4896185566485526737}
   - component: {fileID: 5284024286427749542}
   - component: {fileID: 7440527462078757191}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1892,12 +1910,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7262404458237172114}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: -0.021622688, z: 0.17004925}
+  m_LocalRotation: {x: -0, y: 0.7071067, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: -0.021622658, z: -0.17004925}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6487748173705817609}
+  m_Father: {fileID: 1589294724402218960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5284024286427749542
 MeshFilter:
@@ -1958,7 +1976,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6487748173705817609}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Parent Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1977,12 +1995,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 797259995003225136}
-  - {fileID: 4896185566485526737}
-  - {fileID: 3815966171437365979}
-  - {fileID: 1850436502654514129}
-  - {fileID: 2396185198333795627}
+  m_Children: []
   m_Father: {fileID: 1589294724402218960}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8216384998740242773
@@ -1996,7 +2009,7 @@ GameObject:
   - component: {fileID: 3815966171437365979}
   - component: {fileID: 1881763194582798248}
   - component: {fileID: 5810411162985212487}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Forearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2011,12 +2024,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8216384998740242773}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: -0.021605551, z: -0.19603017}
+  m_LocalRotation: {x: -0, y: 0.7071067, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: -0.021605551, z: 0.19603017}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6487748173705817609}
+  m_Father: {fileID: 1589294724402218960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1881763194582798248
 MeshFilter:
@@ -2132,7 +2145,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 70
   orthographic: 0
@@ -2207,7 +2220,7 @@ GameObject:
   - component: {fileID: 797259995003225136}
   - component: {fileID: 5194027977506427633}
   - component: {fileID: 2365513357271076979}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2222,12 +2235,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8885340959142786483}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: -0.012431771, z: -0.008144945}
+  m_LocalRotation: {x: -0, y: 0.7071067, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: -0.012431741, z: 0.008144945}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6487748173705817609}
+  m_Father: {fileID: 1589294724402218960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5194027977506427633
 MeshFilter:
@@ -2290,7 +2303,7 @@ GameObject:
   - component: {fileID: 2396185198333795627}
   - component: {fileID: 7192203762866007219}
   - component: {fileID: 4832583074140115135}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2305,12 +2318,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9048436552010446216}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: -0.043246776, z: 0.12524289}
+  m_LocalRotation: {x: -0, y: 0.7071067, z: 0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: -0.043246746, z: -0.12524289}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6487748173705817609}
+  m_Father: {fileID: 1589294724402218960}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7192203762866007219
 MeshFilter:
