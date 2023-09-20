@@ -70,14 +70,30 @@ public class Firearm : Weapon
     public float smoothing;
 
     [Space]
-    [Header("Recoil")]
-    public float recoilX;
-    public float recoilY;
-    public float recoilZ;
-    public float snappiness;
-    public float returnSpeed;
-    Vector3 currentRotation;
-    Vector3 targetRotation;
+    [Header("Recoil Camera Rotation")]
+    public float camRecoilX;
+    public float camRecoilY;
+    public float camRecoilZ;
+    public float camSnappiness;
+    public float camReturnSpeed;
+    Vector3 camCurrentRotation;
+    Vector3 camTargetRotation;
+
+    [Header("Recoil Firearm Rotation")]
+    public float firearmRecoilX;
+    public float firearmRecoilY;
+    public float firearmRecoilZ;
+    public float firearmSnappiness;
+    public float firearmReturnSpeed;
+    Vector3 firearmCurrentRotation;
+    Vector3 firearmTargetRotation;
+
+    [Header("Recoil Firearm Position")]
+    public float firearmRecoilBackUp;
+    public float backUpSnappiness;
+    public float backUpReturnSpeed;
+    public Vector3 firearmCurrentPosition;
+    public Vector3 firearmTargetPosition;
 
     [Space]
     [Header("Firearm Events")]
@@ -85,15 +101,23 @@ public class Firearm : Weapon
 
     public override void StartWeapon()
     {
-        
+        firearmCurrentPosition = localPlacmentPos;
     }
 
     public override void UpdateWeapon()
     {
-        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.fixedDeltaTime);
+        camTargetRotation = Vector3.Lerp(camTargetRotation, Vector3.zero, camReturnSpeed * Time.deltaTime);
+        camCurrentRotation = Vector3.Slerp(camCurrentRotation, camTargetRotation, camSnappiness * Time.fixedDeltaTime);
 
-        recoil.transform.localRotation = Quaternion.Euler(currentRotation);
+        firearmTargetRotation = Vector3.Lerp(firearmTargetRotation, Vector3.zero, firearmReturnSpeed * Time.deltaTime);
+        firearmCurrentRotation = Vector3.Lerp(firearmCurrentRotation, firearmTargetRotation, firearmSnappiness * Time.fixedDeltaTime);
+
+        firearmTargetPosition = Vector3.Lerp(firearmTargetPosition, localPlacmentPos, backUpReturnSpeed * Time.deltaTime);
+        firearmCurrentPosition = Vector3.Lerp(firearmCurrentPosition, firearmTargetPosition, backUpSnappiness * Time.deltaTime);
+
+        recoil.transform.localRotation = Quaternion.Euler(camCurrentRotation);
+        transform.localRotation = Quaternion.Euler(firearmCurrentRotation);
+        transform.localPosition = firearmCurrentPosition;
     }
 
     bool CanShoot() => !isReloading && currentAmmo > 0;
@@ -227,7 +251,9 @@ public class Firearm : Weapon
 
     void Recoil()
     {
-        targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+        camTargetRotation += new Vector3(camRecoilX, Random.Range(-camRecoilY, camRecoilY), Random.Range(-camRecoilZ, camRecoilZ));
+        firearmTargetRotation += new Vector3(firearmRecoilX, Random.Range(-firearmRecoilY, firearmRecoilY), Random.Range(-firearmRecoilZ, 0));
+        firearmTargetPosition = new Vector3(localPlacmentPos.x, localPlacmentPos.y, firearmRecoilBackUp + localPlacmentPos.z);
     }
 
     void Raycast()
