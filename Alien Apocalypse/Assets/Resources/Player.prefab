@@ -482,11 +482,21 @@ MonoBehaviour:
   raycastDistance: 1000
   swayClamp: 0.015
   smoothing: 3
-  recoilX: -0.3
-  recoilY: 0.5
-  recoilZ: 0.15
-  snappiness: 6
-  returnSpeed: 2
+  camRecoilX: 0
+  camRecoilY: 0
+  camRecoilZ: 0
+  camSnappiness: 0
+  camReturnSpeed: 0
+  firearmRecoilX: 0
+  firearmRecoilY: 0
+  firearmRecoilZ: 0
+  firearmSnappiness: 0
+  firearmReturnSpeed: 0
+  firearmRecoilBackUp: 0
+  backUpSnappiness: 0
+  backUpReturnSpeed: 0
+  firearmCurrentPosition: {x: 0, y: 0, z: 0}
+  firearmTargetPosition: {x: 0, y: 0, z: 0}
   events:
     onShooting:
       m_PersistentCalls:
