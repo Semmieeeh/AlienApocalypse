@@ -1,13 +1,15 @@
 using JetBrains.Annotations;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAiTest : MonoBehaviour
+public class EnemyAiTest : MonoBehaviourPunCallbacks
 {
     [Header("Ai Modifiers")]
-    public float moveSpeed;    
+    public float moveSpeed;
+    public float turnSpeed;
     private NavMeshAgent agent;
     private Vector3 origin;
     public float roamRange;
@@ -17,46 +19,75 @@ public class EnemyAiTest : MonoBehaviour
     public Vector3 target;
 
     [Header("Player")]
-    public GameObject player;
-    public float angleToPLayer;
+    public float angleToPlayer;
     public float detectionAngle;
     public float detectionRange;
+
     public enum EnemyState
     {
         idle,
         chasing
     }
     public EnemyState state;
-    // Start is called before the first frame update
+    public float attackRange;
+    public GameObject nearestPlayer;
+    public bool canAttack;
+    public float attackSpeed;
+    public float attackDamage;
+    private float timePassed;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
-        target = NewDestination(origin, roamRange,-1);
+        agent.angularSpeed = turnSpeed;
+        origin = transform.position;
+        target = NewDestination(origin, roamRange, -1);
         agent.destination = target;
         state = EnemyState.idle;
+        attackRange = agent.stoppingDistance + 1;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        switch (state)
+        if(canAttack == false)
         {
-            case EnemyState.idle:
-                
-                if(Vector3.Distance(transform.position,target)< 3f)
-                {
-                    target = NewDestination(origin, roamRange, -1);
-                    agent.destination = target;
-                }
-                break;
+            timePassed += Time.deltaTime;
+        }
 
-            case EnemyState.chasing:
+        if(timePassed > 2)
+        {
+            canAttack = true;
+            timePassed = 0;
+        }
+        if (photonView.IsMine)
+        {
+            CheckForPlayer();
+            switch (state)
+            {
+                case EnemyState.idle:
+                    if (Vector3.Distance(transform.position, target) < 3f)
+                    {
+                        target = NewDestination(origin, roamRange, -1);
+                        agent.destination = target;
+                    }
+                    break;
 
-                break;
+                case EnemyState.chasing:
+                    if (nearestPlayer != null)
+                    {
+                        agent.destination = nearestPlayer.transform.position;
 
+                        if(Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange && canAttack == true)
+                        {
+                            photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                            
+                        }
+                    }
+                    break;
+            }
         }
     }
+
     public Vector3 NewDestination(Vector3 origin, float dist, int layerMask)
     {
         NavMeshHit navHit;
@@ -64,26 +95,47 @@ public class EnemyAiTest : MonoBehaviour
         randDirection += origin;
         NavMesh.SamplePosition(randDirection, out navHit, roamRange, layerMask);
         return navHit.position;
-       
     }
 
-    public void Attack()
+    [PunRPC]
+    public void Attack(float damage)
     {
-        
-    }
-    public void CheckForPlayer()
-    {
-        Vector3 playerPos = player.transform.position;
-        Vector3 targetDir = playerPos - transform.position;
-        angleToPLayer = Vector3.Angle(targetDir, transform.forward);
-        if (Vector3.Distance(transform.position,player.transform.position)< 10 && angleToPLayer < 90)
+        if(nearestPlayer.TryGetComponent(out PlayerHealth player))
         {
-            state = EnemyState.chasing;
+            player.TakeDamage(damage);
+            canAttack = false;
         }
     }
+
+    public void CheckForPlayer()
+    {
+        if (photonView.IsMine)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            float nearestDistance = float.MaxValue;
+            nearestPlayer = null;
+
+            foreach (GameObject player in players)
+            {
+                Vector3 playerPos = player.transform.position;
+                Vector3 targetDir = playerPos - transform.position;
+                angleToPlayer = Vector3.Angle(targetDir, transform.forward);
+
+                if (Vector3.Distance(transform.position, playerPos) < detectionRange && angleToPlayer < detectionAngle)
+                {
+                    if (Vector3.Distance(transform.position, playerPos) < nearestDistance)
+                    {
+                        nearestDistance = Vector3.Distance(transform.position, playerPos);
+                        nearestPlayer = player;
+                        state = EnemyState.chasing;
+                    }
+                }
+            }
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
-
         float totalFOV = detectionAngle;
         float rayRange = detectionRange;
         float halfFOV = totalFOV / 2.0f;
@@ -92,9 +144,10 @@ public class EnemyAiTest : MonoBehaviour
         Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
         Vector3 leftRayDirection = leftRayRotation * transform.forward;
         Vector3 rightRayDirection = rightRayRotation * transform.forward;
+
+        Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position, leftRayDirection * rayRange);
         Gizmos.DrawRay(transform.position, rightRayDirection * rayRange);
-
 
         Gizmos.color = Color.yellow;
     }

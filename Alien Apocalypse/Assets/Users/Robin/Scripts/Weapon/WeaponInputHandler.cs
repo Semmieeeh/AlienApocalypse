@@ -24,6 +24,7 @@ public class WeaponInputHandler : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.R))
             weapon1.StartCoroutine(weapon1.Reloading());
+        //weapon1.GetComponent<Animator>().SetTrigger("Reload");
 
         Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         weapon1?.Sway(input);
