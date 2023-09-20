@@ -491,13 +491,13 @@ MonoBehaviour:
     onShooting:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 0
+        - m_Target: {fileID: 2636029772182052838}
+          m_TargetAssemblyTypeName: CrosshairTest, Assembly-CSharp
+          m_MethodName: Shoot
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -2448,6 +2448,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4295371461784496555, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
   m_PrefabInstance: {fileID: 2605539143358907301}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2636029772182052838 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 53395683508182083, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
+  m_PrefabInstance: {fileID: 2605539143358907301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6244523ab9b85d1408436a945293806d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3915156029715993586 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1332451557265625175, guid: b83314570ca5d6140934687fd88aeb45, type: 3}

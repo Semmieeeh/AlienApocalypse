@@ -85,7 +85,7 @@ public class Firearm : Weapon
 
     public override void StartWeapon()
     {
-        //pv = GetComponent<PhotonView>();
+        
     }
 
     public override void UpdateWeapon()
@@ -103,9 +103,6 @@ public class Firearm : Weapon
         if(CanShoot())
         {            
             //raycastHitPoint = hit.point;
-
-            // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
-            events.onShooting?.Invoke();
 
             switch(fireType)
             {
@@ -144,11 +141,13 @@ public class Firearm : Weapon
         isSingleShoting = true;
         canSingleShoot = false;
 
-        Recoil();
+        // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
+        events.onShooting?.Invoke();
 
         // OnSingleShot will be called every time a projectile is fired; FireType has to be SingelShot
         events.onSingleShot?.Invoke();
 
+        Recoil();
         Raycast();
 
         yield return new WaitForSeconds(baseSingleShotCooldown);
@@ -168,11 +167,13 @@ public class Firearm : Weapon
             if(currentAmmo <= 0)
                 break;
 
-            Recoil();
+            // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
+            events.onShooting?.Invoke();
 
             // OnBurst will be called every time a projectile is fired; FireType has to be Burst
             events.onBurst?.Invoke();
 
+            Recoil();
             Raycast();
 
             yield return new WaitForSeconds(baseTimeBetweenBurst);
@@ -186,11 +187,13 @@ public class Firearm : Weapon
 
     void AutomaticMode()
     {
-        Recoil();
+        // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
+        events.onShooting?.Invoke();
 
         // OnAutomatic will be called every time a projectile is fired; The FireType has to be Automatic
         events.onAutomatic?.Invoke();
 
+        Recoil();
         Raycast();
 
         baseTimeSinceLastShot = Time.time;        
