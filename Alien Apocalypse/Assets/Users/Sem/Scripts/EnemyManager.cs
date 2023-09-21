@@ -89,7 +89,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
                 }
             }
-            photonView.RPC(nameof(UpdateUIText), RpcTarget.AllBuffered);
+            photonView.RPC(nameof(UpdateUIText), RpcTarget.All);
         }
         
     }
