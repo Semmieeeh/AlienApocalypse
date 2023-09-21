@@ -45,6 +45,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         agent.destination = target;
         state = EnemyState.idle;
         attackRange = agent.stoppingDistance + 1;
+        
     }
 
     void Update()
@@ -54,7 +55,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             timePassed += Time.deltaTime;
         }
 
-        if(timePassed > 2)
+        if(timePassed > attackSpeed)
         {
             canAttack = true;
             timePassed = 0;
@@ -123,11 +124,16 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                 if (Vector3.Distance(transform.position, playerPos) < detectionRange && angleToPlayer < detectionAngle)
                 {
+                    
                     if (Vector3.Distance(transform.position, playerPos) < nearestDistance)
                     {
                         nearestDistance = Vector3.Distance(transform.position, playerPos);
                         nearestPlayer = player;
-                        state = EnemyState.chasing;
+                        if(nearestPlayer.GetComponent<PlayerHealth>().state == PlayerHealth.PlayerState.alive)
+                        {
+                            state = EnemyState.chasing;
+                        }
+                        
                     }
                 }
             }

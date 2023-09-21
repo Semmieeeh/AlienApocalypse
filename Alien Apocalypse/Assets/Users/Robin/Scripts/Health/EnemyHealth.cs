@@ -18,6 +18,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     private void Start()
     {
         health = maxHealth;
+        PhotonNetwork.SerializationRate = 10;
     }
 
     

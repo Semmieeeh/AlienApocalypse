@@ -441,7 +441,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6487748173705817609}
   - {fileID: 5608886674486185883}
   - {fileID: 797259995003225136}
   - {fileID: 4896185566485526737}
@@ -465,7 +464,7 @@ MonoBehaviour:
   mainCam: {fileID: 0}
   recoil: {fileID: 0}
   name: 
-  info: NIGGER
+  info: 
   localPlacmentPos: {x: 0.1, y: -0.084, z: 0.231}
   firearmType: 2
   fireType: 2
@@ -490,17 +489,29 @@ MonoBehaviour:
   firearmRecoilX: -1
   firearmRecoilY: 0
   firearmRecoilZ: 0
-  firearmSnappiness: 2
+  firearmSnappiness: 5
   firearmReturnSpeed: 10
   firearmRecoilBackUp: -0.2
-  backUpSnappiness: 2
-  backUpReturnSpeed: 40
+  backUpSnappiness: 8
+  backUpReturnSpeed: 60
   firearmCurrentPosition: {x: 0.099999964, y: -0.08399996, z: 0.23099966}
   firearmTargetPosition: {x: 0.1, y: -0.084, z: 0.231}
   events:
     onShooting:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 261849482295397412}
+          m_TargetAssemblyTypeName: CrosshairManager, Assembly-CSharp
+          m_MethodName: Shoot
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onSingleShot:
       m_PersistentCalls:
         m_Calls: []
@@ -1155,7 +1166,7 @@ MonoBehaviour:
   unlockedSkill: 1
   whatIsGrappleable:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 2113
   gunTip: {fileID: 4021154189148606574}
   playerCam: {fileID: 0}
   player: {fileID: 0}
@@ -1177,6 +1188,8 @@ MonoBehaviour:
   canGrapple: 0
   arm: {fileID: 3696777177904889979}
   inRange: 0
+  pullStrength: 2
+  stunTime: 3
 --- !u!114 &2563907300207088379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1474,13 +1487,13 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 70
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 895
+    m_Bits: 3967
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1861,7 +1874,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2613094647653782669}
   - component: {fileID: 7787047051649554545}
-  - component: {fileID: 6933276852266805578}
   m_Layer: 9
   m_Name: WeaponHolder
   m_TagString: Untagged
@@ -1900,27 +1912,6 @@ MonoBehaviour:
   mainCam: {fileID: 4937888206879629854}
   recoil: {fileID: 6159436972568402810}
   weapon1: {fileID: 8686671269669966442}
---- !u!95 &6933276852266805578
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7109587351979437210}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5b348db8417d54c458a2451507d47120, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7262404458237172114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2004,37 +1995,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &7572518513103067702
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6487748173705817609}
-  m_Layer: 9
-  m_Name: Parent Model
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6487748173705817609
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7572518513103067702}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1589294724402218960}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &8216384998740242773
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,7 +2144,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 70
+  field of view: 80
   orthographic: 0
   orthographic size: 5
   m_Depth: 80
@@ -2473,13 +2433,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2385985512326875780, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8737044995689368623, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8275622573241325902}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
+--- !u!114 &261849482295397412 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2849365400978640769, guid: b83314570ca5d6140934687fd88aeb45, type: 3}
+  m_PrefabInstance: {fileID: 2605539143358907301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b1fc0fb0d426d144b012c76be193e70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2284597824606398990 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4295371461784496555, guid: b83314570ca5d6140934687fd88aeb45, type: 3}

@@ -2,7 +2,10 @@ using JetBrains.Annotations;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Grappling : MonoBehaviourPunCallbacks
 {
@@ -33,6 +36,8 @@ public class Grappling : MonoBehaviourPunCallbacks
     public Animator arm;
     PhotonView pv;
     public bool inRange;
+    public float pullStrength;
+    public float stunTime;
 
     private void Awake()
     {
@@ -99,6 +104,7 @@ public class Grappling : MonoBehaviourPunCallbacks
             else if (joint != null && isGrappling && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance)
             {
                 StopGrapple();
+                arm.SetInteger("FireState", 0);
                 pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 0);
             }
             if (childOfPoint == null || grapplePointParent == null)
@@ -136,9 +142,19 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
         {
-            StartGrapple();
-            arm.SetInteger("FireState", 2);
-            pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
+            if(hit.transform.gameObject.tag != "Enemy")
+            {
+                StartGrapple();
+                arm.SetInteger("FireState", 2);
+                pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
+            }
+            else if (hit.transform.tag == "Enemy")
+            {
+                StartEnemyGrapple();
+                arm.SetInteger("FireState", 2);
+                pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
+            }
+
         }
         else
         {
@@ -175,7 +191,77 @@ public class Grappling : MonoBehaviourPunCallbacks
             childOfPoint = Instantiate(grapplePointChild, grapplePoint, Quaternion.identity);
         }
     }
+    private GameObject pulledEnemy;
+    void StartEnemyGrapple()
+    {
+        if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
+        {
+            canGrapple = false;
+            armLowerTime = maxAnimDuration;
+            pointingArm = false;
+            isGrappling = true;
+            grapplePoint = hit.point;
+            joint = player.gameObject.AddComponent<SpringJoint>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = grapplePoint;
+            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+            joint.maxDistance = distanceFromPoint *0.7f;
+            joint.minDistance = distanceFromPoint *0.9f;
 
+            joint.spring = grappleStrength;
+            joint.damper = damperStrength;
+            joint.massScale = 4.5f;
+
+            grapplePointParent = hit.transform.gameObject;
+            grapplePointParent.GetComponent<EnemyAiTest>().enabled = false;
+            grapplePointParent.GetComponent<NavMeshAgent>().enabled = false;
+            childOfPoint = Instantiate(grapplePointChild, grapplePoint, Quaternion.identity);
+            grapplePointParent.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            pulledEnemy = grapplePointParent;
+            pv.RPC("SyncEnemyStates", RpcTarget.All, false);
+            Invoke("PullEnemy", 0.1f);
+            
+
+
+        }
+    }
+
+    [PunRPC]
+    public void SyncEnemyStates(bool enableComponents)
+    {
+        pulledEnemy.GetComponent<EnemyAiTest>().enabled = enableComponents;
+        pulledEnemy.GetComponent<NavMeshAgent>().enabled = enableComponents;
+    }
+    public void PullEnemy()
+    {
+        Vector3 pullDirection = player.position - grapplePointParent.transform.position;
+        pullDirection.y += 3;
+        pullStrength = Vector3.Distance(transform.position, grapplePointParent.transform.position) * 0.125f;
+        if(pullStrength < 0.2)
+        {
+            pullStrength = 0.2f;
+        }
+        if (pullStrength > 1.3f)
+        {
+            pullStrength = 1.3f;
+        }
+        Debug.Log(pullStrength.ToString());
+        grapplePointParent.GetComponent<Rigidbody>().AddForce(pullDirection * pullStrength, ForceMode.Impulse);
+        pulledEnemy = grapplePointParent;
+        Invoke("ResetEnemy", stunTime);
+    }
+
+    public void ResetEnemy()
+    {
+        if(pulledEnemy != null)
+        {
+            pulledEnemy.GetComponent<NavMeshAgent>().enabled = true;
+            pulledEnemy.GetComponent<EnemyAiTest>().enabled = true;
+            pulledEnemy = null;
+            pv.RPC("SyncEnemyStates", RpcTarget.All, true);
+        }
+        
+    }
     public void StopGrapple()
     {
         if (joint != null)

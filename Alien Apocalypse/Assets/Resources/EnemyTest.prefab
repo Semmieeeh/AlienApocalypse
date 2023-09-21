@@ -19,9 +19,9 @@ GameObject:
   - component: {fileID: 8752806564868679366}
   - component: {fileID: 1208218930778718600}
   - component: {fileID: 7714293854834881682}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EnemyTest
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   roamRange: 50
   target: {x: 0, y: 0, z: 0}
   angleToPlayer: 0
-  detectionAngle: 90
+  detectionAngle: 180
   detectionRange: 30
   state: 0
   attackRange: 3
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!114 &7714293854834881682
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,9 +27,17 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health < minHealth)
+        switch (state)
         {
+            case PlayerState.alive:
 
+                break; 
+            case PlayerState.downed:
+
+                break;
+            case PlayerState.dead:
+
+                break;
         }
     }
 

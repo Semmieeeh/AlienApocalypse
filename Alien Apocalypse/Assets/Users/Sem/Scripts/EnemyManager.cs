@@ -44,7 +44,6 @@ public class EnemyManager : MonoBehaviourPunCallbacks
         {
             instance = this;
             spawnPoint = GameObject.Find("SpawnPoint").transform;
-            waveStartTime = 10;
             waveSize = 5;
 
             waveStartTimeCounter = waveStartTime;
@@ -144,7 +143,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
             yield return new WaitForSeconds(waveStartTime);
             
-            for (int i = 0; i < waveSize; i++)
+            for (int i = 0; i < waveSize * PhotonNetwork.CurrentRoom.PlayerCount; i++)
             {
                 SpawnEnemies(1);
                 enemiesSpawning = true;
