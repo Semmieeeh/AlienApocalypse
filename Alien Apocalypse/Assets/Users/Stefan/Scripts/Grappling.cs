@@ -229,8 +229,11 @@ public class Grappling : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncEnemyStates(bool enableComponents)
     {
-        pulledEnemy.GetComponent<EnemyAiTest>().enabled = enableComponents;
-        pulledEnemy.GetComponent<NavMeshAgent>().enabled = enableComponents;
+        if (pulledEnemy != null)
+        {
+            pulledEnemy.GetComponent<EnemyAiTest>().enabled = enableComponents;
+            pulledEnemy.GetComponent<NavMeshAgent>().enabled = enableComponents;
+        }
     }
     public void PullEnemy()
     {

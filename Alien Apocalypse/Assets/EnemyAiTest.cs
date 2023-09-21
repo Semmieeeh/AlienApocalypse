@@ -51,41 +51,44 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if(canAttack == false)
+        if (PhotonNetwork.IsMasterClient)
         {
-            timePassed += Time.deltaTime;
-        }
-
-        if(timePassed > attackSpeed)
-        {
-            canAttack = true;
-            timePassed = 0;
-        }
-        if (photonView.IsMine)
-        {
-            CheckForPlayer();
-            switch (state)
+            if (canAttack == false)
             {
-                case EnemyState.idle:
-                    if (Vector3.Distance(transform.position, target) < 3f)
-                    {
-                        target = NewDestination(origin, roamRange, -1);
-                        agent.destination = target;
-                    }
-                    break;
+                timePassed += Time.deltaTime;
+            }
 
-                case EnemyState.chasing:
-                    if (nearestPlayer != null)
-                    {
-                        agent.destination = nearestPlayer.transform.position;
-
-                        if(Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange && canAttack == true)
+            if (timePassed > attackSpeed)
+            {
+                canAttack = true;
+                timePassed = 0;
+            }
+            if (photonView.IsMine)
+            {
+                CheckForPlayer();
+                switch (state)
+                {
+                    case EnemyState.idle:
+                        if (Vector3.Distance(transform.position, target) < 3f)
                         {
-                            photonView.RPC("Attack", RpcTarget.All, attackDamage);
-                            
+                            target = NewDestination(origin, roamRange, -1);
+                            agent.destination = target;
                         }
-                    }
-                    break;
+                        break;
+
+                    case EnemyState.chasing:
+                        if (nearestPlayer != null)
+                        {
+                            agent.destination = nearestPlayer.transform.position;
+
+                            if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange && canAttack == true)
+                            {
+                                photonView.RPC("Attack", RpcTarget.All, attackDamage);
+
+                            }
+                        }
+                        break;
+                }
             }
         }
     }
@@ -102,10 +105,13 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Attack(float damage)
     {
-        if(nearestPlayer.TryGetComponent(out PlayerHealth player))
+        if (PhotonNetwork.IsMasterClient)
         {
-            player.TakeDamage(damage);
-            canAttack = false;
+            if (nearestPlayer.TryGetComponent(out PlayerHealth player))
+            {
+                player.TakeDamage(damage);
+                canAttack = false;
+            }
         }
     }
 
