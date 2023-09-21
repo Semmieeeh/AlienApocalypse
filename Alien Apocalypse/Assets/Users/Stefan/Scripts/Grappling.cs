@@ -234,21 +234,23 @@ public class Grappling : MonoBehaviourPunCallbacks
     }
     public void PullEnemy()
     {
-        Vector3 pullDirection = player.position - grapplePointParent.transform.position;
-        pullDirection.y += 3;
-        pullStrength = Vector3.Distance(transform.position, grapplePointParent.transform.position) * 0.125f;
-        if(pullStrength < 0.2)
+        if (pulledEnemy != false)
         {
-            pullStrength = 0.2f;
+            Vector3 pullDirection = player.position - pulledEnemy.transform.position;
+            pullDirection.y += 3;
+            pullStrength = Vector3.Distance(transform.position, pulledEnemy.transform.position) * 0.125f;
+            if (pullStrength < 0.2)
+            {
+                pullStrength = 0.2f;
+            }
+            if (pullStrength > 1.3f)
+            {
+                pullStrength = 1.3f;
+            }
+            Debug.Log(pullStrength.ToString());
+            pulledEnemy.GetComponent<Rigidbody>().AddForce(pullDirection * pullStrength, ForceMode.Impulse);
+            Invoke("ResetEnemy", stunTime);
         }
-        if (pullStrength > 1.3f)
-        {
-            pullStrength = 1.3f;
-        }
-        Debug.Log(pullStrength.ToString());
-        grapplePointParent.GetComponent<Rigidbody>().AddForce(pullDirection * pullStrength, ForceMode.Impulse);
-        pulledEnemy = grapplePointParent;
-        Invoke("ResetEnemy", stunTime);
     }
 
     public void ResetEnemy()
