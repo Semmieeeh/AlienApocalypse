@@ -45,7 +45,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         agent.destination = target;
         state = EnemyState.idle;
         attackRange = agent.stoppingDistance + 1;
-        
+        PhotonNetwork.SerializationRate = 20;
+
     }
 
     void Update()
