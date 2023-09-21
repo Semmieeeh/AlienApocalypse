@@ -111,7 +111,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
     public void CheckForPlayer()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && PhotonNetwork.IsMasterClient)
         {
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             float nearestDistance = float.MaxValue;
