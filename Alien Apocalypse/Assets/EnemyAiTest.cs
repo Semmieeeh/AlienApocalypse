@@ -45,7 +45,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         agent.destination = target;
         state = EnemyState.idle;
         attackRange = agent.stoppingDistance + 1;
-        PhotonNetwork.SerializationRate = 20;
+        photonView.ObservedComponents.Add(this);
 
     }
 
@@ -157,5 +157,17 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         Gizmos.DrawRay(transform.position, rightRayDirection * rayRange);
 
         Gizmos.color = Color.yellow;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+        }
+        else
+        {
+            transform.position = (Vector3)stream.ReceiveNext();
+        }
     }
 }
