@@ -264,6 +264,7 @@ public class Grappling : MonoBehaviourPunCallbacks
 
             Debug.Log(pullStrength.ToString());
             rb.freezeRotation = false;
+            
             rb.AddForce(pullDirection * pullStrength, ForceMode.Impulse);
             
         }

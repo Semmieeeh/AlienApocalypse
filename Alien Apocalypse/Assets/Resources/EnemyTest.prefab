@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1208218930778718600}
   - component: {fileID: 7714293854834881682}
   - component: {fileID: 5822976697407679499}
+  - component: {fileID: 187458815304847596}
   m_Layer: 11
   m_Name: EnemyTest
   m_TagString: Enemy
@@ -259,3 +260,15 @@ MonoBehaviour:
   canAttack: 0
   attackSpeed: 2
   attackDamage: 10
+--- !u!114 &187458815304847596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4048559642317091293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d4ba53ae7c1ee4698e23ac0768038d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
