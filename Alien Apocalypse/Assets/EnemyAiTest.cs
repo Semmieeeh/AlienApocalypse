@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAiTest : MonoBehaviourPunCallbacks, IPunObservable
+public class EnemyAiTest : MonoBehaviourPunCallbacks
 {
     [Header("Ai Modifiers")]
     public float moveSpeed;
@@ -37,15 +37,17 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks, IPunObservable
     private float timePassed;
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = moveSpeed;
-        agent.angularSpeed = turnSpeed;
-        origin = transform.position;
-        photonView.RPC("NewTarget",RpcTarget.All);
-        agent.destination = target;
-        state = EnemyState.idle;
-        attackRange = agent.stoppingDistance + 1;
-        photonView.ObservedComponents.Add(this);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            agent = GetComponent<NavMeshAgent>();
+            agent.speed = moveSpeed;
+            agent.angularSpeed = turnSpeed;
+            origin = transform.position;
+            photonView.RPC("NewTarget", RpcTarget.All);
+            agent.destination = target;
+            state = EnemyState.idle;
+            attackRange = agent.stoppingDistance + 1;
+        }
     }
 
     void Update()
@@ -92,7 +94,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    [PunRPC]
     public Vector3 NewDestination(Vector3 origin, float dist, int layerMask)
     {
         NavMeshHit navHit;
@@ -101,6 +102,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks, IPunObservable
         NavMesh.SamplePosition(randDirection, out navHit, roamRange, layerMask);
         return navHit.position;
     }
+
     [PunRPC]
     public void NewTarget()
     {
@@ -171,15 +173,4 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks, IPunObservable
         Gizmos.color = Color.yellow;
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(transform.position);
-        }
-        else
-        {
-            transform.position = (Vector3)stream.ReceiveNext();
-        }
-    }
 }
