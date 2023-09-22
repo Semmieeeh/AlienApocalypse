@@ -41,7 +41,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         agent.speed = moveSpeed;
         agent.angularSpeed = turnSpeed;
         origin = transform.position;
-        target = NewDestination(origin, roamRange, -1);
+        photonView.RPC("NewTarget",RpcTarget.All);
         agent.destination = target;
         state = EnemyState.idle;
         attackRange = agent.stoppingDistance + 1;
@@ -71,8 +71,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                     case EnemyState.idle:
                         if (Vector3.Distance(transform.position, target) < 3f)
                         {
-                            target = NewDestination(origin, roamRange, -1);
-                            agent.destination = target;
+                            photonView.RPC("NewTarget", RpcTarget.All);
+                            
                         }
                         break;
 
@@ -93,6 +93,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     public Vector3 NewDestination(Vector3 origin, float dist, int layerMask)
     {
         NavMeshHit navHit;
@@ -100,6 +101,12 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         randDirection += origin;
         NavMesh.SamplePosition(randDirection, out navHit, roamRange, layerMask);
         return navHit.position;
+    }
+    [PunRPC]
+    public void NewTarget()
+    {
+        target = NewDestination(origin, roamRange, -1);
+        agent.destination = target;
     }
 
     [PunRPC]

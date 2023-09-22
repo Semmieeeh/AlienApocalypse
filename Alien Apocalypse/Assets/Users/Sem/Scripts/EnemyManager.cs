@@ -50,19 +50,26 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             cooldownCounter = waveCooldown;
             if (photonView.IsMine)
             {
-                waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
+                }
             }
-            if (PhotonNetwork.CurrentRoom.PlayerCount > 0 && PhotonNetwork.IsMasterClient && startedTheWaves == false)
+            if (PhotonNetwork.IsMasterClient && startedTheWaves == false && PhotonNetwork.CurrentRoom.PlayerCount >0)
             {
                 wavesStarted = true;
                 isInCooldown = true;
+                photonView.RPC(nameof(UpdateIsInCooldown), RpcTarget.AllBuffered, isInCooldown);
+                enemiesSpawning = false;
+                photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
                 StartCoroutine(nameof(StartEnemyWaves));
                 startedTheWaves = false;
             }
 
         }
-
         
+
+
     }
 
     [PunRPC]
@@ -81,6 +88,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsMasterClient)
             {
                 cooldownCounter -= Time.deltaTime;
+                photonView.RPC(nameof(UpdateUIText), RpcTarget.All);
                 if (Time.time - lastSyncTime >= syncCooldownInterval)
                 {
                     lastSyncTime = Time.time;
@@ -89,14 +97,14 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
                 }
             }
-            photonView.RPC(nameof(UpdateUIText), RpcTarget.All);
+            
         }
         
     }
     [PunRPC]
     public void UpdateUIText()
     {
-        if(waveStatusText != null)
+        if (waveStatusText != null)
         {
             if (isInCooldown)
             {
