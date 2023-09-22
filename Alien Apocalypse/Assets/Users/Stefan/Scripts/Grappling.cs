@@ -237,15 +237,16 @@ public class Grappling : MonoBehaviourPunCallbacks
             pulledEnemy.GetComponent<NavMeshAgent>().enabled = enableComponents;
         }
     }
+
     [PunRPC]
     public void PullEnemy()
     {
         if (pulledEnemy != false)
         {
-            Vector3 pullDirection = player.position - pulledEnemy.transform.position;
+            Vector3 pullDirection = this.gameObject.transform.position - pulledEnemy.transform.position;
             pullDirection.y += 3;
             Rigidbody rb = pulledEnemy.GetComponent<Rigidbody>();
-            pullStrength = Vector3.Distance(transform.position, pulledEnemy.transform.position) * 0.125f;
+            pullStrength = Vector3.Distance(this.gameObject.transform.position, pulledEnemy.transform.position) * 0.125f;
             if (pullStrength < 0.2)
             {
                 pullStrength = 0.2f;
@@ -271,7 +272,7 @@ public class Grappling : MonoBehaviourPunCallbacks
             pulledEnemy.GetComponent<EnemyAiTest>().enabled = true;
             Rigidbody rb = pulledEnemy.GetComponent<Rigidbody>();
             rb.freezeRotation = true;
-            rb.rotation = new Quaternion(0,0,0,0);
+            rb.rotation = new Quaternion(0,0,0,1);
             pulledEnemy = null;
             pv.RPC("SyncEnemyStates", RpcTarget.All, true);
         }
