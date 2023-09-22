@@ -12,15 +12,13 @@ GameObject:
   - component: {fileID: 4074790767040350792}
   - component: {fileID: 4717985822571115453}
   - component: {fileID: 1007215792900696976}
-  - component: {fileID: 5822976697407679499}
   - component: {fileID: 3400959186251748033}
   - component: {fileID: 5383451163047497190}
   - component: {fileID: 7315644714475837296}
   - component: {fileID: 8752806564868679366}
   - component: {fileID: 1208218930778718600}
   - component: {fileID: 7714293854834881682}
-  - component: {fileID: -7578363889908849475}
-  - component: {fileID: 8252792650132961112}
+  - component: {fileID: 5822976697407679499}
   m_Layer: 11
   m_Name: EnemyTest
   m_TagString: Enemy
@@ -110,31 +108,6 @@ MonoBehaviour:
   maxHealth: 100
   gettingShotBy: {fileID: 0}
   xpAmount: 0
---- !u!114 &5822976697407679499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4048559642317091293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ce9130991c3d3c469a970563ddb9e92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  turnSpeed: 1000
-  roamRange: 50
-  target: {x: 0, y: 0, z: 0}
-  angleToPlayer: 0
-  detectionAngle: 180
-  detectionRange: 30
-  state: 0
-  attackRange: 3
-  nearestPlayer: {fileID: 0}
-  canAttack: 0
-  attackSpeed: 2
-  attackDamage: 10
 --- !u!65 &3400959186251748033
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -224,11 +197,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 5822976697407679499}
   - {fileID: 1208218930778718600}
   - {fileID: 7714293854834881682}
-  - {fileID: -7578363889908849475}
-  - {fileID: 8252792650132961112}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -264,7 +234,7 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 1
---- !u!114 &-7578363889908849475
+--- !u!114 &5822976697407679499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,20 +243,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4048559642317091293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ce9130991c3d3c469a970563ddb9e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SmoothingDelay: 5
---- !u!114 &8252792650132961112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4048559642317091293}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SmoothingDelay: 5
+  moveSpeed: 5
+  turnSpeed: 1000
+  roamRange: 50
+  target: {x: 0, y: 0, z: 0}
+  angleToPlayer: 0
+  detectionAngle: 180
+  detectionRange: 30
+  state: 0
+  attackRange: 3
+  nearestPlayer: {fileID: 0}
+  canAttack: 0
+  attackSpeed: 2
+  attackDamage: 10

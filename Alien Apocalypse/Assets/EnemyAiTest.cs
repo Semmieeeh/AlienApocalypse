@@ -43,10 +43,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             agent.speed = moveSpeed;
             agent.angularSpeed = turnSpeed;
             origin = transform.position;
-            photonView.RPC("NewTarget", RpcTarget.All);
+            
             agent.destination = target;
             state = EnemyState.idle;
             attackRange = agent.stoppingDistance + 1;
+            photonView.RPC("NewTarget", RpcTarget.All);
         }
     }
 
@@ -155,22 +156,22 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        float totalFOV = detectionAngle;
-        float rayRange = detectionRange;
-        float halfFOV = totalFOV / 2.0f;
+    //void OnDrawGizmosSelected()
+    //{
+    //    float totalFOV = detectionAngle;
+    //    float rayRange = detectionRange;
+    //    float halfFOV = totalFOV / 2.0f;
 
-        Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
-        Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
-        Vector3 leftRayDirection = leftRayRotation * transform.forward;
-        Vector3 rightRayDirection = rightRayRotation * transform.forward;
+    //    Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
+    //    Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
+    //    Vector3 leftRayDirection = leftRayRotation * transform.forward;
+    //    Vector3 rightRayDirection = rightRayRotation * transform.forward;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, leftRayDirection * rayRange);
-        Gizmos.DrawRay(transform.position, rightRayDirection * rayRange);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawRay(transform.position, leftRayDirection * rayRange);
+    //    Gizmos.DrawRay(transform.position, rightRayDirection * rayRange);
 
-        Gizmos.color = Color.yellow;
-    }
+    //    Gizmos.color = Color.yellow;
+    //}
 
 }
