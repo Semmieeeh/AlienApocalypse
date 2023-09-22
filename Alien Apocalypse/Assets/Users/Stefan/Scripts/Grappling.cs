@@ -38,6 +38,7 @@ public class Grappling : MonoBehaviourPunCallbacks
     public bool inRange;
     public float pullStrength;
     public float stunTime;
+    public float abilityCooldown;
 
     private void Awake()
     {
@@ -60,6 +61,7 @@ public class Grappling : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        abilityCooldown -= Time.deltaTime;
         if (pv.IsMine && playerCam != null)
         {
             inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
@@ -142,13 +144,13 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
         {
-            if(hit.transform.gameObject.tag != "Enemy")
+            if (hit.transform.gameObject.tag != "Enemy")
             {
                 StartGrapple();
                 arm.SetInteger("FireState", 2);
                 pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
             }
-            else if (hit.transform.tag == "Enemy")
+            else if (hit.transform.tag == "Enemy" && abilityCooldown <= 0)
             {
                 StartEnemyGrapple();
                 arm.SetInteger("FireState", 2);
@@ -187,7 +189,6 @@ public class Grappling : MonoBehaviourPunCallbacks
             joint.massScale = 4.5f;
 
             grapplePointParent = hit.transform.gameObject;
-
             childOfPoint = Instantiate(grapplePointChild, grapplePoint, Quaternion.identity);
         }
     }
@@ -207,6 +208,7 @@ public class Grappling : MonoBehaviourPunCallbacks
             float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
             joint.maxDistance = distanceFromPoint *0.7f;
             joint.minDistance = distanceFromPoint *0.9f;
+            abilityCooldown = 3;
 
             joint.spring = grappleStrength;
             joint.damper = damperStrength;
@@ -218,9 +220,9 @@ public class Grappling : MonoBehaviourPunCallbacks
             childOfPoint = Instantiate(grapplePointChild, grapplePoint, Quaternion.identity);
             grapplePointParent.GetComponent<Rigidbody>().velocity = Vector3.zero;
             pulledEnemy = grapplePointParent;
-            pv.RPC("SyncEnemyStates", RpcTarget.All, false);
-            Invoke("PullEnemy", 0.1f);
-            
+            pv.RPC(nameof(SyncEnemyStates), RpcTarget.All, false);
+            pv.RPC(nameof(PullEnemy), RpcTarget.All);
+            Invoke("ResetEnemyRPC", stunTime);
 
 
         }
@@ -235,12 +237,14 @@ public class Grappling : MonoBehaviourPunCallbacks
             pulledEnemy.GetComponent<NavMeshAgent>().enabled = enableComponents;
         }
     }
+    [PunRPC]
     public void PullEnemy()
     {
         if (pulledEnemy != false)
         {
             Vector3 pullDirection = player.position - pulledEnemy.transform.position;
             pullDirection.y += 3;
+            Rigidbody rb = pulledEnemy.GetComponent<Rigidbody>();
             pullStrength = Vector3.Distance(transform.position, pulledEnemy.transform.position) * 0.125f;
             if (pullStrength < 0.2)
             {
@@ -252,21 +256,31 @@ public class Grappling : MonoBehaviourPunCallbacks
             }
 
             Debug.Log(pullStrength.ToString());
-            pulledEnemy.GetComponent<Rigidbody>().AddForce(pullDirection * pullStrength, ForceMode.Impulse);
-            Invoke("ResetEnemy", stunTime);
+            rb.freezeRotation = false;
+            rb.AddForce(pullDirection * pullStrength, ForceMode.Impulse);
+            
         }
     }
 
+    [PunRPC]
     public void ResetEnemy()
     {
         if(pulledEnemy != null)
         {
             pulledEnemy.GetComponent<NavMeshAgent>().enabled = true;
             pulledEnemy.GetComponent<EnemyAiTest>().enabled = true;
+            Rigidbody rb = pulledEnemy.GetComponent<Rigidbody>();
+            rb.freezeRotation = true;
+            rb.rotation = new Quaternion(0,0,0,0);
             pulledEnemy = null;
             pv.RPC("SyncEnemyStates", RpcTarget.All, true);
         }
         
+    }
+
+    public void ResetEnemyRPC()
+    {
+        pv.RPC(nameof(ResetEnemy), RpcTarget.All);
     }
     public void StopGrapple()
     {
