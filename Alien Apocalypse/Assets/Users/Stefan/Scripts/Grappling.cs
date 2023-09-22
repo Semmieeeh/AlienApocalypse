@@ -61,6 +61,7 @@ public class Grappling : MonoBehaviourPunCallbacks
 
     void Update()
     {
+
         abilityCooldown -= Time.deltaTime;
         if (pv.IsMine && playerCam != null)
         {
@@ -197,36 +198,39 @@ public class Grappling : MonoBehaviourPunCallbacks
     [PunRPC]
     public void StartEnemyGrapple()
     {
-        if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
+        if (playerCam != null)
         {
-            canGrapple = false;
-            armLowerTime = maxAnimDuration;
-            pointingArm = false;
-            isGrappling = true;
-            grapplePoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
-            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
-            joint.maxDistance = distanceFromPoint *0.7f;
-            joint.minDistance = distanceFromPoint *0.9f;
-            abilityCooldown = 3;
+            if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
+            {
+                canGrapple = false;
+                armLowerTime = maxAnimDuration;
+                pointingArm = false;
+                isGrappling = true;
+                grapplePoint = hit.point;
+                joint = player.gameObject.AddComponent<SpringJoint>();
+                joint.autoConfigureConnectedAnchor = false;
+                joint.connectedAnchor = grapplePoint;
+                float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+                joint.maxDistance = distanceFromPoint * 0.7f;
+                joint.minDistance = distanceFromPoint * 0.9f;
+                abilityCooldown = 3;
 
-            joint.spring = grappleStrength;
-            joint.damper = damperStrength;
-            joint.massScale = 4.5f;
+                joint.spring = grappleStrength;
+                joint.damper = damperStrength;
+                joint.massScale = 4.5f;
 
-            grapplePointParent = hit.transform.gameObject;
-            grapplePointParent.GetComponent<EnemyAiTest>().enabled = false;
-            grapplePointParent.GetComponent<NavMeshAgent>().enabled = false;
-            childOfPoint = Instantiate(grapplePointChild, grapplePoint, Quaternion.identity);
-            grapplePointParent.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            pulledEnemy = grapplePointParent;
-            pv.RPC(nameof(SyncEnemyStates), RpcTarget.All, false);
-            pv.RPC(nameof(PullEnemy), RpcTarget.All);
-            Invoke("ResetEnemyRPC", stunTime);
+                grapplePointParent = hit.transform.gameObject;
+                grapplePointParent.GetComponent<EnemyAiTest>().enabled = false;
+                grapplePointParent.GetComponent<NavMeshAgent>().enabled = false;
+                childOfPoint = Instantiate(grapplePointChild, grapplePoint, Quaternion.identity);
+                grapplePointParent.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                pulledEnemy = grapplePointParent;
+                pv.RPC(nameof(SyncEnemyStates), RpcTarget.All, false);
+                pv.RPC(nameof(PullEnemy), RpcTarget.All);
+                Invoke("ResetEnemyRPC", stunTime);
 
 
+            }
         }
     }
 
