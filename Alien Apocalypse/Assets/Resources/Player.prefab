@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 0}
-  recoil: {fileID: 0}
+  recoilObject: {fileID: 0}
   name: 
   info: 
   localPlacmentPos: {x: 0.1, y: -0.084, z: 0.231}
@@ -1571,8 +1571,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -1926,7 +1926,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCam: {fileID: 4937888206879629854}
   recoil: {fileID: 6159436972568402810}
-  weapon1: {fileID: 8686671269669966442}
+  selectedWeapon: {fileID: 8686671269669966442}
+  input: {x: 0, y: 0}
 --- !u!1 &7262404458237172114
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,16 +52,9 @@ public class Firearm : Weapon
     public float baseReloadTime;
     bool isReloading;
 
-    //[Space]
-    //[Header("Projectile")]
-    //public GameObject projectilePrefab;
-    //public Transform muzzle;
-    //public float baseProjectileSpeed;
-
     [Space]
     [Header("Raycast")]
     public float raycastDistance;
-    //public Vector3 raycastHitPoint;
     RaycastHit hit;
 
     [Space]
@@ -92,8 +85,8 @@ public class Firearm : Weapon
     public float firearmRecoilBackUp;
     public float backUpSnappiness;
     public float backUpReturnSpeed;
-    public Vector3 firearmCurrentPosition;
-    public Vector3 firearmTargetPosition;
+    Vector3 firearmCurrentPosition;
+    Vector3 firearmTargetPosition;
 
     [Space]
     [Header("Firearm Events")]
@@ -104,7 +97,7 @@ public class Firearm : Weapon
         firearmCurrentPosition = localPlacmentPos;
     }
 
-    public override void UpdateWeapon()
+    public override void UpdateWeapon(Vector2 mouseInput)
     {
         camTargetRotation = Vector3.Lerp(camTargetRotation, Vector3.zero, camReturnSpeed * Time.deltaTime);
         camCurrentRotation = Vector3.Slerp(camCurrentRotation, camTargetRotation, camSnappiness * Time.fixedDeltaTime);
@@ -115,7 +108,7 @@ public class Firearm : Weapon
         firearmTargetPosition = Vector3.Lerp(firearmTargetPosition, localPlacmentPos, backUpReturnSpeed * Time.deltaTime);
         firearmCurrentPosition = Vector3.Lerp(firearmCurrentPosition, firearmTargetPosition, backUpSnappiness * Time.deltaTime);
 
-        recoil.transform.localRotation = Quaternion.Euler(camCurrentRotation);
+        recoilObject.transform.localRotation = Quaternion.Euler(camCurrentRotation);
         transform.localRotation = Quaternion.Euler(firearmCurrentRotation);
         transform.localPosition = firearmCurrentPosition;
     }
@@ -237,7 +230,7 @@ public class Firearm : Weapon
         events.onEndReloading?.Invoke();
     }
 
-    public override void Sway(Vector2 mouseInput)
+    public override Vector3 Sway(Vector2 mouseInput, Vector3 pos)
     {
         Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
@@ -246,7 +239,9 @@ public class Firearm : Weapon
 
         Vector3 target = new Vector3(input.x, input.y, 0);
 
-        transform.localPosition = Vector3.Lerp(transform.localPosition, target + localPlacmentPos, Time.deltaTime * smoothing);
+        Vector3 newPos = Vector3.Lerp(pos, target + Vector3.zero, Time.deltaTime * smoothing);
+
+        return newPos;
     }
 
     void Recoil()

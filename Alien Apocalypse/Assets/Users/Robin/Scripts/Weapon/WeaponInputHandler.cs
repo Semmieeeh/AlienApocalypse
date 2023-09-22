@@ -7,35 +7,35 @@ public class WeaponInputHandler : MonoBehaviour
 {
     public Camera mainCam;
     public GameObject recoil;
-    public Weapon weapon1;
-
+    public Weapon selectedWeapon;
+    public Vector2 input;
     void Start()
     {
-        weapon1.transform.localPosition = weapon1.GetLocalPlacmentPos();
+        selectedWeapon.transform.localPosition = selectedWeapon.GetLocalPlacmentPos();
         SetWeapon();
     }
 
     void Update()
     {
         if(Input.GetButton("Fire1"))
-            weapon1.Shooting();
+            selectedWeapon.Shooting();
         else if(Input.GetButtonUp("Fire1"))
-            weapon1.OnButtonUp();
+            selectedWeapon.OnButtonUp();
 
         if(Input.GetKeyDown(KeyCode.R))
-            weapon1.StartCoroutine(weapon1.Reloading());
+            selectedWeapon.StartCoroutine(selectedWeapon.Reloading());
         //weapon1.GetComponent<Animator>().SetTrigger("Reload");
 
-        Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-        weapon1?.Sway(input);
+        input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        transform.localPosition = selectedWeapon.Sway(input, transform.localPosition);
 
-        weapon1.UpdateWeapon();
+        selectedWeapon.UpdateWeapon(input);
     }
 
     void SetWeapon()
     {
-        weapon1.StartWeapon();
-        weapon1.mainCam = mainCam;
-        weapon1.recoil = recoil;
+        selectedWeapon.StartWeapon();
+        selectedWeapon.mainCam = mainCam;
+        selectedWeapon.recoilObject = recoil;
     }
 }

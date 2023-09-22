@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviourPunCallbacks
 {
     [Header("References")]
     public Camera mainCam;
-    public GameObject recoil;
+    public GameObject recoilObject;
 
     [Header("General")]
     [Space]
@@ -34,7 +34,7 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public virtual void StartWeapon() { }
 
-    public virtual void UpdateWeapon() { }
+    public virtual void UpdateWeapon(Vector2 mouseInput) { }
 
     public virtual void Shooting() { }
 
@@ -48,5 +48,8 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public virtual void OnButtonUp() { }
 
-    public virtual void Sway(Vector2 mouseInput) { }
+    public virtual Vector3 Sway(Vector2 mouseInput, Vector3 pos)
+    {
+        return Vector3.zero;
+    }
 }
