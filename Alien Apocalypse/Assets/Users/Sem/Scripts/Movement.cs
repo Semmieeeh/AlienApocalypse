@@ -61,8 +61,7 @@ public class Movement : MonoBehaviour
 
         FovChange();
 
-        
-        //Physics.IgnoreLayerCollision(3,11,true);
+        Physics.IgnoreLayerCollision(3,11,true);
         StopWhenNoInput();
     }
     public void StopWhenNoInput()

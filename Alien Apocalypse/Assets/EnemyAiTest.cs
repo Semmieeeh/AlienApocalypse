@@ -107,8 +107,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     [PunRPC]
     public void NewTarget()
     {
-        target = NewDestination(origin, roamRange, -1);
-        agent.destination = target;
+        if (agent != null)
+        {
+            target = NewDestination(origin, roamRange, -1);
+            agent.destination = target;
+        }
     }
 
     [PunRPC]
