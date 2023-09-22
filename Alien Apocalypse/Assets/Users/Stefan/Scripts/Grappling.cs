@@ -193,8 +193,9 @@ public class Grappling : MonoBehaviourPunCallbacks
         }
     }
     private GameObject pulledEnemy;
+
     [PunRPC]
-    void StartEnemyGrapple()
+    public void StartEnemyGrapple()
     {
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
         {
@@ -252,9 +253,9 @@ public class Grappling : MonoBehaviourPunCallbacks
             {
                 pullStrength = 0.2f;
             } 
-            else if (pullStrength > 1f)
+            else if (pullStrength > 1.2f)
             {
-                pullStrength = 1f;
+                pullStrength = 1.2f;
             }
 
             Debug.Log(pullStrength.ToString());
@@ -280,6 +281,7 @@ public class Grappling : MonoBehaviourPunCallbacks
         
     }
 
+    [PunRPC]
     public void ResetEnemyRPC()
     {
         pv.RPC(nameof(ResetEnemy), RpcTarget.All);
