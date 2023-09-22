@@ -131,7 +131,10 @@ public class Grappling : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RaycastRPC()
     {
-        inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
+        if (playerCam != null)
+        {
+            inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
+        }
     }
 
     [PunRPC]
