@@ -65,7 +65,7 @@ public class Grappling : MonoBehaviourPunCallbacks
         abilityCooldown -= Time.deltaTime;
         if (pv.IsMine && playerCam != null)
         {
-            inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
+            pv.RPC("RaycastRPC", RpcTarget.All);
         }
         if (pv.IsMine)
         {
@@ -126,6 +126,12 @@ public class Grappling : MonoBehaviourPunCallbacks
                 joint.connectedAnchor = grapplePoint;
             }
         }
+    }
+
+    [PunRPC]
+    public void RaycastRPC()
+    {
+        inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
     }
 
     [PunRPC]
