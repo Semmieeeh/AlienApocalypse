@@ -84,7 +84,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
                 enemiesSpawning = false;
                 photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
                 StartCoroutine(nameof(StartEnemyWaves));
-                startedTheWaves = false;
+                startedTheWaves = true;
             }
 
             if (PhotonNetwork.IsMasterClient)
