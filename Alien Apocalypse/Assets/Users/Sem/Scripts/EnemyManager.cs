@@ -55,16 +55,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
                     waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
                 }
             }
-            if (PhotonNetwork.IsMasterClient && startedTheWaves == false && PhotonNetwork.CurrentRoom.PlayerCount >0)
-            {
-                wavesStarted = true;
-                isInCooldown = true;
-                photonView.RPC(nameof(UpdateIsInCooldown), RpcTarget.AllBuffered, isInCooldown);
-                enemiesSpawning = false;
-                photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
-                StartCoroutine(nameof(StartEnemyWaves));
-                startedTheWaves = false;
-            }
+            
 
         }
         
@@ -82,8 +73,19 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     public void Update()
     {
 
+
         if (photonView.IsMine)
         {
+            if (PhotonNetwork.IsMasterClient && startedTheWaves == false && PhotonNetwork.CurrentRoom.PlayerCount > 1)
+            {
+                wavesStarted = true;
+                isInCooldown = true;
+                photonView.RPC(nameof(UpdateIsInCooldown), RpcTarget.AllBuffered, isInCooldown);
+                enemiesSpawning = false;
+                photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
+                StartCoroutine(nameof(StartEnemyWaves));
+                startedTheWaves = false;
+            }
 
             if (PhotonNetwork.IsMasterClient)
             {
