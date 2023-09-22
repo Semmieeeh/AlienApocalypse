@@ -46,6 +46,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks, IPunObservable
         state = EnemyState.idle;
         attackRange = agent.stoppingDistance + 1;
         photonView.ObservedComponents.Add(this);
+        PhotonNetwork.SerializationRate = 20;
 
     }
 
