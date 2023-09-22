@@ -137,7 +137,7 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         arm.SetInteger("FireState", 1);
         pointingArm = true;
-        pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 1);
+        pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 1);
     }
 
     public void CheckForRayCast()
@@ -148,13 +148,13 @@ public class Grappling : MonoBehaviourPunCallbacks
             {
                 StartGrapple();
                 arm.SetInteger("FireState", 2);
-                pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
+                pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 2);
             }
             else if (hit.transform.tag == "Enemy" && abilityCooldown <= 0)
             {
-                StartEnemyGrapple();
+                pv.RPC(nameof(StartEnemyGrapple), RpcTarget.All);
                 arm.SetInteger("FireState", 2);
-                pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
+                pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 2);
             }
 
         }
@@ -164,7 +164,7 @@ public class Grappling : MonoBehaviourPunCallbacks
             canGrapple = true;
             armLowerTime = maxAnimDuration;
             arm.SetInteger("FireState", 2);
-            pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 2);
+            pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 2);
         }
     }
 
@@ -193,6 +193,7 @@ public class Grappling : MonoBehaviourPunCallbacks
         }
     }
     private GameObject pulledEnemy;
+    [PunRPC]
     void StartEnemyGrapple()
     {
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
@@ -243,10 +244,10 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         if (pulledEnemy != false)
         {
-            Vector3 pullDirection = this.gameObject.transform.position - pulledEnemy.transform.position;
+            Vector3 pullDirection = gameObject.transform.position - pulledEnemy.transform.position;
             pullDirection.y += 3;
             Rigidbody rb = pulledEnemy.GetComponent<Rigidbody>();
-            pullStrength = Vector3.Distance(this.gameObject.transform.position, pulledEnemy.transform.position) * 0.125f;
+            pullStrength = Vector3.Distance(gameObject.transform.position, pulledEnemy.transform.position) * 0.125f;
             if (pullStrength < 0.2)
             {
                 pullStrength = 0.2f;
