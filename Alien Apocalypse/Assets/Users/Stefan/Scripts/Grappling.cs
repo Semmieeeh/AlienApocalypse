@@ -78,7 +78,7 @@ public class Grappling : MonoBehaviourPunCallbacks
                 damperStrength = minDamperStrength;
                 grappleStrength = idleStrength;
                 LiftArm();
-                pv.RPC("SyncArmAnimation", RpcTarget.Others, 1); // Notify other players about the animation change
+                pv.RPC("SyncArmAnimation", RpcTarget.Others, 1);
             }
             if (!Input.GetButton("Grapple") && isGrappling == false && pointingArm == false && canGrapple == false)
             {
