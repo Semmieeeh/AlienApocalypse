@@ -6,6 +6,8 @@ public class WeaponData : ScriptableObject
 {
     [Header("General")]
     [Space]
+    public GameObject prefab;
+    [Space]
     public new string name;
 
     [TextArea(4, 1)]
