@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAiTest : MonoBehaviourPunCallbacks
+public class EnemyAiTest : MonoBehaviourPunCallbacks, IPunObservable
 {
     [Header("Ai Modifiers")]
     public float moveSpeed;

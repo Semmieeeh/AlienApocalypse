@@ -245,11 +245,12 @@ public class Grappling : MonoBehaviourPunCallbacks
             if (pullStrength < 0.2)
             {
                 pullStrength = 0.2f;
-            }
-            if (pullStrength > 1.3f)
+            } 
+            else if (pullStrength > 1f)
             {
-                pullStrength = 1.3f;
+                pullStrength = 1f;
             }
+
             Debug.Log(pullStrength.ToString());
             pulledEnemy.GetComponent<Rigidbody>().AddForce(pullDirection * pullStrength, ForceMode.Impulse);
             Invoke("ResetEnemy", stunTime);
