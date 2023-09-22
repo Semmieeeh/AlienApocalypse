@@ -11,26 +11,7 @@ public class Weapon : MonoBehaviourPunCallbacks
     public Camera mainCam;
     public GameObject recoilObject;
 
-    [Header("General")]
-    [Space]
-    public new string name;
-
-    [TextArea(4, 1)]
-    [Space]
-    public string info;
-
-    [Space]
-    [Header("Position")]
-    public Vector3 localPlacmentPos;
-
-    public enum FirearmType
-    {
-        handgun,
-        shotgun,
-        assaultRifle
-    }
-
-    public Vector3 GetLocalPlacmentPos() => localPlacmentPos;
+    public Vector3 GetLocalPlacmentPos() => Vector3.zero;
 
     public virtual void StartWeapon() { }
 
@@ -48,8 +29,5 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public virtual void OnButtonUp() { }
 
-    public virtual Vector3 Sway(Vector2 mouseInput, Vector3 pos)
-    {
-        return Vector3.zero;
-    }
+    public virtual Vector3 Sway(Vector2 mouseInput, Vector3 pos) => Vector3.zero;
 }

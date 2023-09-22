@@ -1,90 +1,52 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Photon.Pun;
 
 public class Firearm : Weapon
 {
-    [Space]
-    [Header("Type")]
-    public FirearmType firearmType;
-    public Firetype fireType;
-    public enum Firetype
-    {
-        singleShot,
-        burst,
-        automatic,
-    }
+    public FirearmData firearmData;
 
     [Space]
     [Header("Shooting")]
-    public float baseDamage;
 
     [Space]
     [Header("Single Shot")]
-    public float baseSingleShotCooldown;
     bool isSingleShoting;
     bool canSingleShoot = true;
 
     [Space]
     [Header("Burst")]
-    public int baseBurstAmount;
-    public float baseTimeBetweenBurst;
-    public float baseBurstCooldown;
+
     bool isBursting;
     bool canBurst = true;
 
     [Space]
-    [Header("Automatic")]
-    public float baseFireRate;
     float baseTimeSinceLastShot;
 
     [Space]
     [Header("Ammo")]
     public int currentAmmo;
-    public int baseMaxAmmo;
     public int totalAmmo;
 
     [Space]
     [Header("Reloading")]
-    public float baseReloadTime;
     bool isReloading;
 
     [Space]
     [Header("Raycast")]
-    public float raycastDistance;
     RaycastHit hit;
 
     [Space]
-    [Header("Sway")]
-    public float swayClamp;
-    public float smoothing;
-
-    [Space]
     [Header("Recoil Camera Rotation")]
-    public float camRecoilX;
-    public float camRecoilY;
-    public float camRecoilZ;
-    public float camSnappiness;
-    public float camReturnSpeed;
     Vector3 camCurrentRotation;
     Vector3 camTargetRotation;
 
     [Header("Recoil Firearm Rotation")]
-    public float firearmRecoilX;
-    public float firearmRecoilY;
-    public float firearmRecoilZ;
-    public float firearmSnappiness;
-    public float firearmReturnSpeed;
     Vector3 firearmCurrentRotation;
     Vector3 firearmTargetRotation;
 
     [Header("Recoil Firearm Position")]
-    public float firearmRecoilBackUp;
-    public float backUpSnappiness;
-    public float backUpReturnSpeed;
     Vector3 firearmCurrentPosition;
     Vector3 firearmTargetPosition;
 
@@ -94,19 +56,19 @@ public class Firearm : Weapon
 
     public override void StartWeapon()
     {
-        firearmCurrentPosition = localPlacmentPos;
+        firearmCurrentPosition = firearmData.localPlacmentPos;
     }
 
     public override void UpdateWeapon(Vector2 mouseInput)
     {
-        camTargetRotation = Vector3.Lerp(camTargetRotation, Vector3.zero, camReturnSpeed * Time.deltaTime);
-        camCurrentRotation = Vector3.Slerp(camCurrentRotation, camTargetRotation, camSnappiness * Time.fixedDeltaTime);
+        camTargetRotation = Vector3.Lerp(camTargetRotation, Vector3.zero, firearmData.camReturnSpeed * Time.deltaTime);
+        camCurrentRotation = Vector3.Slerp(camCurrentRotation, camTargetRotation, firearmData.camSnappiness * Time.fixedDeltaTime);
 
-        firearmTargetRotation = Vector3.Lerp(firearmTargetRotation, Vector3.zero, firearmReturnSpeed * Time.deltaTime);
-        firearmCurrentRotation = Vector3.Lerp(firearmCurrentRotation, firearmTargetRotation, firearmSnappiness * Time.fixedDeltaTime);
+        firearmTargetRotation = Vector3.Lerp(firearmTargetRotation, Vector3.zero, firearmData.firearmReturnSpeed * Time.deltaTime);
+        firearmCurrentRotation = Vector3.Lerp(firearmCurrentRotation, firearmTargetRotation, firearmData.firearmSnappiness * Time.fixedDeltaTime);
 
-        firearmTargetPosition = Vector3.Lerp(firearmTargetPosition, localPlacmentPos, backUpReturnSpeed * Time.deltaTime);
-        firearmCurrentPosition = Vector3.Lerp(firearmCurrentPosition, firearmTargetPosition, backUpSnappiness * Time.deltaTime);
+        firearmTargetPosition = Vector3.Lerp(firearmTargetPosition, firearmData.localPlacmentPos, firearmData.backUpReturnSpeed * Time.deltaTime);
+        firearmCurrentPosition = Vector3.Lerp(firearmCurrentPosition, firearmTargetPosition, firearmData.backUpSnappiness * Time.deltaTime);
 
         recoilObject.transform.localRotation = Quaternion.Euler(camCurrentRotation);
         transform.localRotation = Quaternion.Euler(firearmCurrentRotation);
@@ -121,21 +83,21 @@ public class Firearm : Weapon
         {            
             //raycastHitPoint = hit.point;
 
-            switch(fireType)
+            switch(firearmData.fireType)
             {
-                case Firetype.singleShot:
+                case FirearmData.Firetype.singleShot:
                 {
                     if(CanShootSingleShot())
                         StartCoroutine(SingleShot());
                     break;
                 }
-                case Firetype.burst:
+                case FirearmData.Firetype.burst:
                 {
                     if(CanShootBurst())
                         StartCoroutine(BurstMode());
                     break;
                 }
-                case Firetype.automatic:
+                case FirearmData.Firetype.automatic:
                 {
                     if(CanShootAutomatic())
                         AutomaticMode();
@@ -167,7 +129,7 @@ public class Firearm : Weapon
         Recoil();
         Raycast();
 
-        yield return new WaitForSeconds(baseSingleShotCooldown);
+        yield return new WaitForSeconds(firearmData.baseSingleShotCooldown);
         isSingleShoting = false;
     }
 
@@ -179,7 +141,7 @@ public class Firearm : Weapon
         isBursting = true;
         canBurst = false;
 
-        for(int i = 0; i < baseBurstAmount; i++)
+        for(int i = 0; i < firearmData.baseBurstAmount; i++)
         {
             if(currentAmmo <= 0)
                 break;
@@ -193,14 +155,14 @@ public class Firearm : Weapon
             Recoil();
             Raycast();
 
-            yield return new WaitForSeconds(baseTimeBetweenBurst);
+            yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
         }
 
-        yield return new WaitForSeconds(baseBurstCooldown);
+        yield return new WaitForSeconds(firearmData.baseBurstCooldown);
         isBursting = false;        
     }
 
-    bool CanShootAutomatic() => Time.time > (1 / (baseFireRate / 60)) + baseTimeSinceLastShot;
+    bool CanShootAutomatic() => Time.time > (1 / (firearmData.baseFireRate / 60)) + baseTimeSinceLastShot;
 
     void AutomaticMode()
     {
@@ -222,9 +184,9 @@ public class Firearm : Weapon
 
         isReloading = true;
 
-        yield return new WaitForSeconds(baseReloadTime);
+        yield return new WaitForSeconds(firearmData.baseReloadTime);
 
-        currentAmmo = baseMaxAmmo;
+        currentAmmo = firearmData.baseMaxAmmo;
         isReloading = false;
 
         events.onEndReloading?.Invoke();
@@ -234,30 +196,30 @@ public class Firearm : Weapon
     {
         Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-        input.x = Mathf.Clamp(input.x, -swayClamp, swayClamp);
-        input.y = Mathf.Clamp(input.y, -swayClamp, swayClamp);
+        input.x = Mathf.Clamp(input.x, -firearmData.swayClamp, firearmData.swayClamp);
+        input.y = Mathf.Clamp(input.y, -firearmData.swayClamp, firearmData.swayClamp);
 
         Vector3 target = new Vector3(input.x, input.y, 0);
 
-        Vector3 newPos = Vector3.Lerp(pos, target + Vector3.zero, Time.deltaTime * smoothing);
+        Vector3 newPos = Vector3.Lerp(pos, target + Vector3.zero, Time.deltaTime * firearmData.smoothing);
 
         return newPos;
     }
 
     void Recoil()
     {
-        camTargetRotation += new Vector3(camRecoilX, Random.Range(-camRecoilY, camRecoilY), Random.Range(-camRecoilZ, camRecoilZ));
-        firearmTargetRotation += new Vector3(firearmRecoilX, Random.Range(-firearmRecoilY, firearmRecoilY), Random.Range(-firearmRecoilZ, 0));
-        firearmTargetPosition = new Vector3(localPlacmentPos.x, localPlacmentPos.y, firearmRecoilBackUp + localPlacmentPos.z);
+        camTargetRotation += new Vector3(firearmData.camRecoilX, Random.Range(-firearmData.camRecoilY, firearmData.camRecoilY), Random.Range(-firearmData.camRecoilZ, firearmData.camRecoilZ));
+        firearmTargetRotation += new Vector3(firearmData.firearmRecoilX, Random.Range(-firearmData.firearmRecoilY, firearmData.firearmRecoilY), Random.Range(-firearmData.firearmRecoilZ, 0));
+        firearmTargetPosition = new Vector3(firearmData.localPlacmentPos.x, firearmData.localPlacmentPos.y, firearmData.firearmRecoilBackUp + firearmData.localPlacmentPos.z);
     }
 
     void Raycast()
     {
-        if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, raycastDistance))
+        if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
         {
             if(hit.transform.TryGetComponent(out IDamagable damagable))
             {
-                damagable.Damagable(baseDamage, events.onKillEnemy, events.onHitEnemy);               
+                damagable.Damagable(firearmData.baseDamage, events.onKillEnemy, events.onHitEnemy);               
             }
         }
 

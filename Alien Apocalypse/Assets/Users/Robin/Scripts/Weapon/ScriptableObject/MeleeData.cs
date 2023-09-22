@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeData : MonoBehaviour
+[CreateAssetMenu(fileName = "MeleeData", menuName = "Melee", order = 1)]
+public class MeleeData : WeaponData
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -463,37 +463,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCam: {fileID: 0}
   recoilObject: {fileID: 0}
-  name: 
-  info: 
-  localPlacmentPos: {x: 0.1, y: -0.084, z: 0.231}
-  firearmType: 2
-  fireType: 2
-  baseDamage: 25
-  baseSingleShotCooldown: 0.3
-  baseBurstAmount: 3
-  baseTimeBetweenBurst: 0.1
-  baseBurstCooldown: 0.5
-  baseFireRate: 1200
+  firearmData: {fileID: 11400000, guid: a0e9080334caf20468df47e184f6fbfa, type: 2}
   currentAmmo: 60
-  baseMaxAmmo: 60
   totalAmmo: 0
-  baseReloadTime: 1
-  raycastDistance: 1000
-  swayClamp: 0.015
-  smoothing: 3
-  camRecoilX: -1
-  camRecoilY: -0.2
-  camRecoilZ: -0.2
-  camSnappiness: 2
-  camReturnSpeed: 10
-  firearmRecoilX: -1
-  firearmRecoilY: 0
-  firearmRecoilZ: 0
-  firearmSnappiness: 5
-  firearmReturnSpeed: 10
-  firearmRecoilBackUp: -0.2
-  backUpSnappiness: 8
-  backUpReturnSpeed: 60
   events:
     onShooting:
       m_PersistentCalls:
