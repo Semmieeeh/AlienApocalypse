@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f41e6957edc5f404d8109c01ae381721, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
+  prefab: {fileID: 0}
   name: Test
   info: 
   localPlacmentPos: {x: 0.1, y: -0.084, z: 0.231}
   firearmType: 2
   fireType: 0
   baseDamage: 25
-  baseSingleShotCooldown: 0.3
+  baseCooldown: 0.3
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
-  baseBurstCooldown: 0.5
   baseFireRate: 1200
   baseMaxAmmo: 60
   baseReloadTime: 1

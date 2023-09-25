@@ -464,8 +464,11 @@ MonoBehaviour:
   mainCam: {fileID: 0}
   recoilObject: {fileID: 0}
   firearmData: {fileID: 11400000, guid: a0e9080334caf20468df47e184f6fbfa, type: 2}
+  modifiedDamaged: 0
+  modifiedMaxAmmo: 0
   currentAmmo: 60
   totalAmmo: 0
+  modifiedReloadTime: 0
   events:
     onShooting:
       m_PersistentCalls:

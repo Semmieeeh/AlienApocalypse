@@ -24,22 +24,18 @@ public class FirearmData : WeaponData
     public Firetype fireType;
 
     [Space]
-    [Header("Shooting")]
+    [Header("General")]
     public float baseDamage;
-
-    [Space]
-    [Header("Single Shot")]
-    public float baseSingleShotCooldown;
+    public float baseCooldown;
 
     [Space]
     [Header("Burst")]
     public int baseBurstAmount;
     public float baseTimeBetweenBurst;
-    public float baseBurstCooldown;
 
     [Space]
     [Header("Automatic")]
-    public float baseFireRate;
+    public int baseFireRate;
 
     [Space]
     [Header("Ammo")]

@@ -8,7 +8,9 @@ public class Firearm : Weapon
     public FirearmData firearmData;
 
     [Space]
-    [Header("Shooting")]
+    [Header("General")]
+    public float damage;
+    public float cooldown;
 
     [Space]
     [Header("Single Shot")]
@@ -17,20 +19,23 @@ public class Firearm : Weapon
 
     [Space]
     [Header("Burst")]
-
+    public float burstAmount;
     bool isBursting;
     bool canBurst = true;
 
     [Space]
-    float baseTimeSinceLastShot;
+    [Header("Automatic")]
+    public int fireRate;
+    float timeSinceLastShot;
 
     [Space]
     [Header("Ammo")]
+    public float maxAmmo;
     public int currentAmmo;
-    public int totalAmmo;
 
     [Space]
     [Header("Reloading")]
+    public float reloadTime;
     bool isReloading;
 
     [Space]
@@ -57,6 +62,7 @@ public class Firearm : Weapon
     public override void StartWeapon()
     {
         firearmCurrentPosition = firearmData.localPlacmentPos;
+        SetWeaponData();
     }
 
     public override void UpdateWeapon(Vector2 mouseInput)
@@ -75,14 +81,34 @@ public class Firearm : Weapon
         transform.localPosition = firearmCurrentPosition;
     }
 
+    void SetWeaponData()
+    {
+        damage = firearmData.baseDamage;
+        cooldown = firearmData.baseCooldown;
+
+        burstAmount = firearmData.baseBurstAmount;
+        fireRate = firearmData.baseFireRate;
+
+        maxAmmo = firearmData.baseMaxAmmo;
+        reloadTime = firearmData.baseReloadTime;
+    }
+
+    public void ModifyWeaponData(float damage, float cooldown, int burstAmount, int fireRate, int maxAmmo, float reloadTime)
+    {
+        this.damage *= 1 + (damage / 100);
+        this.cooldown *= 1 - (cooldown / 100);
+        this.burstAmount += burstAmount;
+        this.fireRate *= 1 - (fireRate / 100);
+        this.maxAmmo += maxAmmo;
+        this.reloadTime *= 1 - (reloadTime / 100);
+    }
+
     bool CanShoot() => !isReloading && currentAmmo > 0;
 
     public override void Shooting()
     {
         if(CanShoot())
-        {            
-            //raycastHitPoint = hit.point;
-
+        {
             switch(firearmData.fireType)
             {
                 case FirearmData.Firetype.singleShot:
@@ -129,7 +155,7 @@ public class Firearm : Weapon
         Recoil();
         Raycast();
 
-        yield return new WaitForSeconds(firearmData.baseSingleShotCooldown);
+        yield return new WaitForSeconds(firearmData.baseCooldown);
         isSingleShoting = false;
     }
 
@@ -158,11 +184,11 @@ public class Firearm : Weapon
             yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
         }
 
-        yield return new WaitForSeconds(firearmData.baseBurstCooldown);
+        yield return new WaitForSeconds(firearmData.baseCooldown);
         isBursting = false;        
     }
 
-    bool CanShootAutomatic() => Time.time > (1 / (firearmData.baseFireRate / 60)) + baseTimeSinceLastShot;
+    bool CanShootAutomatic() => Time.time > (1 / (firearmData.baseFireRate / 60)) + timeSinceLastShot;
 
     void AutomaticMode()
     {
@@ -175,7 +201,7 @@ public class Firearm : Weapon
         Recoil();
         Raycast();
 
-        baseTimeSinceLastShot = Time.time;        
+        timeSinceLastShot = Time.time;        
     }
 
     public override IEnumerator Reloading()

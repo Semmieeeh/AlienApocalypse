@@ -8,7 +8,8 @@ public class WeaponInputHandler : MonoBehaviour
     public Camera mainCam;
     public GameObject recoil;
     public Weapon selectedWeapon;
-    public Vector2 input;
+
+
     void Start()
     {
         selectedWeapon.transform.localPosition = selectedWeapon.GetLocalPlacmentPos();
@@ -26,7 +27,7 @@ public class WeaponInputHandler : MonoBehaviour
             selectedWeapon.StartCoroutine(selectedWeapon.Reloading());
         //weapon1.GetComponent<Animator>().SetTrigger("Reload");
 
-        input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         transform.localPosition = selectedWeapon.Sway(input, transform.localPosition);
 
         selectedWeapon.UpdateWeapon(input);
