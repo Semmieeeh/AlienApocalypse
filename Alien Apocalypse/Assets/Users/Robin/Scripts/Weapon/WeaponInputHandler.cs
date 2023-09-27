@@ -16,12 +16,22 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     [Header("Weapon")]
     public Weapon selectedWeapon;
     public List<Weapon> weaponSlots;
-    public float scrollNum;
-    public float oldScrollNum = 1;
+    public float scrollNum = 0;
+    public float oldScrollNum = 0;
 
     void Start()
     {
+        GameObject weapon = PhotonNetwork.Instantiate(selectedWeapon.firearmData.prefab.name, selectedWeapon.transform.position, selectedWeapon.transform.rotation);
 
+        weapon.transform.parent = selectedWeapon.transform;
+
+        weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        weapon.transform.localScale = new Vector3(1, 1, 1);
+
+        selectedWeapon.mainCam = mainCam;
+        selectedWeapon.recoilObject = recoil;
+
+        selectedWeapon.StartWeapon();
     }
 
     void Update()
