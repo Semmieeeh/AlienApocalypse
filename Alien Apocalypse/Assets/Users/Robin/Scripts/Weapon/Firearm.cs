@@ -213,7 +213,7 @@ public class Firearm : Weapon
     public override IEnumerator Reloading()
     {
         events.onStartReloading?.Invoke();
-
+        anim?.SetTrigger("Reload");
         isReloading = true;
 
         yield return new WaitForSeconds(reloadTime);
