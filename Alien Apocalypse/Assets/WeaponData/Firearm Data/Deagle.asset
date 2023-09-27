@@ -10,34 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f41e6957edc5f404d8109c01ae381721, type: 3}
-  m_Name: Test 1
+  m_Name: Deagle
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2639805789047824044, guid: 4d8959eec08a1444985eb71337556374, type: 3}
+  prefab: {fileID: 8925006049182737821, guid: b6c39c3fee3e42943bd2897226923ceb, type: 3}
   name: Test
   info: 
-  localPlacmentPos: {x: 0.2, y: -0.22, z: 0.32}
+  localPlacmentPos: {x: 0.2, y: -0.17, z: 0.32}
   firearmType: 2
   fireType: 0
-  baseDamage: 25
-  baseCooldown: 0.3
+  baseDamage: 50
+  baseCooldown: 0.2
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
   baseFireRate: 1200
-  baseMaxAmmo: 60
-  baseReloadTime: 1
+  baseMaxAmmo: 7
+  baseReloadTime: 1.5
   raycastDistance: 1000
-  swayClamp: 0.015
-  smoothing: 3
-  camRecoilX: -1
+  swayClamp: 0.02
+  smoothing: 5
+  camRecoilX: -6
   camRecoilY: -0.2
   camRecoilZ: -0.2
   camSnappiness: 2
   camReturnSpeed: 10
-  firearmRecoilX: -1
+  firearmRecoilX: -15
   firearmRecoilY: 0
   firearmRecoilZ: 0
   firearmSnappiness: 5
-  firearmReturnSpeed: 10
-  firearmRecoilBackUp: -0.2
-  backUpSnappiness: 8
+  firearmReturnSpeed: 13
+  firearmRecoilBackUp: -0.8
+  backUpSnappiness: 18
   backUpReturnSpeed: 60

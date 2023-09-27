@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f41e6957edc5f404d8109c01ae381721, type: 3}
-  m_Name: Test
+  m_Name: AlienBlaster
   m_EditorClassIdentifier: 
-  prefab: {fileID: 8925006049182737821, guid: b6c39c3fee3e42943bd2897226923ceb, type: 3}
-  name: Test
+  prefab: {fileID: 2639805789047824044, guid: 4d8959eec08a1444985eb71337556374, type: 3}
+  name: Test 1
   info: 
-  localPlacmentPos: {x: 0.2, y: -0.17, z: 0.32}
+  localPlacmentPos: {x: 0.3, y: -0.28, z: 0.41}
   firearmType: 2
-  fireType: 0
-  baseDamage: 25
+  fireType: 1
+  baseDamage: 15
   baseCooldown: 0.3
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
-  baseFireRate: 1200
-  baseMaxAmmo: 60
+  baseFireRate: 120
+  baseMaxAmmo: 36
   baseReloadTime: 1
   raycastDistance: 1000
   swayClamp: 0.015
@@ -33,11 +33,11 @@ MonoBehaviour:
   camRecoilZ: -0.2
   camSnappiness: 2
   camReturnSpeed: 10
-  firearmRecoilX: -1
+  firearmRecoilX: -2
   firearmRecoilY: 0
   firearmRecoilZ: 0
   firearmSnappiness: 5
   firearmReturnSpeed: 10
-  firearmRecoilBackUp: -0.2
+  firearmRecoilBackUp: -0.4
   backUpSnappiness: 8
   backUpReturnSpeed: 60
