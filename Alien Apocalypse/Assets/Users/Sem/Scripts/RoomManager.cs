@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -14,6 +15,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public GameObject roomCam;
     [Space]
     public GameObject connectingUI;
+    public GameObject cantConnectUi;
     public GameObject nicknameUI;
     public string roomNameToJoin = "Test";
     public bool spawnedEnemy = false;
@@ -44,10 +46,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log("We're in a room!");
         roomCam.SetActive(false);
         SpawnPlayer();
-        
-        
-        
+
     }
+
 
     public void SpawnPlayer()
     {

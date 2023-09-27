@@ -22,7 +22,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public float angleToPlayer;
     public float detectionAngle;
     public float detectionRange;
-
+    public float flyingHeight;
     public enum EnemyState
     {
         idle,
@@ -35,6 +35,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public float attackSpeed;
     public float attackDamage;
     private float timePassed;
+    RaycastHit hit;
+    public bool flyingEnemy;
     void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -48,11 +50,23 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             state = EnemyState.idle;
             attackRange = agent.stoppingDistance + 1;
             photonView.RPC("NewTarget", RpcTarget.All);
+            if (flyingEnemy)
+            {
+                agent.baseOffset = Random.Range(4f, 8f);
+                attackRange += agent.baseOffset;
+            }
         }
     }
 
     void Update()
     {
+        if(flyingHeight > 0.1f)
+        { 
+            Physics.Raycast(transform.position, -transform.up, out hit);
+            Transform flight = hit.transform;
+            Vector3 flightTransform = new Vector3(flight.position.x, flight.position.y + 10, flight.position.z);
+            transform.position = flightTransform;
+        }
         if (PhotonNetwork.IsMasterClient)
         {
             if (canAttack == false)
@@ -71,7 +85,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 switch (state)
                 {
                     case EnemyState.idle:
-                        if (Vector3.Distance(transform.position, target) < 3f)
+                        if (Vector3.Distance(transform.position, target) < 3f + flyingHeight)
                         {
                             photonView.RPC("NewTarget", RpcTarget.All);
                             
@@ -83,7 +97,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         {
                             agent.destination = nearestPlayer.transform.position;
 
-                            if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange && canAttack == true)
+                            if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < (attackRange + flyingHeight) && canAttack == true)
                             {
                                 photonView.RPC("Attack", RpcTarget.All, attackDamage);
 
