@@ -23,11 +23,7 @@ public class PlayerSetup : MonoBehaviour
         uiVanStefan.SetActive(true);
         weapon.layer = 7;
         gameObject.layer = 3;
-        myWeapon.layer = 7;
-        for(int i = 0; i <myWeapon.transform.childCount; i++)
-        {
-            myWeapon.transform.GetChild(i).gameObject.layer = 7;
-        }
+
         cam.GetComponent<Camera>().enabled = true;
         cam.GetComponent<MouseLook>().enabled = true;
         cam.GetComponent<AudioListener>().enabled = true;

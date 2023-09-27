@@ -2,21 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Photon.Pun;
 
-public class WeaponInputHandler : MonoBehaviour
+public class WeaponInputHandler : MonoBehaviourPunCallbacks
 {
+    [Header("Recoil")]
     public Camera mainCam;
     public GameObject recoil;
-    public Weapon selectedWeapon;
 
+    [Header("Ability")]
+    public List<Ability> weaponAbilities;
+
+    [Header("Weapon")]
+    public Weapon selectedWeapon;
+    public List<Weapon> weaponSlots;
+    public float scrollNum;
+    public float oldScrollNum = 1;
 
     void Start()
     {
-        selectedWeapon.transform.localPosition = selectedWeapon.GetLocalPlacmentPos();
-        SetWeapon();
+
     }
 
     void Update()
+    {
+        SelectWeapon();
+
+        if(selectedWeapon.firearmData != null)
+            InputWeapon();
+    }
+
+    void InputWeapon()
     {
         if(Input.GetButton("Fire1"))
             selectedWeapon.Shooting();
@@ -25,18 +41,43 @@ public class WeaponInputHandler : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.R))
             selectedWeapon.StartCoroutine(selectedWeapon.Reloading());
-        //weapon1.GetComponent<Animator>().SetTrigger("Reload");
 
-        Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
-        transform.localPosition = selectedWeapon.Sway(input, transform.localPosition);
-
-        selectedWeapon.UpdateWeapon(input);
+        transform.localPosition = selectedWeapon.Sway(transform.localPosition);
+        selectedWeapon.UpdateWeapon();
     }
 
-    void SetWeapon()
+    [PunRPC]
+    void SelectWeapon()
     {
-        selectedWeapon.StartWeapon();
-        selectedWeapon.mainCam = mainCam;
-        selectedWeapon.recoilObject = recoil;
+        scrollNum += Input.mouseScrollDelta.y;
+        scrollNum = Mathf.Clamp(scrollNum, -weaponSlots.Count + 1, 0);
+
+        if(oldScrollNum != scrollNum)
+        {
+            if(selectedWeapon.transform.childCount > 0)
+            {
+                PhotonNetwork.Destroy(selectedWeapon.transform.GetChild(0).gameObject);
+            }
+
+            if(weaponSlots[Mathf.Abs((int)scrollNum)] != null)
+            {
+                selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
+                
+                if(selectedWeapon.firearmData != null)
+                {
+                    GameObject weapon = PhotonNetwork.Instantiate(selectedWeapon.firearmData.prefab.name, selectedWeapon.transform.position, selectedWeapon.transform.rotation);
+
+                    weapon.transform.parent = selectedWeapon.transform;
+
+                    weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                    weapon.transform.localScale = new Vector3(1, 1, 1);
+
+                    selectedWeapon.mainCam = mainCam;
+                    selectedWeapon.recoilObject = recoil;
+                }
+            }
+
+            oldScrollNum = scrollNum;
+        }
     }
 }

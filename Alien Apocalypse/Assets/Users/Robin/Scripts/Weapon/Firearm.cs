@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public class Firearm : Weapon
 {
-    public FirearmData firearmData;
-
     [Space]
     [Header("General")]
     public float damage;
@@ -30,7 +28,7 @@ public class Firearm : Weapon
 
     [Space]
     [Header("Ammo")]
-    public float maxAmmo;
+    public int maxAmmo;
     public int currentAmmo;
 
     [Space]
@@ -63,9 +61,10 @@ public class Firearm : Weapon
     {
         firearmCurrentPosition = firearmData.localPlacmentPos;
         SetWeaponData();
+        currentAmmo = maxAmmo;
     }
 
-    public override void UpdateWeapon(Vector2 mouseInput)
+    public override void UpdateWeapon()
     {
         camTargetRotation = Vector3.Lerp(camTargetRotation, Vector3.zero, firearmData.camReturnSpeed * Time.deltaTime);
         camCurrentRotation = Vector3.Slerp(camCurrentRotation, camTargetRotation, firearmData.camSnappiness * Time.fixedDeltaTime);
@@ -95,11 +94,17 @@ public class Firearm : Weapon
 
     public void ModifyWeaponData(float damage, float cooldown, int burstAmount, int fireRate, int maxAmmo, float reloadTime)
     {
+        // Damage increase in Percentage
         this.damage *= 1 + (damage / 100);
+        // Cooldown decrease in Percentage
         this.cooldown *= 1 - (cooldown / 100);
+        // Burst Amount added by Adding
         this.burstAmount += burstAmount;
+        // Fire Rate increased in Percentage
         this.fireRate *= 1 - (fireRate / 100);
+        // Max Ammo increase by Adding
         this.maxAmmo += maxAmmo;
+        // Reload Time decreased in Percentage
         this.reloadTime *= 1 - (reloadTime / 100);
     }
 
@@ -155,7 +160,7 @@ public class Firearm : Weapon
         Recoil();
         Raycast();
 
-        yield return new WaitForSeconds(firearmData.baseCooldown);
+        yield return new WaitForSeconds(cooldown);
         isSingleShoting = false;
     }
 
@@ -167,7 +172,7 @@ public class Firearm : Weapon
         isBursting = true;
         canBurst = false;
 
-        for(int i = 0; i < firearmData.baseBurstAmount; i++)
+        for(int i = 0; i < burstAmount; i++)
         {
             if(currentAmmo <= 0)
                 break;
@@ -184,11 +189,11 @@ public class Firearm : Weapon
             yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
         }
 
-        yield return new WaitForSeconds(firearmData.baseCooldown);
+        yield return new WaitForSeconds(cooldown);
         isBursting = false;        
     }
 
-    bool CanShootAutomatic() => Time.time > (1 / (firearmData.baseFireRate / 60)) + timeSinceLastShot;
+    bool CanShootAutomatic() => Time.time > (1 / (fireRate / 60)) + timeSinceLastShot;
 
     void AutomaticMode()
     {
@@ -210,15 +215,15 @@ public class Firearm : Weapon
 
         isReloading = true;
 
-        yield return new WaitForSeconds(firearmData.baseReloadTime);
+        yield return new WaitForSeconds(reloadTime);
 
-        currentAmmo = firearmData.baseMaxAmmo;
+        currentAmmo = maxAmmo;
         isReloading = false;
 
         events.onEndReloading?.Invoke();
     }
 
-    public override Vector3 Sway(Vector2 mouseInput, Vector3 pos)
+    public override Vector3 Sway(Vector3 pos)
     {
         Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 

@@ -8,6 +8,7 @@ using Photon.Pun;
 public class Weapon : MonoBehaviourPunCallbacks
 {
     [Header("References")]
+    public FirearmData firearmData;
     public Camera mainCam;
     public GameObject recoilObject;
 
@@ -15,7 +16,7 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public virtual void StartWeapon() { }
 
-    public virtual void UpdateWeapon(Vector2 mouseInput) { }
+    public virtual void UpdateWeapon() { }
 
     public virtual void Shooting() { }
 
@@ -29,5 +30,5 @@ public class Weapon : MonoBehaviourPunCallbacks
 
     public virtual void OnButtonUp() { }
 
-    public virtual Vector3 Sway(Vector2 mouseInput, Vector3 pos) => Vector3.zero;
+    public virtual Vector3 Sway(Vector3 pos) => Vector3.zero;
 }
