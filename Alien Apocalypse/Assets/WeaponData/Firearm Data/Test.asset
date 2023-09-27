@@ -19,25 +19,25 @@ MonoBehaviour:
   firearmType: 2
   fireType: 0
   baseDamage: 25
-  baseCooldown: 0.3
+  baseCooldown: 0.2
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
   baseFireRate: 1200
-  baseMaxAmmo: 60
+  baseMaxAmmo: 7
   baseReloadTime: 1
   raycastDistance: 1000
-  swayClamp: 0.015
-  smoothing: 3
-  camRecoilX: -1
+  swayClamp: 0.02
+  smoothing: 5
+  camRecoilX: -6
   camRecoilY: -0.2
   camRecoilZ: -0.2
   camSnappiness: 2
   camReturnSpeed: 10
-  firearmRecoilX: -1
+  firearmRecoilX: -15
   firearmRecoilY: 0
   firearmRecoilZ: 0
   firearmSnappiness: 5
-  firearmReturnSpeed: 10
-  firearmRecoilBackUp: -0.2
-  backUpSnappiness: 8
+  firearmReturnSpeed: 13
+  firearmRecoilBackUp: -0.8
+  backUpSnappiness: 18
   backUpReturnSpeed: 60

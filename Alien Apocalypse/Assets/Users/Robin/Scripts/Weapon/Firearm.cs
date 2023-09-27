@@ -56,6 +56,7 @@ public class Firearm : Weapon
     [Space]
     [Header("Firearm Events")]
     public FireArmEvents events;
+    public Animator anim;
 
     public override void StartWeapon()
     {
@@ -150,7 +151,7 @@ public class Firearm : Weapon
     {
         isSingleShoting = true;
         canSingleShoot = false;
-
+        anim?.SetTrigger("Shoot");
         // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
         events.onShooting?.Invoke();
 
@@ -185,7 +186,7 @@ public class Firearm : Weapon
 
             Recoil();
             Raycast();
-
+            anim?.SetTrigger("Shoot");
             yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
         }
 
@@ -205,7 +206,7 @@ public class Firearm : Weapon
 
         Recoil();
         Raycast();
-
+        anim?.SetTrigger("Shoot");
         timeSinceLastShot = Time.time;        
     }
 

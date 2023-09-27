@@ -23,11 +23,16 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     {
         GameObject weapon = PhotonNetwork.Instantiate(selectedWeapon.firearmData.prefab.name, selectedWeapon.transform.position, selectedWeapon.transform.rotation);
 
+        
         weapon.transform.parent = selectedWeapon.transform;
-
+        
         weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         weapon.transform.localScale = new Vector3(1, 1, 1);
 
+        if (weapon.TryGetComponent<Animator>(out Animator anim))
+        {
+            selectedWeapon.GetComponent<Firearm>().anim = anim;
+        }
         selectedWeapon.mainCam = mainCam;
         selectedWeapon.recoilObject = recoil;
 
@@ -81,9 +86,13 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
                     weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                     weapon.transform.localScale = new Vector3(1, 1, 1);
-
+                    if (weapon.TryGetComponent<Animator>(out Animator anim))
+                    {
+                        selectedWeapon.GetComponent<Firearm>().anim = anim;
+                    }
                     selectedWeapon.mainCam = mainCam;
                     selectedWeapon.recoilObject = recoil;
+                    selectedWeapon.StartWeapon();
                 }
             }
 
