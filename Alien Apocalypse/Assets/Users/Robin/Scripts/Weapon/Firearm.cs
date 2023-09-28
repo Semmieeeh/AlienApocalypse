@@ -223,10 +223,10 @@ public class Firearm : Weapon
         {
             anim.SetTrigger("Reload");
         }
-        
+        currentAmmo = maxAmmo;
         yield return new WaitForSeconds(reloadTime);
 
-        currentAmmo = maxAmmo;
+        
         isReloading = false;
 
         events.onEndReloading?.Invoke();

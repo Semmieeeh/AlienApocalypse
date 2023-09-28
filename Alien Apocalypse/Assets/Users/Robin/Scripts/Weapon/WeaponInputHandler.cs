@@ -50,7 +50,13 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
             selectedWeapon.OnButtonUp();
 
         if(Input.GetKeyDown(KeyCode.R))
-            selectedWeapon.StartCoroutine(selectedWeapon.Reloading());
+        {
+            if (selectedWeapon.GetComponent<Firearm>().currentAmmo < selectedWeapon.GetComponent<Firearm>().maxAmmo)
+            {
+                selectedWeapon.StartCoroutine(selectedWeapon.Reloading());
+            }
+        }
+            
 
         transform.localPosition = selectedWeapon.Sway(transform.localPosition);
         selectedWeapon.UpdateWeapon();

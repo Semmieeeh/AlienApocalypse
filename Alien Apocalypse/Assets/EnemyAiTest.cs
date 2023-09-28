@@ -60,15 +60,16 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if(flyingHeight > 0.1f)
-        { 
-            Physics.Raycast(transform.position, -transform.up, out hit);
-            Transform flight = hit.transform;
-            Vector3 flightTransform = new Vector3(flight.position.x, flight.position.y + 10, flight.position.z);
-            transform.position = flightTransform;
-        }
+        
         if (PhotonNetwork.IsMasterClient)
         {
+            if (flyingHeight > 0.1f)
+            {
+                Physics.Raycast(transform.position, -transform.up, out hit);
+                Transform flight = hit.transform;
+                Vector3 flightTransform = new Vector3(flight.position.x, flight.position.y + 10, flight.position.z);
+                transform.position = flightTransform;
+            }
             if (canAttack == false)
             {
                 timePassed += Time.deltaTime;
