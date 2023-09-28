@@ -8,7 +8,6 @@ using Photon.Pun;
 public class Weapon : MonoBehaviourPunCallbacks
 {
     [Header("References")]
-    public FirearmData firearmData;
     public Camera mainCam;
     public GameObject recoilObject;
 
@@ -21,7 +20,6 @@ public class Weapon : MonoBehaviourPunCallbacks
     public virtual void Shooting() { }
 
     public virtual void Meeling() { }
-
 
     public virtual IEnumerator Reloading()
     {

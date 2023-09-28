@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class RaycastController : MonoBehaviour
+public class RaycastController : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Player")]
+    public WeaponInputHandler handler;
 
-    // Update is called once per frame
+    [Space]
+    [Header("Raycast")]
+    public float raycastLength;
+
     void Update()
     {
-        
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, raycastLength))
+        {
+            if(hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable))
+            {
+                if(Input.GetKeyDown(KeyCode.F))
+                {
+                    interactable.Interact(handler);
+                }
+            }
+        }
     }
 }

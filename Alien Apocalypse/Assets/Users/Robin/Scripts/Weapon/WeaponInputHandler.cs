@@ -14,10 +14,15 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     public List<Ability> weaponAbilities;
 
     [Header("Weapon")]
+    public GameObject weaponHolder;
     public Weapon selectedWeapon;
     public List<Weapon> weaponSlots;
     public float scrollNum = 0;
     public float oldScrollNum = 0;
+
+    [Space]
+    [Header("Firearm Events")]
+    public FirearmEvents events;
 
     void Start()
     {
@@ -28,10 +33,9 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     {
         for(int i = 0; i < weaponSlots.Count; i++)
         {
-            if(weaponSlots[i] != null)
-            {
-                SetWeapon();
-            }
+
+            SetWeapon();
+            
         }
     }
 
@@ -96,15 +100,34 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         }
     }
 
-    public void AddWeapon(Firearm firearm)
+    public bool CanAddWeapon()
     {
         for(int i = 0; i < weaponSlots.Count; i++)
         {
-            if(weaponSlots[i] == null)
+            if(weaponSlots[i].TryGetComponent<Firearm>(out Firearm firearm))
             {
-                weaponSlots[i] = firearm;
+                if(firearm.firearmData == null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void AddWeapon(FirearmData firearmData)
+    {
+        for(int i = 0; i < weaponSlots.Count; i++)
+        {
+
+            if(weaponSlots[i].TryGetComponent<Firearm>(out Firearm firearm))
+            {
+                firearm.firearmData = firearmData;
                 SetWeapon();
             }
+
+            
         }
     }
 
@@ -114,33 +137,53 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         {
             if(weaponSlots[i].transform.childCount == 0)
             {
-                GameObject weapon = PhotonNetwork.Instantiate(weaponSlots[i].firearmData.prefab.name, transform.position, transform.rotation);
-
-                weapon.transform.parent = weaponSlots[i].transform;
-
-                weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                weapon.transform.localScale = new Vector3(1, 1, 1);
-
-
-                if(weapon.TryGetComponent<Animator>(out Animator animator))
+                if(weaponSlots[i].TryGetComponent<Firearm>(out Firearm firearm))
                 {
-                    weaponSlots[i].GetComponent<Firearm>().anim = animator;
-                }
+                    if(firearm.firearmData != null)
+                    {
+                        GameObject weapon = PhotonNetwork.Instantiate(firearm.firearmData.prefab.name, transform.position, transform.rotation);
 
-                weaponSlots[i].StartWeapon();
+                        weapon.transform.parent = weaponSlots[i].transform;
 
-                if(Mathf.Abs((int)scrollNum) == i)
-                {
-                    selectedWeapon = weaponSlots[i];
+                        weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                        weapon.transform.localScale = new Vector3(1, 1, 1);
 
-                    selectedWeapon.mainCam = mainCam;
-                    selectedWeapon.recoilObject = recoil;
-                }
-                else
-                {
-                    weaponSlots[i].transform.GetChild(0).gameObject.SetActive(false);
+                        firearm.events = events;
+
+                        if(weapon.TryGetComponent<Animator>(out Animator animator))
+                        {
+                            firearm.anim = animator;
+                        }
+
+                        weaponSlots[i].StartWeapon();
+
+                        if(Mathf.Abs((int)scrollNum) == i)
+                        {
+                            selectedWeapon = weaponSlots[i];
+
+                            selectedWeapon.mainCam = mainCam;
+                            selectedWeapon.recoilObject = recoil;
+                        }
+                        else
+                        {
+                            weaponSlots[i].transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+[System.Serializable]
+public class FirearmEvents
+{
+    public UnityEvent onShooting;
+    public UnityEvent onSingleShot;
+    public UnityEvent onBurst;
+    public UnityEvent onAutomatic;
+    public UnityEvent onHitEnemy;
+    public UnityEvent onKillEnemy;
+    public UnityEvent onStartReloading;
+    public UnityEvent onEndReloading;
 }

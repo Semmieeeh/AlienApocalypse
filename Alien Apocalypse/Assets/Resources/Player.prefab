@@ -1612,6 +1612,7 @@ MonoBehaviour:
   mainCam: {fileID: 4937888206879629854}
   recoil: {fileID: 6159436972568402810}
   weaponAbilities: []
+  weaponHolder: {fileID: 4605885190825178082, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
   selectedWeapon: {fileID: 6067759532985043722}
   weaponSlots:
   - {fileID: 6067759532985043722}
@@ -1619,6 +1620,31 @@ MonoBehaviour:
   - {fileID: 3609449282241596146}
   scrollNum: 0
   oldScrollNum: 0
+  events:
+    onShooting:
+      m_PersistentCalls:
+        m_Calls: []
+    onSingleShot:
+      m_PersistentCalls:
+        m_Calls: []
+    onBurst:
+      m_PersistentCalls:
+        m_Calls: []
+    onAutomatic:
+      m_PersistentCalls:
+        m_Calls: []
+    onHitEnemy:
+      m_PersistentCalls:
+        m_Calls: []
+    onKillEnemy:
+      m_PersistentCalls:
+        m_Calls: []
+    onStartReloading:
+      m_PersistentCalls:
+        m_Calls: []
+    onEndReloading:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &1504607484341158647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1780,7 +1806,7 @@ PrefabInstance:
     - target: {fileID: 2291872792041277451, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
       propertyPath: firearmData
       value: 
-      objectReference: {fileID: 11400000, guid: 983079d0788a6cc4fa6c56fdf04d9816, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2291872792041277451, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
       propertyPath: events.onHitEnemy.m_PersistentCalls.m_Calls.Array.size
       value: 1

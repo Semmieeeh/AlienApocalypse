@@ -7,6 +7,7 @@ public class Firearm : Weapon
 {
     [Space]
     [Header("General")]
+    public FirearmData firearmData;
     public float damage;
     public float cooldown;
 
@@ -57,10 +58,10 @@ public class Firearm : Weapon
     [Header("Animation")]
     public Animator anim;
 
-
     [Space]
     [Header("Firearm Events")]
-    public FireArmEvents events;
+    [HideInInspector]
+    public FirearmEvents events;
 
     public override void StartWeapon()
     {
@@ -223,9 +224,9 @@ public class Firearm : Weapon
         {
             anim.SetTrigger("Reload");
         }
-        currentAmmo = maxAmmo;
         yield return new WaitForSeconds(reloadTime);
 
+        currentAmmo = maxAmmo;
         
         isReloading = false;
 
@@ -270,17 +271,4 @@ public class Firearm : Weapon
 
         currentAmmo--;
     }
-}
-
-[System.Serializable]
-public class FireArmEvents
-{
-    public UnityEvent onShooting;
-    public UnityEvent onSingleShot;
-    public UnityEvent onBurst;
-    public UnityEvent onAutomatic;
-    public UnityEvent onHitEnemy;
-    public UnityEvent onKillEnemy;
-    public UnityEvent onStartReloading;
-    public UnityEvent onEndReloading;
 }
