@@ -35,7 +35,7 @@ public class FirearmData : WeaponData
 
     [Space]
     [Header("Automatic")]
-    public int baseFireRate;
+    public float baseFireRate;
 
     [Space]
     [Header("Ammo")]

@@ -23,7 +23,7 @@ public class Firearm : Weapon
 
     [Space]
     [Header("Automatic")]
-    public int fireRate;
+    public float fireRate;
     float timeSinceLastShot;
 
     [Space]
@@ -171,7 +171,6 @@ public class Firearm : Weapon
     }
 
     bool CanShootBurst() => !isBursting && canBurst;
-
 
     IEnumerator BurstMode()
     {
