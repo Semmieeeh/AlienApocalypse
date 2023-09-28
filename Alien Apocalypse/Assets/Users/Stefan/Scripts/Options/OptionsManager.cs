@@ -18,6 +18,14 @@ public class OptionsManager : MonoBehaviour
     /// </summary>
     public static OptionsEvent onOptionsChanged;
 
+    public static OptionsData Options
+    {
+        get
+        {
+            return OptionsData.Options;
+        }
+    }
+
     private List<IOption<bool>> boolOptions = new();
 
     private List<IOption<float>> floatOptions = new ( );
