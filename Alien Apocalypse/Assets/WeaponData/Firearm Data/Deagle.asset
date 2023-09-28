@@ -28,10 +28,10 @@ MonoBehaviour:
   raycastDistance: 1000
   swayClamp: 0.02
   smoothing: 5
-  camRecoilX: -6
+  camRecoilX: -15
   camRecoilY: -0.2
   camRecoilZ: -0.2
-  camSnappiness: 2
+  camSnappiness: 8
   camReturnSpeed: 10
   firearmRecoilX: -15
   firearmRecoilY: 0
@@ -41,3 +41,4 @@ MonoBehaviour:
   firearmRecoilBackUp: -0.8
   backUpSnappiness: 18
   backUpReturnSpeed: 60
+  anim: {fileID: 7400000, guid: 1f27136cb71c91c4badfa880576a9700, type: 2}

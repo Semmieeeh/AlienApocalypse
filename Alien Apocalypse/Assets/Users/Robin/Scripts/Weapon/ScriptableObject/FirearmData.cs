@@ -75,5 +75,5 @@ public class FirearmData : WeaponData
     public float backUpReturnSpeed;
 
     [Header("Animation Data")]
-    public Animation anim;
+    public AnimationClip anim;
 }

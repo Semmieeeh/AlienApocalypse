@@ -93,7 +93,7 @@ public class Firearm : Weapon
         fireRate = firearmData.baseFireRate;
 
         maxAmmo = firearmData.baseMaxAmmo;
-        reloadTime = firearmData.baseReloadTime;
+        reloadTime = firearmData.anim.length;
 
         currentAmmo = maxAmmo;
     }
