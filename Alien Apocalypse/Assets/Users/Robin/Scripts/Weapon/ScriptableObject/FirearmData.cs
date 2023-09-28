@@ -76,4 +76,6 @@ public class FirearmData : WeaponData
 
     [Header("Animation Data")]
     public AnimationClip anim;
+
+
 }
