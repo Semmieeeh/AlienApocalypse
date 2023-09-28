@@ -73,4 +73,7 @@ public class FirearmData : WeaponData
     public float firearmRecoilBackUp;
     public float backUpSnappiness;
     public float backUpReturnSpeed;
+
+    [Header("Animation Data")]
+    public Animation anim;
 }
