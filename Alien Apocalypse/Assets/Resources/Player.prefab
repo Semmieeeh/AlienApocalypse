@@ -1174,6 +1174,7 @@ GameObject:
   - component: {fileID: 6838655476068543461}
   - component: {fileID: 3377234245554906752}
   - component: {fileID: 781989904993670416}
+  - component: {fileID: 4346205093680881249}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1322,6 +1323,20 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &4346205093680881249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3758188069513626420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5965e939ffd2bc143ae4e16dacdd0f5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handler: {fileID: 7787047051649554545}
+  raycastLength: 10
 --- !u!1 &4477877718893400725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,7 +1638,19 @@ MonoBehaviour:
   events:
     onShooting:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 261849482295397412}
+          m_TargetAssemblyTypeName: CrosshairManager, Assembly-CSharp
+          m_MethodName: Shoot
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onSingleShot:
       m_PersistentCalls:
         m_Calls: []
@@ -1635,10 +1662,46 @@ MonoBehaviour:
         m_Calls: []
     onHitEnemy:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 3915156029715993586}
+          m_TargetAssemblyTypeName: UIEnemyHits, Assembly-CSharp
+          m_MethodName: EnemyHit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onKillEnemy:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 3915156029715993586}
+          m_TargetAssemblyTypeName: UIEnemyHits, Assembly-CSharp
+          m_MethodName: EnemyKill
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2120277522286803370}
+          m_TargetAssemblyTypeName: InformativePopupManager, Assembly-CSharp
+          m_MethodName: AddKillPopup
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     onStartReloading:
       m_PersistentCalls:
         m_Calls: []

@@ -9,11 +9,14 @@ public class PickUpWeapon : MonoBehaviourPunCallbacks, IInteractable
 
     public void Interact(WeaponInputHandler handler)
     {
-        if(handler.CanAddWeapon())
+        if(firearmData != null)
         {
-            handler.AddWeapon(firearmData);
+            if(handler.CanAddWeapon())
+            {
+                handler.AddWeapon(firearmData);
 
-            PhotonNetwork.Destroy(gameObject);
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 }

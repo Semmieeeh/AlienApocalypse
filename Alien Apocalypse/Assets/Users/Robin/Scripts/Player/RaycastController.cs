@@ -18,7 +18,7 @@ public class RaycastController : MonoBehaviourPunCallbacks
         {
             if(hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable))
             {
-                if(Input.GetKeyDown(KeyCode.F))
+                if(Input.GetKeyDown(KeyCode.E))
                 {
                     interactable.Interact(handler);
                 }
