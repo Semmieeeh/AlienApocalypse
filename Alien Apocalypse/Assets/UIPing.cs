@@ -11,6 +11,6 @@ public class UIPing : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        textElement.text = "Ping" + (PhotonNetwork.IsConnected? PhotonNetwork.GetPing().ToString() : "??");
+        textElement.text = "Ping: " + (PhotonNetwork.IsConnected? PhotonNetwork.GetPing().ToString() : "??");
     }
 }

@@ -35,9 +35,7 @@ public class MainMenu : MonoBehaviour
     }
     public void PopupMessage(string description)
     {
-        if (Popup == null) throw new System.NullReferenceException(nameof(Popup));
-
-        Popup.Popup("Important", description);
+        PopupMessage("Important", description);
     }
     public void PopupMessage(string cause, string description)
     {
