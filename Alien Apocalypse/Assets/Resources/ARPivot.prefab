@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1814970507048184447}
+  - component: {fileID: 1449288521228019787}
+  - component: {fileID: 7768546008566916693}
   m_Layer: 0
   m_Name: Assault Rifle
   m_TagString: Untagged
@@ -33,6 +35,40 @@ Transform:
   - {fileID: 5310396930078496763}
   m_Father: {fileID: 1648212493076297248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1449288521228019787
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3472738930565078864}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9e5dab670b01b964fb0cf935a587ef06, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7768546008566916693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3472738930565078864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70d86aa0ca754a440a863fe5e36fc1d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireArm: {fileID: 0}
 --- !u!1 &5637194204385380209
 GameObject:
   m_ObjectHideFlags: 0
