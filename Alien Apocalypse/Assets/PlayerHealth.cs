@@ -46,7 +46,7 @@ public class PlayerHealth : MonoBehaviour
     {
         //update health text object
         health -= damage;
-        Debug.Log(health);
+        //Debug.Log(health);
     }
     public void Die()
     {

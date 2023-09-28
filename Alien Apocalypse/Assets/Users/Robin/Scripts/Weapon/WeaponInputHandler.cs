@@ -21,30 +21,25 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        GameObject weapon = PhotonNetwork.Instantiate(selectedWeapon.firearmData.prefab.name, selectedWeapon.transform.position, selectedWeapon.transform.rotation);
+        InitializeWeaponSlots();
+    }
 
-        
-        weapon.transform.parent = selectedWeapon.transform;
-        
-        weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        weapon.transform.localScale = new Vector3(1, 1, 1);
-
-        if (weapon.TryGetComponent<Animator>(out Animator anim))
+    void InitializeWeaponSlots()
+    {
+        for(int i = 0; i < weaponSlots.Count; i++)
         {
-            selectedWeapon.GetComponent<Firearm>().anim = anim;
+            if(weaponSlots[i] != null)
+            {
+                SetWeapon();
+            }
         }
-        selectedWeapon.mainCam = mainCam;
-        selectedWeapon.recoilObject = recoil;
-
-        selectedWeapon.StartWeapon();
     }
 
     void Update()
     {
         SelectWeapon();
 
-        if(selectedWeapon.firearmData != null)
-            InputWeapon();
+        InputWeapon();
     }
 
     void InputWeapon()
@@ -69,34 +64,77 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
         if(oldScrollNum != scrollNum)
         {
-            if(selectedWeapon.transform.childCount > 0)
+            if(selectedWeapon != null)
             {
-                PhotonNetwork.Destroy(selectedWeapon.transform.GetChild(0).gameObject);
+                selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
             }
 
             if(weaponSlots[Mathf.Abs((int)scrollNum)] != null)
             {
                 selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
-                
-                if(selectedWeapon.firearmData != null)
-                {
-                    GameObject weapon = PhotonNetwork.Instantiate(selectedWeapon.firearmData.prefab.name, selectedWeapon.transform.position, selectedWeapon.transform.rotation);
 
-                    weapon.transform.parent = selectedWeapon.transform;
+                selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
 
-                    weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-                    weapon.transform.localScale = new Vector3(1, 1, 1);
-                    if (weapon.TryGetComponent<Animator>(out Animator anim))
-                    {
-                        selectedWeapon.GetComponent<Firearm>().anim = anim;
-                    }
-                    selectedWeapon.mainCam = mainCam;
-                    selectedWeapon.recoilObject = recoil;
-                    selectedWeapon.StartWeapon();
-                }
+                selectedWeapon.mainCam = mainCam;
+                selectedWeapon.recoilObject = recoil;
+            }
+            else
+            {
+                selectedWeapon.mainCam = null;
+                selectedWeapon.recoilObject = null;
+
+                selectedWeapon = null;
             }
 
             oldScrollNum = scrollNum;
+        }
+    }
+
+    public void AddWeapon(Firearm firearm)
+    {
+        for(int i = 0; i < weaponSlots.Count; i++)
+        {
+            if(weaponSlots[i] == null)
+            {
+                weaponSlots[i] = firearm;
+                SetWeapon();
+            }
+        }
+    }
+
+    void SetWeapon()
+    {
+        for(int i = 0; i < weaponSlots.Count; i++)
+        {
+            if(weaponSlots[i].transform.childCount == 0)
+            {
+                GameObject weapon = PhotonNetwork.Instantiate(weaponSlots[i].firearmData.prefab.name, transform.position, transform.rotation);
+
+                weapon.transform.parent = weaponSlots[i].transform;
+
+                weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+                weapon.transform.localScale = new Vector3(1, 1, 1);
+
+
+                if(weapon.TryGetComponent<Animator>(out Animator animator))
+                {
+                    weaponSlots[i].GetComponent<Firearm>().anim = animator;
+                }
+
+                weaponSlots[i].StartWeapon();
+
+                if(Mathf.Abs((int)scrollNum) == i)
+                {
+                    selectedWeapon = weaponSlots[i];
+
+                    selectedWeapon.mainCam = mainCam;
+                    selectedWeapon.recoilObject = recoil;
+                }
+                else
+                {
+                    weaponSlots[i].transform.GetChild(0).gameObject.SetActive(false);
+                }
+            }
         }
     }
 }

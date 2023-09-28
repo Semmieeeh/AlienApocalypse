@@ -54,15 +54,18 @@ public class Firearm : Weapon
     Vector3 firearmTargetPosition;
 
     [Space]
+    [Header("Animation")]
+    public Animator anim;
+
+
+    [Space]
     [Header("Firearm Events")]
     public FireArmEvents events;
-    public Animator anim;
 
     public override void StartWeapon()
     {
         firearmCurrentPosition = firearmData.localPlacmentPos;
         SetWeaponData();
-        currentAmmo = maxAmmo;
     }
 
     public override void UpdateWeapon()
@@ -91,6 +94,8 @@ public class Firearm : Weapon
 
         maxAmmo = firearmData.baseMaxAmmo;
         reloadTime = firearmData.baseReloadTime;
+
+        currentAmmo = maxAmmo;
     }
 
     public void ModifyWeaponData(float damage, float cooldown, int burstAmount, int fireRate, int maxAmmo, float reloadTime)
@@ -151,7 +156,7 @@ public class Firearm : Weapon
     {
         isSingleShoting = true;
         canSingleShoot = false;
-        anim?.SetTrigger("Shoot");
+
         // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
         events.onShooting?.Invoke();
 
@@ -186,7 +191,7 @@ public class Firearm : Weapon
 
             Recoil();
             Raycast();
-            anim?.SetTrigger("Shoot");
+
             yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
         }
 
@@ -206,16 +211,20 @@ public class Firearm : Weapon
 
         Recoil();
         Raycast();
-        anim?.SetTrigger("Shoot");
+ 
         timeSinceLastShot = Time.time;        
     }
 
     public override IEnumerator Reloading()
     {
         events.onStartReloading?.Invoke();
-        anim?.SetTrigger("Reload");
         isReloading = true;
 
+        if(anim != null)
+        {
+            anim.SetTrigger("Reload");
+        }
+        
         yield return new WaitForSeconds(reloadTime);
 
         currentAmmo = maxAmmo;
@@ -247,6 +256,11 @@ public class Firearm : Weapon
 
     void Raycast()
     {
+        if(anim != null)
+        {
+            anim.SetTrigger("Shoot");
+        }
+
         if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
         {
             if(hit.transform.TryGetComponent(out IDamagable damagable))
