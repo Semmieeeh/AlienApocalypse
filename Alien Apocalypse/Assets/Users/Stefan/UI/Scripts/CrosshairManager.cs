@@ -206,6 +206,11 @@ public class CrosshairManager : MonoBehaviour
 
     public void Shoot()
     {
+        if ( OptionsManager.Options.CrosshairEffects == false )
+            return;
+
+
+
         active = true;
         currentAnimationTime = 0;
         
