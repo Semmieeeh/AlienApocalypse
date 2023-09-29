@@ -57,7 +57,7 @@ public class Firearm : Weapon
 
     [Space]
     [Header("Animation")]
-    public Animator anim;
+    public Animator animator;
 
     [Space]
     [Header("Audio")]
@@ -225,9 +225,9 @@ public class Firearm : Weapon
         events.onStartReloading?.Invoke();
         isReloading = true;
 
-        if(anim != null)
+        if(animator != null)
         {
-            anim.SetTrigger("Reload");
+            animator.SetTrigger("Reload");
         }
 
         source.clip = firearmData.reloadSound;
@@ -265,9 +265,9 @@ public class Firearm : Weapon
 
     void Shoot()
     {
-        if(anim != null)
+        if(animator != null)
         {
-            anim.SetTrigger("Shoot");
+            animator.SetTrigger("Shoot");
         }
 
         source.clip = firearmData.shootSound;
@@ -287,7 +287,7 @@ public class Firearm : Weapon
     [PunRPC]
     public void PlaySound()
     {
-        if (source != null)
+        if(source != null)
         {
             source.Play();
         }

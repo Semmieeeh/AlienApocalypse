@@ -151,7 +151,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
                         if(weapon.TryGetComponent<Animator>(out Animator animator))
                         {
-                            firearm.anim = animator;
+                            firearm.animator = animator;
                         }
 
                         if(weapon.TryGetComponent<AudioSource>(out AudioSource audioSource))
@@ -173,6 +173,25 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                             weaponSlots[i].transform.GetChild(0).gameObject.SetActive(false);
                         }
                     }
+                }
+            }
+        }
+    }
+
+    public void AddAbility(FirearmAbility firearmAbility)
+    {
+        weaponAbilities.Add(firearmAbility);
+    }
+
+    void SetAbility()
+    {
+        for(int i = 0; i < weaponSlots.Count; i++)
+        {
+            if(weaponSlots[i].transform.childCount > 0)
+            {
+                if(weaponSlots[i].TryGetComponent<Firearm>(out Firearm firearm))
+                {
+
                 }
             }
         }
