@@ -154,6 +154,11 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                             firearm.anim = animator;
                         }
 
+                        if(weapon.TryGetComponent<AudioSource>(out AudioSource audioSource))
+                        {
+                            firearm.source = audioSource;
+                        }
+
                         weaponSlots[i].StartWeapon();
 
                         if(Mathf.Abs((int)scrollNum) == i)

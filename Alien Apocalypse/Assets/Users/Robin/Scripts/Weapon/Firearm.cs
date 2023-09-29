@@ -58,6 +58,9 @@ public class Firearm : Weapon
     [Space]
     [Header("Animation")]
     public Animator anim;
+
+    [Space]
+    [Header("Audio")]
     public AudioSource source;
 
     [Space]
@@ -167,7 +170,7 @@ public class Firearm : Weapon
         events.onSingleShot?.Invoke();
 
         Recoil();
-        Raycast();
+        Shoot();
 
         yield return new WaitForSeconds(cooldown);
         isSingleShoting = false;
@@ -192,7 +195,7 @@ public class Firearm : Weapon
             events.onBurst?.Invoke();
 
             Recoil();
-            Raycast();
+            Shoot();
 
             yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
         }
@@ -212,7 +215,7 @@ public class Firearm : Weapon
         events.onAutomatic?.Invoke();
 
         Recoil();
-        Raycast();
+        Shoot();
  
         timeSinceLastShot = Time.time;        
     }
@@ -226,6 +229,10 @@ public class Firearm : Weapon
         {
             anim.SetTrigger("Reload");
         }
+
+        source.clip = firearmData.reloadSound;
+        photonView.RPC("PlaySound", RpcTarget.All);
+
         yield return new WaitForSeconds(reloadTime/2);
         currentAmmo = maxAmmo;
         yield return new WaitForSeconds(reloadTime / 2);
@@ -256,13 +263,16 @@ public class Firearm : Weapon
         firearmTargetPosition = new Vector3(firearmData.localPlacmentPos.x, firearmData.localPlacmentPos.y, firearmData.firearmRecoilBackUp + firearmData.localPlacmentPos.z);
     }
 
-    void Raycast()
+    void Shoot()
     {
         if(anim != null)
         {
             anim.SetTrigger("Shoot");
         }
-        photonView.RPC("ShootSound", RpcTarget.All);
+
+        source.clip = firearmData.shootSound;
+        photonView.RPC("PlaySound", RpcTarget.All);
+
         if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
         {
             if(hit.transform.TryGetComponent(out IDamagable damagable))
@@ -275,12 +285,11 @@ public class Firearm : Weapon
     }
 
     [PunRPC]
-    public void ShootSound()
+    public void PlaySound()
     {
         if (source != null)
         {
             source.Play();
         }
     }
-
 }

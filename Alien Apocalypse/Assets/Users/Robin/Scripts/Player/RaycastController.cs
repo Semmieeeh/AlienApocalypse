@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class RaycastController : MonoBehaviourPunCallbacks
+public class RaycastController : MonoBehaviour
 {
     [Header("Player")]
     public WeaponInputHandler handler;
