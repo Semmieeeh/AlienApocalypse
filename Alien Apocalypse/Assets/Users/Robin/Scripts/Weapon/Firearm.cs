@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -272,10 +273,7 @@ public class Firearm : Weapon
         {
             anim.SetTrigger("Shoot");
         }
-        if (source != null)
-        {
-            source.Play();
-        }
+        photonView.RPC("ShootSound", RpcTarget.All);
         if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
         {
             if(hit.transform.TryGetComponent(out IDamagable damagable))
@@ -286,4 +284,14 @@ public class Firearm : Weapon
 
         currentAmmo--;
     }
+
+    [PunRPC]
+    public void ShootSound()
+    {
+        if (source != null)
+        {
+            source.Play();
+        }
+    }
+
 }
