@@ -58,7 +58,7 @@ public class Firearm : Weapon
     [Space]
     [Header("Animation")]
     public Animator anim;
-    private AudioSource source;
+    public AudioSource source;
 
     [Space]
     [Header("Firearm Events")]
@@ -91,18 +91,7 @@ public class Firearm : Weapon
     {
         damage = firearmData.baseDamage;
         cooldown = firearmData.baseCooldown;
-        if(transform.GetChild(0).TryGetComponent<AudioSource>(out AudioSource s))
-        {
-            source = s;
-            if (photonView.IsMine)
-            {
-                source.spatialBlend = 0;
-            }
-            else
-            {
-                source.spatialBlend = 1;
-            }
-        }
+        
         burstAmount = firearmData.baseBurstAmount;
         fireRate = firearmData.baseFireRate;
 
