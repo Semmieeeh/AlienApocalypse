@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class Movement : MonoBehaviourPunCallbacks
+public class Movement : MonoBehaviour
 {
     [Header("Speed modifiers")]
     public float walkSpeed = 20f;
@@ -40,17 +40,12 @@ public class Movement : MonoBehaviourPunCallbacks
     public bool wallRunning;
     public bool dashUnlocked;
     public float fallingspeedThreshold;
-    public Animator anim;
-    public bool walkingBackwards;
-    int walkState;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
         maxFov = Camera.main.fieldOfView + 10;
         PhotonNetwork.SerializationRate = 25;
-        walkState = 0;
-        photonView.RPC("UpdateAnimation", RpcTarget.All);
     }
 
     private void Update()
@@ -68,47 +63,6 @@ public class Movement : MonoBehaviourPunCallbacks
 
         Physics.IgnoreLayerCollision(3,11,true);
         StopWhenNoInput();
-        AnimationCheck();
-        
-    }
-
-    public void AnimationCheck()
-    {
-        if (Input.GetKey(KeyCode.S))
-        {
-            walkingBackwards = true;
-        }
-        else
-        {
-            walkingBackwards = false;
-        }
-
-
-
-
-        if (sprinting && input.magnitude > 0.5f && grounded)
-        {
-            walkState = 2;
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-        }
-
-        if (sprinting && input.magnitude < 0.5f && grounded)
-        {
-            walkState = 0;
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-        }
-
-        if(!sprinting && input.magnitude > 0.5f && grounded)
-        {
-            walkState = 1;
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-        }
-
-        if(!sprinting && input.magnitude < 0.5f && grounded)
-        {
-            walkState = 0;
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-        }
     }
     public void StopWhenNoInput()
     {
@@ -244,11 +198,4 @@ public class Movement : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
-    void UpdateAnimation(int state,bool state2)
-    {
-        anim.SetBool("WalkingBackwards", state2);
-        anim.SetInteger("WalkState", state);
-        
-    }
 }
