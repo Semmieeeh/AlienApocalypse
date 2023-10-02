@@ -26,8 +26,8 @@ MonoBehaviour:
   baseMaxAmmo: 36
   baseReloadTime: 1
   raycastDistance: 1000
-  swayClamp: 0.02
-  smoothing: 5
+  swayClamp: 0.015
+  smoothing: 3
   camRecoilX: -2.5
   camRecoilY: -0.2
   camRecoilZ: -0.2
@@ -42,5 +42,3 @@ MonoBehaviour:
   backUpSnappiness: 8
   backUpReturnSpeed: 60
   anim: {fileID: 7400000, guid: ec3f78622677e764e827cce237a65283, type: 2}
-  shootSound: {fileID: 0}
-  reloadSound: {fileID: 0}
