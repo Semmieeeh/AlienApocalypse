@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6625734595342488557}
   - component: {fileID: 545115714369202350}
   - component: {fileID: 7310395408582631964}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Alien Blaster Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,8 @@ GameObject:
   - component: {fileID: 6475517372909030591}
   - component: {fileID: 708788918839171486}
   - component: {fileID: 5271443141555169532}
-  m_Layer: 0
+  - component: {fileID: 6447088498975249838}
+  m_Layer: 8
   m_Name: AlienBlasterPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,3 +202,17 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &6447088498975249838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5180381444067359868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ec45602d41bf94b97a68ef8de40594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 290631054588713901}

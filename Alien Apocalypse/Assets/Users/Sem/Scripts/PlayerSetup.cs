@@ -16,6 +16,7 @@ public class PlayerSetup : MonoBehaviour
     public EnemyManager enemy;
     public GameObject weapon;
     public GameObject myWeapon;
+    public GameObject[] playerParts;
     public void IsLocalPlayer()
     {
         movement.enabled = true;
@@ -23,7 +24,10 @@ public class PlayerSetup : MonoBehaviour
         uiVanStefan.SetActive(true);
         weapon.layer = 7;
         gameObject.layer = 3;
-
+        foreach (var part in playerParts)
+        {
+            part.layer = 13;
+        }
         cam.GetComponent<Camera>().enabled = true;
         cam.GetComponent<MouseLook>().enabled = true;
         cam.GetComponent<AudioListener>().enabled = true;

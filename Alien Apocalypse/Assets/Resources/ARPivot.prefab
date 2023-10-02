@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1814970507048184447}
   - component: {fileID: 1449288521228019787}
   - component: {fileID: 7768546008566916693}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Assault Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,8 @@ GameObject:
   - component: {fileID: -1500343585719706855}
   - component: {fileID: 3926202768692612481}
   - component: {fileID: 2084303751050916004}
-  m_Layer: 0
+  - component: {fileID: 8401966451230363304}
+  m_Layer: 9
   m_Name: ARPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,6 +244,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8401966451230363304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5637194204385380209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ec45602d41bf94b97a68ef8de40594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 3472738930565078864}
+  - {fileID: 7190868715993374985}
+  - {fileID: 7746584705758065936}
 --- !u!1 &7190868715993374985
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +271,7 @@ GameObject:
   - component: {fileID: 790655532389679926}
   - component: {fileID: 4071042203725338687}
   - component: {fileID: 8057473783201880584}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Clip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +354,7 @@ GameObject:
   - component: {fileID: 5310396930078496763}
   - component: {fileID: 3020631042927331765}
   - component: {fileID: 3230209192274923723}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
