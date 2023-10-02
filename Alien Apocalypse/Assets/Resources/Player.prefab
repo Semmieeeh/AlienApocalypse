@@ -1239,7 +1239,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3967
+    m_Bits: 8063
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1337,6 +1337,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handler: {fileID: 7787047051649554545}
   raycastLength: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1 &4477877718893400725
 GameObject:
   m_ObjectHideFlags: 0
