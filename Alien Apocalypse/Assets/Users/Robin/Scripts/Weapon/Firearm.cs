@@ -36,7 +36,7 @@ public class Firearm : Weapon
     [Space]
     [Header("Reloading")]
     public float reloadTime;
-    bool isReloading;
+    public bool isReloading;
 
     [Space]
     [Header("Raycast")]
@@ -289,7 +289,7 @@ public class Firearm : Weapon
     {
         if(source != null)
         {
-            source.Play();
+            source.PlayOneShot(source.clip);
         }
     }
 }

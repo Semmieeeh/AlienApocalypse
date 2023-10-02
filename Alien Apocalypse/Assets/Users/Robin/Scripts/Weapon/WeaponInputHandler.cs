@@ -46,7 +46,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
         if(Input.GetKeyDown(KeyCode.R))
         {
-            if (selectedWeapon.GetComponent<Firearm>().currentAmmo < selectedWeapon.GetComponent<Firearm>().maxAmmo)
+            if (selectedWeapon.GetComponent<Firearm>().currentAmmo < selectedWeapon.GetComponent<Firearm>().maxAmmo && selectedWeapon.GetComponent<Firearm>().isReloading == false)
             {
                 selectedWeapon.StartCoroutine(selectedWeapon.Reloading());
             }

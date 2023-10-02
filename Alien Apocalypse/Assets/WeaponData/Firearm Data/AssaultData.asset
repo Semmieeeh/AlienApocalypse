@@ -28,9 +28,9 @@ MonoBehaviour:
   raycastDistance: 1000
   swayClamp: 0.015
   smoothing: 5
-  camRecoilX: -2
-  camRecoilY: -0.1
-  camRecoilZ: -0.1
+  camRecoilX: -3
+  camRecoilY: -0.2
+  camRecoilZ: -0.2
   camSnappiness: 10
   camReturnSpeed: 5
   firearmRecoilX: -2.5
@@ -38,7 +38,9 @@ MonoBehaviour:
   firearmRecoilZ: 0
   firearmSnappiness: 10
   firearmReturnSpeed: 20
-  firearmRecoilBackUp: -0.3
+  firearmRecoilBackUp: -0.6
   backUpSnappiness: 20
   backUpReturnSpeed: 30
   anim: {fileID: 7400000, guid: 61634443afc098644b45d41444c221b0, type: 2}
+  shootSound: {fileID: 8300000, guid: 5703e52fe98ca4442915ee08a905a7cc, type: 3}
+  reloadSound: {fileID: 8300000, guid: e63a991ae81cfa54cbfca0a65c5b3fc7, type: 3}
