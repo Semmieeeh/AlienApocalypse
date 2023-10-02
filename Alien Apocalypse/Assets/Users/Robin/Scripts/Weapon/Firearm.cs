@@ -36,7 +36,7 @@ public class Firearm : Weapon
     [Space]
     [Header("Reloading")]
     public float reloadTime;
-    bool isReloading;
+    public bool isReloading;
 
     [Space]
     [Header("Raycast")]
@@ -100,7 +100,7 @@ public class Firearm : Weapon
 
         maxAmmo = firearmData.baseMaxAmmo;
         reloadTime = firearmData.anim.length;
-
+        source.spatialBlend = 0;
         currentAmmo = maxAmmo;
     }
 
@@ -277,7 +277,7 @@ public class Firearm : Weapon
         {
             if(hit.transform.TryGetComponent(out IDamagable damagable))
             {
-                damagable.Damagable(firearmData.baseDamage, events.onKillEnemy, events.onHitEnemy);               
+                damagable.Damagable(firearmData.baseDamage, events.onKillEnemy, events.onHitEnemy);           
             }
         }
 
@@ -289,7 +289,10 @@ public class Firearm : Weapon
     {
         if(source != null)
         {
-            source.Play();
+            float pitch = source.pitch;
+            source.pitch = Random.Range(source.pitch - 0.07f, source.pitch +0.0f);
+            source.PlayOneShot(source.clip);
+            source.pitch = pitch;
         }
     }
 }
