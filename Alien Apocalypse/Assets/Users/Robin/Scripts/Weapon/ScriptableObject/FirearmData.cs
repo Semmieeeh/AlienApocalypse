@@ -76,6 +76,7 @@ public class FirearmData : WeaponData
 
     [Header("Animation Data")]
     public AnimationClip anim;
+    public int weaponInt;
 
     [Header("Audio Data")]
     public AudioClip shootSound;

@@ -43,6 +43,8 @@ public class Movement : MonoBehaviourPunCallbacks
     public bool walkingBackwards;
     public int walkState;
     public Animator anim;
+    public Animator armAnim;
+    public int armState;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -67,6 +69,35 @@ public class Movement : MonoBehaviourPunCallbacks
         Physics.IgnoreLayerCollision(3,11,true);
         StopWhenNoInput();
         AnimationCheck();
+        ArmAnimCheck();
+    }
+
+    public void ArmAnimCheck()
+    {
+        if(sprinting && input.magnitude > 0.5f)
+        {
+            photonView.RPC("AnimRPC", RpcTarget.All, 2);
+        }
+
+        if(sprinting && input.magnitude < 0.5f)
+        {
+            photonView.RPC("AnimRPC", RpcTarget.All, 0);
+        }
+
+        if(!sprinting && input.magnitude > 0.5f)
+        {
+            photonView.RPC("AnimRPC", RpcTarget.All, 1);
+        }
+
+        if(!sprinting && input.magnitude < 0.5f)
+        {
+            photonView.RPC("AnimRPC", RpcTarget.All, 0);
+        }
+    }
+    [PunRPC]
+    public void AnimRPC(int i)
+    {
+        armAnim.SetInteger("ArmState", i);
     }
     private void OnTriggerStay(Collider other)
     {

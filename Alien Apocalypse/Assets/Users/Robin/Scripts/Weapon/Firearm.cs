@@ -58,6 +58,7 @@ public class Firearm : Weapon
     [Space]
     [Header("Animation")]
     public Animator animator;
+    public int weaponInt;
 
     [Space]
     [Header("Audio")]
@@ -84,7 +85,7 @@ public class Firearm : Weapon
 
         firearmTargetPosition = Vector3.Lerp(firearmTargetPosition, firearmData.localPlacmentPos, firearmData.backUpReturnSpeed * Time.deltaTime);
         firearmCurrentPosition = Vector3.Lerp(firearmCurrentPosition, firearmTargetPosition, firearmData.backUpSnappiness * Time.deltaTime);
-
+        
         recoilObject.transform.localRotation = Quaternion.Euler(camCurrentRotation);
         transform.localRotation = Quaternion.Euler(firearmCurrentRotation);
         transform.localPosition = firearmCurrentPosition;
@@ -94,7 +95,7 @@ public class Firearm : Weapon
     {
         damage = firearmData.baseDamage;
         cooldown = firearmData.baseCooldown;
-        
+        weaponInt = firearmData.weaponInt;
         burstAmount = firearmData.baseBurstAmount;
         fireRate = firearmData.baseFireRate;
 

@@ -24,6 +24,11 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     [Header("Firearm Events")]
     public FirearmEvents events;
 
+    [Header("Arm Animations")]
+    public Animator anim;
+    public GameObject arms;
+    private GameObject previousWeapon;
+
     void Start()
     {
         SetWeapon();
@@ -32,11 +37,22 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     void Update()
     {
         SelectWeapon();
-
-        if(selectedWeapon != null)
+        UpdateAnimations();
+        if (selectedWeapon != null)
             InputWeapon();
+        
     }
-
+    public void UpdateAnimations()
+    {
+        if (selectedWeapon != null)
+        {
+            anim.SetInteger("WeaponState", selectedWeapon.gameObject.GetComponent<Firearm>().weaponInt);
+        }
+        else
+        {
+            anim.SetInteger("WeaponState", 0);
+        }
+    }
     void InputWeapon()
     {
         if(Input.GetButton("Fire1"))
@@ -61,7 +77,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     {
         scrollNum += Input.mouseScrollDelta.y;
         scrollNum = Mathf.Clamp(scrollNum, -weaponSlots.Count + 1, 0);
-
+        
         if(oldScrollNum != scrollNum)
         {
             if(selectedWeapon != null)
@@ -70,7 +86,11 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     if(currentFirearm.firearmData != null)
                     {
+                        
                         selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
+                        
+
+                        
                     }
                 }
             }
@@ -82,7 +102,12 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
 
                     selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
-
+                    if (previousWeapon != null)
+                    {
+                        previousWeapon.SetActive(false);
+                    }
+                    arms.transform.GetChild(-scrollNum.ToInt()).gameObject.SetActive(true);
+                    previousWeapon = arms.transform.GetChild(-scrollNum.ToInt()).gameObject;
                     selectedWeapon.mainCam = mainCam;
                     selectedWeapon.recoilObject = recoil;
                 }
@@ -90,7 +115,10 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     selectedWeapon.mainCam = null;
                     selectedWeapon.recoilObject = null;
-
+                    if (previousWeapon != null)
+                    {
+                        previousWeapon.SetActive(false);
+                    }
                     selectedWeapon = null;                    
                 }
             }
@@ -125,6 +153,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     firearm.firearmData = firearmData;
                     SetWeapon();
+                    
                 }
             }            
         }
@@ -171,6 +200,10 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                         else
                         {
                             weaponSlots[i].transform.GetChild(0).gameObject.SetActive(false);
+                            arms.transform.GetChild(0).gameObject.SetActive(true);
+                            previousWeapon = arms.transform.GetChild(0).gameObject;
+
+
                         }
                     }
                 }
