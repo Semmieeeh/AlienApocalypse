@@ -10,11 +10,10 @@ public class RaycastController : MonoBehaviour
     [Space]
     [Header("Raycast")]
     public float raycastLength;
-    public LayerMask layerMask;
 
     void Update()
     {
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, raycastLength, layerMask))
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, raycastLength))
         {
             if(hit.transform.TryGetComponent<IInteractable>(out IInteractable interactable))
             {

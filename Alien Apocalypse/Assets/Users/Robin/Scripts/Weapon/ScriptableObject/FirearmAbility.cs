@@ -12,7 +12,7 @@ public class FirearmAbility : Ability
     [Header("Increase by Adding")]
     public int burstAmount;
     [Header("Increase in %")]
-    public float fireRate;
+    public int fireRate;
     [Header("Increase by Adding")]
     public int maxAmmo;
     [Header("Decrease in %")]

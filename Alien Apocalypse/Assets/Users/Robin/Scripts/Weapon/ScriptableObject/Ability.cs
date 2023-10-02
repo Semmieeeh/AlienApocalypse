@@ -8,6 +8,7 @@ public class Ability : ScriptableObject
     {
         player,
         firearm,
+        melee,
     }
     public AbilityType abilityType;
 }

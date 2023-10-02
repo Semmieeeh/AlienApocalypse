@@ -104,7 +104,7 @@ public class Firearm : Weapon
         currentAmmo = maxAmmo;
     }
 
-    public void ModifyWeaponData(float damage, float cooldown, int burstAmount, float fireRate, int maxAmmo, float reloadTime)
+    public void ModifyWeaponData(float damage, float cooldown, int burstAmount, int fireRate, int maxAmmo, float reloadTime)
     {
         // Damage increase in Percentage
         this.damage *= 1 + (damage / 100);
@@ -113,7 +113,7 @@ public class Firearm : Weapon
         // Burst Amount added by Adding
         this.burstAmount += burstAmount;
         // Fire Rate increased in Percentage
-        this.fireRate *= 1 + (fireRate / 100);
+        this.fireRate *= 1 - (fireRate / 100);
         // Max Ammo increase by Adding
         this.maxAmmo += maxAmmo;
         // Reload Time decreased in Percentage

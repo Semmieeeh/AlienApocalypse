@@ -11,7 +11,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     public GameObject recoil;
 
     [Header("Ability")]
-    public List<FirearmAbility> weaponAbilities;
+    public List<Ability> weaponAbilities;
 
     [Header("Weapon")]
     public GameObject weaponHolder;
@@ -181,7 +181,6 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     public void AddAbility(FirearmAbility firearmAbility)
     {
         weaponAbilities.Add(firearmAbility);
-        SetAbility();
     }
 
     void SetAbility()
@@ -192,10 +191,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
             {
                 if(weaponSlots[i].TryGetComponent<Firearm>(out Firearm firearm))
                 {
-                    for(int j = 0; j < weaponAbilities.Count; j++)
-                    {
-                        firearm.ModifyWeaponData(weaponAbilities[j].damage, weaponAbilities[j].cooldown, weaponAbilities[j].burstAmount, weaponAbilities[j].fireRate, weaponAbilities[j].maxAmmo, weaponAbilities[j].reloadTime); ;
-                    }
+
                 }
             }
         }
