@@ -70,6 +70,7 @@ public class Movement : MonoBehaviourPunCallbacks
         StopWhenNoInput();
         AnimationCheck();
         ArmAnimCheck();
+        anim.SetBool("Grounded", grounded);
     }
 
     bool IsMoving()
@@ -173,6 +174,7 @@ public class Movement : MonoBehaviourPunCallbacks
             if (jumping)
             {
                 rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
+                anim.SetTrigger("Jump");
             }
             else if (input.magnitude > 0.5f)
             {
