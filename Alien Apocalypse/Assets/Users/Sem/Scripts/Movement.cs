@@ -287,9 +287,9 @@ public class Movement : MonoBehaviourPunCallbacks
         }
     }
    [PunRPC]
-    public void UpdateAnimation(int state, bool otherState)
+    public void UpdateAnimation(int state, bool otherState, bool walkingBackwards)
     {
-        anim.SetBool("WalkingBackwards", otherState);
+        anim.SetBool("WalkingBackwards", walkingBackwards);
         anim.SetInteger("WalkState", state);
     }
 
