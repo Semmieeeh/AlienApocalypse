@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class DashAbility : MonoBehaviour
+public class DashAbility : MonoBehaviourPunCallbacks
 {
     Rigidbody rb;
     public float dashCooldown;
@@ -32,21 +33,24 @@ public class DashAbility : MonoBehaviour
 
     public void Dash()
     {
-        if (dashCooldown <= 0)
+        if (photonView.IsMine)
         {
-            if(rb.velocity.magnitude < 5)
+            if (dashCooldown <= 0)
             {
-                dashAmount = 20 * multiplier;
-            }
-            else
-            {
-                dashAmount = 10 * multiplier;
-            }
+                if (rb.velocity.magnitude < 5)
+                {
+                    dashAmount = 20 * multiplier;
+                }
+                else
+                {
+                    dashAmount = 10 * multiplier;
+                }
 
-            float velBeforeStop = rb.velocity.magnitude;
-            rb.velocity = Vector3.zero;
-            rb.AddForce(Camera.main.transform.forward * (velBeforeStop + dashAmount), ForceMode.Impulse);
-            dashCooldown = maxDashCooldown;
+                float velBeforeStop = rb.velocity.magnitude;
+                rb.velocity = Vector3.zero;
+                this.rb.AddForce(Camera.main.transform.forward * (velBeforeStop + dashAmount), ForceMode.Impulse);
+                dashCooldown = maxDashCooldown;
+            }
         }
     }
 }

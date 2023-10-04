@@ -17,6 +17,7 @@ public class PlayerSetup : MonoBehaviour
     public GameObject weapon;
     public GameObject myWeapon;
     public GameObject[] playerParts;
+    public GameObject inputObject;
     public void IsLocalPlayer()
     {
         movement.enabled = true;
@@ -34,6 +35,7 @@ public class PlayerSetup : MonoBehaviour
         cam.GetComponent<MouseLook>().cam2.SetActive(true);
         nicknameTextObject.SetActive(false);
         StartCoroutine(nameof(WaitForEnemyObj));
+        inputObject.SetActive(true);
     }
 
     [PunRPC]

@@ -31,17 +31,21 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        SetWeapon();
+        photonView.RPC("SetWeapon", RpcTarget.All);
     }
 
     void Update()
     {
-        SelectWeapon();
-        UpdateAnimations();
-        if (selectedWeapon != null)
-            InputWeapon();
+        if (photonView.IsMine)
+        {
+            photonView.RPC(nameof(SelectWeapon), RpcTarget.All);
+            UpdateAnimations();
+            if (selectedWeapon != null)
+                InputWeapon();
+        }
         
     }
+
     public void UpdateAnimations()
     {
         if (selectedWeapon != null)
@@ -87,9 +91,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     if(currentFirearm.firearmData != null)
                     {
                         
-                        selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
-                        
-
+                        selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);                        
                         
                     }
                 }
@@ -152,13 +154,14 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 if(firearm.firearmData == null)
                 {
                     firearm.firearmData = firearmData;
-                    SetWeapon();
+                    photonView.RPC("SetWeapon", RpcTarget.All);
                     
                 }
             }            
         }
     }
 
+    [PunRPC]
     void SetWeapon()
     {
         for(int i = 0; i < weaponSlots.Count; i++)

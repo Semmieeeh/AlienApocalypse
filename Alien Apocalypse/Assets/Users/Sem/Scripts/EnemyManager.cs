@@ -56,7 +56,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
                 }
             }
 
-            if (PhotonNetwork.IsMasterClient && startedTheWaves == false && PhotonNetwork.CurrentRoom.PlayerCount > 0)
+            if (PhotonNetwork.IsMasterClient && startedTheWaves == false && PhotonNetwork.CurrentRoom.PlayerCount > 1)
             {
                 wavesStarted = true;
                 isInCooldown = true;

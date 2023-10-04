@@ -69,90 +69,99 @@ public class Firearm : Weapon
     [HideInInspector]
     public FirearmEvents events;
 
-    public void Start()
+    public override void StartWeapon()
     {
         if (photonView.IsMine)
         {
+            firearmCurrentPosition = firearmData.localPlacmentPos;
             transform.GetChild(0).GetComponent<Children>().enabled = true;
+            SetWeaponData();
         }
-    }
-    public override void StartWeapon()
-    {
-        firearmCurrentPosition = firearmData.localPlacmentPos;
-        SetWeaponData();
     }
 
     public override void UpdateWeapon()
     {
-        camTargetRotation = Vector3.Lerp(camTargetRotation, Vector3.zero, firearmData.camReturnSpeed * Time.deltaTime);
-        camCurrentRotation = Vector3.Slerp(camCurrentRotation, camTargetRotation, firearmData.camSnappiness * Time.fixedDeltaTime);
+        if (photonView.IsMine)
+        {
+            camTargetRotation = Vector3.Lerp(camTargetRotation, Vector3.zero, firearmData.camReturnSpeed * Time.deltaTime);
+            camCurrentRotation = Vector3.Slerp(camCurrentRotation, camTargetRotation, firearmData.camSnappiness * Time.fixedDeltaTime);
 
-        firearmTargetRotation = Vector3.Lerp(firearmTargetRotation, Vector3.zero, firearmData.firearmReturnSpeed * Time.deltaTime);
-        firearmCurrentRotation = Vector3.Lerp(firearmCurrentRotation, firearmTargetRotation, firearmData.firearmSnappiness * Time.fixedDeltaTime);
+            firearmTargetRotation = Vector3.Lerp(firearmTargetRotation, Vector3.zero, firearmData.firearmReturnSpeed * Time.deltaTime);
+            firearmCurrentRotation = Vector3.Lerp(firearmCurrentRotation, firearmTargetRotation, firearmData.firearmSnappiness * Time.fixedDeltaTime);
 
-        firearmTargetPosition = Vector3.Lerp(firearmTargetPosition, firearmData.localPlacmentPos, firearmData.backUpReturnSpeed * Time.deltaTime);
-        firearmCurrentPosition = Vector3.Lerp(firearmCurrentPosition, firearmTargetPosition, firearmData.backUpSnappiness * Time.deltaTime);
-        
-        recoilObject.transform.localRotation = Quaternion.Euler(camCurrentRotation);
-        transform.localRotation = Quaternion.Euler(firearmCurrentRotation);
-        transform.localPosition = firearmCurrentPosition;
+            firearmTargetPosition = Vector3.Lerp(firearmTargetPosition, firearmData.localPlacmentPos, firearmData.backUpReturnSpeed * Time.deltaTime);
+            firearmCurrentPosition = Vector3.Lerp(firearmCurrentPosition, firearmTargetPosition, firearmData.backUpSnappiness * Time.deltaTime);
+
+            recoilObject.transform.localRotation = Quaternion.Euler(camCurrentRotation);
+            transform.localRotation = Quaternion.Euler(firearmCurrentRotation);
+            transform.localPosition = firearmCurrentPosition;
+        }
     }
 
     void SetWeaponData()
     {
-        damage = firearmData.baseDamage;
-        cooldown = firearmData.baseCooldown;
-        weaponInt = firearmData.weaponInt;
-        burstAmount = firearmData.baseBurstAmount;
-        fireRate = firearmData.baseFireRate;
+        if (photonView.IsMine)
+        {
+            damage = firearmData.baseDamage;
+            cooldown = firearmData.baseCooldown;
+            weaponInt = firearmData.weaponInt;
+            burstAmount = firearmData.baseBurstAmount;
+            fireRate = firearmData.baseFireRate;
 
-        maxAmmo = firearmData.baseMaxAmmo;
-        reloadTime = firearmData.anim.length;
-
-        currentAmmo = maxAmmo;
+            maxAmmo = firearmData.baseMaxAmmo;
+            reloadTime = firearmData.anim.length;
+            source.spatialBlend = 0;
+            currentAmmo = maxAmmo;
+        }
     }
 
     public void ModifyWeaponData(float damage, float cooldown, int burstAmount, float fireRate, int maxAmmo, float reloadTime)
     {
-        // Damage increase in Percentage
-        this.damage *= 1 + (damage / 100);
-        // Cooldown decrease in Percentage
-        this.cooldown *= 1 - (cooldown / 100);
-        // Burst Amount added by Adding
-        this.burstAmount += burstAmount;
-        // Fire Rate increased in Percentage
-        this.fireRate *= 1 + (fireRate / 100);
-        // Max Ammo increase by Adding
-        this.maxAmmo += maxAmmo;
-        // Reload Time decreased in Percentage
-        this.reloadTime *= 1 - (reloadTime / 100);
+        if (photonView.IsMine)
+        {
+            // Damage increase in Percentage
+            this.damage *= 1 + (damage / 100);
+            // Cooldown decrease in Percentage
+            this.cooldown *= 1 - (cooldown / 100);
+            // Burst Amount added by Adding
+            this.burstAmount += burstAmount;
+            // Fire Rate increased in Percentage
+            this.fireRate *= 1 + (fireRate / 100);
+            // Max Ammo increase by Adding
+            this.maxAmmo += maxAmmo;
+            // Reload Time decreased in Percentage
+            this.reloadTime *= 1 - (reloadTime / 100);
+        }
     }
 
     bool CanShoot() => !isReloading && currentAmmo > 0;
 
     public override void Shooting()
     {
-        if(CanShoot())
+        if (photonView.IsMine)
         {
-            switch(firearmData.fireType)
+            if (CanShoot())
             {
-                case FirearmData.Firetype.singleShot:
+                switch (firearmData.fireType)
                 {
-                    if(CanShootSingleShot())
-                        StartCoroutine(SingleShot());
-                    break;
-                }
-                case FirearmData.Firetype.burst:
-                {
-                    if(CanShootBurst())
-                        StartCoroutine(BurstMode());
-                    break;
-                }
-                case FirearmData.Firetype.automatic:
-                {
-                    if(CanShootAutomatic())
-                        AutomaticMode();
-                    break;
+                    case FirearmData.Firetype.singleShot:
+                        {
+                            if (CanShootSingleShot())
+                                StartCoroutine(SingleShot());
+                            break;
+                        }
+                    case FirearmData.Firetype.burst:
+                        {
+                            if (CanShootBurst())
+                                StartCoroutine(BurstMode());
+                            break;
+                        }
+                    case FirearmData.Firetype.automatic:
+                        {
+                            if (CanShootAutomatic())
+                                AutomaticMode();
+                            break;
+                        }
                 }
             }
         }
@@ -160,136 +169,164 @@ public class Firearm : Weapon
 
     public override void OnButtonUp()
     {
-        canBurst = true;
-        canSingleShoot = true;
+        if (photonView.IsMine)
+        {
+            canBurst = true;
+            canSingleShoot = true;
+        }
     }
 
     bool CanShootSingleShot() => !isSingleShoting && canSingleShoot;
 
     IEnumerator SingleShot()
     {
-        isSingleShoting = true;
-        canSingleShoot = false;
+        if (photonView.IsMine)
+        {
+            isSingleShoting = true;
+            canSingleShoot = false;
 
-        // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
-        events.onShooting?.Invoke();
+            // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
+            events.onShooting?.Invoke();
 
-        // OnSingleShot will be called every time a projectile is fired; FireType has to be SingelShot
-        events.onSingleShot?.Invoke();
+            // OnSingleShot will be called every time a projectile is fired; FireType has to be SingelShot
+            events.onSingleShot?.Invoke();
 
-        Recoil();
-        Shoot();
+            Recoil();
+            Shoot();
 
-        yield return new WaitForSeconds(cooldown);
-        isSingleShoting = false;
+            yield return new WaitForSeconds(cooldown);
+            isSingleShoting = false;
+        }
     }
 
     bool CanShootBurst() => !isBursting && canBurst;
 
     IEnumerator BurstMode()
     {
-        isBursting = true;
-        canBurst = false;
-
-        for(int i = 0; i < burstAmount; i++)
+        if (photonView.IsMine)
         {
-            if(currentAmmo <= 0)
-                break;
+            isBursting = true;
+            canBurst = false;
 
-            // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
-            events.onShooting?.Invoke();
+            for (int i = 0; i < burstAmount; i++)
+            {
+                if (currentAmmo <= 0)
+                    break;
 
-            // OnBurst will be called every time a projectile is fired; FireType has to be Burst
-            events.onBurst?.Invoke();
+                // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
+                events.onShooting?.Invoke();
 
-            Recoil();
-            Shoot();
+                // OnBurst will be called every time a projectile is fired; FireType has to be Burst
+                events.onBurst?.Invoke();
 
-            yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
-        }
+                Recoil();
+                Shoot();
 
-        yield return new WaitForSeconds(cooldown);
-        isBursting = false;        
+                yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
+            }
+
+            yield return new WaitForSeconds(cooldown);
+            isBursting = false;
+        }    
     }
 
     bool CanShootAutomatic() => Time.time > (1 / (fireRate / 60)) + timeSinceLastShot;
 
     void AutomaticMode()
     {
-        // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
-        events.onShooting?.Invoke();
+        if (photonView.IsMine)
+        {
+            // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
+            events.onShooting?.Invoke();
 
-        // OnAutomatic will be called every time a projectile is fired; The FireType has to be Automatic
-        events.onAutomatic?.Invoke();
+            // OnAutomatic will be called every time a projectile is fired; The FireType has to be Automatic
+            events.onAutomatic?.Invoke();
 
-        Recoil();
-        Shoot();
- 
-        timeSinceLastShot = Time.time;        
+            Recoil();
+            Shoot();
+
+            timeSinceLastShot = Time.time;
+        }        
     }
 
     public override IEnumerator Reloading()
     {
-        events.onStartReloading?.Invoke();
-        isReloading = true;
-
-        if(animator != null)
+        if (photonView.IsMine)
         {
-            animator.SetTrigger("Reload");
+            events.onStartReloading?.Invoke();
+            isReloading = true;
+
+            if (animator != null)
+            {
+                animator.SetTrigger("Reload");
+            }
+
+            source.clip = firearmData.reloadSound;
+            photonView.RPC("PlaySound", RpcTarget.All);
+
+            yield return new WaitForSeconds(reloadTime / 2);
+            currentAmmo = maxAmmo;
+            yield return new WaitForSeconds(reloadTime / 2);
+
+            isReloading = false;
+
+            events.onEndReloading?.Invoke();
         }
-
-        source.clip = firearmData.reloadSound;
-        photonView.RPC("PlaySound", RpcTarget.All);
-
-        yield return new WaitForSeconds(reloadTime/2);
-        currentAmmo = maxAmmo;
-        yield return new WaitForSeconds(reloadTime / 2);
-
-        isReloading = false;
-
-        events.onEndReloading?.Invoke();
     }
 
     public override Vector3 Sway(Vector3 pos)
     {
-        Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        if(photonView.IsMine)
+        {
+            Vector2 input = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
-        input.x = Mathf.Clamp(input.x, -firearmData.swayClamp, firearmData.swayClamp);
-        input.y = Mathf.Clamp(input.y, -firearmData.swayClamp, firearmData.swayClamp);
+            input.x = Mathf.Clamp(input.x, -firearmData.swayClamp, firearmData.swayClamp);
+            input.y = Mathf.Clamp(input.y, -firearmData.swayClamp, firearmData.swayClamp);
 
-        Vector3 target = new Vector3(input.x, input.y, 0);
+            Vector3 target = new Vector3(input.x, input.y, 0);
 
-        Vector3 newPos = Vector3.Lerp(pos, target + Vector3.zero, Time.deltaTime * firearmData.smoothing);
+            Vector3 newPos = Vector3.Lerp(pos, target + Vector3.zero, Time.deltaTime * firearmData.smoothing);
 
-        return newPos;
+            return newPos;
+        }
+        else
+        {
+            return Vector3.zero;
+        }
     }
 
     void Recoil()
     {
-        camTargetRotation += new Vector3(firearmData.camRecoilX, Random.Range(-firearmData.camRecoilY, firearmData.camRecoilY), Random.Range(-firearmData.camRecoilZ, firearmData.camRecoilZ));
-        firearmTargetRotation += new Vector3(firearmData.firearmRecoilX, Random.Range(-firearmData.firearmRecoilY, firearmData.firearmRecoilY), Random.Range(-firearmData.firearmRecoilZ, 0));
-        firearmTargetPosition = new Vector3(firearmData.localPlacmentPos.x, firearmData.localPlacmentPos.y, firearmData.firearmRecoilBackUp + firearmData.localPlacmentPos.z);
+        if (photonView.IsMine)
+        {
+            camTargetRotation += new Vector3(firearmData.camRecoilX, Random.Range(-firearmData.camRecoilY, firearmData.camRecoilY), Random.Range(-firearmData.camRecoilZ, firearmData.camRecoilZ));
+            firearmTargetRotation += new Vector3(firearmData.firearmRecoilX, Random.Range(-firearmData.firearmRecoilY, firearmData.firearmRecoilY), Random.Range(-firearmData.firearmRecoilZ, 0));
+            firearmTargetPosition = new Vector3(firearmData.localPlacmentPos.x, firearmData.localPlacmentPos.y, firearmData.firearmRecoilBackUp + firearmData.localPlacmentPos.z);
+        }
     }
 
     void Shoot()
     {
-        if(animator != null)
+        if (photonView.IsMine)
         {
-            animator.SetTrigger("Shoot");
-        }
-
-        source.clip = firearmData.shootSound;
-        photonView.RPC("PlaySound", RpcTarget.All);
-
-        if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
-        {
-            if(hit.transform.TryGetComponent(out IDamagable damagable))
+            if (animator != null)
             {
-                damagable.Damagable(firearmData.baseDamage, events.onKillEnemy, events.onHitEnemy);               
+                animator.SetTrigger("Shoot");
             }
-        }
 
-        currentAmmo--;
+            source.clip = firearmData.shootSound;
+            photonView.RPC("PlaySound", RpcTarget.All);
+
+            if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
+            {
+                if (hit.transform.TryGetComponent(out IDamagable damagable))
+                {
+                    damagable.Damagable(firearmData.baseDamage, events.onKillEnemy, events.onHitEnemy);
+                }
+            }
+
+            currentAmmo--;
+        }
     }
 
     [PunRPC]

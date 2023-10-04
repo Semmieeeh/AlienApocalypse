@@ -52,10 +52,15 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             photonView.RPC("NewTarget", RpcTarget.All);
             if (flyingEnemy)
             {
-                agent.baseOffset = Random.Range(4f, 8f);
-                attackRange += agent.baseOffset;
+                photonView.RPC("Offset", RpcTarget.All);
             }
         }
+    }
+    [PunRPC]
+    public void Offset()
+    {
+        agent.baseOffset = Random.Range(4f, 8f);
+        attackRange += agent.baseOffset;
     }
 
     void Update()
