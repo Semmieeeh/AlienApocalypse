@@ -10,6 +10,10 @@ using UnityEngine;
 
 public interface IOption<T>
 {
+
+    /// <summary>
+    /// The index of the option that the data will be saved and written to
+    /// </summary>
     public int OptionIndex
     {
         get;
