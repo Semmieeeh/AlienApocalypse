@@ -32,6 +32,9 @@ public class StartScreen : MonoBehaviourPunCallbacks
     [SerializeField]
     GameObject noOneOnline;
 
+    [SerializeField]
+    TextMeshProUGUI roomsText, populationText;
+
     List<RoomDisplay> roomUIs = new ( );
 
 
@@ -60,6 +63,11 @@ public class StartScreen : MonoBehaviourPunCallbacks
             {
                 Popup ("Server Timeout!", "Cannot establish connection to server under specific time!", true);
             }
+        }
+
+        if ( PhotonNetwork.InLobby )
+        {
+            SetPopulationText (PhotonNetwork.CountOfPlayers);
         }
     }
 
@@ -183,11 +191,17 @@ public class StartScreen : MonoBehaviourPunCallbacks
 
         roomUIs.Clear();
 
+        roomsText.text = rooms.Count == 1? "1 Lobby" : $"{rooms.Count} Lobbies";
+
+        SetPopulationText (PhotonNetwork.CountOfPlayers);
+
         if(rooms.Count <= 0 )
         {
             noOneOnline.SetActive (true);
             return;
         }
+
+
         noOneOnline.SetActive (false);
 
         for(int i = 0; i < rooms.Count; i++ )
@@ -197,6 +211,11 @@ public class StartScreen : MonoBehaviourPunCallbacks
 
             display.SetServer (rooms[i]);
         }
+    }
+    
+    public void SetPopulationText(int pop )
+    {
+        populationText.text = $"Population: {pop}";
     }
 
     public void Popup ( string cause, string message, bool toMainMenu )
