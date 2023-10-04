@@ -26,7 +26,6 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
     [Header("Arm Animations")]
     public Animator anim;
-    public GameObject arms;
     private GameObject previousWeapon;
 
     void Start()
@@ -44,6 +43,8 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 InputWeapon();
         }
         
+
+
     }
 
     public void UpdateAnimations()
@@ -104,12 +105,12 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
 
                     selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
-                    if (previousWeapon != null)
-                    {
-                        previousWeapon.SetActive(false);
-                    }
-                    arms.transform.GetChild(-scrollNum.ToInt()).gameObject.SetActive(true);
-                    previousWeapon = arms.transform.GetChild(-scrollNum.ToInt()).gameObject;
+                    //if (previousWeapon != null)
+                    //{
+                    //    previousWeapon.SetActive(false);
+                    //}
+                    //arms.transform.GetChild(-scrollNum.ToInt()).gameObject.SetActive(true);
+                    //previousWeapon = arms.transform.GetChild(-scrollNum.ToInt()).gameObject;
                     selectedWeapon.mainCam = mainCam;
                     selectedWeapon.recoilObject = recoil;
                 }
@@ -117,10 +118,10 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     selectedWeapon.mainCam = null;
                     selectedWeapon.recoilObject = null;
-                    if (previousWeapon != null)
-                    {
-                        previousWeapon.SetActive(false);
-                    }
+                    //if (previousWeapon != null)
+                    //{
+                    //    previousWeapon.SetActive(false);
+                    //}
                     selectedWeapon = null;                    
                 }
             }
@@ -203,8 +204,6 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                         else
                         {
                             weaponSlots[i].transform.GetChild(0).gameObject.SetActive(false);
-                            arms.transform.GetChild(0).gameObject.SetActive(true);
-                            previousWeapon = arms.transform.GetChild(0).gameObject;
 
 
                         }
