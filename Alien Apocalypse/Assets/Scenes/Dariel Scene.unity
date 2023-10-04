@@ -890,6 +890,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &7212294291556276553
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4791826543372512159, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_Name
+      value: Gatling Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5274889952192229669, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b2e6a589651bbba41b454c441620ddbf, type: 3}
 --- !u!23 &7515234753226821212
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1086,3 +1143,4 @@ SceneRoots:
   - {fileID: 7554610428353151619}
   - {fileID: 5556508983687339206}
   - {fileID: 7740227347401211229}
+  - {fileID: 7212294291556276553}

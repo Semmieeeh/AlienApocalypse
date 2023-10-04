@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6663476269296191671}
   - component: {fileID: 4453048448822706539}
+  - component: {fileID: 4992237602750286126}
   m_Layer: 5
   m_Name: Room
   m_TagString: Untagged
@@ -188,6 +189,69 @@ MonoBehaviour:
   players: {fileID: 2542470146171232008}
   status: {fileID: 4631190873719858112}
   connection: {fileID: 1246645022425913401}
+--- !u!114 &4992237602750286126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156760143801416075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c008568f8e388854494d3a66658d6938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionEvents:
+    OnHoverEnter:
+      m_PersistentCalls:
+        m_Calls: []
+    OnHoverExit:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPointerUp:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPointerDown:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPointerClick:
+      m_PersistentCalls:
+        m_Calls: []
+  interactionSoundEffects:
+    OnHoverEnter: {fileID: 0}
+    OnHoverExit: {fileID: 0}
+    OnClickEnter: {fileID: 0}
+    OnClickExit: {fileID: 0}
+    OnClick: {fileID: 0}
+  m_Interactable: 1
+  m_deriveFromParentSelectable: 0
+  m_Hovered: 0
+  m_textField: {fileID: 0}
+  m_background: {fileID: 9131629254774028752}
+  m_colorBlock:
+    m_DefaultColor: {r: 0.058823533, g: 0.2509804, b: 0.25882354, a: 1}
+    m_HighlightedColor: {r: 0.050124552, g: 0.7999927, b: 0.8301887, a: 1}
+    m_ClickedColor: {r: 0.025418296, g: 0.12789287, b: 0.13207549, a: 1}
+    m_SelectedColor: {r: 0, g: 0.60728824, b: 0.6320754, a: 1}
+    m_DisabledColor: {r: 0.111178346, g: 0.16981131, b: 0.16981131, a: 1}
+  hoveredScale: {x: 1, y: 1, z: 1}
+  m_theme: 0
+  m_textAlignment: 1
+  OnClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4453048448822706539}
+        m_TargetAssemblyTypeName: RoomDisplay, Assembly-CSharp
+        m_MethodName: TryJoinRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1499263924284622377
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,7 +610,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Server Name
+  m_text: Button
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c464333698dbd2b48863c415b4cd90f0, type: 2}
   m_sharedMaterial: {fileID: -4710353662655119040, guid: c464333698dbd2b48863c415b4cd90f0, type: 2}

@@ -602,40 +602,7 @@ public static class Utilities
 
     }
 
-    /// <summary>
-    /// Insert banned words here
-    /// </summary>
-    public static readonly string[] bannedWords =
-    {
-
-    };
-
-    public static readonly char CensorMessageCharacter = '*';
-    public static bool IsMessageClean(this string message)
-    {
-        for (int i = 0; i < bannedWords.Length; i++)
-        {
-            if (message.Contains(bannedWords[i])) return false;
-        }
-        return true;
-    }
-
-    public static string CensorMessage(this string message)
-    {
-        if (message.IsMessageClean()) return message;
-
-        for (int i = 0; i < bannedWords.Length; i++)
-        {
-            if (message.Contains(bannedWords[i]))
-            {
-                string censorMessage = new string(CensorMessageCharacter, bannedWords[i].Length);
-
-                message = message.Replace(bannedWords[i], censorMessage);
-            }
-        }
-
-        return message;
-    }
+    
 }
 
 

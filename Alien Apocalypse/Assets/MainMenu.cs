@@ -33,6 +33,11 @@ public class MainMenu : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
+    private void Update ( )
+    {
+        Debug.Log (PlayerName.NickName);
+    }
     public void PopupMessage(string description)
     {
         PopupMessage("Important", description);

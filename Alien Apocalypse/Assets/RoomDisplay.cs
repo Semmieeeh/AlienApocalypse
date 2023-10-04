@@ -21,4 +21,26 @@ public class RoomDisplay : MonoBehaviour
 
         connection.text = Random.Range (5, 34).ToString();
     }
+
+    public void TryJoinRoom ( )
+    {
+        if ( !room.IsOpen )
+        {
+            UIPopup.Instance.Popup ("Join lobby failed!", "Lobby is full!");
+        }
+        else if ( !PlayerName.ValidNickName ( ) )
+        {
+            UIPopup.Instance.Popup ("Invalid name!", $"Please insert a valid nickname!");
+        }
+        else
+        {
+            JoinRoom ( );
+        }
+    }
+    private void JoinRoom ( )
+    {
+
+
+        throw new System.NotImplementedException ("TODO: SEM EN/OF ROBIN ZORG DAT DE SPELER DE ROOM KAN JOINEN KLIK OP DE ERROR MESSAGE!");
+    }
 }
