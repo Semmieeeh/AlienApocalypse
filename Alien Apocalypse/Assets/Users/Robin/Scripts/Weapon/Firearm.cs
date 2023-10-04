@@ -69,6 +69,13 @@ public class Firearm : Weapon
     [HideInInspector]
     public FirearmEvents events;
 
+    public void Start()
+    {
+        if (photonView.IsMine)
+        {
+            transform.GetChild(0).GetComponent<Children>().enabled = true;
+        }
+    }
     public override void StartWeapon()
     {
         firearmCurrentPosition = firearmData.localPlacmentPos;

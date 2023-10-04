@@ -71,6 +71,14 @@ public class Movement : MonoBehaviourPunCallbacks
         AnimationCheck();
         ArmAnimCheck();
         anim.SetBool("Grounded", grounded);
+        if (Input.GetKey(KeyCode.S))
+        {
+            walkingBackwards = true;
+        }
+        else
+        {
+            walkingBackwards = false;
+        }
     }
 
     bool IsMoving()
@@ -250,44 +258,36 @@ public class Movement : MonoBehaviourPunCallbacks
     }
     public void AnimationCheck()
     {
-        if (Input.GetKey(KeyCode.S))
+        if (photonView.IsMine)
         {
-            walkingBackwards = true;
-        }
-        else
-        {
-            walkingBackwards = false;
-        }
 
+            if (sprinting && input.magnitude > 0.5f && grounded)
+            {
+                walkState = 2;
+                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+            }
 
+            if (sprinting && input.magnitude < 0.5f && grounded)
+            {
+                walkState = 0;
+                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+            }
 
+            if (!sprinting && input.magnitude > 0.5f && grounded)
+            {
+                walkState = 1;
+                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+            }
 
-        if (sprinting && input.magnitude > 0.5f && grounded)
-        {
-            walkState = 2;
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-        }
-
-        if (sprinting && input.magnitude < 0.5f && grounded)
-        {
-            walkState = 0;
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-        }
-
-        if (!sprinting && input.magnitude > 0.5f && grounded)
-        {
-            walkState = 1;
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-        }
-
-        if (!sprinting && input.magnitude < 0.5f && grounded)
-        {
-            walkState = 0;
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+            if (!sprinting && input.magnitude < 0.5f && grounded)
+            {
+                walkState = 0;
+                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+            }
         }
     }
    [PunRPC]
-    public void UpdateAnimation(int state, bool otherState, bool walkingBackwards)
+    public void UpdateAnimation(int state, bool walkingBackwards)
     {
         anim.SetBool("WalkingBackwards", walkingBackwards);
         anim.SetInteger("WalkState", state);

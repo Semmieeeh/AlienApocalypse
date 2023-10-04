@@ -800,6 +800,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5684488273751843598}
   - component: {fileID: 1092489326508012738}
+  - component: {fileID: 8667211018016069325}
   m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
@@ -845,6 +846,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8667211018016069325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2194266804496867221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 3
+    SynchronizeType: 2
+    Name: WeaponState
+  - Type: 3
+    SynchronizeType: 2
+    Name: ArmState
+  - Type: 4
+    SynchronizeType: 2
+    Name: Moving
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &2230940159786558984
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,7 +1550,9 @@ MonoBehaviour:
   - {fileID: 764306591615039172}
   - {fileID: 7502185322259282756}
   - {fileID: 6060817614836963458}
+  - {fileID: 1705158115375451226}
   - {fileID: 5603662700397019883}
+  - {fileID: 8667211018016069325}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2637,6 +2667,7 @@ GameObject:
   - component: {fileID: 1904861962113739953}
   - component: {fileID: 2707998334018175545}
   - component: {fileID: 6060817614836963458}
+  - component: {fileID: 1705158115375451226}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -2698,6 +2729,36 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &1705158115375451226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5226098777138643329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: WalkingBackwards
+  - Type: 3
+    SynchronizeType: 2
+    Name: WalkState
+  - Type: 9
+    SynchronizeType: 2
+    Name: Jump
+  - Type: 4
+    SynchronizeType: 2
+    Name: Grounded
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &5311163375452071885
 GameObject:
   m_ObjectHideFlags: 0
@@ -3940,7 +4001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3472738930565078864, guid: 5e475c673a485604bb4fa72c8881251a, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3926202768692612481, guid: 5e475c673a485604bb4fa72c8881251a, type: 3}
       propertyPath: m_Enabled
@@ -3952,7 +4013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5637194204385380209, guid: 5e475c673a485604bb4fa72c8881251a, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5637194204385380209, guid: 5e475c673a485604bb4fa72c8881251a, type: 3}
       propertyPath: m_IsActive
@@ -3960,11 +4021,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7190868715993374985, guid: 5e475c673a485604bb4fa72c8881251a, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7746584705758065936, guid: 5e475c673a485604bb4fa72c8881251a, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8401966451230363304, guid: 5e475c673a485604bb4fa72c8881251a, type: 3}
       propertyPath: m_Enabled
@@ -4324,7 +4385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6116666383805497862, guid: 237618eb10df9ed49a6b5cf0cbc4db4e, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7284097791091097426, guid: 237618eb10df9ed49a6b5cf0cbc4db4e, type: 3}
       propertyPath: m_Name
@@ -4332,7 +4393,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7284097791091097426, guid: 237618eb10df9ed49a6b5cf0cbc4db4e, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7284097791091097426, guid: 237618eb10df9ed49a6b5cf0cbc4db4e, type: 3}
       propertyPath: m_IsActive
@@ -4798,7 +4859,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 290631054588713901, guid: 064cffbf9e288c54b8e26e2745fcac60, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 708788918839171486, guid: 064cffbf9e288c54b8e26e2745fcac60, type: 3}
       propertyPath: m_Enabled
@@ -4810,7 +4871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5180381444067359868, guid: 064cffbf9e288c54b8e26e2745fcac60, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5180381444067359868, guid: 064cffbf9e288c54b8e26e2745fcac60, type: 3}
       propertyPath: m_IsActive

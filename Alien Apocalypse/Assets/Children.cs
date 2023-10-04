@@ -11,11 +11,12 @@ public class Children : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            foreach (var obj in objects)
+            foreach (GameObject obj in objects)
             {
                 obj.layer = 7;
             }
         }
+        
     }
 
 }
