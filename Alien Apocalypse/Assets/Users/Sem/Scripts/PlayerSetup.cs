@@ -44,7 +44,7 @@ public class PlayerSetup : MonoBehaviour
     public void SetNickname(string name)
     {
         nickname = name;
-        nicknameText.text = nickname;
+        nicknameText.text = PhotonNetwork.NickName;
     }
     public IEnumerator WaitForEnemyObj()
     {

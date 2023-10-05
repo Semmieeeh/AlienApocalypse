@@ -24,7 +24,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private string nickname = "Unnamed";
     void Start()
     {
-        
+        spawnPoint = GameObject.Find("PlayerSpawnPoint").transform;
     }
     public void SetNickName(string name)
     {
