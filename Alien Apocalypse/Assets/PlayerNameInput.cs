@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,6 +8,7 @@ public class PlayerNameInput : MonoBehaviour, INicknameCallback
 {
     [SerializeField]
     TMP_InputField input;
+    public RoomManager roomManager;
     private void OnEnable ( )
     {
         PlayerName.AddListener( this );
@@ -24,6 +26,7 @@ public class PlayerNameInput : MonoBehaviour, INicknameCallback
 
     public void SetNickName (string name)
     {
-        PlayerName.TrySetNickName( name );
+        PhotonNetwork.NickName = name;
+        roomManager.nickname = name;
     }
 }

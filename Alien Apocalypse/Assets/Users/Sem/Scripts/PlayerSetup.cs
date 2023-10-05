@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 
-public class PlayerSetup : MonoBehaviour
+public class PlayerSetup : MonoBehaviourPunCallbacks
 {
     public Movement movement;
     public GameObject uiVanStefan;
@@ -38,13 +38,16 @@ public class PlayerSetup : MonoBehaviour
         StartCoroutine(nameof(WaitForEnemyObj));
         inputObject.SetActive(true);
         rot.enabled = true;
+
+
+        photonView.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);
     }
 
     [PunRPC]
     public void SetNickname(string name)
     {
         nickname = name;
-        nicknameText.text = PhotonNetwork.NickName;
+        nicknameText.text = nickname;
     }
     public IEnumerator WaitForEnemyObj()
     {

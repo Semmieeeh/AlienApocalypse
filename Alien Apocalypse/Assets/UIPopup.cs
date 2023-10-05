@@ -12,7 +12,7 @@ public class UIPopup : MonoBehaviour
         get
         {
             if ( m_instance == null )
-                m_instance = FindObjectOfType<UIPopup> ( );
+                m_instance = FindObjectOfType<UIPopup> (true );
             return m_instance;
         }
     }

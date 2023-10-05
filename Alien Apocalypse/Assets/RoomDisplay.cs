@@ -39,8 +39,7 @@ public class RoomDisplay : MonoBehaviour
     }
     private void JoinRoom ( )
     {
-
-
-        throw new System.NotImplementedException ("TODO: SEM EN/OF ROBIN ZORG DAT DE SPELER DE ROOM KAN JOINEN KLIK OP DE ERROR MESSAGE!");
+        RoomList.instance.JoinRoomByName(serverName.text);
+        
     }
 }

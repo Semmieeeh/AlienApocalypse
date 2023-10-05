@@ -21,7 +21,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public bool spawnedEnemy = false;
     public RoomList roomList;
 
-    private string nickname = "Unnamed";
+    public string nickname = "Unnamed";
     void Start()
     {
         spawnPoint = GameObject.Find("PlayerSpawnPoint").transform;
