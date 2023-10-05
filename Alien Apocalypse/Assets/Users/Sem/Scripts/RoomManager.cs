@@ -17,7 +17,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public GameObject connectingUI;
     public GameObject cantConnectUi;
     public GameObject nicknameUI;
-    public string roomNameToJoin = "Test";
+    public string roomNameToJoin;
     public bool spawnedEnemy = false;
     public RoomList roomList;
 

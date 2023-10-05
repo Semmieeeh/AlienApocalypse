@@ -43,7 +43,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             instance = this;
-            spawnPoint = GameObject.Find("SpawnPoint").transform;
+            spawnPoint = GameObject.Find("PlayerSpawnPoint").transform;
             waveSize = 5;
 
             waveStartTimeCounter = waveStartTime;

@@ -92,10 +92,11 @@ public class RoomList : MonoBehaviourPunCallbacks
         foreach(var room in rooms)
         {
             GameObject roomItem = Instantiate(roomlistButton, roomlistParent);
-            roomItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = room.Name;
-            roomItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = room.PlayerCount + "/4";
-
             roomItem.GetComponent<RoomItemButton>().roomName = room.Name;
+            roomItem.GetComponent<RoomItemButton>().text1.text = room.Name;
+            roomItem.GetComponent<RoomItemButton>().text2.text = room.PlayerCount + "/4";
+
+            
         }
     }
 
@@ -105,5 +106,6 @@ public class RoomList : MonoBehaviourPunCallbacks
         roomManager.roomNameToJoin = name;
         roomManagerGameObject.SetActive(true);
         gameObject.SetActive(false);
+        PhotonNetwork.JoinRoom(name, null);
     }
 }

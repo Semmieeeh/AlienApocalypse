@@ -1347,7 +1347,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 692341990}
   m_LocalEulerAnglesHint: {x: 21.109, y: 0, z: 0}
 --- !u!81 &378272929
 AudioListener:
@@ -3229,6 +3229,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658400590}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &692341990 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1810110414038956675, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+  m_PrefabInstance: {fileID: 1949183033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &695782451
 GameObject:
   m_ObjectHideFlags: 0
@@ -10491,7 +10496,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1810110414038956675, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 378272928}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
 --- !u!1 &1958773735
@@ -11620,5 +11628,4 @@ SceneRoots:
   - {fileID: 178232828}
   - {fileID: 1049571351}
   - {fileID: 1709125005}
-  - {fileID: 378272928}
   - {fileID: 1949183033}

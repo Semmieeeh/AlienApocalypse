@@ -57,6 +57,7 @@ public static class PlayerName
         }
 
         SetNickName(newName);
+        
     }
 
     /// <summary>

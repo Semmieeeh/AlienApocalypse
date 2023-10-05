@@ -143,7 +143,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6663476269296191671}
-  - component: {fileID: 4453048448822706539}
   - component: {fileID: 4992237602750286126}
   - component: {fileID: -2698703151198630001}
   m_Layer: 5
@@ -174,22 +173,6 @@ RectTransform:
   m_AnchoredPosition: {x: 637.5, y: -43.625}
   m_SizeDelta: {x: 1247.7039, y: 67.25}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4453048448822706539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1156760143801416075}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e74517eb285b644c91e06fc77bb9363, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serverName: {fileID: 1562227172323308582}
-  players: {fileID: 2542470146171232008}
-  status: {fileID: 4631190873719858112}
-  connection: {fileID: 1246645022425913401}
 --- !u!114 &4992237602750286126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +249,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: 
+  text1: {fileID: 1562227172323308582}
+  text2: {fileID: 5668338207103427864}
 --- !u!1 &1499263924284622377
 GameObject:
   m_ObjectHideFlags: 0
