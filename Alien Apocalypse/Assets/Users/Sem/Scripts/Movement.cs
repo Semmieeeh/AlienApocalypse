@@ -63,6 +63,7 @@ public class Movement : MonoBehaviourPunCallbacks
         input.Normalize();
         sprinting = Input.GetButton("Sprint");
         jumping = Input.GetButton("Jump");
+        
 
         FovChange();
 
@@ -70,7 +71,8 @@ public class Movement : MonoBehaviourPunCallbacks
         StopWhenNoInput();
         AnimationCheck();
         ArmAnimCheck();
-        anim.SetBool("Grounded", grounded);
+        photonView.RPC("SetJumpAnim", RpcTarget.All);
+        
         if (Input.GetKey(KeyCode.S))
         {
             walkingBackwards = true;
@@ -120,11 +122,13 @@ public class Movement : MonoBehaviourPunCallbacks
     public void AnimRPC(int i)
     {
         armAnim.SetInteger("ArmState", i);
+        armAnim.SetBool("Jumping", grounded);
         armAnim.SetBool("Moving", IsMoving());
     }
     private void OnTriggerStay(Collider other)
     {
         grounded = other.gameObject.tag == "Ground";
+        
     }
     public void StopWhenNoInput()
     {
@@ -291,6 +295,12 @@ public class Movement : MonoBehaviourPunCallbacks
     {
         anim.SetBool("WalkingBackwards", walkingBackwards);
         anim.SetInteger("WalkState", state);
+
+    }
+    [PunRPC]
+    void SetJumpAnim()
+    {
+        anim.SetBool("Grounded", grounded);
     }
 
 }

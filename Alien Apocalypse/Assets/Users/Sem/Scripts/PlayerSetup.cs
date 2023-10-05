@@ -18,6 +18,7 @@ public class PlayerSetup : MonoBehaviour
     public GameObject myWeapon;
     public GameObject[] playerParts;
     public GameObject inputObject;
+    public FollowRotation rot;
     public void IsLocalPlayer()
     {
         movement.enabled = true;
@@ -36,6 +37,7 @@ public class PlayerSetup : MonoBehaviour
         nicknameTextObject.SetActive(false);
         StartCoroutine(nameof(WaitForEnemyObj));
         inputObject.SetActive(true);
+        rot.enabled = true;
     }
 
     [PunRPC]
