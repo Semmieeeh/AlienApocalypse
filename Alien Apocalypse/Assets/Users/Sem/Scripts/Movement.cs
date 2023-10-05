@@ -71,7 +71,7 @@ public class Movement : MonoBehaviourPunCallbacks
         StopWhenNoInput();
         AnimationCheck();
         ArmAnimCheck();
-        photonView.RPC("SetJumpAnim", RpcTarget.All);
+        
         
         if (Input.GetKey(KeyCode.S))
         {
@@ -264,7 +264,7 @@ public class Movement : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-
+            photonView.RPC("SetJumpAnim", RpcTarget.All,grounded);
             if (sprinting && input.magnitude > 0.5f && grounded)
             {
                 walkState = 2;
@@ -298,9 +298,9 @@ public class Movement : MonoBehaviourPunCallbacks
 
     }
     [PunRPC]
-    void SetJumpAnim()
+    void SetJumpAnim(bool b)
     {
-        anim.SetBool("Grounded", grounded);
+        anim.SetBool("Grounded", b);
     }
 
 }

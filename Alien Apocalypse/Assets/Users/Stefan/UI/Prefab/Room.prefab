@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 6663476269296191671}
   - component: {fileID: 4453048448822706539}
   - component: {fileID: 4992237602750286126}
+  - component: {fileID: -2698703151198630001}
   m_Layer: 5
   m_Name: Room
   m_TagString: Untagged
@@ -225,7 +226,7 @@ MonoBehaviour:
     OnClick: {fileID: 0}
   m_Interactable: 1
   m_deriveFromParentSelectable: 0
-  m_Hovered: 0
+  m_Hovered: 1
   m_textField: {fileID: 0}
   m_background: {fileID: 9131629254774028752}
   m_colorBlock:
@@ -240,9 +241,9 @@ MonoBehaviour:
   OnClickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4453048448822706539}
-        m_TargetAssemblyTypeName: RoomDisplay, Assembly-CSharp
-        m_MethodName: TryJoinRoom
+      - m_Target: {fileID: -2698703151198630001}
+        m_TargetAssemblyTypeName: RoomItemButton, Assembly-CSharp
+        m_MethodName: OnButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -252,6 +253,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &-2698703151198630001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156760143801416075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb730c020ea28594298e458fc752bf97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomName: 
 --- !u!1 &1499263924284622377
 GameObject:
   m_ObjectHideFlags: 0
