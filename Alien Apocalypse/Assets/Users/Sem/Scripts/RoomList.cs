@@ -106,6 +106,5 @@ public class RoomList : MonoBehaviourPunCallbacks
         roomManager.roomNameToJoin = name;
         roomManagerGameObject.SetActive(true);
         gameObject.SetActive(false);
-        PhotonNetwork.JoinRoom(name, null);
     }
 }
