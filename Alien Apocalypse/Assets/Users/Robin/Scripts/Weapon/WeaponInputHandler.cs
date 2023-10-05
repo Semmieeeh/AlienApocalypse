@@ -180,6 +180,8 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                         weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                         weapon.transform.localScale = new Vector3(1, 1, 1);
 
+                        SetAbility();
+
                         firearm.events = events;
 
                         if(weapon.TryGetComponent<Animator>(out Animator animator))
@@ -216,7 +218,17 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     public void AddAbility(FirearmAbility firearmAbility)
     {
         weaponAbilities.Add(firearmAbility);
-        SetAbility();
+
+        for(int i = 0; i < weaponSlots.Count; i++)
+        {
+            if(weaponSlots[i].transform.childCount > 0)
+            {
+                if(weaponSlots[i].TryGetComponent<Firearm>(out Firearm firearm))
+                {
+                    firearm.ModifyWeaponData(firearmAbility.damage, firearmAbility.cooldown, firearmAbility.burstAmount, firearmAbility.fireRate, firearmAbility.maxAmmo, firearmAbility.reloadTime); ;
+                }
+            }
+        }
     }
 
     void SetAbility()

@@ -29,6 +29,11 @@ public class Firearm : Weapon
     float timeSinceLastShot;
 
     [Space]
+    [Header("Projectile")]
+    bool isProjectile;
+    bool canProjectile = true;
+
+    [Space]
     [Header("Ammo")]
     public int maxAmmo;
     public int currentAmmo;
@@ -145,23 +150,29 @@ public class Firearm : Weapon
                 switch (firearmData.fireType)
                 {
                     case FirearmData.Firetype.singleShot:
-                        {
-                            if (CanShootSingleShot())
-                                StartCoroutine(SingleShot());
-                            break;
-                        }
+                    {
+                        if (CanShootSingleShot())
+                            StartCoroutine(SingleShot());
+                        break;
+                    }
                     case FirearmData.Firetype.burst:
-                        {
-                            if (CanShootBurst())
-                                StartCoroutine(BurstMode());
-                            break;
-                        }
+                    {
+                        if (CanShootBurst())
+                            StartCoroutine(BurstMode());
+                        break;
+                    }
                     case FirearmData.Firetype.automatic:
-                        {
-                            if (CanShootAutomatic())
-                                AutomaticMode();
-                            break;
-                        }
+                    {
+                        if (CanShootAutomatic())
+                            AutomaticMode();
+                        break;
+                    }
+                    case FirearmData.Firetype.projectile:
+                    {
+                        if(CanShootProjectile())
+                            StartCoroutine(ProjectileMode());
+                        break;
+                    }
                 }
             }
         }
@@ -249,6 +260,21 @@ public class Firearm : Weapon
         }        
     }
 
+    bool CanShootProjectile() => !isProjectile && canProjectile;
+
+    IEnumerator ProjectileMode()
+    {
+        if(photonView.IsMine)
+        {
+            events.onShooting?.Invoke();
+
+            Recoil();
+            Projectile();
+        }
+
+        yield return new WaitForSeconds(cooldown);
+    }
+
     public override IEnumerator Reloading()
     {
         if (photonView.IsMine)
@@ -317,11 +343,39 @@ public class Firearm : Weapon
             source.clip = firearmData.shootSound;
             photonView.RPC("PlaySound", RpcTarget.All);
 
-            if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
+            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
             {
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {
                     damagable.Damagable(firearmData.baseDamage, events.onKillEnemy, events.onHitEnemy);
+                }
+            }
+
+            currentAmmo--;
+        }
+    }
+
+    [PunRPC]
+    void Projectile()
+    {
+        if(photonView.IsMine)
+        {
+            if(animator != null)
+            {
+                animator.SetTrigger("Shoot");
+            }
+
+            source.clip = firearmData.shootSound;
+            photonView.RPC("PlaySound", RpcTarget.All);
+
+            GameObject projectile = PhotonNetwork.Instantiate(nameof(firearmData.projectilePrefab), firearmData.prefab.transform.GetChild(0).transform.position, firearmData.prefab.transform.GetChild(0).transform.rotation);
+
+            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit otherHit, firearmData.raycastDistance))
+            {
+                if(projectile.TryGetComponent<Projectile>(out Projectile pro))
+                {
+                    pro.InitializeProjectile(damage, firearmData.projectileSpeed, firearmData.radius, firearmData.prefab.transform.GetChild(0).transform.position, otherHit.point); ;
+                    pro.InitialzieEvent(events.onHitEnemy, events.onKillEnemy);
                 }
             }
 

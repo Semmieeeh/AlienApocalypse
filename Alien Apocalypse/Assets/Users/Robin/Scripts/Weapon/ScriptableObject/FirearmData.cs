@@ -12,7 +12,8 @@ public class FirearmData : WeaponData
     {
         handgun,
         shotgun,
-        assaultRifle
+        assaultRifle,
+        rocketLauncher,
     }
 
     public enum Firetype
@@ -20,6 +21,7 @@ public class FirearmData : WeaponData
         singleShot,
         burst,
         automatic,
+        projectile,
     }
     public Firetype fireType;
 
@@ -36,6 +38,12 @@ public class FirearmData : WeaponData
     [Space]
     [Header("Automatic")]
     public float baseFireRate;
+
+    [Space]
+    [Header("Projectile")]
+    public GameObject projectilePrefab;
+    public float projectileSpeed;
+    public float radius;
 
     [Space]
     [Header("Ammo")]
