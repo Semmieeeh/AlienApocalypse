@@ -23,10 +23,11 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     public FollowRotation rot;
     public GameObject localUI;
     Transform t;
+    public int number;
     public void IsLocalPlayer()
     {
         movement.enabled = true;
-        
+        number = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         uiVanStefan.SetActive(true);
         weapon.layer = 7;
         gameObject.layer = 3;
@@ -70,6 +71,10 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SetPlayerColor()
     {
-        playerBody.GetComponent<Renderer>().material = playerColors[PhotonNetwork.CurrentRoom.PlayerCount-1];
+        PlayerSetup[] setup = FindObjectsOfType<PlayerSetup>();
+        foreach(PlayerSetup p in setup)
+        {
+            p.playerBody.GetComponent<Renderer>().material = p.playerColors[p.number];
+        }
     }
 }
