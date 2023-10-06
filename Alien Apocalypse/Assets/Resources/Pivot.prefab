@@ -2275,8 +2275,8 @@ Transform:
   m_GameObject: {fileID: 920043875069220815}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000011920926, y: 0.00000007026547, z: 0.0000000028147362, w: 1}
-  m_LocalPosition: {x: -0.00015059455, y: -0.0023522165, z: 0.000351302}
-  m_LocalScale: {x: 0.0017993423, y: 0.0031711285, z: 0.0012287357}
+  m_LocalPosition: {x: -0.00015, y: -0.00241, z: 0.00023}
+  m_LocalScale: {x: 0.0017198294, y: 0.0030309963, z: 0.0008846463}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4291475110818938492}
@@ -7576,7 +7576,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 7d91274cc4a876a439f75445704f421b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -21034,6 +21034,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 6522654158016112718}
+  playerColors:
+  - {fileID: 2100000, guid: 697c735da55d9b24da62d8dfab753be1, type: 2}
+  - {fileID: 2100000, guid: 18e16feedec046044a974600617f0ab2, type: 2}
+  - {fileID: 2100000, guid: 5ae00ebff67e7a34894550c8e7c6badc, type: 2}
+  - {fileID: 2100000, guid: 1ea3a5d96a1f485489e581cf099a514d, type: 2}
+  playerBody: {fileID: 2526949683610610359}
   uiVanStefan: {fileID: 4733898485138010356}
   cam: {fileID: 1680025527811052324}
   nicknameTextObject: {fileID: 7483136181773381663}
@@ -23889,8 +23895,8 @@ Transform:
   m_GameObject: {fileID: 8643752102865326994}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000011920926, y: -0.000000087993804, z: 0.00000017860357, w: 1}
-  m_LocalPosition: {x: 0.00015059454, y: -0.0023522172, z: 0.0003512992}
-  m_LocalScale: {x: 0.0017993425, y: 0.0031711285, z: 0.0012287357}
+  m_LocalPosition: {x: 0.00015118913, y: -0.0024100014, z: 0.00022999798}
+  m_LocalScale: {x: 0.0017198295, y: 0.0030309963, z: 0.0008846463}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3520062530518818028}

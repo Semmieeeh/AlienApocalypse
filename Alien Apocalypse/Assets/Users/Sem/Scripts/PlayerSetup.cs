@@ -7,6 +7,8 @@ using TMPro;
 public class PlayerSetup : MonoBehaviourPunCallbacks
 {
     public Movement movement;
+    public Material[] playerColors;
+    public GameObject playerBody;
     public GameObject uiVanStefan;
     public GameObject cam;
     public GameObject nicknameTextObject;
@@ -43,6 +45,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         Vector3 v = new Vector3(0,0,0);
 
         photonView.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);
+        photonView.RPC("SetPlayerColor", RpcTarget.All);
     }
 
     [PunRPC]
@@ -62,5 +65,11 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         {
             enemy.waveStatusText = waveStatusTextObj;
         }
+    }
+
+    [PunRPC]
+    public void SetPlayerColor()
+    {
+        playerBody.GetComponent<Renderer>().material = playerColors[PhotonNetwork.CurrentRoom.PlayerCount-1];
     }
 }
