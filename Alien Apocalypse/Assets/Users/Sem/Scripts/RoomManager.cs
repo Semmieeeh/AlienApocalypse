@@ -7,7 +7,7 @@ using Photon.Pun.UtilityScripts;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public GameObject prefab;
+    public GameObject[] prefabs;
     public GameObject enemyManager;
     [Space]
     public Transform spawnPoint;
@@ -55,7 +55,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
             GameObject enemy = PhotonNetwork.Instantiate(enemyManager.name, spawnPoint.position, Quaternion.identity);
 
         }
-        GameObject playerPrefab = PhotonNetwork.Instantiate(prefab.name, spawnPoint.position, Quaternion.identity);
+        
+        GameObject playerPrefab = PhotonNetwork.Instantiate(prefabs[PhotonNetwork.CurrentRoom.PlayerCount-1].name, spawnPoint.position, Quaternion.identity);
         GameObject player = playerPrefab.transform.GetChild(0).gameObject;
         player.GetComponent<PlayerSetup>().IsLocalPlayer();
         player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.AllBuffered, nickname);

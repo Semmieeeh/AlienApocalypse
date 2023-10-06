@@ -72,14 +72,14 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SetPlayerColor()
     {
-        playerBody.GetComponent<Renderer>().material = playerColors[number];
-        PlayerSetup[] setup = FindObjectsOfType<PlayerSetup>();
-        foreach(PlayerSetup p in setup)
-        {
-            if(p != this.gameObject.GetComponent<PlayerSetup>())
-            {
-                p.playerBody.GetComponent<Renderer>().material = p.playerColors[p.number];
-            }
-        }
+        //playerBody.GetComponent<Renderer>().material = playerColors[number];
+        //PlayerSetup[] setup = FindObjectsOfType<PlayerSetup>();
+        //foreach(PlayerSetup p in setup)
+        //{
+        //    if(p != this.gameObject.GetComponent<PlayerSetup>())
+        //    {
+        //        p.playerBody.GetComponent<Renderer>().material = p.playerColors[p.number];
+        //    }
+        //}
     }
 }
