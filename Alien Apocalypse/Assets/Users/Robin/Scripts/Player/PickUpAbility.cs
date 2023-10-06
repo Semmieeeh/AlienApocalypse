@@ -8,7 +8,6 @@ using Photon.Pun;
 public class PickUpAbility : MonoBehaviourPunCallbacks, IInteractable
 {
     public FirearmAbility firearmAbility;
-
     
     public void Interact(WeaponInputHandler handler)
     {
@@ -18,6 +17,7 @@ public class PickUpAbility : MonoBehaviourPunCallbacks, IInteractable
             photonView.RPC("Destroy",RpcTarget.All);
         }
     }
+
     [PunRPC]
     void Destroy()
     {

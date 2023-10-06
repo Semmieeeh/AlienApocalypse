@@ -91,9 +91,10 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     if(currentFirearm.firearmData != null)
                     {
-                        
-                        selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);                        
-                        
+                        if(selectedWeapon.transform.childCount > 0)
+                        {
+                            selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
+                        }
                     }
                 }
             }

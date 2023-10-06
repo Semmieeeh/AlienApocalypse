@@ -114,7 +114,10 @@ public class Firearm : Weapon
             fireRate = firearmData.baseFireRate;
 
             maxAmmo = firearmData.baseMaxAmmo;
-            reloadTime = firearmData.anim.length;
+            if(firearmData.anim != null)
+            {
+                reloadTime = firearmData.anim.length;
+            }
             source.spatialBlend = 0;
             currentAmmo = maxAmmo;
         }
@@ -184,6 +187,7 @@ public class Firearm : Weapon
         {
             canBurst = true;
             canSingleShoot = true;
+            canProjectile = true;
         }
     }
 
@@ -266,6 +270,9 @@ public class Firearm : Weapon
     {
         if(photonView.IsMine)
         {
+            isProjectile = true;
+            canProjectile = false;
+
             events.onShooting?.Invoke();
 
             Recoil();
@@ -273,6 +280,7 @@ public class Firearm : Weapon
         }
 
         yield return new WaitForSeconds(cooldown);
+        isProjectile = false;
     }
 
     public override IEnumerator Reloading()
@@ -347,7 +355,7 @@ public class Firearm : Weapon
             {
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {
-                    damagable.Damagable(firearmData.baseDamage, events.onKillEnemy, events.onHitEnemy);
+                    damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy);
                 }
             }
 
@@ -368,13 +376,13 @@ public class Firearm : Weapon
             source.clip = firearmData.shootSound;
             photonView.RPC("PlaySound", RpcTarget.All);
 
-            GameObject projectile = PhotonNetwork.Instantiate(nameof(firearmData.projectilePrefab), firearmData.prefab.transform.GetChild(0).transform.position, firearmData.prefab.transform.GetChild(0).transform.rotation);
+            GameObject projectile = PhotonNetwork.Instantiate(firearmData.projectilePrefab.name, transform.position, transform.rotation);
 
             if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit otherHit, firearmData.raycastDistance))
             {
                 if(projectile.TryGetComponent<Projectile>(out Projectile pro))
                 {
-                    pro.InitializeProjectile(damage, firearmData.projectileSpeed, firearmData.radius, firearmData.prefab.transform.GetChild(0).transform.position, otherHit.point); ;
+                    pro.InitializeProjectile(damage, firearmData.projectileSpeed, firearmData.radius, transform.position, otherHit.point); ;
                     pro.InitialzieEvent(events.onHitEnemy, events.onKillEnemy);
                 }
             }

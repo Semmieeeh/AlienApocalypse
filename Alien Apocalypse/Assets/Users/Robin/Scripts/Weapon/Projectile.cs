@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(PhotonView))]
+[RequireComponent(typeof(PhotonTransformView))]
 public class Projectile : MonoBehaviour
 {
     [Header("Projectile Data")]
@@ -28,6 +30,14 @@ public class Projectile : MonoBehaviour
         {
             Collider[] collider = Physics.OverlapSphere(transform.position, radius, mask);
             
+            foreach(Collider col in collider)
+            {
+                if(col.TryGetComponent<IDamagable>(out IDamagable damagable))
+                {
+                    damagable.Damagable(projectileDamage, onKill, onHit);
+                }
+            }
+
             PhotonNetwork.Destroy(gameObject);
         }
 
