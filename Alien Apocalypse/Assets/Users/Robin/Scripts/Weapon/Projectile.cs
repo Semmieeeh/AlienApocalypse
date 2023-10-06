@@ -48,6 +48,8 @@ public class Projectile : MonoBehaviour
     {
         this.projectileDamage = projectileDamage;
         this.projectileSpeed = projectileSpeed;
+        this.radius = radius;
+
         this.lastPos = lastPos;
         this.hitPoint = hitPoint;
     }

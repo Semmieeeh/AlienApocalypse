@@ -32,6 +32,7 @@ public class Firearm : Weapon
     [Header("Projectile")]
     bool isProjectile;
     bool canProjectile = true;
+    Vector3 raycastHitPoint;
 
     [Space]
     [Header("Ammo")]
@@ -276,7 +277,7 @@ public class Firearm : Weapon
             events.onShooting?.Invoke();
 
             Recoil();
-            Projectile();
+            photonView.RPC(nameof(Projectile), RpcTarget.All);
         }
 
         yield return new WaitForSeconds(cooldown);
@@ -373,6 +374,8 @@ public class Firearm : Weapon
                 animator.SetTrigger("Shoot");
             }
 
+            Debug.Log("Instantiate");
+
             source.clip = firearmData.shootSound;
             photonView.RPC("PlaySound", RpcTarget.All);
 
@@ -380,12 +383,19 @@ public class Firearm : Weapon
 
             if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit otherHit, firearmData.raycastDistance))
             {
-                if(projectile.TryGetComponent<Projectile>(out Projectile pro))
-                {
-                    pro.InitializeProjectile(damage, firearmData.projectileSpeed, firearmData.radius, transform.position, otherHit.point); ;
-                    pro.InitialzieEvent(events.onHitEnemy, events.onKillEnemy);
-                }
+                raycastHitPoint = otherHit.point;
             }
+            else
+            {
+                raycastHitPoint = mainCam.transform.position + mainCam.transform.forward * firearmData.raycastDistance;
+            }
+
+            if(projectile.TryGetComponent<Projectile>(out Projectile pro))
+            {
+                pro.InitializeProjectile(damage, firearmData.projectileSpeed, firearmData.radius, transform.position, raycastHitPoint);
+                pro.InitialzieEvent(events.onHitEnemy, events.onKillEnemy);
+            }
+            
 
             currentAmmo--;
         }
