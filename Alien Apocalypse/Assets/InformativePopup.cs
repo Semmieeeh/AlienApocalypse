@@ -60,7 +60,7 @@ public class InformativePopup : MonoBehaviour
         animationImage.color = popup.color;
 
         active = true;
-        Animator.SetTrigger("Toggle");
+        Animator.SetTrigger("Activate");
     }
 
     [System.Serializable]

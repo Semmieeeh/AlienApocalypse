@@ -19,7 +19,7 @@ public class UIEnemyHits : MonoBehaviour
         }
         foreach (Animator animator in hitAnimators)
         {
-            animator.SetTrigger("Toggle");
+            animator.SetTrigger("Activate");
         }
     }
 
@@ -31,7 +31,7 @@ public class UIEnemyHits : MonoBehaviour
         }
         foreach (Animator animator in hitAnimators)
         {
-            animator.SetTrigger("Toggle");
+            animator.SetTrigger("Activate");
         }
     }
 
