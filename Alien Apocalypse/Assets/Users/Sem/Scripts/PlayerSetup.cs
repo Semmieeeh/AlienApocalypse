@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using System.Linq;
 
 public class PlayerSetup : MonoBehaviourPunCallbacks
 {
@@ -75,6 +76,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         foreach(PlayerSetup p in setup)
         {
             p.playerBody.GetComponent<Renderer>().material = p.playerColors[p.number];
+            Debug.Log(setup.Length);
         }
     }
 }
