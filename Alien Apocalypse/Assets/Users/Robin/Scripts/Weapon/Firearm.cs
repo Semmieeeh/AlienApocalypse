@@ -359,7 +359,7 @@ public class Firearm : Weapon
 
             if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
             {
-                if (hit.transform.TryGetComponent(out IDamagable damagable))
+                if(hit.transform.TryGetComponent(out IDamagable damagable))
                 {
                     damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy);
                     enemyHit = true;
