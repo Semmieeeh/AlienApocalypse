@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
+using UnityEngine.Rendering;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,6 +16,9 @@ public class ShootEffect : MonoBehaviour
 
     [SerializeField]
     GameObject hitDecal;
+
+    [SerializeField]
+    LayerMask enemyMask;
 
     [SerializeField]
     VisualEffect[] effects;
@@ -38,11 +42,20 @@ public class ShootEffect : MonoBehaviour
         {
             VFXShootRay ray = Instantiate (shootRayObject).GetComponent<VFXShootRay> ( );
 
+            Vector3 point = hit[i].point;
+
+            if ( point == Vector3.zero )
+            {
+                point = transform.forward * 100;
+            }
 
             if ( ray )
             {
-                ray.Shoot (transform.position, hit[i].point);
+                ray.Shoot (transform.position, point);
             }
+
+            if(hit[i].transform && hit[i].transform.gameObject.layer == enemyMask )
+                continue;
 
             VisualEffect decal = Instantiate (hitDecal, hit[i].point, Quaternion.identity).GetComponent<VisualEffect> ( );
 
