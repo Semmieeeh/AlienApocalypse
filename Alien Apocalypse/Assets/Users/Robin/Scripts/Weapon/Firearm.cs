@@ -9,6 +9,8 @@ public class Firearm : Weapon
     [Space]
     [Header("General")]
     public FirearmData firearmData;
+    public DataHolder dataHolder;
+
     public float damage;
     public float cooldown;
 
@@ -207,8 +209,8 @@ public class Firearm : Weapon
             // OnSingleShot will be called every time a projectile is fired; FireType has to be SingelShot
             events.onSingleShot?.Invoke();
 
-            Recoil();
             Shoot();
+            Recoil();
 
             yield return new WaitForSeconds(cooldown);
             isSingleShoting = false;
@@ -235,8 +237,8 @@ public class Firearm : Weapon
                 // OnBurst will be called every time a projectile is fired; FireType has to be Burst
                 events.onBurst?.Invoke();
 
-                Recoil();
                 Shoot();
+                Recoil();
 
                 yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
             }
@@ -258,8 +260,8 @@ public class Firearm : Weapon
             // OnAutomatic will be called every time a projectile is fired; The FireType has to be Automatic
             events.onAutomatic?.Invoke();
 
-            Recoil();
             Shoot();
+            Recoil();
 
             timeSinceLastShot = Time.time;
         }        
@@ -276,8 +278,8 @@ public class Firearm : Weapon
 
             events.onShooting?.Invoke();
 
-            Recoil();
             photonView.RPC(nameof(Projectile), RpcTarget.All);
+            Recoil();
         }
 
         yield return new WaitForSeconds(cooldown);
@@ -352,12 +354,27 @@ public class Firearm : Weapon
             source.clip = firearmData.shootSound;
             photonView.RPC("PlaySound", RpcTarget.All);
 
+            Vector3 particlePoint;
+            bool enemyHit = false;
+
             if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
             {
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {
                     damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy);
+                    enemyHit = true;
                 }
+
+                particlePoint = hit.point;
+            }
+            else
+            {
+                particlePoint = dataHolder.muzzle.position + dataHolder.muzzle.forward * firearmData.raycastDistance;
+            }
+
+            if(dataHolder.shootEffect != null)
+            {
+                dataHolder.shootEffect.Activate(enemyHit, particlePoint);
             }
 
             currentAmmo--;
@@ -379,7 +396,7 @@ public class Firearm : Weapon
             source.clip = firearmData.shootSound;
             photonView.RPC("PlaySound", RpcTarget.All);
 
-            GameObject projectile = PhotonNetwork.Instantiate(firearmData.projectilePrefab.name, transform.position, transform.rotation);
+            GameObject projectile = PhotonNetwork.Instantiate(firearmData.projectilePrefab.name, transform.GetChild(0).transform.GetChild(0).position, transform.rotation);
 
             if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit otherHit, firearmData.raycastDistance))
             {
@@ -395,7 +412,11 @@ public class Firearm : Weapon
                 pro.InitializeProjectile(damage, firearmData.projectileSpeed, firearmData.radius, transform.position, raycastHitPoint);
                 pro.InitialzieEvent(events.onHitEnemy, events.onKillEnemy);
             }
-            
+
+            if(dataHolder.shootEffect != null)
+            {
+                dataHolder.shootEffect.Activate(otherHit);
+            }
 
             currentAmmo--;
         }

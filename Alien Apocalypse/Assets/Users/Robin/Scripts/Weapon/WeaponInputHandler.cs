@@ -185,6 +185,12 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
                         firearm.events = events;
 
+                        if(weapon.TryGetComponent<DataHolder>(out DataHolder dataHolder))
+                        {
+                            firearm.dataHolder = dataHolder;
+                            Debug.Log("Got DataHolder");
+                        }
+
                         if(weapon.TryGetComponent<Animator>(out Animator animator))
                         {
                             firearm.animator = animator;

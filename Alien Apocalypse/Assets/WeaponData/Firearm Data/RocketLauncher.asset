@@ -18,17 +18,17 @@ MonoBehaviour:
   localPlacmentPos: {x: 0.16, y: -0.124, z: 0.38}
   firearmType: 0
   fireType: 3
-  baseDamage: 10
-  baseCooldown: 5
+  baseDamage: 80
+  baseCooldown: 2
   baseBurstAmount: 0
   baseTimeBetweenBurst: 0
   baseFireRate: 0
   projectilePrefab: {fileID: 8097077941979880184, guid: 0f4ae3b2ff2cdf8439e7b232772dd2b9, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 50
   radius: 5
   baseMaxAmmo: 8
   baseReloadTime: 3
-  raycastDistance: 1000
+  raycastDistance: 100
   swayClamp: 0
   smoothing: 0
   camRecoilX: 0
