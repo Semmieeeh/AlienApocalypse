@@ -66,7 +66,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     void Update()
     {
         
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
             if (flyingHeight > 0.1f)
             {
@@ -179,22 +179,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
-    //void OnDrawGizmosSelected()
-    //{
-    //    float totalFOV = detectionAngle;
-    //    float rayRange = detectionRange;
-    //    float halfFOV = totalFOV / 2.0f;
-
-    //    Quaternion leftRayRotation = Quaternion.AngleAxis(-halfFOV, Vector3.up);
-    //    Quaternion rightRayRotation = Quaternion.AngleAxis(halfFOV, Vector3.up);
-    //    Vector3 leftRayDirection = leftRayRotation * transform.forward;
-    //    Vector3 rightRayDirection = rightRayRotation * transform.forward;
-
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawRay(transform.position, leftRayDirection * rayRange);
-    //    Gizmos.DrawRay(transform.position, rightRayDirection * rayRange);
-
-    //    Gizmos.color = Color.yellow;
-    //}
+    
 
 }
