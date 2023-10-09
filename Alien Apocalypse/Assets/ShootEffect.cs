@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 using UnityEngine.Rendering;
+using Unity.Burst.CompilerServices;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -25,6 +26,44 @@ public class ShootEffect : MonoBehaviour
 
     [SerializeField]
     ParticleSystem[] particles;
+
+    public virtual void Activate(bool hitEnemy, params Vector3[] hitPoints )
+    {
+        foreach ( var effect in effects )
+        {
+            effect.Play ( );
+        }
+
+        foreach ( var particle in particles )
+        {
+            particle.Play ( );
+        }
+
+        for ( int i = 0; i < hitPoints.Length; i++ )
+        {
+            VFXShootRay ray = Instantiate (shootRayObject).GetComponent<VFXShootRay> ( );
+
+            Vector3 point = hitPoints[i];
+
+            if ( point == Vector3.zero )
+            {
+                point = transform.forward * 100;
+            }
+
+            if ( ray )
+            {
+                ray.Shoot (transform.position, point);
+            }
+
+            if ( hitEnemy )
+                continue;
+
+            VisualEffect decal = Instantiate (hitDecal, hitPoints[i], Quaternion.identity).GetComponent<VisualEffect> ( );
+
+            decal.Play ( );
+
+        }
+    }
 
     public virtual void Activate (params RaycastHit[] hit )
     {
