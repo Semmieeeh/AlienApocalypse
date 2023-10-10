@@ -69,7 +69,7 @@ public class Movement : MonoBehaviourPunCallbacks
         }
         else if (Input.mouseScrollDelta.y > 0)
         {
-            photonView.RPC("NextCheck", RpcTarget.All);
+            photonView.RPC("NextCheck", RpcTarget.All); 
         }
 
         FovChange();

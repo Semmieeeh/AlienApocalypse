@@ -2310,7 +2310,7 @@ Transform:
   m_GameObject: {fileID: 851983632}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.7, y: 0, z: 0}
+  m_LocalPosition: {x: -17.48177, y: 0, z: 0}
   m_LocalScale: {x: 11.7404, y: 5.8702, z: 5.8702}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2508,7 +2508,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &903638582
 BoxCollider:
@@ -2603,7 +2603,7 @@ Transform:
   m_GameObject: {fileID: 903638581}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.018232, y: 0.55, z: 0.53}
+  m_LocalPosition: {x: 4.2, y: 0.55, z: 0.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2723,52 +2723,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935355572}
   m_CullTransparentMesh: 1
---- !u!1 &937019227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 937019228}
-  - component: {fileID: 937019229}
-  m_Layer: 0
-  m_Name: IslandSpawnPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &937019228
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 937019227}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -11.4, y: 0, z: 29.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!114 &937019229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 937019227}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 750b5df222ed6c9409776d7c219d5d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colliders: {fileID: 5823753094046980005, guid: bf896f05d084f3f499ddf3bd475cb84c, type: 3}
-  spawnPos: {fileID: 937019228}
 --- !u!1 &938054546
 GameObject:
   m_ObjectHideFlags: 0
@@ -3642,7 +3596,7 @@ Transform:
   m_GameObject: {fileID: 1113126630}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.9, y: 10, z: -207.3}
+  m_LocalPosition: {x: 20.6, y: 10, z: -207.3}
   m_LocalScale: {x: 1, y: 20, z: 50.00001}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4054,7 +4008,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &1178552713
 MonoBehaviour:
@@ -4188,7 +4142,7 @@ Transform:
   m_GameObject: {fileID: 1178552712}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.018232, y: 0.55, z: 16.79}
+  m_LocalPosition: {x: 4.1999993, y: 0.55, z: 16.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4222,7 +4176,7 @@ Transform:
   m_GameObject: {fileID: 1183418911}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.9, y: 10, z: -107.3}
+  m_LocalPosition: {x: 20.6, y: 10, z: -107.3}
   m_LocalScale: {x: 1, y: 20, z: 50.00001}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4319,6 +4273,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Temp Eiland 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5823753094046980005, guid: bf896f05d084f3f499ddf3bd475cb84c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9040919041885787238, guid: bf896f05d084f3f499ddf3bd475cb84c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -25.342758
@@ -4329,7 +4287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9040919041885787238, guid: bf896f05d084f3f499ddf3bd475cb84c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.460888
+      value: 34.4
       objectReference: {fileID: 0}
     - target: {fileID: 9040919041885787238, guid: bf896f05d084f3f499ddf3bd475cb84c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4528,7 +4486,7 @@ Transform:
   m_GameObject: {fileID: 1240839013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.9, y: 10, z: -157.3}
+  m_LocalPosition: {x: 20.6, y: 10, z: -157.3}
   m_LocalScale: {x: 1, y: 20, z: 50.00001}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6172,7 +6130,7 @@ PrefabInstance:
     - target: {fileID: 817914298730703352, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
       propertyPath: islandPos
       value: 
-      objectReference: {fileID: 937019228}
+      objectReference: {fileID: 0}
     - target: {fileID: 817914298730703352, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
       propertyPath: islandPrefab
       value: 
@@ -6482,7 +6440,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &2022826596
 MonoBehaviour:
@@ -6603,7 +6561,7 @@ Transform:
   m_GameObject: {fileID: 2022826594}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.018232, y: 0.55, z: 14.61}
+  m_LocalPosition: {x: 4.1999993, y: 0.55, z: 14.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7003,5 +6961,4 @@ SceneRoots:
   - {fileID: 1178552719}
   - {fileID: 297257779}
   - {fileID: 1949183033}
-  - {fileID: 937019228}
   - {fileID: 1214155435}

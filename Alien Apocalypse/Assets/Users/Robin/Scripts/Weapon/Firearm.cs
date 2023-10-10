@@ -71,6 +71,7 @@ public class Firearm : Weapon
     [Space]
     [Header("Audio")]
     public AudioSource source;
+    public bool gatling;
 
     [Space]
     [Header("Firearm Events")]
@@ -115,7 +116,7 @@ public class Firearm : Weapon
             weaponInt = firearmData.weaponInt;
             burstAmount = firearmData.baseBurstAmount;
             fireRate = firearmData.baseFireRate;
-
+            gatling = firearmData.isGatling;
             maxAmmo = firearmData.baseMaxAmmo;
             if(firearmData.anim != null)
             {
@@ -191,6 +192,10 @@ public class Firearm : Weapon
             canBurst = true;
             canSingleShoot = true;
             canProjectile = true;
+            if (gatling)
+            {
+                source.pitch = 1;
+            }
         }
     }
 
@@ -427,9 +432,17 @@ public class Firearm : Weapon
     [PunRPC]
     public void PlaySound()
     {
-        if(source != null)
+        if(source != null && !gatling)
         {
             source.PlayOneShot(source.clip);
+        }
+        else
+        {
+            source.PlayOneShot(source.clip);
+            if (source.pitch < 1.2f)
+            {
+                source.pitch += 0.005f;
+            }
         }
     }
 }

@@ -29,6 +29,7 @@ public class FirearmData : WeaponData
     [Header("General")]
     public float baseDamage;
     public float baseCooldown;
+    public bool isGatling;
 
     [Space]
     [Header("Burst")]
