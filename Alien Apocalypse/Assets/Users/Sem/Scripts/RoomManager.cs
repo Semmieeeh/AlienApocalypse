@@ -34,7 +34,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void JoinRoomButton()
     {
         Debug.Log("Connecting...");
-        PhotonNetwork.JoinOrCreateRoom(roomNameToJoin, null, null);
+        RoomOptions options = new RoomOptions();
+        options.MaxPlayers = 4;
+        PhotonNetwork.JoinOrCreateRoom(roomNameToJoin, options, null);
     }
     
 

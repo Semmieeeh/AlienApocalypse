@@ -37,6 +37,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     private float timePassed;
     RaycastHit hit;
     public bool flyingEnemy;
+    public Animator anim;
+    public Animator armAnim;
     void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -99,14 +101,30 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         break;
 
                     case EnemyState.chasing:
+                        
                         if (nearestPlayer != null)
                         {
                             agent.destination = nearestPlayer.transform.position;
-
-                            if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < (attackRange + flyingHeight) && canAttack == true)
+                            
+                            if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
-                                photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                                anim.SetInteger("WalkState", 0);
+                                
+                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
+                                agent.updateRotation = true;
+                                if (canAttack == true)
+                                {
+                                    
+                                    photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                                    
+                                }
 
+                            }
+                            else
+                            {
+                                
+                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
+                                anim.SetInteger("WalkState", 1);
                             }
                         }
                         break;
@@ -141,6 +159,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         {
             if (nearestPlayer.TryGetComponent(out PlayerHealth player))
             {
+                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                 player.TakeDamage(damage);
                 canAttack = false;
             }
@@ -179,6 +198,18 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
-    
+    [PunRPC]
+    private void UpdateAlienArms(int state, string attackTrigger, bool inRange)
+    {
+        armAnim.SetInteger("WalkState",state);
+        armAnim.SetTrigger(attackTrigger);
+        armAnim.SetBool("InRange", inRange);
+    }
+
+    [PunRPC]
+    void UpdateAlienLegs()
+    {
+
+    }
 
 }

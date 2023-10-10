@@ -33,6 +33,7 @@ Transform:
   m_Children:
   - {fileID: 790655532389679926}
   - {fileID: 5310396930078496763}
+  - {fileID: 413312331003577060}
   m_Father: {fileID: 1648212493076297248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1449288521228019787
@@ -103,7 +104,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 413312331003577060}
   - {fileID: 1814970507048184447}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -448,8 +448,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1648212493076297248}
+    m_TransformParent: {fileID: 1814970507048184447}
     m_Modifications:
+    - target: {fileID: 637860560883457351, guid: 140d7580d4c00964f844375fdba0405e, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5811202954332822001, guid: 140d7580d4c00964f844375fdba0405e, type: 3}
       propertyPath: m_Name
       value: AR Shoot Particle
@@ -460,7 +464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6078886128398860796, guid: 140d7580d4c00964f844375fdba0405e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.063
+      value: 0.0687
       objectReference: {fileID: 0}
     - target: {fileID: 6078886128398860796, guid: 140d7580d4c00964f844375fdba0405e, type: 3}
       propertyPath: m_LocalPosition.z

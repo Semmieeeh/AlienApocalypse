@@ -28,10 +28,11 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         this.onHit = onHit;
 
         photonView.RPC(nameof(SyncDamage), RpcTarget.All, damage);
+        Debug.Log(damage);
     }
 
     [PunRPC]
-    void SyncDamage(float damage)
+    public void SyncDamage(float damage)
     {
         health -= damage;
 
