@@ -23,6 +23,9 @@ MonoBehaviour:
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
   baseFireRate: 1200
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 0
+  radius: 0
   baseMaxAmmo: 7
   baseReloadTime: 1.5
   raycastDistance: 1000
@@ -38,8 +41,8 @@ MonoBehaviour:
   firearmRecoilZ: 0
   firearmSnappiness: 10
   firearmReturnSpeed: 13
-  firearmRecoilBackUp: -1.5
-  backUpSnappiness: 20
+  firearmRecoilBackUp: -2
+  backUpSnappiness: 25
   backUpReturnSpeed: 60
   anim: {fileID: 7400000, guid: 1f27136cb71c91c4badfa880576a9700, type: 2}
   weaponInt: 1

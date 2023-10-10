@@ -1182,7 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5079d1617664f58458da1946848e854c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageMultiplier: 2
+  damageMultiplier: 4
   parent: {fileID: 6342635429818818792}
 --- !u!1 &4087236324043453785
 GameObject:
@@ -1823,14 +1823,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   turnSpeed: 1000
-  roamRange: 50
+  roamRange: 100
   target: {x: 0, y: 0, z: 0}
   angleToPlayer: 0
   detectionAngle: 180
   detectionRange: 30
   flyingHeight: 0
   state: 0
-  attackRange: 3
+  attackRange: 10
   nearestPlayer: {fileID: 0}
   canAttack: 0
   attackSpeed: 2
@@ -2155,7 +2155,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6101855443315125917}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7ec45602d41bf94b97a68ef8de40594, type: 3}
   m_Name: 

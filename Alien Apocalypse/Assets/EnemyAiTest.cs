@@ -50,7 +50,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             
             agent.destination = target;
             state = EnemyState.idle;
-            attackRange = agent.stoppingDistance + 1;
+            agent.stoppingDistance = attackRange + 1;
             photonView.RPC("NewTarget", RpcTarget.All);
             if (flyingEnemy)
             {
@@ -64,10 +64,15 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         agent.baseOffset = Random.Range(4f, 8f);
         attackRange += agent.baseOffset;
     }
-
+    bool canChooseNew;
     void Update()
     {
         
+        if(canChooseNew == true)
+        {
+            photonView.RPC("NewTarget", RpcTarget.All);
+            canChooseNew = false;
+        }
         if (PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
             if (flyingHeight > 0.1f)
@@ -93,7 +98,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 switch (state)
                 {
                     case EnemyState.idle:
-                        if (Vector3.Distance(transform.position, target) < 3f + flyingHeight)
+
+                        anim.SetInteger("WalkState", 1);
+                        if (Vector3.Distance(transform.position, target) < 3f)
                         {
                             photonView.RPC("NewTarget", RpcTarget.All);
                             
@@ -122,9 +129,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             }
                             else
                             {
-                                
+                                canChooseNew = true;
                                 photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
-                                anim.SetInteger("WalkState", 1);
+                                anim.SetInteger("WalkState", 2);
                             }
                         }
                         break;
@@ -193,6 +200,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         }
                         
                     }
+                }
+                else
+                {
+                    state = EnemyState.idle;          
+
                 }
             }
         }
