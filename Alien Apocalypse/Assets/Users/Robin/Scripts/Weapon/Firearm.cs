@@ -286,6 +286,8 @@ public class Firearm : Weapon
         isProjectile = false;
     }
 
+    public bool IsReload() => isReloading; 
+
     public override IEnumerator Reloading()
     {
         if (photonView.IsMine)

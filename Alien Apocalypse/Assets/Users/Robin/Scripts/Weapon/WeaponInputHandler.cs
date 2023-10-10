@@ -85,49 +85,57 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         
         if(oldScrollNum != scrollNum)
         {
-            if(selectedWeapon != null)
+            if(selectedWeapon.transform.TryGetComponent<Firearm>(out Firearm currentFirearm))
             {
-                if(selectedWeapon.transform.TryGetComponent<Firearm>(out Firearm currentFirearm))
+                if(currentFirearm.IsReload() == true)
                 {
-                    if(currentFirearm.firearmData != null)
+                    scrollNum = oldScrollNum;
+                    return;
+                }
+                else
+                {
+                    if(selectedWeapon != null)
                     {
-                        if(selectedWeapon.transform.childCount > 0)
+                        if(currentFirearm.firearmData != null)
                         {
-                            selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
+                            if(selectedWeapon.transform.childCount > 0)
+                            {
+                                selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
+                            }
+                        }                        
+                    }
+
+                    if(weaponSlots[Mathf.Abs((int)scrollNum)].transform.TryGetComponent<Firearm>(out Firearm nextFirearm))
+                    {
+                        if(nextFirearm.firearmData != null)
+                        {
+                            selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
+
+                            selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
+                            //if (previousWeapon != null)
+                            //{
+                            //    previousWeapon.SetActive(false);
+                            //}
+                            //arms.transform.GetChild(-scrollNum.ToInt()).gameObject.SetActive(true);
+                            //previousWeapon = arms.transform.GetChild(-scrollNum.ToInt()).gameObject;
+                            selectedWeapon.mainCam = mainCam;
+                            selectedWeapon.recoilObject = recoil;
+                        }
+                        else if(nextFirearm.firearmData == null)
+                        {
+                            selectedWeapon.mainCam = null;
+                            selectedWeapon.recoilObject = null;
+                            //if (previousWeapon != null)
+                            //{
+                            //    previousWeapon.SetActive(false);
+                            //}
+                            selectedWeapon = null;
                         }
                     }
-                }
-            }
 
-            if(weaponSlots[Mathf.Abs((int)scrollNum)].transform.TryGetComponent<Firearm>(out Firearm nextFirearm))
-            {
-                if(nextFirearm.firearmData != null)
-                {
-                    selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
-
-                    selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
-                    //if (previousWeapon != null)
-                    //{
-                    //    previousWeapon.SetActive(false);
-                    //}
-                    //arms.transform.GetChild(-scrollNum.ToInt()).gameObject.SetActive(true);
-                    //previousWeapon = arms.transform.GetChild(-scrollNum.ToInt()).gameObject;
-                    selectedWeapon.mainCam = mainCam;
-                    selectedWeapon.recoilObject = recoil;
+                    oldScrollNum = scrollNum;
                 }
-                else if(nextFirearm.firearmData == null)
-                {
-                    selectedWeapon.mainCam = null;
-                    selectedWeapon.recoilObject = null;
-                    //if (previousWeapon != null)
-                    //{
-                    //    previousWeapon.SetActive(false);
-                    //}
-                    selectedWeapon = null;                    
-                }
-            }
-
-            oldScrollNum = scrollNum;
+            }            
         }
     }
 
