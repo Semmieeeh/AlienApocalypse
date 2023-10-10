@@ -269,11 +269,18 @@ public class Firearm : Weapon
             Recoil();
 
             timeSinceLastShot = Time.time;
+            
         }        
     }
 
     bool CanShootProjectile() => !isProjectile && canProjectile;
-
+    void AdjustGatlingBarrelRotation()
+    {
+        Vector3 currentEulerAngles = dataHolder.gatlingBarrel.localRotation.eulerAngles;
+        float newYaw = currentEulerAngles.z - 20.0f; // Adjust the desired rotation angle as needed
+        Quaternion newRotation = Quaternion.Euler(currentEulerAngles.x, currentEulerAngles.y, newYaw);
+        dataHolder.gatlingBarrel.localRotation = newRotation;
+    }
     IEnumerator ProjectileMode()
     {
         if(photonView.IsMine)
@@ -385,9 +392,25 @@ public class Firearm : Weapon
             }
 
             currentAmmo--;
+            if (gatling)
+            {
+                //AdjustGatlingBarrelRotation();
+            }
         }
     }
 
+    //remove
+    public float rotationSpeed;
+    
+    void Update()
+    {
+        // Rotate the gatlingBarrel by rotationSpeed degrees per second
+        if (Input.GetMouseButton(0) && gatling)
+        {
+            float rotationAmount = rotationSpeed * Time.deltaTime;
+            dataHolder.gatlingBarrel.Rotate(Vector3.back, rotationAmount);
+        }
+    }
     [PunRPC]
     void Projectile()
     {
@@ -439,7 +462,7 @@ public class Firearm : Weapon
         else
         {
             source.PlayOneShot(source.clip);
-            if (source.pitch < 1.2f)
+            if (source.pitch < 1.3f)
             {
                 source.pitch += 0.005f;
             }
