@@ -20,6 +20,8 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public string roomNameToJoin;
     public bool spawnedEnemy = false;
     public RoomList roomList;
+    public GameObject island;
+    public Transform islandPos;
 
     public string nickname = "Unnamed";
     void Start()
@@ -58,11 +60,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         }
         
-        GameObject playerPrefab = PhotonNetwork.Instantiate(prefabs[PhotonNetwork.CurrentRoom.PlayerCount-1].name, spawnPoint.position, Quaternion.identity);
+        GameObject playerPrefab = PhotonNetwork.Instantiate(prefabs[PhotonNetwork.CurrentRoom.PlayerCount-1].name, spawnPoint.position, spawnPoint.transform.rotation);
         GameObject player = playerPrefab.transform.GetChild(0).gameObject;
         player.GetComponent<PlayerSetup>().IsLocalPlayer();
         player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.AllBuffered, nickname);
-        
+        //GameObject isl = PhotonNetwork.Instantiate(island.name, islandPos.position, islandPos.rotation);
+
     }
     
 }

@@ -63,7 +63,14 @@ public class Movement : MonoBehaviourPunCallbacks
         input.Normalize();
         sprinting = Input.GetButton("Sprint");
         jumping = Input.GetButton("Jump");
-        
+        if (Input.mouseScrollDelta.y < 0)
+        {
+            photonView.RPC("NextCheck", RpcTarget.All);
+        }
+        else if (Input.mouseScrollDelta.y > 0)
+        {
+            photonView.RPC("NextCheck", RpcTarget.All);
+        }
 
         FovChange();
 
@@ -76,10 +83,12 @@ public class Movement : MonoBehaviourPunCallbacks
         if (Input.GetKey(KeyCode.S))
         {
             walkingBackwards = true;
+            photonView.RPC("Walking", RpcTarget.All);
         }
         else
         {
             walkingBackwards = false;
+            photonView.RPC("Walking", RpcTarget.All);
         }
     }
 
@@ -94,26 +103,30 @@ public class Movement : MonoBehaviourPunCallbacks
             return false;
         }
     }
+    int i;
     public void ArmAnimCheck()
     {
-        if(sprinting && input.magnitude > 0.5f)
+        
+        if(sprinting && input.magnitude > 0.5f && i!=2)
         {
             photonView.RPC("AnimRPC", RpcTarget.All, 2);
+            photonView.RPC("NextCheck", RpcTarget.All);
+            
+            i = 2;
         }
 
-        if(sprinting && input.magnitude < 0.5f)
-        {
-            photonView.RPC("AnimRPC", RpcTarget.All, 0);
-        }
-
-        if(!sprinting && input.magnitude > 0.5f)
+        if(!sprinting && input.magnitude > 0.5f && i!=1)
         {
             photonView.RPC("AnimRPC", RpcTarget.All, 1);
+            photonView.RPC("NextCheck", RpcTarget.All);
+            i = 1;
         }
-
-        if(!sprinting && input.magnitude < 0.5f)
+        
+        if(input.magnitude < 0.5f  && i!=0)
         {
             photonView.RPC("AnimRPC", RpcTarget.All, 0);
+            photonView.RPC("NextCheck", RpcTarget.All);
+            i = 0;
         }
 
         
@@ -124,6 +137,7 @@ public class Movement : MonoBehaviourPunCallbacks
         armAnim.SetInteger("ArmState", i);
         armAnim.SetBool("Jumping", grounded);
         armAnim.SetBool("Moving", IsMoving());
+        
     }
     private void OnTriggerStay(Collider other)
     {
@@ -260,33 +274,54 @@ public class Movement : MonoBehaviourPunCallbacks
             return Vector3.zero;
         }
     }
+    int j;
+    bool jumped;
     public void AnimationCheck()
     {
         if (photonView.IsMine)
         {
-            photonView.RPC("SetJumpAnim", RpcTarget.All,grounded);
-            if (sprinting && input.magnitude > 0.5f && grounded)
+            photonView.RPC("SetJumpAnim", RpcTarget.All, grounded);
+            if (!grounded && jumped == false)
             {
-                walkState = 2;
-                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+                
+                armAnim.SetTrigger("NextAnim");
+                j = 3;
+                jumped = true;
+            }
+            else if (grounded && jumped == true)
+            {
+                j = 4;
+                armAnim.SetTrigger("NextAnim");
+                jumped = false;
+            }
+            if (sprinting && input.magnitude > 0.5f && grounded && j!=2)
+            {
+                if (j != 3)
+                {
+                    walkState = 2;
+                    photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+                    j = 2;
+                }
             }
 
-            if (sprinting && input.magnitude < 0.5f && grounded)
+            if (!sprinting && input.magnitude > 0.5f && grounded && j!=1)
             {
-                walkState = 0;
-                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+                if (j != 3)
+                {
+                    walkState = 1;
+                    photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+                    j = 1;
+                }
             }
 
-            if (!sprinting && input.magnitude > 0.5f && grounded)
+            if (input.magnitude < 0.5f && grounded && j != 0)
             {
-                walkState = 1;
-                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-            }
-
-            if (!sprinting && input.magnitude < 0.5f && grounded)
-            {
-                walkState = 0;
-                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+                if (j != 3)
+                {
+                    walkState = 0;
+                    photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
+                    j = 0;
+                }
             }
         }
     }
@@ -298,9 +333,20 @@ public class Movement : MonoBehaviourPunCallbacks
 
     }
     [PunRPC]
+    private void Walking()
+    {
+        anim.SetBool("WalkingBackwards", walkingBackwards);
+    }
+    [PunRPC]
+    private void NextCheck()
+    {
+        armAnim.SetTrigger("NextAnim");
+    }
+    [PunRPC]
     void SetJumpAnim(bool b)
     {
         anim.SetBool("Grounded", b);
+        armAnim.SetBool("Jumping", b);
     }
 
 }

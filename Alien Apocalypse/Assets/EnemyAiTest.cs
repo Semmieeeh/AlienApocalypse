@@ -47,10 +47,10 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             agent.speed = moveSpeed;
             agent.angularSpeed = turnSpeed;
             origin = transform.position;
-            
+            target = transform.position;
             agent.destination = target;
             state = EnemyState.idle;
-            agent.stoppingDistance = attackRange + 1;
+            agent.stoppingDistance = attackRange;
             photonView.RPC("NewTarget", RpcTarget.All);
             if (flyingEnemy)
             {
@@ -99,8 +99,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 {
                     case EnemyState.idle:
 
-                        anim.SetInteger("WalkState", 1);
-                        if (Vector3.Distance(transform.position, target) < 3f)
+                        photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
+                        if (Vector3.Distance(transform.position, target) < 5f)
                         {
                             photonView.RPC("NewTarget", RpcTarget.All);
                             
@@ -115,10 +115,12 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             
                             if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
-                                anim.SetInteger("WalkState", 0);
-                                
+                                photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
                                 photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
-                                agent.updateRotation = true;
+
+                                Quaternion targetRotation = CalculateRotationToPlayer();
+                                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
                                 if (canAttack == true)
                                 {
                                     
@@ -131,7 +133,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             {
                                 canChooseNew = true;
                                 photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
-                                anim.SetInteger("WalkState", 2);
+                                photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 2);
                             }
                         }
                         break;
@@ -219,9 +221,20 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdateAlienLegs()
+    void UpdateAlienLegs(int i)
     {
+        anim.SetInteger("WalkState", i);
+    }
 
+    private Quaternion CalculateRotationToPlayer()
+    {
+        if (nearestPlayer != null)
+        {
+            Vector3 directionToPlayer = nearestPlayer.transform.position - transform.position;
+            directionToPlayer.y = 0;
+            return Quaternion.LookRotation(directionToPlayer);
+        }
+        return transform.rotation;
     }
 
 }

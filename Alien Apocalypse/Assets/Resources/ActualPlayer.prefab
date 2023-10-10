@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grapplingGun: {fileID: 5463677568850874811}
-  quality: 500
+  quality: 25
   damper: 14
   strength: 500
   velocity: 15
@@ -4645,7 +4645,7 @@ PrefabInstance:
     - target: {fileID: 2291872792041277451, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
       propertyPath: firearmData
       value: 
-      objectReference: {fileID: 11400000, guid: 8b65683c653d9d6459b339ec65080377, type: 2}
+      objectReference: {fileID: 11400000, guid: 8b71ba987f8810f4e80a1a86d1fc29fb, type: 2}
     - target: {fileID: 2291872792041277451, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
       propertyPath: events.onHitEnemy.m_PersistentCalls.m_Calls.Array.size
       value: 1
