@@ -17,6 +17,7 @@ public class UIPauseManager : MonoBehaviour
     private bool m_Paused;
     public GameObject player;
     public GameObject cam;
+    public GameObject weaponInput;
     public bool Paused
     {
         get
@@ -63,6 +64,7 @@ public class UIPauseManager : MonoBehaviour
         player.GetComponent<WallRunning>().enabled = !Paused;
         player.GetComponent<SlidingAbility>().enabled = !Paused;
         player.GetComponent<GrappleRope>().enabled = !Paused;
+        weaponInput.GetComponent<WeaponInputHandler>().enabled = !Paused;
         cam.GetComponent<MouseLook>().enabled = !Paused;
     }
 
