@@ -202,7 +202,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     private void UpdateAlienArms(int state, string attackTrigger, bool inRange)
     {
         armAnim.SetInteger("WalkState",state);
-        armAnim.SetTrigger(attackTrigger);
+        armAnim.SetTrigger(attackTrigger);  
         armAnim.SetBool("InRange", inRange);
     }
 

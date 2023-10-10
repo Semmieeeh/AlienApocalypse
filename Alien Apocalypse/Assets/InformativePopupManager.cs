@@ -7,7 +7,7 @@ public class InformativePopupManager : MonoBehaviour
     [SerializeField]
     InformativePopup popup;
 
-    private Queue<InformativePopUpType> popups = new();
+    private readonly Queue<InformativePopUpType> popups = new();
 
     private void Update()
     {
@@ -34,6 +34,7 @@ public class InformativePopupManager : MonoBehaviour
 
     public void AddPopup(InformativePopUpType type)
     {
+        Debug.Log ($"Added kill popup of type {type}");
         popups.Enqueue(type);
     }
 }
