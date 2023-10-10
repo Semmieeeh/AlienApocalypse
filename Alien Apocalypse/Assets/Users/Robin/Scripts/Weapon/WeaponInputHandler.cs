@@ -52,10 +52,12 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         if (selectedWeapon != null)
         {
             anim.SetInteger("WeaponState", selectedWeapon.gameObject.GetComponent<Firearm>().weaponInt);
+            anim.SetTrigger("NextAnim");
         }
         else
         {
             anim.SetInteger("WeaponState", 0);
+            anim.SetTrigger("NextAnim");
         }
     }
     void InputWeapon()
