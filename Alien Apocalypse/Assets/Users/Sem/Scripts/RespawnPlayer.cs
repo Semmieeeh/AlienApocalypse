@@ -9,7 +9,7 @@ public class RespawnPlayer : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            collision.gameObject.transform.position = GameObject.Find("SpawnPoint").transform.position;
+            collision.gameObject.transform.position = GameObject.Find("PlayerSpawnPoint").transform.position;
             
         }
     }

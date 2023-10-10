@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,8 @@ public class UIPauseManager : MonoBehaviour
     GameObject optionsMenu;
 
     private bool m_Paused;
-
+    public GameObject player;
+    public GameObject cam;
     public bool Paused
     {
         get
@@ -54,6 +56,14 @@ public class UIPauseManager : MonoBehaviour
         {
             Paused = !Paused;
         }
+
+        player.GetComponent<Movement>().enabled = !Paused;
+        player.GetComponent<Grappling>().enabled = !Paused;
+        player.GetComponent<DashAbility>().enabled = !Paused;
+        player.GetComponent<WallRunning>().enabled = !Paused;
+        player.GetComponent<SlidingAbility>().enabled = !Paused;
+        player.GetComponent<GrappleRope>().enabled = !Paused;
+        cam.GetComponent<MouseLook>().enabled = !Paused;
     }
 
     public void DisableMenu ( )
