@@ -39,12 +39,9 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         {
             photonView.RPC(nameof(SelectWeapon), RpcTarget.All);
             UpdateAnimations();
-            if (selectedWeapon != null)
-                InputWeapon();
-        }
-        
 
-
+            InputWeapon();
+        }     
     }
 
     public void UpdateAnimations()
@@ -62,21 +59,29 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     }
     void InputWeapon()
     {
-        if(Input.GetButton("Fire1"))
-            selectedWeapon.Shooting();
-        else if(Input.GetButtonUp("Fire1"))
-            selectedWeapon.OnButtonUp();
-
-        if(Input.GetKeyDown(KeyCode.R))
+        if(selectedWeapon != null)
         {
-            if (selectedWeapon.GetComponent<Firearm>().currentAmmo < selectedWeapon.GetComponent<Firearm>().maxAmmo && selectedWeapon.GetComponent<Firearm>().isReloading == false)
-            {
-                selectedWeapon.StartCoroutine(selectedWeapon.Reloading());
-            }
-        }            
+            if(Input.GetButton("Fire1"))
+                selectedWeapon.Shooting();
+            else if(Input.GetButtonUp("Fire1"))
+                selectedWeapon.OnButtonUp();
 
-        transform.localPosition = selectedWeapon.Sway(transform.localPosition);
-        selectedWeapon.UpdateWeapon();
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                if(selectedWeapon.GetComponent<Firearm>().currentAmmo < selectedWeapon.GetComponent<Firearm>().maxAmmo && selectedWeapon.GetComponent<Firearm>().isReloading == false)
+                {
+                    selectedWeapon.StartCoroutine(selectedWeapon.Reloading());
+                }
+            }
+
+            transform.localPosition = selectedWeapon.Sway(transform.localPosition);
+            selectedWeapon.UpdateWeapon();
+        }
+
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            DropWeapon();
+        }
     }
 
     [PunRPC]
@@ -87,16 +92,16 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         
         if(oldScrollNum != scrollNum)
         {
-            if(selectedWeapon.transform.TryGetComponent<Firearm>(out Firearm currentFirearm))
+            if(selectedWeapon != null)
             {
-                if(currentFirearm.IsReload() == true)
+                if(selectedWeapon.transform.TryGetComponent<Firearm>(out Firearm currentFirearm))
                 {
-                    scrollNum = oldScrollNum;
-                    return;
-                }
-                else
-                {
-                    if(selectedWeapon != null)
+                    if(currentFirearm.IsReload() == true)
+                    {
+                        scrollNum = oldScrollNum;
+                        return;
+                    }
+                    else
                     {
                         if(currentFirearm.firearmData != null)
                         {
@@ -104,40 +109,40 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                             {
                                 selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
                             }
-                        }                        
-                    }
-
-                    if(weaponSlots[Mathf.Abs((int)scrollNum)].transform.TryGetComponent<Firearm>(out Firearm nextFirearm))
-                    {
-                        if(nextFirearm.firearmData != null)
-                        {
-                            selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
-
-                            selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
-                            //if (previousWeapon != null)
-                            //{
-                            //    previousWeapon.SetActive(false);
-                            //}
-                            //arms.transform.GetChild(-scrollNum.ToInt()).gameObject.SetActive(true);
-                            //previousWeapon = arms.transform.GetChild(-scrollNum.ToInt()).gameObject;
-                            selectedWeapon.mainCam = mainCam;
-                            selectedWeapon.recoilObject = recoil;
-                        }
-                        else if(nextFirearm.firearmData == null)
-                        {
-                            selectedWeapon.mainCam = null;
-                            selectedWeapon.recoilObject = null;
-                            //if (previousWeapon != null)
-                            //{
-                            //    previousWeapon.SetActive(false);
-                            //}
-                            selectedWeapon = null;
                         }
                     }
-
-                    oldScrollNum = scrollNum;
                 }
-            }            
+            }
+
+            if(weaponSlots[Mathf.Abs((int)scrollNum)].transform.TryGetComponent<Firearm>(out Firearm nextFirearm))
+            {
+                if(nextFirearm.firearmData != null)
+                {
+                    selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
+
+                    selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
+                    //if (previousWeapon != null)
+                    //{
+                    //    previousWeapon.SetActive(false);
+                    //}
+                    //arms.transform.GetChild(-scrollNum.ToInt()).gameObject.SetActive(true);
+                    //previousWeapon = arms.transform.GetChild(-scrollNum.ToInt()).gameObject;
+                    selectedWeapon.mainCam = mainCam;
+                    selectedWeapon.recoilObject = recoil;
+                }
+                else if(nextFirearm.firearmData == null)
+                {
+                    selectedWeapon.mainCam = null;
+                    selectedWeapon.recoilObject = null;
+                    //if (previousWeapon != null)
+                    //{
+                    //    previousWeapon.SetActive(false);
+                    //}
+                    selectedWeapon = null;
+                }
+            }
+
+            oldScrollNum = scrollNum;          
         }
     }
 
@@ -259,6 +264,27 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     {
                         firearm.ModifyWeaponData(weaponAbilities[j].damage, weaponAbilities[j].cooldown, weaponAbilities[j].burstAmount, weaponAbilities[j].fireRate, weaponAbilities[j].maxAmmo, weaponAbilities[j].reloadTime); ;
                     }
+                }
+            }
+        }
+    }
+
+    void DropWeapon()
+    {
+        if(selectedWeapon != null)
+        {
+            if(selectedWeapon.transform.TryGetComponent<Firearm>(out Firearm currentFirearm))
+            {
+                if(currentFirearm.firearmData != null)
+                {
+                    PhotonNetwork.Destroy(selectedWeapon.transform.GetChild(0).gameObject);
+                    PhotonNetwork.Instantiate(currentFirearm.firearmData.dropPrefab.name, transform.position, Quaternion.identity);
+
+                    selectedWeapon.mainCam = null;
+                    selectedWeapon.recoilObject = null;
+
+                    currentFirearm.firearmData = null;
+                    selectedWeapon = null;
                 }
             }
         }

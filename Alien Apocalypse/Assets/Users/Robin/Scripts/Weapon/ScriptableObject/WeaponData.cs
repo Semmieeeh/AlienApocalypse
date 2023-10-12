@@ -7,6 +7,7 @@ public class WeaponData : ScriptableObject
     [Header("General")]
     [Space]
     public GameObject prefab;
+    public GameObject dropPrefab;
 
     [Space]
     public new string name;

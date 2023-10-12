@@ -14,6 +14,7 @@ public class FirearmData : WeaponData
         shotgun,
         assaultRifle,
         rocketLauncher,
+        gatlingGun,
     }
 
     public enum Firetype
@@ -29,7 +30,7 @@ public class FirearmData : WeaponData
     [Header("General")]
     public float baseDamage;
     public float baseCooldown;
-    public bool isGatling;
+    public float rotationAmount;
 
     [Space]
     [Header("Burst")]
