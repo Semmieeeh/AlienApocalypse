@@ -71,7 +71,6 @@ public class Firearm : Weapon
     [Space]
     [Header("Audio")]
     public AudioSource source;
-    public bool gatling;
 
     [Space]
     [Header("Firearm Events")]
@@ -116,7 +115,6 @@ public class Firearm : Weapon
             weaponInt = firearmData.weaponInt;
             burstAmount = firearmData.baseBurstAmount;
             fireRate = firearmData.baseFireRate;
-            gatling = firearmData.isGatling;
             maxAmmo = firearmData.baseMaxAmmo;
             if(firearmData.anim != null)
             {
@@ -192,10 +190,8 @@ public class Firearm : Weapon
             canBurst = true;
             canSingleShoot = true;
             canProjectile = true;
-            if (gatling)
-            {
-                source.pitch = 1;
-            }
+
+            source.pitch = 1;            
         }
     }
 
@@ -258,7 +254,7 @@ public class Firearm : Weapon
     void AutomaticMode()
     {
         if (photonView.IsMine)
-        {
+        {           
             // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
             events.onShooting?.Invoke();
 
@@ -274,13 +270,7 @@ public class Firearm : Weapon
     }
 
     bool CanShootProjectile() => !isProjectile && canProjectile;
-    void AdjustGatlingBarrelRotation()
-    {
-        Vector3 currentEulerAngles = dataHolder.gatlingBarrel.localRotation.eulerAngles;
-        float newYaw = currentEulerAngles.z - 20.0f; // Adjust the desired rotation angle as needed
-        Quaternion newRotation = Quaternion.Euler(currentEulerAngles.x, currentEulerAngles.y, newYaw);
-        dataHolder.gatlingBarrel.localRotation = newRotation;
-    }
+
     IEnumerator ProjectileMode()
     {
         if(photonView.IsMine)
@@ -365,13 +355,19 @@ public class Firearm : Weapon
                 animator.SetTrigger("Shoot");
             }
 
+            GunType();
             source.clip = firearmData.shootSound;
             photonView.RPC("PlaySound", RpcTarget.All);
 
             Vector3 particlePoint;
             bool enemyHit = false;
 
-            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, firearmData.raycastDistance))
+            Vector3 mainForward = mainCam.transform.forward * firearmData.raycastDistance;
+            Vector3 gunForward = dataHolder.muzzle.forward * firearmData.raycastDistance;
+
+            Vector3 hitPoint = new Vector3(mainForward.x, gunForward.y, mainForward.z);
+
+            if(Physics.Linecast(mainCam.transform.position, hitPoint, out hit))
             {
                 if(hit.transform.TryGetComponent(out IDamagable damagable))
                 {
@@ -383,7 +379,7 @@ public class Firearm : Weapon
             }
             else
             {
-                particlePoint = dataHolder.muzzle.position + dataHolder.muzzle.forward * firearmData.raycastDistance;
+                particlePoint = hitPoint;
             }
 
             if(dataHolder.shootEffect != null)
@@ -392,25 +388,9 @@ public class Firearm : Weapon
             }
 
             currentAmmo--;
-            if (gatling)
-            {
-                //AdjustGatlingBarrelRotation();
-            }
         }
     }
 
-    //remove
-    public float rotationSpeed;
-    
-    void Update()
-    {
-        // Rotate the gatlingBarrel by rotationSpeed degrees per second
-        if (Input.GetMouseButton(0) && gatling)
-        {
-            float rotationAmount = rotationSpeed * Time.deltaTime;
-            dataHolder.gatlingBarrel.Rotate(Vector3.back, rotationAmount);
-        }
-    }
     [PunRPC]
     void Projectile()
     {
@@ -455,16 +435,41 @@ public class Firearm : Weapon
     [PunRPC]
     public void PlaySound()
     {
-        if(source != null && !gatling)
+        if(source != null)
         {
             source.PlayOneShot(source.clip);
         }
-        else
+    }
+
+    void GunType()
+    {
+        switch(firearmData.firearmType)
         {
-            source.PlayOneShot(source.clip);
-            if (source.pitch < 1.3f)
+            case FirearmData.FirearmType.handgun:
             {
-                source.pitch += 0.005f;
+                break;
+            }
+            case FirearmData.FirearmType.shotgun:
+            {
+                break;
+            }
+            case FirearmData.FirearmType.assaultRifle:
+            {
+                break;
+            }
+            case FirearmData.FirearmType.rocketLauncher:
+            {
+                break;
+            }
+            case FirearmData.FirearmType.gatlingGun:
+            {
+                dataHolder.gatlingBarrel.localEulerAngles = new Vector3(dataHolder.gatlingBarrel.localEulerAngles.x, dataHolder.gatlingBarrel.localEulerAngles.y, dataHolder.gatlingBarrel.localEulerAngles.z + firearmData.rotationAmount);
+                if(source.pitch < 1.3f)
+                {
+                    source.pitch += 0.005f;
+                }
+
+                break;
             }
         }
     }

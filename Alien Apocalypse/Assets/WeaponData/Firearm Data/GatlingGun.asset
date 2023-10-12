@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: GatlingGun
   m_EditorClassIdentifier: 
   prefab: {fileID: 2583214933535969425, guid: 000b3fe0de0908b48af62abb08de22b8, type: 3}
+  dropPrefab: {fileID: 0}
   name: 
   info: 
   localPlacmentPos: {x: 0.25, y: -0.15, z: 0.05}
-  firearmType: 0
+  firearmType: 4
   fireType: 2
   baseDamage: 20
   baseCooldown: 5
-  isGatling: 1
+  rotationAmount: 35
   baseBurstAmount: 0
   baseTimeBetweenBurst: 0
   baseFireRate: 1200
