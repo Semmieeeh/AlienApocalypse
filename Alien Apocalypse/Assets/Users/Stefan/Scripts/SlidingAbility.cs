@@ -40,7 +40,7 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
         slideCooldown -= Time.deltaTime;
         if(movement != null)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && slideCooldown <=0)
+            if (Input.GetKey(KeyCode.LeftControl) && !isSliding && slideCooldown <=0 && movement.grounded)
             {
                 StartSlide();
             }
