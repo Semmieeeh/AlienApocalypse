@@ -106,6 +106,10 @@ public class WallRunning : MonoBehaviour
                 }
             }
         }
+        else if(m == null)
+        {
+            m = GetComponent<Movement>();
+        }
     }
 
     public void OnTriggerExit(Collider other)

@@ -40,6 +40,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
     public void Start()
     {
+        multiplier = 1;
         startedTheWaves = false;
         if (PhotonNetwork.IsMasterClient)
         {
@@ -172,7 +173,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             wavesCompleted++;
             waveSize += 5;
             yield return new WaitForSeconds(waveCooldown);
-            multiplier += 0.1f;
+            multiplier = multiplier * 1.1f;
             
             
         }
@@ -185,7 +186,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             
             int enemyIndex = Random.Range(0, enemiesToSpawn.Length);
             GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, spawnPoint.position, spawnPoint.rotation);
-            enemyObj.GetComponent<EnemyHealth>().multiplier += multiplier;
+            enemyObj.GetComponent<EnemyHealth>().multiplier = multiplier;
             EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
             enemyHealth.instance = this;
         }

@@ -1,24 +1,34 @@
 using System.Collections;
 using System.Net;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.UIElements;
 
-public class SlidingAbility : MonoBehaviour
+public class SlidingAbility : MonoBehaviourPunCallbacks
 {
-    public float slideScale = 0.5f;
-    public float slideForce = 10f;
-    public float slideDuration = 1f;
-
-    private Vector3 originalScale;
+    public float slideScale;
+    public float slideForce;
+    public float slideDuration;
+    CapsuleCollider c;
+    private float originalScale;
     private Rigidbody playerRigidbody;
     private bool isSliding = false;
-    Rigidbody rb;
     public Movement movement;
+    public float centerOffset;
+    Animator anim;
+    public bool canSlide;
+    public float slideCooldown;
+    public float slideCooldownMax;
 
     private void Start()
     {
+
         playerRigidbody = GetComponent<Rigidbody>();
-        originalScale = transform.localScale;
+        c = GetComponent<CapsuleCollider>();
+        originalScale = c.height;
         movement = GetComponent<Movement>();
+        anim = movement.anim;
+        
     }
 
     private void Update()
@@ -27,34 +37,69 @@ public class SlidingAbility : MonoBehaviour
         {
             movement = GetComponent<Movement>();
         }
-
+        slideCooldown -= Time.deltaTime;
         if(movement != null)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding)
+            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && slideCooldown <=0)
             {
                 StartSlide();
             }
             else if (Input.GetKeyUp(KeyCode.LeftControl) && isSliding == true)
             {
-                StopAllCoroutines();
-                transform.localScale = originalScale;
+                float scale = originalScale;
+                photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
                 isSliding = false;
             }
         }
     }
-
+    
     private void StartSlide()
     {
-        transform.localScale *= slideScale;
-        Vector3 slideDirection = transform.forward;
-        playerRigidbody.AddForce(slideDirection * slideForce, ForceMode.VelocityChange);
+        float scale = c.height * slideScale;
+        photonView.RPC("UpdateAnim", RpcTarget.All, scale, true, centerOffset);
+        slideCooldown = slideCooldownMax;
+        if (movement.input.magnitude > 0.5f)
+        {
+            Vector3 slideDirection = CalculateSlideDirection(movement.input);
+            playerRigidbody.AddForce(slideDirection * slideForce, ForceMode.VelocityChange);
+            StartCoroutine(nameof(Cancel));
+        }
         isSliding = true;
+        StartCoroutine(nameof(Cancel));
     }
 
-    private IEnumerator RevertScaleAfterDelay(float delay)
+    private Vector3 CalculateSlideDirection(Vector2 input)
     {
-        yield return new WaitForSeconds(delay);
-        transform.localScale = originalScale;
-        isSliding = false;
+        
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+        Vector3 slideDirection = (forward * input.y + right * input.x).normalized;
+
+        return slideDirection;
     }
+
+    IEnumerator Cancel()
+    {
+        yield return new WaitForSeconds(slideDuration);
+        if (isSliding)
+        {
+            float scale = originalScale;
+            photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
+            isSliding = false;
+        }
+    }
+    [PunRPC]
+    void UpdateAnim(float scale,bool b,float centerHeight)
+    {
+        c.height = scale;
+        c.center = new Vector3(0, centerHeight, 0);
+        anim.SetBool("Sliding", b);
+    }
+
+
+    
 }
