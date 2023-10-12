@@ -39,6 +39,7 @@ public class Grappling : MonoBehaviourPunCallbacks
     public float pullStrength;
     public float stunTime;
     public float abilityCooldown;
+    
 
     private void Awake()
     {
@@ -143,7 +144,7 @@ public class Grappling : MonoBehaviourPunCallbacks
 
     public void CheckForRayCast()
     {
-        if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
+        if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable) && abilityCooldown <=0)
         {
             if (hit.transform.gameObject.tag != "Enemy")
             {
@@ -168,6 +169,7 @@ public class Grappling : MonoBehaviourPunCallbacks
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
         {
             canGrapple = false;
+            abilityCooldown = 2;
             armLowerTime = maxAnimDuration;
             pointingArm = false;
             isGrappling = true;

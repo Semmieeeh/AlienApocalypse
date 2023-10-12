@@ -23,6 +23,10 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public float detectionAngle;
     public float detectionRange;
     public float flyingHeight;
+    [Header("Sounds")]
+    public AudioSource source;
+    public AudioClip[] clips;
+
     public enum EnemyState
     {
         idle,
@@ -100,7 +104,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                     case EnemyState.idle:
 
                         photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
-                        if (Vector3.Distance(transform.position, target) < 5f)
+                        if (Vector3.Distance(transform.position, target) <= attackRange)
                         {
                             photonView.RPC("NewTarget", RpcTarget.All);
                             
@@ -168,6 +172,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         {
             if (nearestPlayer.TryGetComponent(out PlayerHealth player))
             {
+                source.clip = clips[0];
+                source.Play();
                 photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                 player.TakeDamage(damage);
                 canAttack = false;

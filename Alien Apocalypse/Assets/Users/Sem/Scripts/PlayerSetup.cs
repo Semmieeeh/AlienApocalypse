@@ -22,6 +22,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     public GameObject[] playerParts;
     public GameObject inputObject;
     public FollowRotation rot;
+    public FollowRotation rot2;
     public GameObject localUI;
     Transform t;
     public int number;
@@ -44,6 +45,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         StartCoroutine(nameof(WaitForEnemyObj));
         inputObject.SetActive(true);
         rot.enabled = true;
+        rot2.enabled = true;
         Vector3 v = new Vector3(0,0,0);
 
         photonView.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);

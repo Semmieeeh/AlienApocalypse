@@ -20,6 +20,7 @@ MonoBehaviour:
   fireType: 0
   baseDamage: 50
   baseCooldown: 0.2
+  isGatling: 0
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
   baseFireRate: 1200
@@ -29,7 +30,7 @@ MonoBehaviour:
   baseMaxAmmo: 7
   baseReloadTime: 1.5
   raycastDistance: 1000
-  swayClamp: 0.02
+  swayClamp: 0.05
   smoothing: 5
   camRecoilX: -20
   camRecoilY: 0

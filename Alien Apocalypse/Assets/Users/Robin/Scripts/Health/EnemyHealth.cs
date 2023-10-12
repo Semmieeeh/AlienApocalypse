@@ -8,17 +8,19 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
 {
     public EnemyManager instance;
     public float health;
-    public float maxHealth = 100;
+    public float maxHealth;
     public GameObject gettingShotBy;
     public float xpAmount;
+    public float multiplier;
 
     UnityEvent onKill;
     UnityEvent onHit;
 
     private void Start()
     {
+        maxHealth = maxHealth * multiplier;
         health = maxHealth;
-        PhotonNetwork.SerializationRate = 10;
+        
     }
 
     

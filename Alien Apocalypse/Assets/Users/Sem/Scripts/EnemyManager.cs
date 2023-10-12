@@ -36,6 +36,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
     public float waveStartTimeCounter;
     public float cooldownCounter;
+    float multiplier = 0;
 
     public void Start()
     {
@@ -171,6 +172,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             wavesCompleted++;
             waveSize += 5;
             yield return new WaitForSeconds(waveCooldown);
+            multiplier += 0.1f;
             
             
         }
@@ -183,6 +185,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             
             int enemyIndex = Random.Range(0, enemiesToSpawn.Length);
             GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, spawnPoint.position, spawnPoint.rotation);
+            enemyObj.GetComponent<EnemyHealth>().multiplier += multiplier;
             EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
             enemyHealth.instance = this;
         }
