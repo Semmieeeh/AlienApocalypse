@@ -205,12 +205,14 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             player.TakeDamage(damage);
                             Vector3 v = player.transform.position;
                             v.y += 0.4f;
+                            v *= 10;
                             bulletTracer.Activate(true, v);
                             Debug.Log("Hit By Chance!");
                         }
                         else
                         {
                             Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
+                            v *= 10;
                             bulletTracer.Activate(true, v);
                         }
                         Debug.Log("Missed!");
