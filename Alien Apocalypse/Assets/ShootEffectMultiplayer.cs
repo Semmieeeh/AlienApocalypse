@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.VFX;
 using UnityEngine.Rendering;
 using Unity.Burst.CompilerServices;
+using Photon.Pun;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 
-public class ShootEffectMultiplayer : MonoBehaviour
+public class ShootEffectMultiplayer : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     GameObject shootRayObject;
@@ -29,79 +30,85 @@ public class ShootEffectMultiplayer : MonoBehaviour
 
     public virtual void Activate(bool hitEnemy, params Vector3[] hitPoints)
     {
-        foreach (var effect in effects)
+        if (photonView.IsMine)
         {
-            effect.Play();
-        }
-
-        foreach (var particle in particles)
-        {
-            particle.Play();
-        }
-
-        for (int i = 0; i < hitPoints.Length; i++)
-        {
-            VFXShootRay ray = Instantiate(shootRayObject).GetComponent<VFXShootRay>();
-
-            Vector3 point = hitPoints[i];
-
-            if (point == Vector3.zero)
+            foreach (var effect in effects)
             {
-                point = transform.forward * 100;
+                effect.Play();
             }
 
-            if (ray)
+            foreach (var particle in particles)
             {
-                ray.Shoot(transform.position, point);
+                particle.Play();
             }
 
-            if (hitEnemy)
-                continue;
+            for (int i = 0; i < hitPoints.Length; i++)
+            {
+                VFXShootRay ray = Instantiate(shootRayObject).GetComponent<VFXShootRay>();
 
-            VisualEffect decal = Instantiate(hitDecal, hitPoints[i], Quaternion.identity).GetComponent<VisualEffect>();
+                Vector3 point = hitPoints[i];
 
-            decal.Play();
+                if (point == Vector3.zero)
+                {
+                    point = transform.forward * 100;
+                }
 
+                if (ray)
+                {
+                    ray.Shoot(transform.position, point);
+                }
+
+                if (hitEnemy)
+                    continue;
+
+                VisualEffect decal = Instantiate(hitDecal, hitPoints[i], Quaternion.identity).GetComponent<VisualEffect>();
+
+                decal.Play();
+
+            }
         }
     }
 
     public virtual void Activate(params RaycastHit[] hit)
     {
-        foreach (var effect in effects)
+        if (photonView.IsMine)
         {
-            effect.Play();
-        }
-
-        foreach (var particle in particles)
-        {
-            particle.Play();
-        }
-
-        for (int i = 0; i < hit.Length; i++)
-        {
-            VFXShootRay ray = Instantiate(shootRayObject).GetComponent<VFXShootRay>();
-
-            Vector3 point = hit[i].point;
-
-            if (point == Vector3.zero)
+            foreach (var effect in effects)
             {
-                point = transform.forward * 100;
+                effect.Play();
             }
 
-            if (ray)
+            foreach (var particle in particles)
             {
-                ray.Shoot(transform.position, point);
+                particle.Play();
             }
 
-            if (hit[i].transform && hit[i].transform.gameObject.layer == enemyMask)
-                continue;
+            for (int i = 0; i < hit.Length; i++)
+            {
+                VFXShootRay ray = Instantiate(shootRayObject).GetComponent<VFXShootRay>();
 
-            VisualEffect decal = Instantiate(hitDecal, hit[i].point, Quaternion.identity).GetComponent<VisualEffect>();
+                Vector3 point = hit[i].point;
 
-            decal.transform.forward = hit[i].normal;
+                if (point == Vector3.zero)
+                {
+                    point = transform.forward * 100;
+                }
 
-            decal.Play();
+                if (ray)
+                {
+                    ray.Shoot(transform.position, point);
+                }
 
+                if (hit[i].transform && hit[i].transform.gameObject.layer == enemyMask)
+                    continue;
+
+                VisualEffect decal = Instantiate(hitDecal, hit[i].point, Quaternion.identity).GetComponent<VisualEffect>();
+
+                decal.transform.forward = hit[i].normal;
+
+                decal.Play();
+
+            }
         }
     }
 }
