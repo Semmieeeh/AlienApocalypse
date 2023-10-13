@@ -19,7 +19,10 @@ public class Children : MonoBehaviourPunCallbacks
                 obj.layer = 7;
             }
 
-            particlePivot.transform.position = Vector3.zero;
+            if (particlePivot != null)
+            {
+                particlePivot.transform.localPosition = Vector3.zero;
+            }
         }
         
     }

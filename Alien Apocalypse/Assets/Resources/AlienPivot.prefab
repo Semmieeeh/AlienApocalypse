@@ -1836,7 +1836,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 92d4128cdf893f74ebe523b37b76e735, type: 3}
   bulletTracer: {fileID: 5514600773744489883}
   flash: {fileID: 5441524397424131661}
-  particleMissOffset: 2
+  particleMissOffset: 0.2
   state: 0
   attackRange: 15
   nearestPlayer: {fileID: 0}
@@ -2267,6 +2267,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 8263295312938792522}
+  effects: []
+  particlePivot: {fileID: 0}
 --- !u!1 &6258868593792151893
 GameObject:
   m_ObjectHideFlags: 0

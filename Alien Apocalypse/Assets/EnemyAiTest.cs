@@ -185,9 +185,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         source.Play();
                         photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                         flash.Play();
-                        Vector3 v = player.transform.position;
-                        v.y += 0.4f;
-                        bulletTracer.Activate(true, v);
+                        Vector3 j = player.transform.position;
+                        j.y += 0.4f;
+                        bulletTracer.Activate(true, j);
                         player.TakeDamage(damage);
                         canAttack = false;
                         Debug.Log("Hit!");
@@ -197,20 +197,19 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         source.clip = clips[0];
                         source.Play();                        
                         canAttack = false;
-                        
-                        int j = Random.Range(0, 5);
-                        if (j == 2)
+                        flash.Play();
+                        int k = Random.Range(0, 5);
+                        if (k == 2)
                         {
                             photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                             player.TakeDamage(damage);
-                            Vector3 v = player.transform.position;
-                            v.y += 0.4f;
-                            v *= 10;
+                            Vector3 v = player.transform.position;                      
                             bulletTracer.Activate(true, v);
                             Debug.Log("Hit By Chance!");
                         }
                         else
                         {
+                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                             Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
                             v *= 10;
                             bulletTracer.Activate(true, v);

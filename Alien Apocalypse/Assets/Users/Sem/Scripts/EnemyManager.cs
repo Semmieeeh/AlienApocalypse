@@ -42,6 +42,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     {
         multiplier = 1;
         startedTheWaves = false;
+        waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
         if (PhotonNetwork.IsMasterClient)
         {
             instance = this;
@@ -52,22 +53,19 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             cooldownCounter = waveCooldown;
             if (photonView.IsMine)
             {
-                if (PhotonNetwork.IsMasterClient)
+                if (PhotonNetwork.IsMasterClient && startedTheWaves == false && PhotonNetwork.CurrentRoom.PlayerCount > 0)
                 {
-                    waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
+                    wavesStarted = true;
+                    isInCooldown = true;
+                    photonView.RPC(nameof(UpdateIsInCooldown), RpcTarget.AllBuffered, isInCooldown);
+                    enemiesSpawning = false;
+                    photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
+                    StartCoroutine(nameof(StartEnemyWaves));
+                    startedTheWaves = true;
                 }
             }
 
-            if (PhotonNetwork.IsMasterClient && startedTheWaves == false && PhotonNetwork.CurrentRoom.PlayerCount > 0)
-            {
-                wavesStarted = true;
-                isInCooldown = true;
-                photonView.RPC(nameof(UpdateIsInCooldown), RpcTarget.AllBuffered, isInCooldown);
-                enemiesSpawning = false;
-                photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
-                StartCoroutine(nameof(StartEnemyWaves));
-                startedTheWaves = true;
-            }
+            
 
 
         }
@@ -80,6 +78,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     public void UpdateCooldownCounter(float newCooldown)
     {
         cooldownCounter = newCooldown;
+        waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
     }
     private float syncCooldownInterval = 0.05f;
     private float lastSyncTime;
@@ -88,9 +87,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
 
         if (photonView.IsMine)
-        {
-            
-
+        {            
             if (PhotonNetwork.IsMasterClient)
             {
                 cooldownCounter -= Time.deltaTime;
