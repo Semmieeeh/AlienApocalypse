@@ -33,22 +33,25 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if(movement == null)
+        if (photonView.IsMine)
         {
-            movement = GetComponent<Movement>();
-        }
-        slideCooldown -= Time.deltaTime;
-        if(movement != null)
-        {
-            if (Input.GetKey(KeyCode.LeftControl) && !isSliding && slideCooldown <=0 && movement.grounded)
+            if (movement == null)
             {
-                StartSlide();
+                movement = GetComponent<Movement>();
             }
-            else if (Input.GetKeyUp(KeyCode.LeftControl) && isSliding == true)
+            slideCooldown -= Time.deltaTime;
+            if (movement != null)
             {
-                float scale = originalScale;
-                photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
-                isSliding = false;
+                if (Input.GetKey(KeyCode.LeftControl) && !isSliding && slideCooldown <= 0 && movement.grounded)
+                {
+                    StartSlide();
+                }
+                else if (Input.GetKeyUp(KeyCode.LeftControl) && isSliding == true)
+                {
+                    float scale = originalScale;
+                    photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
+                    isSliding = false;
+                }
             }
         }
     }
@@ -61,7 +64,7 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
         if (movement.input.magnitude > 0.5f)
         {
             Vector3 slideDirection = CalculateSlideDirection(movement.input);
-            playerRigidbody.AddForce(slideDirection * slideForce, ForceMode.VelocityChange);
+            playerRigidbody.AddForce(slideDirection * slideForce, ForceMode.Impulse);
             StartCoroutine(nameof(Cancel));
         }
         isSliding = true;

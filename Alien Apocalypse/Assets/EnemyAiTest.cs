@@ -38,7 +38,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public bool canAttack;
     public float attackSpeed;
     public float attackDamage;
-    private float timePassed;
+    public float timePassed;
     RaycastHit hit;
     public bool flyingEnemy;
     public Animator anim;
@@ -94,7 +94,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             if (timePassed > attackSpeed)
             {
                 canAttack = true;
-                timePassed = 0;
+                timePassed = Random.Range(-attackSpeed,attackSpeed);
             }
             if (photonView.IsMine)
             {
@@ -124,7 +124,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                                 Quaternion targetRotation = CalculateRotationToPlayer();
                                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-
+                                
                                 if (canAttack == true)
                                 {
                                     
@@ -172,11 +172,32 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         {
             if (nearestPlayer.TryGetComponent(out PlayerHealth player))
             {
-                source.clip = clips[0];
-                source.Play();
-                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
-                player.TakeDamage(damage);
-                canAttack = false;
+                if(nearestPlayer.TryGetComponent(out Movement m))
+                {
+                    if (m.input.magnitude < 0.5f)
+                    {
+                        source.clip = clips[0];
+                        source.Play();
+                        photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                        player.TakeDamage(damage);
+                        canAttack = false;
+                        Debug.Log("Hit!");
+                    }
+                    else
+                    {
+                        source.clip = clips[0];
+                        source.Play();                        
+                        canAttack = false;
+                        int j = Random.Range(0, 5);
+                        if (j == 2)
+                        {
+                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                            player.TakeDamage(damage);
+                            Debug.Log("Hit By Chance!");
+                        }
+                        Debug.Log("Missed!");
+                    }
+                }
             }
         }
     }
