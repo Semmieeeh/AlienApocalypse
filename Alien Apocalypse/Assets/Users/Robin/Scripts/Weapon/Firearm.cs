@@ -384,8 +384,8 @@ public class Firearm : Weapon
 
             if(dataHolder.shootEffect != null)
             {
-                dataHolder.shootEffect.Activate(enemyHit, particlePoint);
-                photonView.RPC("RPCBulletTracers", RpcTarget.Others, enemyHit, particlePoint);
+                
+                photonView.RPC("RPCBulletTracers", RpcTarget.All, enemyHit, particlePoint);
             }
 
             currentAmmo--;
@@ -394,7 +394,7 @@ public class Firearm : Weapon
     [PunRPC]
     void RPCBulletTracers(bool enemyHit, Vector3 particlePoint)
     {
-        dataHolder.shootEffect2.Activate(enemyHit, particlePoint);
+        dataHolder.shootEffect.Activate(enemyHit, particlePoint);
 
     }
     [PunRPC]
