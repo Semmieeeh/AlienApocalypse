@@ -394,11 +394,8 @@ public class Firearm : Weapon
     [PunRPC]
     void RPCBulletTracers(bool enemyHit, Vector3 particlePoint)
     {
-        if (dataHolder.shootEffect2 != null)
-        {
-            dataHolder.shootEffect2.Activate(enemyHit, particlePoint);
-        }
-        
+        dataHolder.shootEffect2.Activate(enemyHit, particlePoint);
+
     }
     [PunRPC]
     void Projectile()
