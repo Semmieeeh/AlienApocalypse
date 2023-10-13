@@ -26,7 +26,7 @@ public class OptionsManager : MonoBehaviour
         }
     }
 
-    private List<IOption<bool>> boolOptions = new();
+    private List<IOption<bool>> boolOptions = new ( );
 
     private List<IOption<float>> floatOptions = new ( );
 
@@ -47,14 +47,14 @@ public class OptionsManager : MonoBehaviour
         if ( needsUpdate )
         {
             needsUpdate = false;
-            onOptionsChanged?.Invoke(OptionsData.Options );
+            onOptionsChanged?.Invoke (OptionsData.Options);
             Debug.Log ("If you see this, the optionschanged delegate has been called!");
         }
     }
 
     void FetchOptions ( )
     {
-        boolOptions = GetOptionInstances<bool> ( ).ToList();
+        boolOptions = GetOptionInstances<bool> ( ).ToList ( );
         floatOptions = GetOptionInstances<float> ( ).ToList ( );
         intOptions = GetOptionInstances<int> ( ).ToList ( );
     }
@@ -100,16 +100,16 @@ public class OptionsManager : MonoBehaviour
         {
             try
             {
-                element.SetValue ((T)OptionsData.Options[element.OptionIndex]);
+                element.SetValue ((T) OptionsData.Options[element.OptionIndex]);
             }
-            catch(Exception e )
+            catch ( Exception )
             {
                 Debug.Log ($"Failed to set value at index {element.OptionIndex}, data: {OptionsData.Options[element.OptionIndex]}");
             }
         }
     }
 
-    void SaveValuesOfElements<T>(IList<IOption<T>> list )
+    void SaveValuesOfElements<T> ( IList<IOption<T>> list )
     {
         foreach ( var element in list )
         {
@@ -123,7 +123,7 @@ public class OptionsManager : MonoBehaviour
         var optionType = typeof (IOption<T>);
 
         // Find all GameObjects with UISelectable component
-        var selectableObjects = GameObject.FindObjectsOfType<UISelectable> (true );
+        var selectableObjects = GameObject.FindObjectsOfType<UISelectable> (true);
 
         var optionInstances = new List<IOption<T>> ( );
 
@@ -200,6 +200,18 @@ public class OptionsManager : MonoBehaviour
 
         [SerializeField]
         private bool crosshairEffects;
+
+        /// <summary>
+        /// The selected crosshair index
+        /// </summary>
+        [SerializeField]
+        private int crosshairIndex;
+
+        /// <summary>
+        /// The size of the crosshair
+        /// </summary>
+        [SerializeField]
+        private float crosshairSize;
 
         /// <summary>
         /// The fov of the player
@@ -298,26 +310,29 @@ public class OptionsManager : MonoBehaviour
         {
             get
             {
-                try{
-                return index switch
+                try
                 {
-                    0 => CrosshairEffects,
-                    1 => Fov,
-                    2 => HorizontalSens,
-                    3 => VerticalSens,
-                    4 => ScreenResIndex,
-                    5 => FpsIndex,
-                    6 => QualityIndex,
-                    7 => Fullscreen,
-                    8 => VSync,
-                    9 => MainAudioStrength,
-                    10 => SoundsStrength,
-                    11 => MusicStrength,
-                    12 => AmbienceStrength,
-                    _ => throw new IndexOutOfRangeException ( ),
-                }; 
+                    return index switch
+                    {
+                        0 => CrosshairEffects,
+                        1 => Fov,
+                        2 => HorizontalSens,
+                        3 => VerticalSens,
+                        4 => ScreenResIndex,
+                        5 => FpsIndex,
+                        6 => QualityIndex,
+                        7 => Fullscreen,
+                        8 => VSync,
+                        9 => MainAudioStrength,
+                        10 => SoundsStrength,
+                        11 => MusicStrength,
+                        12 => AmbienceStrength,
+                        13 => crosshairIndex,
+                        14 => crosshairSize,
+                        _ => throw new IndexOutOfRangeException ( ),
+                    };
                 }
-                catch(Exception e )
+                catch ( Exception )
                 {
                     Debug.Log ($"failed to get {index}");
                     throw;
@@ -326,56 +341,64 @@ public class OptionsManager : MonoBehaviour
 
             set
             {
-                try{
-                switch(index)
+                try
                 {
-                case 0:
-                        CrosshairEffects = (bool)value;
-                     break;
-                case 1:
-                        Fov = (float) value;
-                    break;
-                case 2:
-                        HorizontalSens = (float)value;
-                    break;
-                case 3:
-                        VerticalSens = (float)value;
-                    break;
-                case 4:
-                        ScreenResIndex = (int) value;
-                    break;
-                case 5:
-                        FpsIndex = (int) value;
-                    break;
-                case 6:
-                        QualityIndex = (int)value;
-                    break;
-                case 7:
-                        Fullscreen = (bool) value;
-                    break;
-                case 8:
-                        VSync = (bool)value;
-                    break;
-                case 9:
-                        MainAudioStrength = (float)value;
-                    break;
-                case 10:
-                        SoundsStrength = (float)value;
-                    break;
-                case 11:
-                        MusicStrength = (float) value;
-                    break;
-                case 12:
-                        AmbienceStrength = (float) value;
-                    break;
+                    switch ( index )
+                    {
+                        case 0:
+                            CrosshairEffects = (bool) value;
+                            break;
+                        case 1:
+                            Fov = (float) value;
+                            break;
+                        case 2:
+                            HorizontalSens = (float) value;
+                            break;
+                        case 3:
+                            VerticalSens = (float) value;
+                            break;
+                        case 4:
+                            ScreenResIndex = (int) value;
+                            break;
+                        case 5:
+                            FpsIndex = (int) value;
+                            break;
+                        case 6:
+                            QualityIndex = (int) value;
+                            break;
+                        case 7:
+                            Fullscreen = (bool) value;
+                            break;
+                        case 8:
+                            VSync = (bool) value;
+                            break;
+                        case 9:
+                            MainAudioStrength = (float) value;
+                            break;
+                        case 10:
+                            SoundsStrength = (float) value;
+                            break;
+                        case 11:
+                            MusicStrength = (float) value;
+                            break;
+                        case 12:
+                            AmbienceStrength = (float) value;
 
+                            break;
+                        case 13:
+                            crosshairIndex = (int) value;
+                            break;
 
-                default:
-                    throw new IndexOutOfRangeException ( );
+                        case 14:
+                            crosshairSize = (float) value;
+                            break;
 
-                } 
+                        default:
+                            throw new IndexOutOfRangeException ( );
+
+                    }
                 }
-                catch(Exception e )
+                catch ( Exception )
                 {
                     Debug.Log ($"Failed to set {index} : {value}");
                     throw;
@@ -387,7 +410,7 @@ public class OptionsManager : MonoBehaviour
         {
             get
             {
-                return 13;
+                return 15;
             }
         }
 
@@ -397,6 +420,26 @@ public class OptionsManager : MonoBehaviour
             set
             {
                 crosshairEffects = value;
+                Save ( );
+            }
+        }
+
+        public int CrosshairIndex
+        {
+            get => crosshairIndex;
+            set
+            {
+                crosshairIndex = value;
+                Save ( );
+            }
+        }
+
+        public float CrosshairSize
+        {
+            get => crosshairSize;
+            set
+            {
+                crosshairSize = value;
                 Save ( );
             }
         }
