@@ -186,7 +186,7 @@ public class OptionsManager : MonoBehaviour
 
             Debug.Log ($"Options saved to: {path}");
 
-            OptionsManager.instance.OnOptionChanged ( );
+            instance.OnOptionChanged ( );
         }
 
         #endregion
