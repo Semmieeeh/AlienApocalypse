@@ -123,10 +123,7 @@ public class WallRunning : MonoBehaviour
     }
     public void CheckForAnimationCancel()
     {
-        if(onWall == false)
-        {
-            anim.SetInteger("RunDirection", 0);
-        }
+        anim.SetInteger("RunDirection", 0); anim.SetInteger("RunDirection", 0);
     }
     public void OnTriggerStay(Collider other)
     {

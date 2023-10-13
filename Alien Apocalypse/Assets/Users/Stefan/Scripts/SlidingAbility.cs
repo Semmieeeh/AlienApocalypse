@@ -65,6 +65,7 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
         {
             Vector3 slideDirection = CalculateSlideDirection(movement.input);
             playerRigidbody.AddForce(slideDirection * slideForce, ForceMode.Impulse);
+            playerRigidbody.AddForce(Vector3.down * slideForce, ForceMode.Impulse);
             StartCoroutine(nameof(Cancel));
         }
         isSliding = true;

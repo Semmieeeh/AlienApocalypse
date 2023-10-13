@@ -385,12 +385,21 @@ public class Firearm : Weapon
             if(dataHolder.shootEffect != null)
             {
                 dataHolder.shootEffect.Activate(enemyHit, particlePoint);
+                photonView.RPC("RPCBulletTracers", RpcTarget.All, enemyHit, particlePoint);                                            
             }
 
             currentAmmo--;
         }
     }
-
+    [PunRPC]
+    void RPCBulletTracers(bool enemyHit, Vector3 particlePoint)
+    {
+        if (dataHolder.shootEffect2 != null)
+        {
+            dataHolder.shootEffect2.Activate(enemyHit, particlePoint);
+        }
+        
+    }
     [PunRPC]
     void Projectile()
     {
