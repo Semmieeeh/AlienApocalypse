@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+[RequireComponent(typeof(PhotonView))]
+[RequireComponent(typeof(PhotonTransformView))]
 public class Chest : MonoBehaviourPunCallbacks, IInteractable
 {
+    public ChestManager chestManager;
+
     public float firearmChance;
     public float firearmAbilityChance;
     public float nothingChance;
@@ -15,9 +19,12 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
     public FirearmAbility[] firearmAbilities;
     public GameObject abilityHolder;
 
+    public bool opened = false;
+
     public void Interact(WeaponInputHandler handler)
     {
-        photonView.RPC(nameof(OpenChest), RpcTarget.All);
+        if(!opened)
+            photonView.RPC("OpenChest", RpcTarget.All);
     }
 
     [PunRPC]
@@ -34,6 +41,9 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
                 if(n == i)
                 {
                     PhotonNetwork.Instantiate(firearmDatas[i].name, goToPoint.position, Quaternion.identity);
+                    opened = true;
+
+                    chestManager.NewChest();
                     return;
                 }
             }
@@ -51,12 +61,19 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
                     if(holder.TryGetComponent<PickUpAbility>(out PickUpAbility pickUpAbility))
                     {
                         pickUpAbility.firearmAbility = firearmAbilities[i];
+                        opened = true;
+
+                        chestManager.NewChest();
+                        return;
                     }
                 }
             }
         }
         else if(value >= ((100 - nothingChance) / 100))
         {
+            opened = true;
+
+            chestManager.NewChest();
             return;
         }
     }
