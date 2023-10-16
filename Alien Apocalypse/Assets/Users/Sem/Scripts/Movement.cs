@@ -8,6 +8,7 @@ public class Movement : MonoBehaviourPunCallbacks
     [Header("Speed modifiers")]
     public float walkSpeed = 20f;
     public float sprintSpeed = 30f;
+    public float downedSpeed = 0.2f;
     public float maxVelocityChange = 20f;
     public float turnSpeed;
     public float slowDownForce;
@@ -35,7 +36,7 @@ public class Movement : MonoBehaviourPunCallbacks
     public float maxFov;
     public float airMultiplier = 1f;
     public GameObject cameraPivot;
-
+    public bool downed;
     public bool wallrunUnlocked;
     public bool wallRunning;
     public bool dashUnlocked;
@@ -45,16 +46,31 @@ public class Movement : MonoBehaviourPunCallbacks
     public Animator anim;
     public Animator armAnim;
     public int armState;
+
+    float startSpeed;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
         maxFov = Camera.main.fieldOfView + 10;
         PhotonNetwork.SerializationRate = 25;
+        startSpeed = walkSpeed;
     }
 
+    bool appliedKnocked;
     private void Update()
     {
+        if (downed && appliedKnocked == false)
+        {
+            photonView.RPC("Knocked", RpcTarget.All);
+            walkSpeed = downedSpeed;
+            appliedKnocked = false;
+
+        }
+        else if(!downed)
+        {
+            walkSpeed = startSpeed;
+        }
         if (rb == null)
         {
             rb = GetComponent<Rigidbody>();
@@ -63,14 +79,7 @@ public class Movement : MonoBehaviourPunCallbacks
         input.Normalize();
         sprinting = Input.GetButton("Sprint");
         jumping = Input.GetButton("Jump");
-        if (Input.mouseScrollDelta.y < 0)
-        {
-            photonView.RPC("NextCheck", RpcTarget.All);
-        }
-        else if (Input.mouseScrollDelta.y > 0)
-        {
-            photonView.RPC("NextCheck", RpcTarget.All);
-        }
+        
 
         FovChange();
 
@@ -103,30 +112,23 @@ public class Movement : MonoBehaviourPunCallbacks
             return false;
         }
     }
-    int i;
     public void ArmAnimCheck()
     {
         
-        if(sprinting && input.magnitude > 0.5f && i!=2)
+        if(sprinting && input.magnitude > 0.5f)
         {
             photonView.RPC("AnimRPC", RpcTarget.All, 2);
-            photonView.RPC("NextCheck", RpcTarget.All);
             
-            i = 2;
         }
 
-        if(!sprinting && input.magnitude > 0.5f && i!=1)
+        if(!sprinting && input.magnitude > 0.5f )
         {
             photonView.RPC("AnimRPC", RpcTarget.All, 1);
-            photonView.RPC("NextCheck", RpcTarget.All);
-            i = 1;
         }
         
-        if(input.magnitude < 0.5f  && i!=0)
+        if(input.magnitude < 0.5f)
         {
             photonView.RPC("AnimRPC", RpcTarget.All, 0);
-            photonView.RPC("NextCheck", RpcTarget.All);
-            i = 0;
         }
 
         
@@ -138,6 +140,13 @@ public class Movement : MonoBehaviourPunCallbacks
         armAnim.SetBool("Jumping", grounded);
         armAnim.SetBool("Moving", IsMoving());
         
+
+
+    }
+    [PunRPC]
+    void Knocked()
+    {
+        armAnim.SetTrigger("Knocked");
     }
     private void OnTriggerStay(Collider other)
     {
@@ -197,7 +206,7 @@ public class Movement : MonoBehaviourPunCallbacks
     {
         if (grounded)
         {
-            if (jumping)
+            if (jumping && !downed)
             {
                 rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
                 anim.SetTrigger("Jump");
@@ -274,7 +283,6 @@ public class Movement : MonoBehaviourPunCallbacks
             return Vector3.zero;
         }
     }
-    int j;
     bool jumped;
     public void AnimationCheck()
     {
@@ -283,64 +291,42 @@ public class Movement : MonoBehaviourPunCallbacks
             photonView.RPC("SetJumpAnim", RpcTarget.All, grounded);
             if (!grounded && jumped == false)
             {
-                
-                armAnim.SetTrigger("NextAnim");
-                j = 3;
                 jumped = true;
             }
             else if (grounded && jumped == true)
             {
-                j = 4;
-                armAnim.SetTrigger("NextAnim");
                 jumped = false;
             }
-            if (sprinting && input.magnitude > 0.5f && grounded && j!=2)
+            if (sprinting && input.magnitude > 0.5f && grounded)
             {
-                if (j != 3)
-                {
-                    walkState = 2;
-                    photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-                    j = 2;
-                }
+                walkState = 2;
+                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards, false);
             }
 
-            if (!sprinting && input.magnitude > 0.5f && grounded && j!=1)
+            if (!sprinting && input.magnitude > 0.5f && grounded)
             {
-                if (j != 3)
-                {
-                    walkState = 1;
-                    photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-                    j = 1;
-                }
+                walkState = 1;
+                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards,false);
             }
 
-            if (input.magnitude < 0.5f && grounded && j != 0)
+            if (input.magnitude < 0.5f && grounded)
             {
-                if (j != 3)
-                {
-                    walkState = 0;
-                    photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards);
-                    j = 0;
-                }
+                walkState = 0;
+                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards,false);
             }
         }
     }
    [PunRPC]
-    public void UpdateAnimation(int state, bool walkingBackwards)
+    public void UpdateAnimation(int state, bool walkingBackwards,bool down)
     {
         anim.SetBool("WalkingBackwards", walkingBackwards);
         anim.SetInteger("WalkState", state);
-
+        anim.SetBool("Downed", down);
     }
     [PunRPC]
     private void Walking()
     {
         anim.SetBool("WalkingBackwards", walkingBackwards);
-    }
-    [PunRPC]
-    private void NextCheck()
-    {
-        armAnim.SetTrigger("NextAnim");
     }
     [PunRPC]
     void SetJumpAnim(bool b)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.VFX;
+using static PlayerHealth;
 
 public class EnemyAiTest : MonoBehaviourPunCallbacks
 {
@@ -143,6 +144,12 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                                 canChooseNew = true;
                                 photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
                                 photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 2);
+                            }
+
+                            if(nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+                            {
+                                state = EnemyState.idle;
+                                photonView.RPC("NewTarget", RpcTarget.All);
                             }
                         }
                         break;
