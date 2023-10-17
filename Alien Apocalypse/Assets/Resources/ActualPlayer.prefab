@@ -418,6 +418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 0
+  healthRegenAmount: 5
   minHealth: 0
   godMode: 0
   revive: 0
@@ -427,9 +428,13 @@ MonoBehaviour:
   c: {fileID: 6379292182470151516}
   b: {fileID: 4433556998246218802}
   animator: {fileID: 7411710092504330217}
+  arms: {fileID: 0}
   animatorObj: {fileID: 1543954047678672394}
   robot: {fileID: 8780093168035667644}
   weapons: {fileID: 5472885011387506981}
+  robotPos: {x: 0, y: 0, z: 0}
+  otherPos: {x: 0, y: 0, z: 0}
+  healthBar: {fileID: 0}
   state: 0
 --- !u!114 &3544805995978173203
 MonoBehaviour:

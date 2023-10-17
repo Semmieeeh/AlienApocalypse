@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerHealth : MonoBehaviourPunCallbacks
 {
     [Header("General Health Modifiers")]
     public float health;
     public float maxHealth;
+    public float healthRegenAmount;
     public float minHealth;
     public bool godMode;
     public bool revive;
@@ -27,6 +29,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     public GameObject weapons;
     public Vector3 robotPos;
     public Vector3 otherPos;
+    public HealthBar healthBar;
+    private float lastHit;
+
     public enum PlayerState
     {
         alive,
@@ -49,12 +54,19 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+
+        healthBar.SetValue(health);
+
         switch (state)
         {
 
             case PlayerState.alive:
                 UpdateHealth(health);
+                lastHit -= Time.deltaTime;
+                if(lastHit <0 && health < maxHealth)
+                {
+                    health += healthRegenAmount *Time.deltaTime;
+                }
                 break;
 
             case PlayerState.downed:
@@ -90,6 +102,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     {
         //update health text object
         health -= damage;
+        lastHit = 3;
+        
         if (health <= 0)
         {
             Downed();
@@ -120,6 +134,9 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Revive()
     {
+        Vector3 newPos = transform.position;
+        newPos.y += 5;
+        transform.position = newPos;
         GetComponent<DashAbility>().enabled = true;
         GetComponent<Grappling>().enabled = true;
         GetComponent<WallRunning>().enabled = true;
