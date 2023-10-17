@@ -25,6 +25,18 @@ public class UIImageSelector : UISelectable, IOption<int>
         }
     }
 
+    public int CurrentChoiseIndex
+    {
+        get
+        {
+            return currentChoiceIndex;
+        }
+        set
+        {
+            currentChoiceIndex = value;
+        }
+    }
+
     protected override void Start ( )
     {
         OnChoiseChanged ( );

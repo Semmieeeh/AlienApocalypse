@@ -42,15 +42,6 @@ public class OptionsManager : MonoBehaviour
         SetElementsOptionData ( );
     }
 
-    private void Update ( )
-    {
-        if ( needsUpdate )
-        {
-            needsUpdate = false;
-            onOptionsChanged?.Invoke (OptionsData.Options);
-            Debug.Log ("If you see this, the optionschanged delegate has been called!");
-        }
-    }
 
     void FetchOptions ( )
     {
@@ -91,7 +82,8 @@ public class OptionsManager : MonoBehaviour
 
     private void OnOptionChanged ( )
     {
-        needsUpdate = true;
+        onOptionsChanged?.Invoke (OptionsData.Options);
+        Debug.Log ("If you see this, the optionschanged delegate has been called!");
     }
 
     void SetValuesOfElements<T> ( IList<IOption<T>> list )
@@ -386,11 +378,11 @@ public class OptionsManager : MonoBehaviour
 
                             break;
                         case 13:
-                            crosshairIndex = (int) value;
+                            CrosshairIndex = (int) value;
                             break;
 
                         case 14:
-                            crosshairSize = (float) value;
+                            CrosshairSize = (float) value;
                             break;
 
                         default:

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class CrosshairManager : MonoBehaviour
 {
@@ -66,6 +67,11 @@ public class CrosshairManager : MonoBehaviour
         }
     }
 
+    private void Start ( )
+    {
+        SetCrosshair (crosshair.CurrentChoiseIndex, 1);
+    }
+
     private void OnEnable ( )
     {
         OptionsManager.onOptionsChanged += SetCrosshair;
@@ -78,8 +84,13 @@ public class CrosshairManager : MonoBehaviour
 
     public void SetCrosshair (OptionsManager.OptionsData options )
     {
-        crosshairImage.sprite = crosshair.choises[options.CrosshairIndex];
-        crosshairSize = options.CrosshairSize;
+        SetCrosshair (options.CrosshairIndex, options.CrosshairSize);
+    }
+
+    void SetCrosshair(int index, float size )
+    {
+        crosshairImage.sprite = crosshair.choises[index];
+        crosshairSize = size;
 
         crosshairImage.transform.localScale = Vector3.one * crosshairSize;
     }
@@ -130,7 +141,7 @@ public class CrosshairManager : MonoBehaviour
 
     void ResetShootAnimation ( )
     {
-        crosshairImage.transform.localScale = Vector3.one;
+        crosshairImage.transform.localScale = Vector3.one * crosshairSize;
     }
 
     public void SetBloomAndPower ( float bloom, float power )
