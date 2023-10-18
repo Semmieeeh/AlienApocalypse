@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     UIPopup m_Popup;
 
     [SerializeField]
-    GameObject mainMenu, playSection, settingsSection, creditsSection, quitSection;
+    GameObject mainMenu, playSection, settingsSection,controlsSection, creditsSection, quitSection;
 
     public UIPopup Popup
     {
@@ -64,6 +64,11 @@ public class MainMenu : MonoBehaviour
         ToggleSection(settingsSection);
     }
 
+    public void ToControlsSection ( )
+    {
+        ToggleSection (controlsSection);
+    }
+
     public void ToCreditsSection()
     {
         ToggleSection(creditsSection);
@@ -78,7 +83,7 @@ public class MainMenu : MonoBehaviour
     {
         var menus = new[]
         {
-            mainMenu, playSection, settingsSection, creditsSection, quitSection
+            mainMenu, playSection, settingsSection, controlsSection, creditsSection, quitSection
         };
 
         for (int i = 0; i < menus.Length; i++)
