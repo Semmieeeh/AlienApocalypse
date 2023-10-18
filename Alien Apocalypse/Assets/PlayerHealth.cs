@@ -8,7 +8,9 @@ using static UnityEngine.Rendering.DebugUI;
 public class PlayerHealth : MonoBehaviourPunCallbacks
 {
     [Header("General Health Modifiers")]
-    public float health;
+    [SerializeField]
+    float m_health;
+
     public float maxHealth;
     public float healthRegenAmount;
     public float minHealth;
@@ -31,6 +33,22 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     public Vector3 otherPos;
     public HealthBar healthBar;
     private float lastHit;
+    private float lastDmg;
+
+    public float Health
+    {
+        get
+        {
+            return m_health;
+        }
+        set
+        {
+            if (value == m_health)
+                return;
+            m_health = value;
+            OnHealthUpdate();
+        }
+    }
 
     public enum PlayerState
     {
@@ -41,13 +59,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     public PlayerState state;
     void Start()
     {
+        lastDmg = 3;
         robotPos = robot.transform.localPosition;
         otherPos = animatorObj.transform.localPosition;
         height = c.height;
-        healthDecrease = 5f;
         minHealth = 0;
         maxHealth = 100;
-        health = maxHealth;
+        Health = maxHealth;
         state = PlayerState.alive;
     }
 
@@ -55,36 +73,43 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     void Update()
     {
 
-        healthBar.SetValue(health);
 
         switch (state)
         {
+            
+
 
             case PlayerState.alive:
-                UpdateHealth(health);
+                
                 lastHit -= Time.deltaTime;
-                if(lastHit <0 && health < maxHealth)
+                if(lastHit <0 && Health < maxHealth)
                 {
-                    health += healthRegenAmount *Time.deltaTime;
+                    Health += healthRegenAmount *Time.deltaTime;
                 }
                 break;
 
             case PlayerState.downed:
 
-                
-                health -= healthDecrease * Time.deltaTime;
                 GetComponent<DashAbility>().enabled = false;
                 GetComponent<Grappling>().enabled = false;
                 GetComponent<WallRunning>().enabled = false;
-                UpdateHealth(health);
-                if(health <= 0)
+                GetComponent<SlidingAbility>().enabled = false;
+                lastDmg -= Time.deltaTime;
+                if(lastDmg < 0)
+                {
+                    TakeDamage(healthDecrease);
+                    lastDmg = 3;
+                }
+
+                
+                if (Health <= 0)
                 {
                     state = PlayerState.dead;
                 }
                 break;
 
             case PlayerState.dead:
-
+                GetComponent<SpectatorMode>().IsSpectator = true;
                 Debug.Log("You died bitch nigga");
                 break;
 
@@ -93,18 +118,26 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         {
             photonView.RPC("Revive",RpcTarget.All);
             revive = false;
+            GetComponent<SpectatorMode>().IsSpectator = false;
 
         }
+    }
+
+
+    void OnHealthUpdate()
+    {
+        healthBar.SetValue(Health);
+        photonView.RPC("UpdateHealth", RpcTarget.All, Health);
     }
 
     [PunRPC]
     public void TakeDamage(float damage)
     {
         //update health text object
-        health -= damage;
+        Health -= damage;
         lastHit = 3;
         
-        if (health <= 0)
+        if (Health <= 0)
         {
             Downed();
         }
@@ -114,6 +147,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     {
         if (!godMode)
         {
+
             
             state = PlayerState.downed;
             c.height = height * 0.1f;
@@ -122,12 +156,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
             b.center = k;
             Vector3 v = new Vector3(0, 1, 0);
             c.center = v;
-            health = maxHealth;
+            
             animator.SetTrigger("Downed");
             GetComponent<Movement>().downed = true;
             robot.transform.localPosition = new Vector3(0, 0.65f, -1f);
             animatorObj.transform.localPosition = new Vector3(0.045f, 0.658f, -0.331f);
             weapons.SetActive(false);
+            Health = maxHealth;
         }
 
     }
@@ -140,6 +175,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         GetComponent<DashAbility>().enabled = true;
         GetComponent<Grappling>().enabled = true;
         GetComponent<WallRunning>().enabled = true;
+        GetComponent<SlidingAbility>().enabled = true;
         state = PlayerState.alive;
         c.height = height;
         GetComponent<Movement>().downed = false;
@@ -150,7 +186,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         Vector3 v = new Vector3(0, 0, 0);
         c.center = v;
         robot.transform.localPosition = new Vector3(0, -1, 0);
-        health = maxHealth * 0.25f;
+        Health = maxHealth * 0.25f;
         animator.SetTrigger("Revived");
         arms.SetTrigger("Revived");
         
@@ -160,7 +196,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdateHealth(float h)
     {
-        health = h;
+        Health = h;
         //health slider ding van stefan
     }
 }

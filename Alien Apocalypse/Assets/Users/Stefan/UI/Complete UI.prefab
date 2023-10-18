@@ -2178,8 +2178,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.600006, y: 0}
-  m_SizeDelta: {x: 0.20004, y: 0}
+  m_AnchoredPosition: {x: -1.0359039, y: 0}
+  m_SizeDelta: {x: -2.9281, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2291744229119083337
 CanvasRenderer:
@@ -2202,7 +2202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.52602863, b: 0.47547168, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2478,8 +2478,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.600006, y: 0}
-  m_SizeDelta: {x: 0.20004, y: 0}
+  m_AnchoredPosition: {x: -1.0359039, y: 0}
+  m_SizeDelta: {x: -2.9281, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2782342803605418989
 CanvasRenderer:
@@ -3182,8 +3182,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.600006, y: 0}
-  m_SizeDelta: {x: 0.20004, y: 0}
+  m_AnchoredPosition: {x: -1.0359039, y: 0}
+  m_SizeDelta: {x: -2.9281, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6706586878452805733
 CanvasRenderer:
@@ -3660,7 +3660,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3964875248334365335}
   - component: {fileID: 1688174818239362282}
-  - component: {fileID: 28001598579544079}
   m_Layer: 0
   m_Name: Health Bar
   m_TagString: Untagged
@@ -3708,24 +3707,10 @@ MonoBehaviour:
   flashImg: {fileID: 2362829403162553601}
   maxValue: 100
   barFilSpeed: 0.5
-  differenceDelay: 1
+  differenceDelay: 0
   currentTimer: 0
   barProgress: 0
   diffProgress: 0
---- !u!114 &28001598579544079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6298977642637865777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f02c64b2e9feb234788f11b3ec6af2d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 1688174818239362282}
-  value: 100
 --- !u!1 &6520740792851466057
 GameObject:
   m_ObjectHideFlags: 0

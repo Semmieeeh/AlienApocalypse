@@ -58,14 +58,7 @@ public class UIPauseManager : MonoBehaviour
             Paused = !Paused;
         }
 
-        player.GetComponent<Movement>().enabled = !Paused;
-        player.GetComponent<Grappling>().enabled = !Paused;
-        player.GetComponent<DashAbility>().enabled = !Paused;
-        //player.GetComponent<WallRunning>().enabled = !Paused;
-        player.GetComponent<SlidingAbility>().enabled = !Paused;
-        player.GetComponent<GrappleRope>().enabled = !Paused;
-        weaponInput.GetComponent<WeaponInputHandler>().enabled = !Paused;
-        cam.GetComponent<MouseLook>().enabled = !Paused;
+        
     }
 
     public void DisableMenu ( )
@@ -92,6 +85,13 @@ public class UIPauseManager : MonoBehaviour
     void OnPauseStateChanged(bool paused )
     {
         pauseMenu.SetActive (paused);
+        player.GetComponent<Movement>().enabled = !paused;
+        player.GetComponent<Grappling>().enabled = !paused;
+        player.GetComponent<DashAbility>().enabled = !paused;
+        player.GetComponent<SlidingAbility>().enabled = paused;
+        player.GetComponent<GrappleRope>().enabled = !paused;
+        weaponInput.GetComponent<WeaponInputHandler>().enabled = !paused;
+        cam.GetComponent<MouseLook>().enabled = !paused;
 
         m_inOptions = false;
 

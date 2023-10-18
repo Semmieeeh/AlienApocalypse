@@ -77,7 +77,7 @@ public class Movement : MonoBehaviourPunCallbacks
         }
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         input.Normalize();
-        sprinting = Input.GetButton("Sprint");
+        sprinting = Input.GetButton("Sprint") && !downed;
         jumping = Input.GetButton("Jump");
         
 

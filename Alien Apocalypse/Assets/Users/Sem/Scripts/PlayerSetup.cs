@@ -25,6 +25,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     public FollowRotation rot2;
     public GameObject localUI;
     Transform t;
+    public Camera specCam;
     public int number;
     public void IsLocalPlayer()
     {
@@ -37,6 +38,9 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         {
             part.layer = 13;
         }
+        specCam.gameObject.SetActive(false);
+        specCam.name = "SpecCam";
+        Destroy(specCam);
         cam.GetComponent<Camera>().enabled = true;
         cam.GetComponent<MouseLook>().enabled = true;
         cam.GetComponent<AudioListener>().enabled = true;

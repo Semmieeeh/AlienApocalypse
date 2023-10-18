@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField]
-    Image barImg, differenceImg,flashImg;
+    public Image barImg, differenceImg,flashImg;
 
     public float maxValue;
 
