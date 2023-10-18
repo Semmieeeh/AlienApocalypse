@@ -9,27 +9,38 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
 {
     public ChestManager chestManager;
 
+    [Space]
+    [Header("Spawn Chances")]
     public float firearmChance;
     public float firearmAbilityChance;
     public float nothingChance;
 
-    public Transform goToPoint;
-
+    [Header("Prefabs")]
     public GameObject[] firearmDatas;
     public FirearmAbility[] firearmAbilities;
     public GameObject abilityHolder;
 
+    public Transform goToPoint;
     public bool opened = false;
+
+    [Header("Chest")]
+    public float rotSpeed;
+    public Vector3 targetRot;
+    public Transform chestLid;
 
     public void Interact(WeaponInputHandler handler)
     {
         if(!opened)
+        {
             photonView.RPC("OpenChest", RpcTarget.All);
+            chestManager.New();
+        }
     }
 
     [PunRPC]
     void OpenChest()
     {
+        GetComponent<Animator>().SetTrigger("Open");
         float value = Random.value;
 
         if(value >= ((100 - firearmChance) / 100))
@@ -43,7 +54,6 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
                     PhotonNetwork.Instantiate(firearmDatas[i].name, goToPoint.position, Quaternion.identity);
                     opened = true;
 
-                    chestManager.NewChest();
                     return;
                 }
             }
@@ -63,7 +73,6 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
                         pickUpAbility.firearmAbility = firearmAbilities[i];
                         opened = true;
 
-                        chestManager.NewChest();
                         return;
                     }
                 }
@@ -73,7 +82,6 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
         {
             opened = true;
 
-            chestManager.NewChest();
             return;
         }
     }
