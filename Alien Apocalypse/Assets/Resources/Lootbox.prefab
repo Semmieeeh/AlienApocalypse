@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86815cb936dd84b409fcfb324162b40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestManager: {fileID: 0}
   firearmChance: 20
   firearmAbilityChance: 70
   nothingChance: 10
@@ -232,6 +233,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3365b09c2842f5349845dc6a93a0e154, type: 2}
   - {fileID: 11400000, guid: f46a3d28f16e9d34bb754e0f5421da56, type: 2}
   abilityHolder: {fileID: 2588307389441523353, guid: 11fa5d342647b134eb1bb149f788dd0b, type: 3}
+  opened: 0
 --- !u!65 &8924734467364344224
 BoxCollider:
   m_ObjectHideFlags: 0

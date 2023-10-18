@@ -13,10 +13,12 @@ public class DamageParent : MonoBehaviourPunCallbacks, IDamagable
     public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit)
     {
         DealDamage(damage * damageMultiplier ,onKill,onHit);
+        parent.hitLimb = GetComponent<Rigidbody>();
     }
 
     public void DealDamage(float damage,UnityEvent onKill,UnityEvent onhit)
     {
         parent.Damagable(damage, onKill , onhit);
+        parent.hitLimb = GetComponent<Rigidbody>();
     }
 }
