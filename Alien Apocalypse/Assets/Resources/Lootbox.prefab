@@ -179,6 +179,8 @@ GameObject:
   - component: {fileID: 8924734467364344224}
   - component: {fileID: 6705335063227260338}
   - component: {fileID: 3207267369725929738}
+  - component: {fileID: 6461723066024945502}
+  - component: {fileID: 2795438106675433244}
   m_Layer: 12
   m_Name: Lootbox
   m_TagString: Untagged
@@ -220,10 +222,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86815cb936dd84b409fcfb324162b40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firearmChance: 20
-  firearmAbilityChance: 70
-  nothingChance: 10
-  goToPoint: {fileID: 8143997828447424943}
+  chestManager: {fileID: 0}
+  firearmChance: 5
+  firearmAbilityChance: 0
+  nothingChance: 15
   firearmDatas:
   - {fileID: 5219653184509103383, guid: efa482ef1e1b6f942af2aaee8b0b14a4, type: 3}
   - {fileID: 5273557812897326287, guid: 02ae363ec03d87646bbd56b19e967e70, type: 3}
@@ -232,6 +234,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3365b09c2842f5349845dc6a93a0e154, type: 2}
   - {fileID: 11400000, guid: f46a3d28f16e9d34bb754e0f5421da56, type: 2}
   abilityHolder: {fileID: 2588307389441523353, guid: 11fa5d342647b134eb1bb149f788dd0b, type: 3}
+  goToPoint: {fileID: 8143997828447424943}
+  opened: 0
+  rotSpeed: 600
+  targetRot: {x: 0, y: 0, z: -120}
+  chestLid: {fileID: 4915306756038184608}
 --- !u!65 &8924734467364344224
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -273,6 +280,8 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3207267369725929738}
+  - {fileID: 2795438106675433244}
+  - {fileID: 1387303482828513413}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -292,6 +301,48 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!95 &6461723066024945502
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361288751020236279}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4bdb018aa8a97b468a2bad88b153d37, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2795438106675433244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361288751020236279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 2
+    Name: Open
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &3817729553851220496
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,6 +437,7 @@ GameObject:
   - component: {fileID: 4915306756038184608}
   - component: {fileID: 1896326022893114925}
   - component: {fileID: 969384360335695920}
+  - component: {fileID: 1387303482828513413}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -458,6 +510,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1387303482828513413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3913064921613973480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &4677371444299690260
 GameObject:
   m_ObjectHideFlags: 0
