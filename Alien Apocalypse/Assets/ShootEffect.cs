@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
-using UnityEngine.Rendering;
-using Unity.Burst.CompilerServices;
-using Photon.Pun;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -22,72 +17,97 @@ public class ShootEffect : ParticlePlayer
     [SerializeField]
     LayerMask enemyMask;
 
-    public virtual void Activate(bool hitEnemy, params Vector3[] hitPoints )
+    public virtual void Activate ( bool hitEnemy, params Vector3[] hitPoints )
     {
         Play ( );
 
-        for (int i = 0; i < hitPoints.Length; i++)
+        for ( int i = 0; i < hitPoints.Length; i++ )
         {
-            VFXShootRay ray = Instantiate(shootRayObject).GetComponent<VFXShootRay>();
+            VFXShootRay ray = Instantiate (shootRayObject).GetComponent<VFXShootRay> ( );
 
             Vector3 point = hitPoints[i];
 
-            if (point == Vector3.zero)
+            if ( point == Vector3.zero )
             {
                 point = transform.forward * 100;
             }
 
-            if (ray)
+            if ( ray )
             {
-                ray.Shoot(transform.position, point);
+                ray.Shoot (transform.position, point);
             }
 
-            if (hitEnemy)
+            if ( hitEnemy )
                 continue;
 
-            VisualEffect decal = Instantiate(hitDecal, hitPoints[i], Quaternion.identity).GetComponent<VisualEffect>();
+            VisualEffect decal = Instantiate (hitDecal, hitPoints[i], Quaternion.identity).GetComponent<VisualEffect> ( );
 
-            decal.Play();
+            decal.Play ( );
 
         }
     }
 
-    public virtual void Activate (params RaycastHit[] hit )
+    public virtual void Activate ( params RaycastHit[] hit )
     {
-        Play ();
+        Play ( );
 
-        for (int i = 0; i < hit.Length; i++)
+        for ( int i = 0; i < hit.Length; i++ )
         {
-            VFXShootRay ray = Instantiate(shootRayObject).GetComponent<VFXShootRay>();
+            VFXShootRay ray = Instantiate (shootRayObject).GetComponent<VFXShootRay> ( );
 
             Vector3 point = hit[i].point;
 
-            if (point == Vector3.zero)
+            if ( point == Vector3.zero )
             {
                 point = transform.forward * 100;
             }
 
-            if (ray)
+            if ( ray )
             {
-                ray.Shoot(transform.position, point);
+                ray.Shoot (transform.position, point);
             }
 
-            if (hit[i].transform && hit[i].transform.gameObject.layer == enemyMask)
+            if ( hit[i].transform && hit[i].transform.gameObject.layer == enemyMask )
                 continue;
 
-            VisualEffect decal = Instantiate(hitDecal, hit[i].point, Quaternion.identity).GetComponent<VisualEffect>();
+            VisualEffect decal = Instantiate (hitDecal, hit[i].point, Quaternion.identity).GetComponent<VisualEffect> ( );
 
             decal.transform.forward = hit[i].normal;
 
-            decal.Play();
+            decal.Play ( );
 
         }
+    }
+    public virtual void Activate ( bool hitEnemy, RaycastHit hit )
+    {
+        Play ( );
+        VFXShootRay ray = Instantiate (shootRayObject).GetComponent<VFXShootRay> ( );
+
+        Vector3 point = hit.point;
+
+        if ( point == Vector3.zero )
+        {
+            point = transform.forward * 100;
+        }
+
+        if ( ray )
+        {
+            ray.Shoot (transform.position, point);
+        }
+
+        VisualEffect decal = Instantiate (hitDecal, point, Quaternion.identity).GetComponent<VisualEffect> ( );
+
+        decal.transform.forward = hit.normal;
+
+        decal.Play ( );
+
+
     }
 }
 
 #if UNITY_EDITOR
 
-[CustomEditor(typeof(ShootEffect))]
+[CustomEditor (typeof (ShootEffect))]
 [CanEditMultipleObjects]
 public class ShootEffectEditor : Editor
 {
@@ -98,7 +118,7 @@ public class ShootEffectEditor : Editor
         base.OnInspectorGUI ( );
         effect = target as ShootEffect;
 
-        if (GUILayout.Button("Shoot"))
+        if ( GUILayout.Button ("Shoot") )
         {
             Physics.Raycast (effect.transform.position, effect.transform.forward, out RaycastHit hit);
 
