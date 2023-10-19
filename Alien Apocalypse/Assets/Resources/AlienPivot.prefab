@@ -2369,6 +2369,7 @@ MonoBehaviour:
   - {fileID: 7067262665663158704}
   - {fileID: 2472891430103302581}
   knockBack: 0
+  gun: {fileID: 6101855443315125917}
   hitLimb: {fileID: 0}
 --- !u!114 &2862996086437632071
 MonoBehaviour:
@@ -2706,6 +2707,9 @@ GameObject:
   - component: {fileID: 6516042150687062557}
   - component: {fileID: 6107837123547481083}
   - component: {fileID: 1842779734311429588}
+  - component: {fileID: 974514304632590948}
+  - component: {fileID: 8599921488963043135}
+  - component: {fileID: 2247408262058376366}
   m_Layer: 8
   m_Name: AlienBlasterPivot
   m_TagString: Untagged
@@ -2863,6 +2867,75 @@ MonoBehaviour:
   - {fileID: 8263295312938792522}
   effects: []
   particlePivot: {fileID: 0}
+--- !u!54 &974514304632590948
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6101855443315125917}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &8599921488963043135
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6101855443315125917}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.099999994, y: 0.2549514, z: 0.63019633}
+  m_Center: {x: -0.000003096535, y: 0.11368777, z: 0.3327729}
+--- !u!65 &2247408262058376366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6101855443315125917}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09999999, y: 0.14711538, z: 0.13046582}
+  m_Center: {x: -0.0000044028043, y: -0.06493291, z: 0.08290877}
 --- !u!1 &6965762728340215032
 GameObject:
   m_ObjectHideFlags: 0

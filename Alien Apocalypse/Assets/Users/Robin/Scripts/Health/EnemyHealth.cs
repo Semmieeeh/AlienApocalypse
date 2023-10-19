@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     public float multiplier;
     public Rigidbody[] rigidBodies;
     public float knockBack;
+    public GameObject gun;
 
 
     UnityEvent onKill;
@@ -68,15 +69,18 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
 
             if (hitLimb != null)
             {
+                photonView.RPC(nameof(ReleaseGun), RpcTarget.All);
                 hitLimb.AddForce(Camera.main.transform.forward * knockBack, ForceMode.Impulse);
+                
             }
             else
             {
-                foreach(var rigidBody in rigidBodies)
+                photonView.RPC(nameof(ReleaseGun), RpcTarget.All);
+                foreach (var rigidBody in rigidBodies)
                 {
-                    rigidBody.AddForce(Camera.main.gameObject.transform.forward * knockBack, ForceMode.Impulse);
+                    rigidBody.AddForce(Camera.main.gameObject.transform.forward * knockBack, ForceMode.Impulse);          
                 }
-
+                
             }
             StartCoroutine(nameof(Die));
         }
@@ -88,6 +92,21 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
             }
         }
     }
+    [PunRPC]
+    private void ReleaseGun()
+    {
+        StartCoroutine(nameof(GunRPC));
+    }
+    [PunRPC]
+    IEnumerator GunRPC()
+    {
+        yield return new WaitForSeconds(0f);
+        gun.transform.parent = null;
+        Rigidbody gunRb = gun.GetComponent<Rigidbody>();
+        gunRb.isKinematic = false;
+        Vector3 rand = new Vector3(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1));
+        gunRb.AddForce(rand * 10,ForceMode.Impulse);
+    }
     IEnumerator Die()
     {
         yield return new WaitForSeconds(10);
@@ -96,6 +115,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     [PunRPC]
     void DieVoid()
     {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
+        PhotonNetwork.Destroy(gun);
     }
 }

@@ -34,6 +34,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public VisualEffect flash;
     public float particleMissOffset;
 
+
     public enum EnemyState
     {
         idle,
