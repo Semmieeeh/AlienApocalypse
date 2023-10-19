@@ -51,10 +51,20 @@ public class Movement : MonoBehaviourPunCallbacks,IPunObservable
     float startSpeed;
     private void Start()
     {
+        if (photonView.IsMine)
+        {
+            photonView.RPC("NetworkStart", RpcTarget.All);
+        }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.SerializationRate = 25;
+        }
+    }
+    void NetworkStart()
+    {
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
         maxFov = Camera.main.fieldOfView + 10;
-        PhotonNetwork.SerializationRate = 25;
         startSpeed = walkSpeed;
     }
 
