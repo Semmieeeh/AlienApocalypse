@@ -42,7 +42,13 @@ public class VFXShootRay : MonoBehaviour
 
         if(timer >= duration )
         {
-            Destroy (gameObject);
+            var newEndpos = linerenderer.GetPosition (0);
+
+            newEndpos = Vector3.Lerp (newEndpos, linerenderer.GetPosition(1), Mathf.InverseLerp(duration,duration + 1, timer));
+
+            linerenderer.SetPosition (0, newEndpos);
+
+            Destroy (gameObject,1);
         }
     }
 }
