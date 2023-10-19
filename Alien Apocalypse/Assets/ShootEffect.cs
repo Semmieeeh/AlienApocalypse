@@ -11,7 +11,7 @@ using UnityEditor;
 #endif
 
 
-public class ShootEffect : MonoBehaviourPunCallbacks
+public class ShootEffect : ParticlePlayer
 {
     [SerializeField]
     GameObject shootRayObject;
@@ -22,23 +22,9 @@ public class ShootEffect : MonoBehaviourPunCallbacks
     [SerializeField]
     LayerMask enemyMask;
 
-    [SerializeField]
-    VisualEffect[] effects;
-
-    [SerializeField]
-    ParticleSystem[] particles;
-
     public virtual void Activate(bool hitEnemy, params Vector3[] hitPoints )
     {
-        foreach (var effect in effects)
-        {
-            effect.Play();
-        }
-
-        foreach (var particle in particles)
-        {
-            particle.Play();
-        }
+        Play ( );
 
         for (int i = 0; i < hitPoints.Length; i++)
         {
@@ -68,15 +54,7 @@ public class ShootEffect : MonoBehaviourPunCallbacks
 
     public virtual void Activate (params RaycastHit[] hit )
     {
-        foreach (var effect in effects)
-        {
-            effect.Play();
-        }
-
-        foreach (var particle in particles)
-        {
-            particle.Play();
-        }
+        Play ();
 
         for (int i = 0; i < hit.Length; i++)
         {
