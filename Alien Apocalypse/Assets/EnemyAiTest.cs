@@ -60,10 +60,10 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         agent.destination = target;
         state = EnemyState.idle;
         agent.stoppingDistance = attackRange;
-        photonView.RPC("NewTarget", RpcTarget.All);
+        NewTarget();
         if (flyingEnemy)
         {
-            photonView.RPC("Offset", RpcTarget.All);
+            Offset();
         }
     }
     [PunRPC]
@@ -78,13 +78,13 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
         photonView.RPC("AiSyncUpdate",RpcTarget.All);
     }
-    [PunRPC]
 
+    [PunRPC]
     void AiSyncUpdate()
     {
         if (canChooseNew == true)
         {
-            photonView.RPC("NewTarget", RpcTarget.All);
+            NewTarget();
             canChooseNew = false;
         }
         if (photonView.IsMine)
@@ -108,7 +108,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             }
             if (photonView.IsMine)
             {
-                photonView.RPC("CheckForPlayer", RpcTarget.All);
+                CheckForPlayer();
                 switch (state)
                 {
                     case EnemyState.idle:
@@ -116,7 +116,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
                         if (Vector3.Distance(transform.position, target) <= attackRange)
                         {
-                            photonView.RPC("NewTarget", RpcTarget.All);
+                            NewTarget();
 
                         }
                         break;
@@ -153,7 +153,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
                             {
                                 state = EnemyState.idle;
-                                photonView.RPC("NewTarget", RpcTarget.All);
+
                             }
                         }
                         break;
@@ -171,7 +171,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         return navHit.position;
     }
 
-    [PunRPC]
     public void NewTarget()
     {
         if (agent != null)
@@ -231,7 +230,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
     public void CheckForPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");

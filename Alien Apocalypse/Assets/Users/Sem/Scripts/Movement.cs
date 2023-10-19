@@ -51,15 +51,21 @@ public class Movement : MonoBehaviourPunCallbacks,IPunObservable
     float startSpeed;
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
+        normalFov = Camera.main.fieldOfView;
+        maxFov = Camera.main.fieldOfView + 10;
+        startSpeed = walkSpeed;
         if (photonView.IsMine)
         {
             photonView.RPC("NetworkStart", RpcTarget.All);
+            
         }
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.SerializationRate = 25;
         }
     }
+    [PunRPC]
     void NetworkStart()
     {
         rb = GetComponent<Rigidbody>();
@@ -90,9 +96,9 @@ public class Movement : MonoBehaviourPunCallbacks,IPunObservable
         input.Normalize();
         sprinting = Input.GetButton("Sprint") && !downed;
         jumping = Input.GetButton("Jump");
-        FovChange();
         Physics.IgnoreLayerCollision(3,11,true);
         StopWhenNoInput();
+        FovChange();
         AnimationCheck();
         ArmAnimCheck(); 
     }
@@ -191,26 +197,30 @@ public class Movement : MonoBehaviourPunCallbacks,IPunObservable
             stopTime = 0;
         }
     }
+
     private void FovChange()
     {
-        if (sprinting && input.magnitude > 0.5f)
+        if (photonView.IsMine)
         {
-            if (Camera.main.fieldOfView < maxFov)
+            if (sprinting && input.magnitude > 0.5f)
             {
-                float fovChange = Mathf.Lerp(curFov, normalFov + rb.velocity.magnitude, Time.deltaTime * 5);
-                Camera.main.fieldOfView = fovChange;
+                if (Camera.main.fieldOfView < maxFov)
+                {
+                    float fovChange = Mathf.Lerp(curFov, normalFov + rb.velocity.magnitude, Time.deltaTime * 5);
+                    Camera.main.fieldOfView = fovChange;
+                }
             }
-        }
-        else
-        {
-            if (Camera.main.fieldOfView != normalFov && grounded)
+            else
             {
-                float fovChange = Mathf.Lerp(curFov, normalFov, Time.deltaTime * 5);
-                Camera.main.fieldOfView = fovChange;
+                if (Camera.main.fieldOfView != normalFov && grounded)
+                {
+                    float fovChange = Mathf.Lerp(curFov, normalFov, Time.deltaTime * 5);
+                    Camera.main.fieldOfView = fovChange;
+                }
             }
-        }
 
-        curFov = Camera.main.fieldOfView;
+            curFov = Camera.main.fieldOfView;
+        }
     }
     
    
