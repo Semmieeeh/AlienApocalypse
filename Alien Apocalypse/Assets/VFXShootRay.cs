@@ -12,6 +12,7 @@ public class VFXShootRay : MonoBehaviour
 
     float timer;
 
+    Vector3 endPos;
     public float Progress{
         get => Mathf.InverseLerp (duration, 0, timer);
     }
@@ -32,23 +33,27 @@ public class VFXShootRay : MonoBehaviour
 
         linerenderer.SetPosition (0, startPos);
         linerenderer.SetPosition (1, endPos);
+
+        this.endPos = endPos;
+
+        linerenderer.widthMultiplier *= 2;
     }
 
     private void Update ( )
     {
-        linerenderer.material.SetFloat ("_Progress", Progress);
+        //linerenderer.material.SetFloat ("_Progress", Progress);
 
         timer += Time.deltaTime;
 
-        if(timer >= duration )
+
+        var newEndpos = Vector3.Lerp (endPos, linerenderer.GetPosition (1), Progress * Time.deltaTime);
+
+        linerenderer.SetPosition (0, newEndpos);
+
+        if (timer >= duration )
         {
-            var newEndpos = linerenderer.GetPosition (0);
 
-            newEndpos = Vector3.Lerp (newEndpos, linerenderer.GetPosition(1), Mathf.InverseLerp(duration,duration + 1, timer));
-
-            linerenderer.SetPosition (0, newEndpos);
-
-            Destroy (gameObject,1);
+            Destroy (gameObject);
         }
     }
 }
