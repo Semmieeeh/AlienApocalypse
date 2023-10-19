@@ -17,7 +17,7 @@ public class ShootEffect : ParticlePlayer
     [SerializeField]
     LayerMask enemyMask;
 
-    public virtual void Activate ( bool hitEnemy, params Vector3[] hitPoints )
+    public virtual void Activate ( bool hitEnemy, Vector3 normal, params Vector3[] hitPoints )
     {
         Play ( );
 
