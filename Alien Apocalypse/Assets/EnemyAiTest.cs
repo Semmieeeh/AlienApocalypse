@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 using UnityEngine.VFX;
 using static PlayerHealth;
 
@@ -51,21 +52,18 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public Animator armAnim;
     void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = moveSpeed;
+        agent.angularSpeed = turnSpeed;
+        origin = transform.position;
+        target = transform.position;
+        agent.destination = target;
+        state = EnemyState.idle;
+        agent.stoppingDistance = attackRange;
+        photonView.RPC("NewTarget", RpcTarget.All);
+        if (flyingEnemy)
         {
-            agent = GetComponent<NavMeshAgent>();
-            agent.speed = moveSpeed;
-            agent.angularSpeed = turnSpeed;
-            origin = transform.position;
-            target = transform.position;
-            agent.destination = target;
-            state = EnemyState.idle;
-            agent.stoppingDistance = attackRange;
-            photonView.RPC("NewTarget", RpcTarget.All);
-            if (flyingEnemy)
-            {
-                photonView.RPC("Offset", RpcTarget.All);
-            }
+            photonView.RPC("Offset", RpcTarget.All);
         }
     }
     [PunRPC]
@@ -83,7 +81,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             photonView.RPC("NewTarget", RpcTarget.All);
             canChooseNew = false;
         }
-        if (PhotonNetwork.IsMasterClient && photonView.IsMine)
+        if (photonView.IsMine)
         {
             if (flyingHeight > 0.1f)
             {
@@ -180,49 +178,48 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Attack(float damage)
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (nearestPlayer.TryGetComponent(out PlayerHealth player))
         {
-            if (nearestPlayer.TryGetComponent(out PlayerHealth player))
+            if (nearestPlayer.TryGetComponent(out Movement m))
             {
-                if(nearestPlayer.TryGetComponent(out Movement m))
+                if (m.rb.velocity.magnitude <=0f)
                 {
-                    if (m.input.magnitude < 0.5f)
+                    source.clip = clips[0];
+                    source.Play();
+                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                    flash.Play();
+                    Vector3 j = player.transform.position;
+                    j.y += 0.4f;
+                    bulletTracer.Activate(true, j);
+                    player.TakeDamage(damage);
+                    canAttack = false;
+                    Debug.Log("Hit!");
+                }
+                else if(m.rb.velocity.magnitude >0f)
+                {
+                    source.clip = clips[0];
+                    source.Play();
+                    canAttack = false;
+                    flash.Play();
+                    int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
+                    Debug.Log(k);
+                    if (k  < 5)
                     {
-                        source.clip = clips[0];
-                        source.Play();
                         photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
-                        flash.Play();
-                        Vector3 j = player.transform.position;
-                        j.y += 0.4f;
-                        bulletTracer.Activate(true, j);
                         player.TakeDamage(damage);
-                        canAttack = false;
-                        Debug.Log("Hit!");
+                        Vector3 v = player.transform.position;
+                        bulletTracer.Activate(true, v);
+                        Debug.Log("Hit By Chance!");
                     }
                     else
                     {
-                        source.clip = clips[0];
-                        source.Play();                        
-                        canAttack = false;
-                        flash.Play();
-                        int k = Random.Range(0, 5);
-                        if (k == 2)
-                        {
-                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
-                            player.TakeDamage(damage);
-                            Vector3 v = player.transform.position;                      
-                            bulletTracer.Activate(true, v);
-                            Debug.Log("Hit By Chance!");
-                        }
-                        else
-                        {
-                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
-                            Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
-                            v *= 10;
-                            bulletTracer.Activate(true, v);
-                        }
+                        photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                        Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
+                        v *= 10;
+                        bulletTracer.Activate(true, v);
                         Debug.Log("Missed!");
                     }
+                    
                 }
             }
         }
@@ -230,37 +227,34 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
     public void CheckForPlayer()
     {
-        if (photonView.IsMine && PhotonNetwork.IsMasterClient)
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        float nearestDistance = float.MaxValue;
+        nearestPlayer = null;
+
+        foreach (GameObject player in players)
         {
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            float nearestDistance = float.MaxValue;
-            nearestPlayer = null;
+            Vector3 playerPos = player.transform.position;
+            Vector3 targetDir = playerPos - transform.position;
+            angleToPlayer = Vector3.Angle(targetDir, transform.forward);
 
-            foreach (GameObject player in players)
+            if (Vector3.Distance(transform.position, playerPos) < detectionRange && angleToPlayer < detectionAngle)
             {
-                Vector3 playerPos = player.transform.position;
-                Vector3 targetDir = playerPos - transform.position;
-                angleToPlayer = Vector3.Angle(targetDir, transform.forward);
 
-                if (Vector3.Distance(transform.position, playerPos) < detectionRange && angleToPlayer < detectionAngle)
+                if (Vector3.Distance(transform.position, playerPos) < nearestDistance)
                 {
-                    
-                    if (Vector3.Distance(transform.position, playerPos) < nearestDistance)
+                    nearestDistance = Vector3.Distance(transform.position, playerPos);
+                    nearestPlayer = player;
+                    if (nearestPlayer.GetComponent<PlayerHealth>().state == PlayerState.alive)
                     {
-                        nearestDistance = Vector3.Distance(transform.position, playerPos);
-                        nearestPlayer = player;
-                        if(nearestPlayer.GetComponent<PlayerHealth>().state == PlayerHealth.PlayerState.alive)
-                        {
-                            state = EnemyState.chasing;
-                        }
-                        
+                        state = EnemyState.chasing;
                     }
-                }
-                else
-                {
-                    state = EnemyState.idle;          
 
                 }
+            }
+            else
+            {
+                state = EnemyState.idle;
+
             }
         }
     }

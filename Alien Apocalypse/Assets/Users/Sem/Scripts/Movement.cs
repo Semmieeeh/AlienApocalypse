@@ -79,26 +79,11 @@ public class Movement : MonoBehaviourPunCallbacks
         input.Normalize();
         sprinting = Input.GetButton("Sprint") && !downed;
         jumping = Input.GetButton("Jump");
-        
-
         FovChange();
-
         Physics.IgnoreLayerCollision(3,11,true);
         StopWhenNoInput();
         AnimationCheck();
-        ArmAnimCheck();
-        
-        
-        if (Input.GetKey(KeyCode.S))
-        {
-            walkingBackwards = true;
-            photonView.RPC("Walking", RpcTarget.All);
-        }
-        else
-        {
-            walkingBackwards = false;
-            photonView.RPC("Walking", RpcTarget.All);
-        }
+        ArmAnimCheck(); 
     }
 
     bool IsMoving()
@@ -204,6 +189,17 @@ public class Movement : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
+        if (input.y < 0)
+        {
+            walkingBackwards = true;
+            photonView.RPC("Walking", RpcTarget.All);
+        }
+        else
+        {
+            walkingBackwards = false;
+            photonView.RPC("Walking", RpcTarget.All);
+        }
+
         if (grounded)
         {
             if (jumping && !downed)

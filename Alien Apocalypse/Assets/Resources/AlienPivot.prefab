@@ -45,7 +45,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 281508434369846496}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -447,7 +447,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949693259398678433}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -659,7 +659,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1988019110418151301}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -905,7 +905,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2454574066657472164}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1241,7 +1241,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3358461074363841755}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1572,7 +1572,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4117335626130515852}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1934,7 +1934,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4983957952744130226}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2117,7 +2117,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5032546653906867034}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2334,6 +2334,7 @@ MonoBehaviour:
   - {fileID: 1077364805597947462}
   - {fileID: 7067262665663158704}
   - {fileID: 2472891430103302581}
+  knockBack: 0
   hitLimb: {fileID: 0}
 --- !u!114 &2862996086437632071
 MonoBehaviour:
@@ -2342,7 +2343,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ce9130991c3d3c469a970563ddb9e92, type: 3}
   m_Name: 
@@ -2366,7 +2367,7 @@ MonoBehaviour:
   nearestPlayer: {fileID: 0}
   canAttack: 0
   attackSpeed: 2
-  attackDamage: 10
+  attackDamage: 2
   timePassed: 0
   flyingEnemy: 0
   anim: {fileID: 6456500423871001546}
@@ -2378,7 +2379,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -2413,6 +2414,28 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5932660472288310766}
+  - {fileID: 7820184073888848070}
+  - {fileID: 756558591756492940}
+  - {fileID: 3122610295318662112}
+  - {fileID: 6250916238582234103}
+  - {fileID: 1589350850243978823}
+  - {fileID: 4553409197124207640}
+  - {fileID: 9150199186119042082}
+  - {fileID: 1362055205027175957}
+  - {fileID: 7705131304087652819}
+  - {fileID: 772865526273564461}
+  - {fileID: 4708035658359202712}
+  - {fileID: 8170962001982172718}
+  - {fileID: 8429622151860021022}
+  - {fileID: 5037146359090376668}
+  - {fileID: 1382600426741373341}
+  - {fileID: 3328731578528166285}
+  - {fileID: 6177541528840312721}
+  - {fileID: 1568994759260040391}
+  - {fileID: 5914590279492832334}
+  - {fileID: 223684446568052065}
+  - {fileID: 3414921060962337090}
+  - {fileID: 7356270682715358315}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -2901,7 +2924,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7659168067474699618}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3112,7 +3135,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7924075614128736851}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3292,7 +3315,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8072792312269693736}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d371c02a02b793843bdb9988fd82df09, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3659,6 +3682,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Muzzle Flash
       objectReference: {fileID: 0}
+    - target: {fileID: 3957002279545363425, guid: 435e22109720e4043a4d6b3b9bfd4f63, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730236359138944491, guid: 435e22109720e4043a4d6b3b9bfd4f63, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8874615929406534381, guid: 435e22109720e4043a4d6b3b9bfd4f63, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.004
@@ -3765,6 +3796,10 @@ PrefabInstance:
     - target: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
       propertyPath: m_Name
       value: Shoot Ray(Cyan)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

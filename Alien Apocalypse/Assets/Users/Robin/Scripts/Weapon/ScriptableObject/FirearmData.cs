@@ -31,6 +31,7 @@ public class FirearmData : WeaponData
     public float baseDamage;
     public float baseCooldown;
     public float rotationAmount;
+    public float bulletForce;
 
     [Space]
     [Header("Burst")]

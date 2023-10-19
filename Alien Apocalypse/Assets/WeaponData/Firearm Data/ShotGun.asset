@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ShotGun
   m_EditorClassIdentifier: 
   prefab: {fileID: 5997996065440876641, guid: c93644c3c015d424fa8e878e06554edf, type: 3}
+  dropPrefab: {fileID: 0}
   name: 
   info: 
   localPlacmentPos: {x: 0.16, y: -0.124, z: 0.38}
@@ -20,6 +21,8 @@ MonoBehaviour:
   fireType: 0
   baseDamage: 10
   baseCooldown: 5
+  rotationAmount: 0
+  bulletForce: 40
   baseBurstAmount: 0
   baseTimeBetweenBurst: 0
   baseFireRate: 0

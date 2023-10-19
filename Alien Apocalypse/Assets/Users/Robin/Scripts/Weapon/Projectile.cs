@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
             {
                 if(col.TryGetComponent<IDamagable>(out IDamagable damagable))
                 {
-                    damagable.Damagable(projectileDamage, onKill, onHit);
+                    damagable.Damagable(projectileDamage, onKill, onHit,1);
                 }
             }
 

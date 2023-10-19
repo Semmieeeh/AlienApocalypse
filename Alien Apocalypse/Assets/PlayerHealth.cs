@@ -77,8 +77,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         switch (state)
         {
             
-
-
             case PlayerState.alive:
                 
                 lastHit -= Time.deltaTime;
@@ -110,7 +108,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
 
             case PlayerState.dead:
                 GetComponent<SpectatorMode>().IsSpectator = true;
-                Debug.Log("You died bitch nigga");
+                Debug.Log("You died");
                 break;
 
         }

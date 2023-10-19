@@ -224,7 +224,6 @@ MonoBehaviour:
   firearmChance: 20
   firearmAbilityChance: 70
   nothingChance: 10
-  goToPoint: {fileID: 8143997828447424943}
   firearmDatas:
   - {fileID: 5219653184509103383, guid: efa482ef1e1b6f942af2aaee8b0b14a4, type: 3}
   - {fileID: 5273557812897326287, guid: 02ae363ec03d87646bbd56b19e967e70, type: 3}
@@ -233,7 +232,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3365b09c2842f5349845dc6a93a0e154, type: 2}
   - {fileID: 11400000, guid: f46a3d28f16e9d34bb754e0f5421da56, type: 2}
   abilityHolder: {fileID: 2588307389441523353, guid: 11fa5d342647b134eb1bb149f788dd0b, type: 3}
+  goToPoint: {fileID: 8143997828447424943}
   opened: 0
+  rotSpeed: 0
+  targetRot: {x: 0, y: 0, z: 0}
+  chestLid: {fileID: 0}
 --- !u!65 &8924734467364344224
 BoxCollider:
   m_ObjectHideFlags: 0

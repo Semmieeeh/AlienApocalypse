@@ -49,6 +49,7 @@ public class Firearm : Weapon
     [Space]
     [Header("Raycast")]
     RaycastHit hit;
+    float bulletForce;
 
     [Space]
     [Header("Recoil Camera Rotation")]
@@ -116,6 +117,7 @@ public class Firearm : Weapon
             burstAmount = firearmData.baseBurstAmount;
             fireRate = firearmData.baseFireRate;
             maxAmmo = firearmData.baseMaxAmmo;
+            bulletForce = firearmData.bulletForce;
             if(firearmData.anim != null)
             {
                 reloadTime = firearmData.anim.length;
@@ -204,10 +206,8 @@ public class Firearm : Weapon
             isSingleShoting = true;
             canSingleShoot = false;
 
-            // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
             events.onShooting?.Invoke();
 
-            // OnSingleShot will be called every time a projectile is fired; FireType has to be SingelShot
             events.onSingleShot?.Invoke();
 
             Shoot();
@@ -232,10 +232,8 @@ public class Firearm : Weapon
                 if (currentAmmo <= 0)
                     break;
 
-                // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
                 events.onShooting?.Invoke();
 
-                // OnBurst will be called every time a projectile is fired; FireType has to be Burst
                 events.onBurst?.Invoke();
 
                 Shoot();
@@ -371,7 +369,7 @@ public class Firearm : Weapon
             {
                 if(hit.transform.TryGetComponent(out IDamagable damagable))
                 {
-                    damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy);
+                    damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy,bulletForce);
                     enemyHit = true;
                 }
 

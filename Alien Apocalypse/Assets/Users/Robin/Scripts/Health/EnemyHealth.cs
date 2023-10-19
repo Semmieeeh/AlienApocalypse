@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
+using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
 {
@@ -13,6 +14,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     public float xpAmount;
     public float multiplier;
     public Rigidbody[] rigidBodies;
+    public float knockBack;
 
 
     UnityEvent onKill;
@@ -22,19 +24,25 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     {
         maxHealth = maxHealth * multiplier;
         health = maxHealth;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<EnemyAiTest>().enabled = true;
+        }
         
     }
 
     public Rigidbody hitLimb;
-    public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit)
+    public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit, float b)
     {
+        knockBack = b;
         this.onKill = onKill;
         this.onHit = onHit;
 
         photonView.RPC(nameof(SyncDamage), RpcTarget.All, damage);
         Debug.Log(damage);
     }
-
+    bool dead;
     [PunRPC]
     public void SyncDamage(float damage)
     {
@@ -42,24 +50,31 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
 
         if(health <= 0)
         {
-            onKill?.Invoke();
+            if (!dead)
+            {
+                onKill?.Invoke();
+            }
+            dead = true;
+            
             
             foreach(var rigidBody in rigidBodies)
             {
                 rigidBody.isKinematic = false;               
             }
-            GetComponent<EnemyAiTest>().anim.enabled = false;
-            GetComponent<EnemyAiTest>().armAnim.enabled = false;
-            GetComponent<EnemyAiTest>().enabled = false;
+            var enemyTest = GetComponent<EnemyAiTest>();
+            enemyTest.anim.enabled = false;
+            enemyTest.armAnim.enabled = false;
+            enemyTest.enabled = false;
+
             if (hitLimb != null)
             {
-                hitLimb.AddForce(Camera.main.transform.forward * 10,ForceMode.Impulse);
+                hitLimb.AddForce(Camera.main.transform.forward * knockBack, ForceMode.Impulse);
             }
             else
             {
                 foreach(var rigidBody in rigidBodies)
                 {
-                    rigidBody.AddForce(Camera.main.gameObject.transform.forward * 15, ForceMode.Impulse);
+                    rigidBody.AddForce(Camera.main.gameObject.transform.forward * knockBack, ForceMode.Impulse);
                 }
 
             }
@@ -67,7 +82,10 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         }
         else
         {
-            onHit?.Invoke();
+            if (!dead)
+            {
+                onHit?.Invoke();
+            }
         }
     }
     IEnumerator Die()

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
   prefab: {fileID: 2587120426959297384, guid: f78a04e8a4fdc0443babb03bc2934eb8, type: 3}
+  dropPrefab: {fileID: 0}
   name: 
   info: 
   localPlacmentPos: {x: 0.16, y: -0.124, z: 0.38}
@@ -20,6 +21,8 @@ MonoBehaviour:
   fireType: 3
   baseDamage: 80
   baseCooldown: 2
+  rotationAmount: 0
+  bulletForce: 100
   baseBurstAmount: 0
   baseTimeBetweenBurst: 0
   baseFireRate: 0

@@ -5,5 +5,5 @@ using UnityEngine.Events;
 
 public interface IDamagable
 {
-    public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit);
+    public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit,float bulletForce);
 }

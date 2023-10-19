@@ -40,7 +40,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         }
         specCam.gameObject.SetActive(false);
         specCam.name = "SpecCam";
-        Destroy(specCam);
+        //Destroy(specCam);
         cam.GetComponent<Camera>().enabled = true;
         cam.GetComponent<MouseLook>().enabled = true;
         cam.GetComponent<AudioListener>().enabled = true;

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AlienBlaster
   m_EditorClassIdentifier: 
   prefab: {fileID: 5180381444067359868, guid: 064cffbf9e288c54b8e26e2745fcac60, type: 3}
+  dropPrefab: {fileID: 0}
   name: Test 1
   info: 
   localPlacmentPos: {x: 0.3, y: -0.28, z: 0.41}
@@ -20,9 +21,14 @@ MonoBehaviour:
   fireType: 1
   baseDamage: 15
   baseCooldown: 0.3
+  rotationAmount: 0
+  bulletForce: 10
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
   baseFireRate: 120
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 0
+  radius: 0
   baseMaxAmmo: 36
   baseReloadTime: 1
   raycastDistance: 1000

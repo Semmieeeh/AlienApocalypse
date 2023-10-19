@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Deagle
   m_EditorClassIdentifier: 
   prefab: {fileID: 7284097791091097426, guid: 237618eb10df9ed49a6b5cf0cbc4db4e, type: 3}
+  dropPrefab: {fileID: 0}
   name: Test
   info: 
   localPlacmentPos: {x: 0.3, y: -0.2, z: 0.4}
@@ -20,7 +21,8 @@ MonoBehaviour:
   fireType: 0
   baseDamage: 50
   baseCooldown: 0.2
-  isGatling: 0
+  rotationAmount: 0
+  bulletForce: 10
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
   baseFireRate: 1200

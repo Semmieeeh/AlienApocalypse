@@ -16,6 +16,7 @@ public class SpectatorMode : MonoBehaviour
             isSpectator = value;
             OnValueChanged();
         }
+
     }
     public GameObject myCam,renderCam;
 
