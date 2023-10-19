@@ -911,6 +911,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.55072784, y: 8.41518, z: 0.62358093}
   m_Center: {x: 1.0242748, y: 1.2128234, z: -1.833458}
+--- !u!1 &373163497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373163498}
+  - component: {fileID: 373163499}
+  m_Layer: 0
+  m_Name: Building (23)
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &373163498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373163497}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -20.29, y: 0, z: 27.56}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1814508509}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &373163499
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373163497}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 18.243366, y: 11.446054, z: 12.5966015}
+  m_Center: {x: 0.41332817, y: 4.3566904, z: -0.28693867}
 --- !u!1 &398029800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,8 +2041,62 @@ Transform:
   - {fileID: 641365184}
   - {fileID: 780405487}
   - {fileID: 1285715878}
+  - {fileID: 819596382}
   m_Father: {fileID: 364093376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &819596381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 819596382}
+  - component: {fileID: 819596383}
+  m_Layer: 0
+  m_Name: Prop (41)
+  m_TagString: Ground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &819596382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819596381}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -58.46, y: 2.74, z: 0.06}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 809327369}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &819596383
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819596381}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.241482, y: 6.6602507, z: 4.996585}
+  m_Center: {x: 1.1537685, y: 0.6331582, z: -0.03648913}
 --- !u!1 &826607509
 GameObject:
   m_ObjectHideFlags: 0
@@ -4850,6 +4957,7 @@ Transform:
   - {fileID: 615906387}
   - {fileID: 1107272966}
   - {fileID: 1856558046}
+  - {fileID: 373163498}
   m_Father: {fileID: 364093376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1820593216
@@ -18158,16 +18266,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a1985e48eb90e408d842d1fba6de6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
-  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 2048
   effects:
   - {fileID: 3152648678933282553}
   - {fileID: 4944097987003011241}
   - {fileID: 4211023455745218441}
   particles: []
+  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!224 &1000168100315927929
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24389,7 +24497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7406a23cff0617b47a48140cc64277ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  m_health: 0
   maxHealth: 0
   healthRegenAmount: 0
   minHealth: 0
@@ -34089,16 +34197,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a1985e48eb90e408d842d1fba6de6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
-  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 2048
   effects:
   - {fileID: 4089055404872294412}
   - {fileID: 6333113928816004700}
   - {fileID: 2958800055536568700}
   particles: []
+  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &2208520569964946086
 GameObject:
   m_ObjectHideFlags: 0
@@ -34255,6 +34363,7 @@ MonoBehaviour:
   rot: {fileID: 353886586140653855}
   rot2: {fileID: 5192529544963680856}
   localUI: {fileID: 0}
+  specCam: {fileID: 0}
   number: 0
 --- !u!1 &2214161544395253847
 GameObject:
@@ -39859,7 +39968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7406a23cff0617b47a48140cc64277ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  m_health: 0
   maxHealth: 0
   healthRegenAmount: 0
   minHealth: 0
@@ -49356,16 +49465,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a1985e48eb90e408d842d1fba6de6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
-  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 2048
   effects:
   - {fileID: 666869378746106851}
   - {fileID: 7358232542741966259}
   - {fileID: 1797438634356075155}
   particles: []
+  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &3413354194739375575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56636,7 +56745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7406a23cff0617b47a48140cc64277ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  m_health: 0
   maxHealth: 0
   healthRegenAmount: 0
   minHealth: 0
@@ -66729,6 +66838,7 @@ MonoBehaviour:
   rot: {fileID: 6375024665695899407}
   rot2: {fileID: 1485748956035013704}
   localUI: {fileID: 0}
+  specCam: {fileID: 0}
   number: 0
 --- !u!1 &4779259598370234835
 GameObject:
@@ -78940,6 +79050,7 @@ MonoBehaviour:
   rot: {fileID: 5406545328411873786}
   rot2: {fileID: 567800660611695293}
   localUI: {fileID: 0}
+  specCam: {fileID: 0}
   number: 0
 --- !u!1 &5857039290449089270
 GameObject:
@@ -78987,16 +79098,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a1985e48eb90e408d842d1fba6de6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
-  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 2048
   effects:
   - {fileID: 8597819828657719529}
   - {fileID: 1733063683876185785}
   - {fileID: 7413326670180917657}
   particles: []
+  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &5858635765521376989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93804,6 +93915,7 @@ MonoBehaviour:
   rot: {fileID: 8861364738508665365}
   rot2: {fileID: 3899896972106834258}
   localUI: {fileID: 0}
+  specCam: {fileID: 0}
   number: 0
 --- !u!1 &6975576534155737923
 GameObject:
@@ -102906,7 +103018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7406a23cff0617b47a48140cc64277ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  m_health: 0
   maxHealth: 0
   healthRegenAmount: 0
   minHealth: 0
