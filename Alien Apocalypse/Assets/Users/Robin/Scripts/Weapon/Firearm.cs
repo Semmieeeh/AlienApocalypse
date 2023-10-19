@@ -384,7 +384,7 @@ public class Firearm : Weapon
             {
                 if (photonView.IsMine)
                 {
-                    photonView.RPC("RPCBulletTracers", RpcTarget.All, enemyHit, hit);
+                    photonView.RPC("RPCBulletTracers", RpcTarget.All, enemyHit, particlePoint);
                 }
             }
 
@@ -392,9 +392,9 @@ public class Firearm : Weapon
         }
     }
     [PunRPC]
-    void RPCBulletTracers(bool enemyHit, RaycastHit hit)
+    void RPCBulletTracers(bool enemyHit, Vector3 particlePoint)
     {
-        dataHolder.shootEffect.Activate(enemyHit, hit);
+        dataHolder.shootEffect.Activate(enemyHit, hit.normal, particlePoint);
 
     }
     [PunRPC]
