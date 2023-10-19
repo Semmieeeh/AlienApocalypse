@@ -75,8 +75,14 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     bool canChooseNew;
     void Update()
     {
-        
-        if(canChooseNew == true)
+
+        photonView.RPC("AiSyncUpdate",RpcTarget.All);
+    }
+    [PunRPC]
+
+    void AiSyncUpdate()
+    {
+        if (canChooseNew == true)
         {
             photonView.RPC("NewTarget", RpcTarget.All);
             canChooseNew = false;
@@ -98,11 +104,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             if (timePassed > attackSpeed)
             {
                 canAttack = true;
-                timePassed = Random.Range(-attackSpeed,attackSpeed);
+                timePassed = Random.Range(-attackSpeed, attackSpeed);
             }
             if (photonView.IsMine)
             {
-                CheckForPlayer();
+                photonView.RPC("CheckForPlayer", RpcTarget.All);
                 switch (state)
                 {
                     case EnemyState.idle:
@@ -111,16 +117,16 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         if (Vector3.Distance(transform.position, target) <= attackRange)
                         {
                             photonView.RPC("NewTarget", RpcTarget.All);
-                            
+
                         }
                         break;
 
                     case EnemyState.chasing:
-                        
+
                         if (nearestPlayer != null)
                         {
                             agent.destination = nearestPlayer.transform.position;
-                            
+
                             if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
                                 photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
@@ -128,12 +134,12 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                                 Quaternion targetRotation = CalculateRotationToPlayer();
                                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
-                                
+
                                 if (canAttack == true)
                                 {
-                                    
+
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
-                                    
+
                                 }
 
                             }
@@ -144,7 +150,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                                 photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 2);
                             }
 
-                            if(nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+                            if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
                             {
                                 state = EnemyState.idle;
                                 photonView.RPC("NewTarget", RpcTarget.All);
@@ -225,6 +231,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     public void CheckForPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");

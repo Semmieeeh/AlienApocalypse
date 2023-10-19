@@ -45,16 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a1985e48eb90e408d842d1fba6de6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRayObject: {fileID: 8251439570758105850, guid: 6326f7049e678b449ae3943849d315a4, type: 3}
-  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 0
   effects:
   - {fileID: 5929338799452524687}
   - {fileID: 4116889802543763947}
   - {fileID: 6429672510126743135}
   particles: []
+  shootRayObject: {fileID: 8251439570758105850, guid: 6326f7049e678b449ae3943849d315a4, type: 3}
+  hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &865699805010594690
 GameObject:
   m_ObjectHideFlags: 0

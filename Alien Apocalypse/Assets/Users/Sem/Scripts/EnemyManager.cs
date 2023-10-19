@@ -168,7 +168,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
             cooldownCounter = waveCooldown;
             wavesCompleted++;
-            waveSize += 5;
+            //waveSize += 5;
             yield return new WaitForSeconds(waveCooldown);
             multiplier = multiplier * 1.1f;
             

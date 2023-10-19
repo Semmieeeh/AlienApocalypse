@@ -2,8 +2,9 @@ using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Movement : MonoBehaviourPunCallbacks
+public class Movement : MonoBehaviourPunCallbacks,IPunObservable
 {
     [Header("Speed modifiers")]
     public float walkSpeed = 20f;
@@ -85,7 +86,24 @@ public class Movement : MonoBehaviourPunCallbacks
         AnimationCheck();
         ArmAnimCheck(); 
     }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(rb.position);
+            stream.SendNext(rb.rotation);
+            stream.SendNext(rb.velocity);
+        }
+        else
+        {
+            rb.position = (Vector3)stream.ReceiveNext();
+            rb.rotation = (Quaternion)stream.ReceiveNext();
+            rb.velocity = (Vector3)stream.ReceiveNext();
 
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
+            rb.position += rb.velocity * lag;
+        }
+    }
     bool IsMoving()
     {
         if (input.magnitude >0.5f)
