@@ -41,7 +41,7 @@ public class ShootEffect : ParticlePlayer
                 continue;
 
             VisualEffect decal = Instantiate (hitDecal, hitPoints[i], Quaternion.identity).GetComponent<VisualEffect> ( );
-
+            decal.transform.forward = normal;
             decal.Play ( );
 
         }

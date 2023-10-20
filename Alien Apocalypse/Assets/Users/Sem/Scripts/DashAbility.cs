@@ -11,6 +11,7 @@ public class DashAbility : MonoBehaviourPunCallbacks
     public bool unlockedSkill;
     public float dashAmount;
     public float multiplier;
+    public UIAbility UIAbility;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -50,6 +51,8 @@ public class DashAbility : MonoBehaviourPunCallbacks
                 rb.velocity = Vector3.zero;
                 this.rb.AddForce(Camera.main.transform.forward * (velBeforeStop + dashAmount), ForceMode.Impulse);
                 dashCooldown = maxDashCooldown;
+                UIAbility.cooldown = maxDashCooldown;
+                UIAbility.Activate();
             }
         }
     }
