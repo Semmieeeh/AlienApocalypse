@@ -94,7 +94,7 @@ public class Movement : MonoBehaviourPunCallbacks,IPunObservable
         }
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         input.Normalize();
-        sprinting = Input.GetButton("Sprint") && !downed;
+        sprinting = Input.GetButton("Sprint") && !downed && input.magnitude >0.5f;
         jumping = Input.GetButton("Jump");
         Physics.IgnoreLayerCollision(3,11,true);
         StopWhenNoInput();

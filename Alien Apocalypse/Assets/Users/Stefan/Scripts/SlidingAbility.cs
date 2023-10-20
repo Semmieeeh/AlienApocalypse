@@ -19,6 +19,7 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
     public bool canSlide;
     public float slideCooldown;
     public float slideCooldownMax;
+    public UIAbility uiAbility;
 
     private void Start()
     {
@@ -49,6 +50,8 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
                 else if (Input.GetKeyUp(KeyCode.LeftControl) && isSliding == true)
                 {
                     float scale = originalScale;
+                    uiAbility.Activate();
+                    uiAbility.cooldown = slideCooldownMax;
                     photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
                     isSliding = false;
                 }
@@ -63,6 +66,7 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
         slideCooldown = slideCooldownMax;
         if (movement.input.magnitude > 0.5f)
         {
+            
             Vector3 slideDirection = CalculateSlideDirection(movement.input);
             playerRigidbody.AddForce(slideDirection * slideForce, ForceMode.Impulse);
             playerRigidbody.AddForce(Vector3.down * slideForce, ForceMode.Impulse);
@@ -91,6 +95,8 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(slideDuration);
         if (isSliding)
         {
+            uiAbility.Activate();
+            uiAbility.cooldown = slideCooldownMax;
             float scale = originalScale;
             photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
             isSliding = false;

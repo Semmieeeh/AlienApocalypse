@@ -39,6 +39,7 @@ public class Grappling : MonoBehaviourPunCallbacks
     public float pullStrength;
     public float stunTime;
     public float abilityCooldown;
+    public UIAbility ui;
     
 
     private void Awake()
@@ -167,6 +168,8 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
         {
+            ui.Activate();
+            ui.cooldown = 2;
             canGrapple = false;
             abilityCooldown = 2;
             armLowerTime = maxAnimDuration;
