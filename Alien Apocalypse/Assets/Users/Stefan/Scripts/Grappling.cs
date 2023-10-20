@@ -71,7 +71,6 @@ public class Grappling : MonoBehaviourPunCallbacks
         }
         if (pv.IsMine)
         {
-            abilityCooldown -= Time.deltaTime;
 
             if (pv.IsMine && playerCam != null)
             {
@@ -168,10 +167,9 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         if (Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable))
         {
-            ui.Activate();
-            ui.cooldown = 2;
+            
             canGrapple = false;
-            abilityCooldown = 2;
+            
             armLowerTime = maxAnimDuration;
             pointingArm = false;
             isGrappling = true;
@@ -209,10 +207,14 @@ public class Grappling : MonoBehaviourPunCallbacks
         if (grapplePointParent != null)
         {
             grapplePointParent = null;
+            ui.Activate();
+            abilityCooldown = 2;
+            ui.cooldown = abilityCooldown;
         }
         isGrappling = false;
         pointingArm = false;
         animDuration = maxAnimDuration;
+        
     }
 
     public bool IsGrappling()
