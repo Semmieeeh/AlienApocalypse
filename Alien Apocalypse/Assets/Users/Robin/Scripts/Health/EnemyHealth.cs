@@ -16,7 +16,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     public Rigidbody[] rigidBodies;
     public float knockBack;
     public GameObject gun;
-
+    public Renderer r;
 
     UnityEvent onKill;
     UnityEvent onHit;
@@ -44,6 +44,21 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         Debug.Log(damage);
     }
     bool dead;
+    float time;
+    private void Update()
+    {
+        photonView.RPC("Shader", RpcTarget.All);
+
+    }
+    [PunRPC]
+    public void Shader()
+    {
+        if (died == true)
+        {
+            time += 2* Time.deltaTime;
+            r.material.SetFloat("_Dead", time);
+        }
+    }
     [PunRPC]
     public void SyncDamage(float damage)
     {
@@ -107,9 +122,13 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         Vector3 rand = new Vector3(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1));
         gunRb.AddForce(rand * 10,ForceMode.Impulse);
     }
+    bool died;
     IEnumerator Die()
     {
+        
         yield return new WaitForSeconds(10);
+        died = true;
+        yield return new WaitForSeconds(2);
         photonView.RPC("DieVoid", RpcTarget.All);
     }
     [PunRPC]
