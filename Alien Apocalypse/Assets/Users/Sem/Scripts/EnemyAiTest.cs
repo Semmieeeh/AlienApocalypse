@@ -76,13 +76,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     bool canChooseNew;
     void Update()
     {
-
-        photonView.RPC("AiSyncUpdate",RpcTarget.All);
-    }
-
-    [PunRPC]
-    void AiSyncUpdate()
-    {
         if (canChooseNew == true)
         {
             NewTarget();
@@ -161,6 +154,13 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 }
             }
         }
+        //photonView.RPC("AiSyncUpdate",RpcTarget.All);
+    }
+
+    [PunRPC]
+    void AiSyncUpdate()
+    {
+        
     }
 
     public Vector3 NewDestination(Vector3 origin, float dist, int layerMask)
