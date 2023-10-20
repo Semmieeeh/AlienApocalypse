@@ -4,15 +4,46 @@ using UnityEngine;
 
 public class BeaconManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public List<Beacon> beacons;
+
+
     void Start()
     {
-        
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            if(transform.GetChild(i).TryGetComponent<Beacon>(out Beacon beacon))
+            {
+                beacon.beaconManager = this;
+                beacons.Add(beacon);
+            }
+        }    
     }
 
-    // Update is called once per frame
-    void Update()
+    public void BeaconsCondition()
     {
-        
+        int enemyScore = 0;
+        int playerScore = 0;
+
+
+        for(int i = 0; i < beacons.Count; i++)
+        {
+            if(beacons[i].totalScore == -100)
+            {
+                enemyScore += beacons[i].totalScore;
+            }
+            else if(beacons[i].totalScore == 100)
+            {
+                playerScore += beacons[i].totalScore;
+            }
+        }
+
+        if(enemyScore == -100 * beacons.Count)
+        {
+
+        }
+        else if(playerScore == 100 * beacons.Count)
+        {
+
+        }
     }
 }

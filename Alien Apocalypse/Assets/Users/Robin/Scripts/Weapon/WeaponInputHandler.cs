@@ -120,7 +120,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     selectedWeapon = weaponSlots[Mathf.Abs((int)scrollNum)];
 
-                    if (selectedWeapon.transform.GetChild(0) != null)
+                    if(selectedWeapon.transform.GetChild(0) != null)
                     {
                         selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
                     }
@@ -168,6 +168,13 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     firearm.firearmData = firearmData;
                     photonView.RPC("SetWeapon", RpcTarget.All);
                     
+                }
+                else if(firearm.firearmData != null)
+                {
+                    DropWeapon();
+
+                    firearm.firearmData = firearmData;
+                    photonView.RPC("SetWeapon", RpcTarget.All);
                 }
             }            
         }
@@ -222,8 +229,6 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                         else
                         {
                             weaponSlots[i].transform.GetChild(0).gameObject.SetActive(false);
-
-
                         }
                     }
                 }
