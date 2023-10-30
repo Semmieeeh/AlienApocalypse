@@ -57,6 +57,9 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         {
             time += 2* Time.deltaTime;
             r.material.SetFloat("_Dead", time);
+            Vector3 scale = new Vector3(gun.transform.localScale.x, gun.transform.localScale.y, gun.transform.localScale.z);
+            scale *= 0.7f * Time.deltaTime;
+            gun.transform.localScale = scale;
         }
     }
     [PunRPC]

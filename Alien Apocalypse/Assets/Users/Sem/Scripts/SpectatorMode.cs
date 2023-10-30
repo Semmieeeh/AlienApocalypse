@@ -24,18 +24,31 @@ public class SpectatorMode : MonoBehaviour
     {
         if (isSpectator)
         {
-            myCam.gameObject.SetActive(false);
-            renderCam.gameObject.SetActive(false);
-            GameObject spec = GameObject.FindGameObjectWithTag("Spectator");
-            spec.GetComponent<Camera>().enabled = true;
-
+            List<PlayerHealth> playerList = new List<PlayerHealth>();
+            playerList.Add(GameObject.FindObjectOfType<PlayerHealth>());
+            foreach (PlayerHealth playerHealth in playerList)
+            {
+                if(playerHealth != GetComponent<PlayerHealth>())
+                {
+                    Vector3 pos = playerHealth.gameObject.GetComponent<Movement>().cameraPivot.transform.position;
+                    Camera.main.gameObject.transform.position = pos;
+                    Camera.main.gameObject.transform.parent = playerHealth.gameObject.GetComponent<Movement>().cameraPivot.transform;
+                }
+            }
         }
         else
         {
-            myCam.gameObject.SetActive(true);
-            renderCam.gameObject.SetActive(false);
-            GameObject spec = GameObject.FindGameObjectWithTag("Spectator");
-            spec.GetComponent<Camera>().enabled = false;
+            List<PlayerHealth> playerList = new List<PlayerHealth>();
+            playerList.Add(GameObject.FindObjectOfType<PlayerHealth>());
+            foreach (PlayerHealth playerHealth in playerList)
+            {
+                if (playerHealth == GetComponent<PlayerHealth>())
+                {
+                    Vector3 pos = playerHealth.gameObject.GetComponent<Movement>().cameraPivot.transform.position;
+                    Camera.main.gameObject.transform.position = pos;
+                    Camera.main.gameObject.transform.parent = playerHealth.gameObject.GetComponent<Movement>().cameraPivot.transform;
+                }
+            }
         }
     }
 }
