@@ -128,7 +128,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         
         yield return new WaitForSeconds(10);
         died = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         photonView.RPC("DieVoid", RpcTarget.All);
     }
     [PunRPC]

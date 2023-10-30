@@ -2711,7 +2711,7 @@ GameObject:
   - component: {fileID: 974514304632590948}
   - component: {fileID: 8599921488963043135}
   - component: {fileID: 2247408262058376366}
-  m_Layer: 8
+  m_Layer: 14
   m_Name: AlienBlasterPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3583,7 +3583,7 @@ GameObject:
   - component: {fileID: 5641062512635061077}
   - component: {fileID: 7614992401982183327}
   - component: {fileID: 5514600773744489883}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Alien Blaster Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3804,6 +3804,10 @@ PrefabInstance:
       value: Muzzle Flash
       objectReference: {fileID: 0}
     - target: {fileID: 3957002279545363425, guid: 435e22109720e4043a4d6b3b9bfd4f63, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957002279545363425, guid: 435e22109720e4043a4d6b3b9bfd4f63, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -3917,6 +3921,10 @@ PrefabInstance:
     - target: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
       propertyPath: m_Name
       value: Shoot Ray(Cyan)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
       propertyPath: m_IsActive
