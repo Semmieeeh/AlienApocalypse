@@ -397,6 +397,7 @@ public class Firearm : Weapon
         dataHolder.shootEffect.Activate(enemyHit, hit.normal, particlePoint);
 
     }
+
     [PunRPC]
     void Projectile()
     {
@@ -429,10 +430,12 @@ public class Firearm : Weapon
                 pro.InitialzieEvent(events.onHitEnemy, events.onKillEnemy);
             }
 
-            if(dataHolder.shootEffect != null)
-            {
-                dataHolder.shootEffect.Activate(otherHit);
-            }
+            //if(dataHolder.shootEffect != null)
+            //{
+            //    dataHolder.shootEffect.Activate(otherHit);
+            //}
+
+
 
             currentAmmo--;
         }
