@@ -167,16 +167,10 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     firearm.firearmData = firearmData;
                     photonView.RPC("SetWeapon", RpcTarget.All);
-                    
-                }
-                else if(firearm.firearmData != null)
-                {
-                    DropWeapon();
 
-                    firearm.firearmData = firearmData;
-                    photonView.RPC("SetWeapon", RpcTarget.All);
+                    return;
                 }
-            }            
+            }
         }
     }
 
