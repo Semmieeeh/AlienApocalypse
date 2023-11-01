@@ -60,10 +60,6 @@ public class Movement : MonoBehaviourPunCallbacks,IPunObservable
             photonView.RPC("NetworkStart", RpcTarget.All);
             
         }
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.SerializationRate = 25;
-        }
     }
     [PunRPC]
     void NetworkStart()
