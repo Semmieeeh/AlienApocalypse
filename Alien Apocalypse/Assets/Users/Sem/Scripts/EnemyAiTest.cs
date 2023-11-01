@@ -263,7 +263,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
             }
         }
-    }
+    } 
 
     [PunRPC]
     private void UpdateAlienArms(int state, string attackTrigger, bool inRange)

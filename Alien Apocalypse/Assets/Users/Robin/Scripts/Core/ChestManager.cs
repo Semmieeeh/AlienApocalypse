@@ -11,9 +11,9 @@ public class ChestManager : MonoBehaviourPunCallbacks
     public List<Chest> chests;
     public Chest currentChest;
 
-    public override void OnCreatedRoom()
+    public override void OnJoinedRoom()
     {
-        base.OnCreatedRoom();
+        base.OnJoinedRoom();
 
         for(int i = 0; i < transform.childCount; i++)
         {

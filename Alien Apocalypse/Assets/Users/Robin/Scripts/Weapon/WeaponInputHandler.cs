@@ -272,7 +272,13 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 if(currentFirearm.firearmData != null)
                 {
                     PhotonNetwork.Destroy(selectedWeapon.transform.GetChild(0).gameObject);
-                    PhotonNetwork.Instantiate(currentFirearm.firearmData.dropPrefab.name, transform.position, Quaternion.identity);
+                    GameObject gun = PhotonNetwork.Instantiate(currentFirearm.firearmData.dropPrefab.name, transform.position, Camera.main.transform.rotation);
+                    
+                    Rigidbody rb = gun.GetComponent<Rigidbody>();
+                    rb.AddForce(Camera.main.transform.forward * 5,ForceMode.Impulse);
+                    Vector3 torque = new Vector3(Random.Range(0,0), Random.Range(0,0), Random.Range(-2f,2f));
+                    rb.AddTorque(torque * 5); 
+                    
 
                     selectedWeapon.mainCam = null;
                     selectedWeapon.recoilObject = null;

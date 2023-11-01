@@ -4,50 +4,47 @@ using UnityEngine;
 
 public class SpectatorMode : MonoBehaviour
 {
+    public bool isSpectator;
+    public int currentPlayer;
+    public GameObject myCam, renderCam;
 
-    bool isSpectator;
+    public List<PlayerHealth> playerList = new List<PlayerHealth>();
+    public HashSet<PlayerHealth> uniquePlayers = new HashSet<PlayerHealth>();
 
-    public bool IsSpectator
-    {
-        get { return isSpectator; }
-        set {
-            if (value == isSpectator)
-                return;
-            isSpectator = value;
-            OnValueChanged();
-        }
-
-    }
-    public GameObject myCam,renderCam;
-
-    public void OnValueChanged()
+    private void Update()
     {
         if (isSpectator)
         {
-            List<PlayerHealth> playerList = new List<PlayerHealth>();
-            playerList.Add(GameObject.FindObjectOfType<PlayerHealth>());
-            foreach (PlayerHealth playerHealth in playerList)
-            {
-                if(playerHealth != GetComponent<PlayerHealth>())
-                {
-                    Vector3 pos = playerHealth.gameObject.GetComponent<Movement>().cameraPivot.transform.position;
-                    Camera.main.gameObject.transform.position = pos;
-                    Camera.main.gameObject.transform.parent = playerHealth.gameObject.GetComponent<Movement>().cameraPivot.transform;
-                }
-            }
+            
         }
         else
         {
-            List<PlayerHealth> playerList = new List<PlayerHealth>();
-            playerList.Add(GameObject.FindObjectOfType<PlayerHealth>());
-            foreach (PlayerHealth playerHealth in playerList)
+            
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (currentPlayer + 1 < playerList.Count)
             {
-                if (playerHealth == GetComponent<PlayerHealth>())
-                {
-                    Vector3 pos = playerHealth.gameObject.GetComponent<Movement>().cameraPivot.transform.position;
-                    Camera.main.gameObject.transform.position = pos;
-                    Camera.main.gameObject.transform.parent = playerHealth.gameObject.GetComponent<Movement>().cameraPivot.transform;
-                }
+                currentPlayer += 1;
+            }
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            if (currentPlayer - 1 >= 0)
+            {
+                currentPlayer -= 1;
+            }
+        }
+
+        PlayerHealth[] playerHealthComponents = FindObjectsOfType<PlayerHealth>();
+
+        foreach (PlayerHealth playerHealth in playerHealthComponents)
+        {
+            if (!uniquePlayers.Contains(playerHealth))
+            {
+                playerList.Add(playerHealth);
+                uniquePlayers.Add(playerHealth);
             }
         }
     }

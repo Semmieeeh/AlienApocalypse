@@ -34,6 +34,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     public HealthBar healthBar;
     private float lastHit;
     private float lastDmg;
+    public GameObject spectatorCam;
 
     public float Health
     {
@@ -107,7 +108,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
                 break;
 
             case PlayerState.dead:
-                GetComponent<SpectatorMode>().IsSpectator = true;
+                GetComponent<SpectatorMode>().isSpectator = true;
                 Debug.Log("You died");
                 break;
 
@@ -116,7 +117,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         {
             photonView.RPC("Revive",RpcTarget.All);
             revive = false;
-            GetComponent<SpectatorMode>().IsSpectator = false;
+            GetComponent<SpectatorMode>().isSpectator = false;
 
         }
     }

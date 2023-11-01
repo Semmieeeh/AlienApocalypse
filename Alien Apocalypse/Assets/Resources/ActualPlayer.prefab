@@ -76,7 +76,6 @@ GameObject:
   - component: {fileID: 8850839293841958532}
   - component: {fileID: 752614929192360651}
   - component: {fileID: 5326529884838062460}
-  - component: {fileID: 3447792621144593626}
   m_Layer: 8
   m_Name: ActualPlayer
   m_TagString: Player
@@ -102,7 +101,6 @@ Transform:
   - {fileID: 5661701423773459517}
   - {fileID: 6751208312581087880}
   - {fileID: 1264871314502632112}
-  - {fileID: 5565248980748553214}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6656805318201552798
@@ -449,6 +447,7 @@ MonoBehaviour:
   robotPos: {x: 0, y: 0, z: 0}
   otherPos: {x: 0, y: 0, z: 0}
   healthBar: {fileID: 0}
+  spectatorCam: {fileID: 2115501902041892078}
   state: 0
 --- !u!114 &3544805995978173203
 MonoBehaviour:
@@ -779,20 +778,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SmoothingDelay: 2
---- !u!114 &3447792621144593626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228508061578831017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f153378cc64c3e48afa79778e9af328, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myCam: {fileID: 8999343727956086905}
-  renderCam: {fileID: 2657877920997847693}
 --- !u!1 &328897478774925911
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,11 +1878,11 @@ Transform:
   m_GameObject: {fileID: 2115501902041892078}
   serializedVersion: 2
   m_LocalRotation: {x: 0.32220674, y: -0, z: -0, w: 0.94666934}
-  m_LocalPosition: {x: 0, y: 1.933, z: -2.186}
+  m_LocalPosition: {x: 0, y: 1.163, z: -2.186}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8171495775377048763}
+  m_Father: {fileID: 3520103413829980194}
   m_LocalEulerAnglesHint: {x: 37.593, y: 0, z: 0}
 --- !u!20 &252239457947684077
 Camera:
@@ -5368,6 +5353,7 @@ Transform:
   - {fileID: 1909738542824555061}
   - {fileID: 6621964833137905736}
   - {fileID: 5069246749348604219}
+  - {fileID: 5565248980748553214}
   m_Father: {fileID: 4525429261579659529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &3607241743118559261
