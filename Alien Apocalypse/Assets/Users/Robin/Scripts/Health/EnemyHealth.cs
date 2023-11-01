@@ -41,7 +41,6 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         this.onHit = onHit;
 
         photonView.RPC(nameof(SyncDamage), RpcTarget.All, damage);
-        Debug.Log(damage);
     }
     bool dead;
     float time;
