@@ -34,9 +34,10 @@ public class SpectatorMode : MonoBehaviour
 
 
 
-
+        Camera.main.GetComponent<MouseLook>().enabled = !isSpectator;
         if (isSpectator)
         {
+            
             if (Input.GetMouseButtonDown(1))
             {
                 if (currentPlayer + 1 <= playerList.Count)
@@ -58,7 +59,7 @@ public class SpectatorMode : MonoBehaviour
         {
             if (Camera.main.transform.localPosition != Vector3.zero)
             {
-                Camera.main.transform.position = Vector3.zero;
+                Camera.main.transform.localPosition = Vector3.zero;
             }
         }
 

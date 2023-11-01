@@ -42,6 +42,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     }
     public EnemyState state;
     public float attackRange;
+    public float targetRange;
     public GameObject nearestPlayer;
     public bool canAttack;
     public float attackSpeed;
@@ -53,6 +54,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public Animator armAnim;
     void Start()
     {
+        targetRange = 5;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         agent.angularSpeed = turnSpeed;
@@ -60,7 +62,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         target = transform.position;
         agent.destination = target;
         state = EnemyState.idle;
-        agent.stoppingDistance = attackRange;
+        agent.stoppingDistance = targetRange;
         NewTarget();
         if (flyingEnemy)
         {
@@ -107,8 +109,10 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 {
                     case EnemyState.idle:
 
+                        agent.stoppingDistance = targetRange;
+                        agent.destination = target;
                         photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
-                        if (Vector3.Distance(transform.position, target) <= attackRange)
+                        if (Vector3.Distance(transform.position, target) <= targetRange -1)
                         {
                             NewTarget();
 
@@ -120,6 +124,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         if (nearestPlayer != null)
                         {
                             agent.destination = nearestPlayer.transform.position;
+                            agent.stoppingDistance = attackRange;
 
                             if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
@@ -154,13 +159,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 }
             }
         }
-        //photonView.RPC("AiSyncUpdate",RpcTarget.All);
-    }
-
-    [PunRPC]
-    void AiSyncUpdate()
-    {
-        
     }
 
     public Vector3 NewDestination(Vector3 origin, float dist, int layerMask)
@@ -196,7 +194,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                     flash.Play();
                     Vector3 j = player.transform.position;
                     j.y += 0.4f;
-                    bulletTracer.Activate(true, j);
+                    bulletTracer.Activate(true, j);                    
                     player.TakeDamage(damage);
                     canAttack = false;
                     Debug.Log("Hit!");

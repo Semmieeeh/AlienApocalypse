@@ -108,6 +108,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
                 break;
 
             case PlayerState.dead:
+                GetComponent<DashAbility>().enabled = false;
+                GetComponent<Grappling>().enabled = false;
+                GetComponent<WallRunning>().enabled = false;
+                GetComponent<SlidingAbility>().enabled = false;
+                GetComponent<Movement>().enabled = false;
                 GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().isSpectator = true;
                 Debug.Log("You died");
                 break;
@@ -143,7 +148,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Downed()
     {
-        if (!godMode)
+        if (!godMode && !knocked)
         {
 
             
@@ -175,6 +180,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         GetComponent<WallRunning>().enabled = true;
         GetComponent<SlidingAbility>().enabled = true;
         state = PlayerState.alive;
+        GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().isSpectator = false;
+        Camera.main.GetComponent<MouseLook>().enabled = true;
         c.height = height;
         GetComponent<Movement>().downed = false;
 
