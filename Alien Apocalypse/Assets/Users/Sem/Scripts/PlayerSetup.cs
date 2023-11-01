@@ -51,7 +51,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         rot.enabled = true;
         rot2.enabled = true;
         Vector3 v = new Vector3(0,0,0);
-
+        GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().myPlayer = gameObject;
         photonView.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);
         photonView.RPC("SetPlayerColor", RpcTarget.All);
         gameObject.tag = "Player";

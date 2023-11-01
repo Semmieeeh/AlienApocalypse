@@ -108,7 +108,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
                 break;
 
             case PlayerState.dead:
-                GetComponent<SpectatorMode>().isSpectator = true;
+                GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().isSpectator = true;
                 Debug.Log("You died");
                 break;
 
@@ -129,7 +129,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         photonView.RPC("UpdateHealth", RpcTarget.All, Health);
     }
 
-    [PunRPC]
     public void TakeDamage(float damage)
     {
         //update health text object
@@ -138,7 +137,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         
         if (Health <= 0)
         {
-            Downed();
+            photonView.RPC("Downed", RpcTarget.All);
         }
     }
     [PunRPC]
