@@ -53,7 +53,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
 
         if(value >= ((100 - firearmChance) / 100))
         {
-            int n = Random.Range(0, firearmDatas.Length);
+            int n = Random.Range(0, firearmDatas.Length - 1);
 
             for(int i = 0; i < firearmDatas.Length; i++)
             {
@@ -74,7 +74,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
         }
         else if(value >= ((100 - firearmAbilityChance) / 100))
         {
-            int n = Random.Range(0, firearmAbilities.Length);
+            int n = Random.Range(0, firearmAbilities.Length - 1);
 
             for(int i = 0; i < firearmAbilities.Length; i++)
             {
