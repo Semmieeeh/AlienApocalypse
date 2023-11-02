@@ -20,7 +20,9 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
     public FirearmAbility[] firearmAbilities;
     public GameObject abilityHolder;
 
+    public GameObject chestBeacon;
     public Transform goToPoint;
+    public float force;
     public bool opened = false;
 
     [Header("Chest")]
@@ -33,6 +35,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
         if(!opened)
         {
             photonView.RPC("OpenChest", RpcTarget.All);
+            chestBeacon.SetActive(false);
             chestManager.New();
         }
     }
@@ -51,7 +54,13 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
             {
                 if(n == i)
                 {
-                    PhotonNetwork.Instantiate(firearmDatas[i].name, goToPoint.position, Quaternion.identity);
+                    GameObject gun = PhotonNetwork.Instantiate(firearmDatas[i].name, goToPoint.position, Quaternion.identity);
+
+                    Rigidbody rb = gun.GetComponent<Rigidbody>();
+                    rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
+                    Vector3 torque = new Vector3(Random.Range(0, 0), Random.Range(0, 0), Random.Range(-2f, 2f));
+                    rb.AddTorque(torque * 5);
+
                     opened = true;
 
                     return;

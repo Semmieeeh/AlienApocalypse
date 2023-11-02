@@ -52,6 +52,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzle: {fileID: 3722142629045764893}
   shootEffect: {fileID: 0}
+  projectile: {fileID: 0}
+  gatlingBarrel: {fileID: 0}
 --- !u!114 &5082289929291211744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 1557261917969453558}
+  effects: []
+  particlePivot: {fileID: 0}
 --- !u!1 &7227417064807899734
 GameObject:
   m_ObjectHideFlags: 0

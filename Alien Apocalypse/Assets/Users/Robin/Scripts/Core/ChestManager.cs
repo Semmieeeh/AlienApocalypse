@@ -41,6 +41,7 @@ public class ChestManager : MonoBehaviourPunCallbacks
             if(chest == currentChest)
             {
                 chests.Remove(chest);
+                break;
             }
         }
 

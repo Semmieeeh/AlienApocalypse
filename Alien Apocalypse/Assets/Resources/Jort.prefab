@@ -209,7 +209,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6883805833349589401}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6a0453358fdcd09429e47ad3534939a2, type: 2}
   m_CullingMode: 0
@@ -251,7 +251,7 @@ Transform:
   m_GameObject: {fileID: 7636916721982335189}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 1.41, z: -14.03}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileDamage: 30
-  projectileSpeed: 40
+  projectileSpeed: 0
   radius: 2
   mask:
     serializedVersion: 2

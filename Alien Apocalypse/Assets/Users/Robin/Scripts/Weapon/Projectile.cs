@@ -37,27 +37,30 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        transform.LookAt(hitPoint);
+        //transform.LookAt(hitPoint);
         transform.Translate(projectileSpeed * Time.deltaTime * Vector3.forward);
 
         if(Physics.Linecast(lastPos, transform.position, out hit))
         {
-            Collider[] collider = Physics.OverlapSphere(transform.position, radius, mask);
-            
-            foreach(Collider col in collider)
+            if(hit.transform.gameObject != gameObject)
             {
-                if(col.TryGetComponent<IDamagable>(out IDamagable damagable))
+                Collider[] collider = Physics.OverlapSphere(transform.position, radius, mask);
+
+                foreach(Collider col in collider)
                 {
-                    damagable.Damagable(projectileDamage, onKill, onHit,1);
+                    if(col.TryGetComponent<IDamagable>(out IDamagable damagable))
+                    {
+                        damagable.Damagable(projectileDamage, onKill, onHit, 30);
+                    }
                 }
+
+                exp = PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);
+
+                Invoke(nameof(DestroyGameObject), explosionTime);
             }
-
-            exp = PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);
-
-            Invoke(nameof(DestroyGameObject), explosionTime);
         }
 
-        if(Time.time >= startTime + timeToDestroy)
+        if(Time.time - startTime > timeToDestroy)
         {
             PhotonNetwork.Destroy(gameObject);
         }
@@ -69,6 +72,7 @@ public class Projectile : MonoBehaviour
     {
         PhotonNetwork.Destroy(gameObject);
         PhotonNetwork.Destroy(exp);
+
     }
 
     public void InitializeProjectile(float projectileDamage, float projectileSpeed, float radius, Vector3 lastPos, Vector3 hitPoint)
