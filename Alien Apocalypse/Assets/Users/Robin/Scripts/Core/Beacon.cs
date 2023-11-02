@@ -62,7 +62,7 @@ public class Beacon : MonoBehaviour
 
             if(enemies.Count > 0 && players.Count == 0)
             {
-                totalScore -= changeScoreEnemy;
+                totalScore -= changeScoreEnemy * enemies.Count;
 
                 if(totalScore >= 100)
                 {

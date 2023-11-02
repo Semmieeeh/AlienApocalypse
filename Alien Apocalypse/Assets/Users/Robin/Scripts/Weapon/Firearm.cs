@@ -286,6 +286,24 @@ public class Firearm : Weapon
         isProjectile = false;
     }
 
+    bool CanShootShotgun()
+    {
+        return true;
+    }
+
+    IEnumerator ShotgunMode()
+    {
+        if(photonView.IsMine)
+        {
+
+
+            Recoil();
+        }
+
+
+        yield return new WaitForSeconds(cooldown);
+    }
+
     public bool IsReload() => isReloading; 
 
     public override IEnumerator Reloading()
@@ -429,13 +447,6 @@ public class Firearm : Weapon
                 pro.InitializeProjectile(damage, firearmData.projectileSpeed, firearmData.radius, transform.position, raycastHitPoint);
                 pro.InitialzieEvent(events.onHitEnemy, events.onKillEnemy);
             }
-
-            //if(dataHolder.shootEffect != null)
-            //{
-            //    dataHolder.shootEffect.Activate(otherHit);
-            //}
-
-
 
             currentAmmo--;
         }

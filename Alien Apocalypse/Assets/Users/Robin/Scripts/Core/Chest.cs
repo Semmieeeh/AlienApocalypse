@@ -43,6 +43,11 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
     [PunRPC]
     void OpenChest()
     {
+        if(opened)
+        {
+            return;
+        }
+
         GetComponent<Animator>().SetTrigger("Open");
         float value = Random.value;
 

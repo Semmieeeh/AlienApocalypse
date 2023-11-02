@@ -6,6 +6,5 @@ public class DataHolder : MonoBehaviour
 {
     public Transform muzzle;
     public ShootEffect shootEffect;
-    public ShootEffectMultiplayer projectile;
     public Transform gatlingBarrel;
 } 
