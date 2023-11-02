@@ -176,6 +176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3812811368386918589}
   - component: {fileID: 8217430493374361831}
+  - component: {fileID: 5921285292115304954}
   - component: {fileID: 8924734467364344224}
   - component: {fileID: 6705335063227260338}
   - component: {fileID: 3207267369725929738}
@@ -222,8 +223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chestManager: {fileID: 0}
   firearmChance: 20
-  firearmAbilityChance: 70
-  nothingChance: 10
+  firearmAbilityChance: 50
+  nothingChance: 30
   firearmDatas:
   - {fileID: 5219653184509103383, guid: efa482ef1e1b6f942af2aaee8b0b14a4, type: 3}
   - {fileID: 5273557812897326287, guid: 02ae363ec03d87646bbd56b19e967e70, type: 3}
@@ -238,6 +239,27 @@ MonoBehaviour:
   rotSpeed: 0
   targetRot: {x: 0, y: 0, z: 0}
   chestLid: {fileID: 0}
+--- !u!95 &5921285292115304954
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361288751020236279}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4bdb018aa8a97b468a2bad88b153d37, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &8924734467364344224
 BoxCollider:
   m_ObjectHideFlags: 0
