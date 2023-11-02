@@ -54,7 +54,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     {
         if (died == true)
         {
-            time += 2* Time.deltaTime;
+            time += 1* Time.deltaTime;
             r.material.SetFloat("_Dead", time);
             Vector3 scale = new Vector3(gun.transform.localScale.x, gun.transform.localScale.y, gun.transform.localScale.z);
             scale *= 0.7f * Time.deltaTime;

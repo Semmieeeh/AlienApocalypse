@@ -18,7 +18,6 @@ public class PUN2_RigidbodySync : MonoBehaviourPun, IPunObservable
     void Start()
     {
         r = GetComponent<Rigidbody>();
-        PhotonNetwork.SerializationRate = 20;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

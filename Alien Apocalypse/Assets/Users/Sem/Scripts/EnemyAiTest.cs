@@ -69,15 +69,20 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             Offset();
         }
     }
+    private float firstOffset;
+    float currentOffset;
+    float desiredOffset;
     [PunRPC]
     public void Offset()
     {
-        agent.baseOffset = Random.Range(4f, 8f);
+        firstOffset = Random.Range(4f, 8f);
+        agent.baseOffset = firstOffset;
         attackRange += agent.baseOffset;
     }
     bool canChooseNew;
     void Update()
     {
+        
         if (canChooseNew == true)
         {
             NewTarget();
@@ -117,9 +122,24 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             NewTarget();
 
                         }
+                        if (flyingEnemy)
+                        {
+                            currentOffset = agent.baseOffset;
+                            float newOffset = Mathf.Lerp(currentOffset, firstOffset, Time.deltaTime * moveSpeed/2);
+                            agent.baseOffset = newOffset;
+                        }
                         break;
 
                     case EnemyState.chasing:
+
+                        if (flyingEnemy)
+                        {
+                            
+                            currentOffset = agent.baseOffset;
+                            desiredOffset = nearestPlayer.transform.position.y + firstOffset;
+                            float newOffset = Mathf.Lerp(currentOffset, desiredOffset, Time.deltaTime * moveSpeed/2);
+                            agent.baseOffset = newOffset;
+                        }
 
                         if (nearestPlayer != null)
                         {
@@ -167,6 +187,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         Vector3 randDirection = Random.insideUnitSphere * dist;
         randDirection += origin;
         NavMesh.SamplePosition(randDirection, out navHit, roamRange, layerMask);
+        
         return navHit.position;
     }
 

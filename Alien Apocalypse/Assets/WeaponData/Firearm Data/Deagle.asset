@@ -22,7 +22,7 @@ MonoBehaviour:
   baseDamage: 50
   baseCooldown: 0.2
   rotationAmount: 0
-  bulletForce: 10
+  bulletForce: 20
   baseBurstAmount: 3
   baseTimeBetweenBurst: 0.1
   baseFireRate: 1200
@@ -34,18 +34,18 @@ MonoBehaviour:
   raycastDistance: 1000
   swayClamp: 0.05
   smoothing: 5
-  camRecoilX: -20
+  camRecoilX: -15
   camRecoilY: 0
   camRecoilZ: 0
-  camSnappiness: 18
+  camSnappiness: 30
   camReturnSpeed: 15
   firearmRecoilX: -20
   firearmRecoilY: 0
   firearmRecoilZ: 0
   firearmSnappiness: 10
-  firearmReturnSpeed: 13
-  firearmRecoilBackUp: -2
-  backUpSnappiness: 25
+  firearmReturnSpeed: 20
+  firearmRecoilBackUp: -5
+  backUpSnappiness: 20
   backUpReturnSpeed: 60
   anim: {fileID: 7400000, guid: 1f27136cb71c91c4badfa880576a9700, type: 2}
   weaponInt: 1

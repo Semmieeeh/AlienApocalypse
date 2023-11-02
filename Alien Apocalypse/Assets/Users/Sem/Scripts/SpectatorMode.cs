@@ -34,7 +34,11 @@ public class SpectatorMode : MonoBehaviour
 
 
 
-        Camera.main.GetComponent<MouseLook>().enabled = !isSpectator;
+        if(Camera.main.TryGetComponent<MouseLook>(out MouseLook mouse))
+        {
+            mouse.enabled = !isSpectator;
+        }
+
         if (isSpectator)
         {
             

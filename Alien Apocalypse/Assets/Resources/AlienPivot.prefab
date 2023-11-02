@@ -2331,7 +2331,7 @@ Transform:
   m_GameObject: {fileID: 5456765229888051616}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.884464, y: 1.3589195, z: 8.858445}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2406,7 +2406,7 @@ MonoBehaviour:
   attackSpeed: 2
   attackDamage: 2
   timePassed: 0
-  flyingEnemy: 0
+  flyingEnemy: 1
   anim: {fileID: 6456500423871001546}
   armAnim: {fileID: 7559578415454998775}
 --- !u!195 &7028250540927831896

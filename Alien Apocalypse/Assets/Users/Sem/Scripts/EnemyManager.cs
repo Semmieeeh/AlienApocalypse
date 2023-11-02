@@ -87,20 +87,17 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
 
         if (photonView.IsMine)
-        {            
-            if (PhotonNetwork.IsMasterClient)
+        {
+            cooldownCounter -= Time.deltaTime;
+            photonView.RPC(nameof(UpdateUIText), RpcTarget.All);
+            if (Time.time - lastSyncTime >= syncCooldownInterval)
             {
-                cooldownCounter -= Time.deltaTime;
-                photonView.RPC(nameof(UpdateUIText), RpcTarget.All);
-                if (Time.time - lastSyncTime >= syncCooldownInterval)
-                {
-                    lastSyncTime = Time.time;
-                    photonView.RPC(nameof(UpdateCooldownCounter), RpcTarget.AllBuffered, cooldownCounter);
-                    
+                lastSyncTime = Time.time;
+                photonView.RPC(nameof(UpdateCooldownCounter), RpcTarget.AllBuffered, cooldownCounter);
 
-                }
+
             }
-            
+
         }
         
     }
@@ -170,7 +167,8 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             wavesCompleted++;
             //waveSize += 5;
             yield return new WaitForSeconds(waveCooldown);
-            multiplier = multiplier * 1.1f;
+            waveSize += 2*PhotonNetwork.CurrentRoom.PlayerCount;
+            multiplier = multiplier * 1.15f;
             
             
         }
@@ -182,10 +180,13 @@ public class EnemyManager : MonoBehaviourPunCallbacks
         {
             
             int enemyIndex = Random.Range(0, enemiesToSpawn.Length);
-            GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, spawnPoint.position, spawnPoint.rotation);
-            enemyObj.GetComponent<EnemyHealth>().multiplier = multiplier;
-            enemyObj.GetComponent<EnemyAiTest>().attackDamage = enemyObj.GetComponent<EnemyAiTest>().attackDamage * multiplier;
+            Vector3 v = new Vector3(Random.Range(spawnPoint.position.x + 1f, spawnPoint.position.x - 1f), spawnPoint.position.y, Random.Range(spawnPoint.position.z + 1f, spawnPoint.position.z - 1f));
+
+            GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, v, spawnPoint.rotation);
             EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
+            enemyHealth.multiplier = multiplier;
+            enemyObj.GetComponent<EnemyAiTest>().attackDamage = enemyObj.GetComponent<EnemyAiTest>().attackDamage * multiplier;
+            
             enemyHealth.instance = this;
         }
     }
