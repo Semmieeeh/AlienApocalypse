@@ -27,27 +27,27 @@ MonoBehaviour:
   baseTimeBetweenBurst: 0
   baseFireRate: 0
   projectilePrefab: {fileID: 7636916721982335189, guid: 2e4f383299cb51e49a15c57b877e8c28, type: 3}
-  projectileSpeed: 30
+  projectileSpeed: 40
   radius: 5
-  baseMaxAmmo: 8
+  baseMaxAmmo: 1
   baseReloadTime: 3
   raycastDistance: 100
-  swayClamp: 0
-  smoothing: 0
-  camRecoilX: 0
+  swayClamp: 0.05
+  smoothing: 1
+  camRecoilX: -35
   camRecoilY: 0
   camRecoilZ: 0
-  camSnappiness: 0
-  camReturnSpeed: 10
-  firearmRecoilX: -20
+  camSnappiness: 22
+  camReturnSpeed: 7
+  firearmRecoilX: -10
   firearmRecoilY: 0
   firearmRecoilZ: 0
-  firearmSnappiness: 10
-  firearmReturnSpeed: 10
-  firearmRecoilBackUp: 0
+  firearmSnappiness: 20
+  firearmReturnSpeed: 5
+  firearmRecoilBackUp: -1
   backUpSnappiness: 10
   backUpReturnSpeed: 10
-  anim: {fileID: 0}
+  anim: {fileID: 7400000, guid: 7d16cc04d60bf3541a8c4c456d3bb79c, type: 2}
   weaponInt: 4
-  shootSound: {fileID: 0}
-  reloadSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: ed1f52d750920e647ad78f28629e6712, type: 3}
+  reloadSound: {fileID: 8300000, guid: c068490d8f491d241bcbe59dd8664435, type: 3}

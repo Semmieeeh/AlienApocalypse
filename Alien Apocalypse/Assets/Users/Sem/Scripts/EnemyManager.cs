@@ -87,17 +87,20 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
 
         if (photonView.IsMine)
-        {
-            cooldownCounter -= Time.deltaTime;
-            photonView.RPC(nameof(UpdateUIText), RpcTarget.All);
-            if (Time.time - lastSyncTime >= syncCooldownInterval)
+        {            
+            if (PhotonNetwork.IsMasterClient)
             {
-                lastSyncTime = Time.time;
-                photonView.RPC(nameof(UpdateCooldownCounter), RpcTarget.AllBuffered, cooldownCounter);
+                cooldownCounter -= Time.deltaTime;
+                photonView.RPC(nameof(UpdateUIText), RpcTarget.All);
+                if (Time.time - lastSyncTime >= syncCooldownInterval)
+                {
+                    lastSyncTime = Time.time;
+                    photonView.RPC(nameof(UpdateCooldownCounter), RpcTarget.AllBuffered, cooldownCounter);
+                    
 
-
+                }
             }
-
+            
         }
         
     }
@@ -167,7 +170,6 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             wavesCompleted++;
             //waveSize += 5;
             yield return new WaitForSeconds(waveCooldown);
-            waveSize += 2*PhotonNetwork.CurrentRoom.PlayerCount;
             multiplier = multiplier * 1.15f;
             
             

@@ -50,13 +50,18 @@ public class Projectile : MonoBehaviour
                 {
                     if(col.TryGetComponent<IDamagable>(out IDamagable damagable))
                     {
-                        damagable.Damagable(projectileDamage, onKill, onHit, 30);
+                        Vector3 dir = col.transform.position-transform.position;
+                        damagable.Damagable(projectileDamage, onKill, onHit, 30,dir);
+                        for(int i = 0; i < transform.childCount; i++)
+                        {
+                            transform.GetChild(i).gameObject.SetActive(false);
+                        }
                     }
                 }
 
                 exp = PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);
 
-                Invoke(nameof(DestroyGameObject), explosionTime);
+                DestroyGameObject();
             }
         }
 
@@ -71,8 +76,12 @@ public class Projectile : MonoBehaviour
     void DestroyGameObject()
     {
         PhotonNetwork.Destroy(gameObject);
-        PhotonNetwork.Destroy(exp);
+        Invoke(nameof(DestroyGameObject), 5);
 
+    }
+    private void DestroyExp()
+    {
+        PhotonNetwork.Destroy(exp);
     }
 
     public void InitializeProjectile(float projectileDamage, float projectileSpeed, float radius, Vector3 lastPos, Vector3 hitPoint)

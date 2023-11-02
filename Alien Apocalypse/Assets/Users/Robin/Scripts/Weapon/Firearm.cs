@@ -387,7 +387,7 @@ public class Firearm : Weapon
             {
                 if(hit.transform.TryGetComponent(out IDamagable damagable))
                 {
-                    damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy,bulletForce);
+                    damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy,bulletForce, Camera.main.transform.forward);
                     enemyHit = true;
                 }
 

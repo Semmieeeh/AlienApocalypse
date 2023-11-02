@@ -56,7 +56,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            GameObject enemy = Instantiate(enemyManager, spawnPoint.position, Quaternion.identity);
+            GameObject enemy = PhotonNetwork.Instantiate(enemyManager.name, spawnPoint.position, Quaternion.identity);
 
         }
         

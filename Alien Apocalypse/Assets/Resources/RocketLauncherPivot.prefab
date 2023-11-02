@@ -52,7 +52,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   muzzle: {fileID: 3722142629045764893}
   shootEffect: {fileID: 0}
-  projectile: {fileID: 0}
   gatlingBarrel: {fileID: 0}
 --- !u!114 &5082289929291211744
 MonoBehaviour:
@@ -86,7 +85,7 @@ Animator:
   m_GameObject: {fileID: 2587120426959297384}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 50d90e94681e15d419f22da7a1723f5a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -109,7 +108,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

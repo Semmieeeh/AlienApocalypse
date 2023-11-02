@@ -17,7 +17,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     public float knockBack;
     public GameObject gun;
     public Renderer r;
-
+    public Vector3 blastDirection;
     UnityEvent onKill;
     UnityEvent onHit;
 
@@ -34,12 +34,12 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     }
 
     public Rigidbody hitLimb;
-    public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit, float b)
+    public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit, float b, Vector3 blastDir)
     {
         knockBack = b;
         this.onKill = onKill;
         this.onHit = onHit;
-
+        blastDirection = blastDir;
         photonView.RPC(nameof(SyncDamage), RpcTarget.All, damage);
     }
     bool dead;
@@ -87,7 +87,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
             if (hitLimb != null)
             {
                 photonView.RPC(nameof(ReleaseGun), RpcTarget.All);
-                hitLimb.AddForce(Camera.main.transform.forward * knockBack, ForceMode.Impulse);
+                hitLimb.AddForce(blastDirection * knockBack, ForceMode.Impulse);
                 
             }
             else
@@ -95,7 +95,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
                 photonView.RPC(nameof(ReleaseGun), RpcTarget.All);
                 foreach (var rigidBody in rigidBodies)
                 {
-                    rigidBody.AddForce(Camera.main.gameObject.transform.forward * knockBack, ForceMode.Impulse);          
+                    rigidBody.AddForce(blastDirection * knockBack, ForceMode.Impulse);          
                 }
                 
             }

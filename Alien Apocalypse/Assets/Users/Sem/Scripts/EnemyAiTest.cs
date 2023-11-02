@@ -125,7 +125,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         if (flyingEnemy)
                         {
                             currentOffset = agent.baseOffset;
-                            float newOffset = Mathf.Lerp(currentOffset, firstOffset, Time.deltaTime * moveSpeed/2);
+                            float newOffset = Mathf.Lerp(currentOffset, firstOffset, Time.deltaTime * moveSpeed/4);
                             agent.baseOffset = newOffset;
                         }
                         break;
@@ -137,7 +137,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             
                             currentOffset = agent.baseOffset;
                             desiredOffset = nearestPlayer.transform.position.y + firstOffset;
-                            float newOffset = Mathf.Lerp(currentOffset, desiredOffset, Time.deltaTime * moveSpeed/2);
+                            float newOffset = Mathf.Lerp(currentOffset, desiredOffset, Time.deltaTime * moveSpeed / 4);
                             agent.baseOffset = newOffset;
                         }
 
