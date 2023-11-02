@@ -9,7 +9,20 @@ using UnityEngine;
 /// </summary>
 public class OptionsManager : MonoBehaviour
 {
-    public static OptionsManager instance;
+    private static OptionsManager m_instance;
+    public static OptionsManager Instance
+    {
+        get
+        {
+            if ( m_instance == null )
+                m_instance = FindObjectOfType<OptionsManager> ( );
+            return m_instance;
+        }
+        set
+        {
+            m_instance = value;
+        }
+    }
 
     public delegate void OptionsEvent ( OptionsData options );
 
@@ -26,6 +39,12 @@ public class OptionsManager : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    UISelector selector;
+
+    [SerializeField]
+    Vector2Int[] resolutions;
+
     private List<IOption<bool>> boolOptions = new ( );
 
     private List<IOption<float>> floatOptions = new ( );
@@ -36,7 +55,9 @@ public class OptionsManager : MonoBehaviour
 
     private void Start ( )
     {
-        instance = this;
+        Instance = this;
+
+        onOptionsChanged += ApplyOptions;
 
         FetchOptions ( );
         SetElementsOptionData ( );
@@ -84,6 +105,19 @@ public class OptionsManager : MonoBehaviour
     {
         onOptionsChanged?.Invoke (OptionsData.Options);
         Debug.Log ("If you see this, the optionschanged delegate has been called!");
+    }
+
+    void ApplyOptions (OptionsData options )
+    {
+        var width = resolutions[options.ScreenResIndex].x;
+        var heigth = resolutions[options.ScreenResIndex].y;
+
+        Screen.SetResolution (width, heigth, options.Fullscreen);
+
+        int fps = /*Calculate fps*/ 0;
+        Application.targetFrameRate = fps;
+
+
     }
 
     void SetValuesOfElements<T> ( IList<IOption<T>> list )
@@ -134,8 +168,8 @@ public class OptionsManager : MonoBehaviour
 
 
     /// <summary>
-    /// Container that holds all the data for settings that can be changed. Call the Save() function on an instance of this class to save it.
-    /// The static OptionsData.Options property reads the last saved instance of OptionsData and returns it
+    /// Container that holds all the data for settings that can be changed. Call the Save() function on an Instance of this class to save it.
+    /// The static OptionsData.Options property reads the last saved Instance of OptionsData and returns it
     /// </summary>
     public class OptionsData
     {
@@ -178,7 +212,7 @@ public class OptionsManager : MonoBehaviour
 
             Debug.Log ($"Options saved to: {path}");
 
-            instance.OnOptionChanged ( );
+            Instance.OnOptionChanged ( );
         }
 
         #endregion
