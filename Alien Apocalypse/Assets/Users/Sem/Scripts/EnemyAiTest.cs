@@ -134,7 +134,10 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         {
                             agent.stoppingDistance = targetRange;
                         }
-                        agent.destination = target;
+                        if (agent != null)
+                        {
+                            agent.destination = target;
+                        }
                         photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
                         Debug.Log(Vector3.Distance(transform.position, agent.destination));
                         if (Vector3.Distance(transform.position, target) <= targetRange -1)
@@ -224,48 +227,51 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Attack(float damage)
     {
-        if (nearestPlayer.TryGetComponent(out PlayerHealth player))
+        if (nearestPlayer != null)
         {
-            if (nearestPlayer.TryGetComponent(out Movement m))
+            if (nearestPlayer.TryGetComponent(out PlayerHealth player))
             {
-                if (m.rb.velocity.magnitude <=0f)
+                if (nearestPlayer.TryGetComponent(out Movement m))
                 {
-                    source.clip = clips[0];
-                    source.Play();
-                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
-                    flash.Play();
-                    Vector3 j = player.transform.position;
-                    j.y += 0.4f;
-                    bulletTracer.Activate(true, j);                    
-                    player.TakeDamage(damage);
-                    canAttack = false;
-                    Debug.Log("Hit!");
-                }
-                else if(m.rb.velocity.magnitude >0f)
-                {
-                    source.clip = clips[0];
-                    source.Play();
-                    canAttack = false;
-                    flash.Play();
-                    int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
-                    Debug.Log(k);
-                    if (k  < 5)
+                    if (m.rb.velocity.magnitude <= 0f)
                     {
+                        source.clip = clips[0];
+                        source.Play();
                         photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                        flash.Play();
+                        Vector3 j = player.transform.position;
+                        j.y += 0.4f;
+                        bulletTracer.Activate(true, j);
                         player.TakeDamage(damage);
-                        Vector3 v = player.transform.position;
-                        bulletTracer.Activate(true, v);
-                        Debug.Log("Hit By Chance!");
+                        canAttack = false;
+                        Debug.Log("Hit!");
                     }
-                    else
+                    else if (m.rb.velocity.magnitude > 0f)
                     {
-                        photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
-                        Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
-                        v *= 10;
-                        bulletTracer.Activate(true, v);
-                        Debug.Log("Missed!");
+                        source.clip = clips[0];
+                        source.Play();
+                        canAttack = false;
+                        flash.Play();
+                        int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
+                        Debug.Log(k);
+                        if (k < 5)
+                        {
+                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                            player.TakeDamage(damage);
+                            Vector3 v = player.transform.position;
+                            bulletTracer.Activate(true, v);
+                            Debug.Log("Hit By Chance!");
+                        }
+                        else
+                        {
+                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                            Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
+                            v *= 10;
+                            bulletTracer.Activate(true, v);
+                            Debug.Log("Missed!");
+                        }
+
                     }
-                    
                 }
             }
         }

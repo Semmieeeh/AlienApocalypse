@@ -55,48 +55,37 @@ public class Movement : MonoBehaviourPunCallbacks
         normalFov = Camera.main.fieldOfView;
         maxFov = Camera.main.fieldOfView + 10;
         startSpeed = walkSpeed;
-        if (photonView.IsMine)
-        {
-            photonView.RPC("NetworkStart", RpcTarget.All);
-            
-        }
     }
-    [PunRPC]
-    void NetworkStart()
-    {
-        rb = GetComponent<Rigidbody>();
-        normalFov = Camera.main.fieldOfView;
-        maxFov = Camera.main.fieldOfView + 10;
-        startSpeed = walkSpeed;
-    }
-
     bool appliedKnocked;
     private void Update()
     {
-        if (downed && appliedKnocked == false)
+        if (photonView.IsMine)
         {
-            photonView.RPC("Knocked", RpcTarget.All);
-            walkSpeed = downedSpeed;
-            appliedKnocked = false;
+            if (downed && appliedKnocked == false)
+            {
+                photonView.RPC("Knocked", RpcTarget.All);
+                walkSpeed = downedSpeed;
+                appliedKnocked = false;
 
+            }
+            else if (!downed)
+            {
+                walkSpeed = startSpeed;
+            }
+            if (rb == null)
+            {
+                rb = GetComponent<Rigidbody>();
+            }
+            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            input.Normalize();
+            sprinting = Input.GetButton("Sprint") && !downed && input.magnitude > 0.5f;
+            jumping = Input.GetButton("Jump");
+            Physics.IgnoreLayerCollision(3, 11, true);
+            StopWhenNoInput();
+            FovChange();
+            AnimationCheck();
+            ArmAnimCheck();
         }
-        else if(!downed)
-        {
-            walkSpeed = startSpeed;
-        }
-        if (rb == null)
-        {
-            rb = GetComponent<Rigidbody>();
-        }
-        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        input.Normalize();
-        sprinting = Input.GetButton("Sprint") && !downed && input.magnitude >0.5f;
-        jumping = Input.GetButton("Jump");
-        Physics.IgnoreLayerCollision(3,11,true);
-        StopWhenNoInput();
-        FovChange();
-        AnimationCheck();
-        ArmAnimCheck(); 
     }
     
     bool IsMoving()
@@ -206,74 +195,77 @@ public class Movement : MonoBehaviourPunCallbacks
 
     private void FixedUpdate()
     {
-        if (input.y < 0)
+        if (photonView.IsMine)
         {
-            walkingBackwards = true;
-            photonView.RPC("Walking", RpcTarget.All);
-        }
-        else
-        {
-            walkingBackwards = false;
-            photonView.RPC("Walking", RpcTarget.All);
-        }
-
-        if (grounded)
-        {
-            if (jumping && !downed)
+            if (input.y < 0)
             {
-                rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
-                anim.SetTrigger("Jump");
+                walkingBackwards = true;
+                photonView.RPC("Walking", RpcTarget.All);
             }
-            else if (input.magnitude > 0.5f)
+            else
             {
-                rb.AddForce(CalculateMovement(sprinting ? sprintSpeed : walkSpeed), ForceMode.Force);
+                walkingBackwards = false;
+                photonView.RPC("Walking", RpcTarget.All);
+            }
+
+            if (grounded)
+            {
+                if (jumping && !downed)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
+                    anim.SetTrigger("Jump");
+                }
+                else if (input.magnitude > 0.5f)
+                {
+                    rb.AddForce(CalculateMovement(sprinting ? sprintSpeed : walkSpeed), ForceMode.Force);
+                    stopped = false;
+                }
+            }
+
+            if (!grounded && input.magnitude > 0.5f)
+            {
+                rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * airMultiplier : walkSpeed * airMultiplier), ForceMode.Force);
                 stopped = false;
             }
-        }
-
-        if (!grounded && input.magnitude > 0.5f)
-        {
-            rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * airMultiplier : walkSpeed * airMultiplier), ForceMode.Force);
-            stopped = false;
-        }
-        float maxSpeed = 75f;
-        if (wallrunUnlocked == true)
-        {
-            if (rb.velocity.y < -0.5f && wallRunning == false)
+            float maxSpeed = 75f;
+            if (wallrunUnlocked == true)
             {
-                fallSpeed += Time.deltaTime;
-                Vector3 extraForceDirection = Vector3.down;
-                if(rb.velocity.magnitude <= maxSpeed)
+                if (rb.velocity.y < -0.5f && wallRunning == false)
                 {
-                    rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
+                    fallSpeed += Time.deltaTime;
+                    Vector3 extraForceDirection = Vector3.down;
+                    if (rb.velocity.magnitude <= maxSpeed)
+                    {
+                        rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
+                    }
                 }
-            }
-            else
-            {
-                fallSpeed = 0;
-            
-            }
-            
-        }
-        else if(wallrunUnlocked == false)
-        {
-            if (rb.velocity.y < -0.5f)
-            {
-                fallSpeed += Time.deltaTime;
-                Vector3 extraForceDirection = Vector3.down;
-                if (rb.velocity.magnitude <= maxSpeed)
+                else
                 {
-                    rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
-                }
-            }
-            else
-            {
-                fallSpeed = 0;
-            }
-            
-        }
+                    fallSpeed = 0;
 
-        grounded = false;
+                }
+
+            }
+            else if (wallrunUnlocked == false)
+            {
+                if (rb.velocity.y < -0.5f)
+                {
+                    fallSpeed += Time.deltaTime;
+                    Vector3 extraForceDirection = Vector3.down;
+                    if (rb.velocity.magnitude <= maxSpeed)
+                    {
+                        rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
+                    }
+                }
+                else
+                {
+                    fallSpeed = 0;
+                }
+
+            }
+
+            grounded = false;
+        }
     }
 
     private Vector3 CalculateMovement(float speed)
