@@ -362,6 +362,16 @@ public class Firearm : Weapon
         }
     }
 
+    //private void Update()
+    //{
+    //    Vector3 mainForward = mainCam.transform.forward * firearmData.raycastDistance;
+    //    Vector3 gunForward = dataHolder.muzzle.forward * firearmData.raycastDistance;
+
+    //    Vector3 hitPoint = new Vector3(mainForward.x, mainForward.y, mainForward.z);
+
+    //    Debug.DrawLine(mainCam.transform.position, hitPoint, Color.red);
+    //}
+
     void Shoot()
     {
         if (photonView.IsMine)
@@ -381,7 +391,7 @@ public class Firearm : Weapon
             Vector3 mainForward = mainCam.transform.forward * firearmData.raycastDistance;
             Vector3 gunForward = dataHolder.muzzle.forward * firearmData.raycastDistance;
 
-            Vector3 hitPoint = new Vector3(mainForward.x, gunForward.y, mainForward.z);
+            Vector3 hitPoint = new Vector3(mainForward.x, mainForward.y, mainForward.z);
 
             if(Physics.Linecast(mainCam.transform.position, hitPoint, out hit))
             {

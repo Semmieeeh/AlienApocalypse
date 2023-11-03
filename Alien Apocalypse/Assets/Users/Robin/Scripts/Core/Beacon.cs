@@ -9,8 +9,6 @@ public class Beacon : MonoBehaviour
     [Header("Sphere Settings")]
     public float radius;
     public LayerMask hitLayer;
-    public LayerMask playerLayer;
-    public LayerMask enemyLayer;
 
     [Header("Beacon")]
     public List<GameObject> players;
@@ -34,20 +32,27 @@ public class Beacon : MonoBehaviour
         AddPoints();
     }
 
+    public Collider[] jort;
+
     void CheckInRange()
     {
         Collider[] hitCollider = Physics.OverlapSphere(transform.position, radius, hitLayer);
 
+        jort = hitCollider;
+
         players.Clear();
         enemies.Clear();
 
+        int playerInt = LayerMask.NameToLayer("Player");
+        int enemyInt = LayerMask.NameToLayer("Enemy");
+
         foreach(Collider col in hitCollider)
         {
-            if(col.gameObject.layer == playerLayer)
+            if(col.gameObject.layer == playerInt)
             {
                 players.Add(col.gameObject);
             }
-            else if(col.gameObject.layer == enemyLayer)
+            else if(col.gameObject.layer == enemyInt)
             {
                 enemies.Add(col.gameObject);
             }
@@ -62,7 +67,7 @@ public class Beacon : MonoBehaviour
 
             if(enemies.Count > 0 && players.Count == 0)
             {
-                totalScore -= changeScoreEnemy * enemies.Count;
+                totalScore -= changeScoreEnemy;
 
                 if(totalScore >= 100)
                 {
