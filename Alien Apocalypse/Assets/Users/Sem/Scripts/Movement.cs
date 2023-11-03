@@ -60,7 +60,6 @@ public class Movement : MonoBehaviourPunCallbacks
             photonView.RPC("NetworkStart", RpcTarget.All);
             
         }
-        PhotonNetwork.SendRate = 5;
     }
     [PunRPC]
     void NetworkStart()

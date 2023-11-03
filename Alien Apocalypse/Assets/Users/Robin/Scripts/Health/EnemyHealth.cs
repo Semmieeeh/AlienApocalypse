@@ -115,7 +115,10 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     IEnumerator GunRPC()
     {
         yield return new WaitForSeconds(0);
-        PhotonNetwork.Destroy(gun);
+        if (gun != null)
+        {
+            PhotonNetwork.Destroy(gun);
+        }
   
     }
     bool died;
