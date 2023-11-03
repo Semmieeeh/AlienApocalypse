@@ -1,3 +1,4 @@
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -78,6 +79,8 @@ public class UIPauseManager : MonoBehaviour
 
     public void ToMainMenu ( )
     {
+        PhotonNetwork.Disconnect();
+        GameObject.Find("Complete Main Menu").SetActive(true);
         throw new System.NotImplementedException ( );
     }
 

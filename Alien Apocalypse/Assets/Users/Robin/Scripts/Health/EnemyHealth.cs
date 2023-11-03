@@ -56,9 +56,6 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         {
             time += 1* Time.deltaTime;
             r.material.SetFloat("_Dead", time);
-            Vector3 scale = new Vector3(gun.transform.localScale.x, gun.transform.localScale.y, gun.transform.localScale.z);
-            scale *= 0.7f * Time.deltaTime;
-            gun.transform.localScale = scale;
         }
     }
     [PunRPC]
@@ -117,17 +114,13 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     [PunRPC]
     IEnumerator GunRPC()
     {
-        yield return new WaitForSeconds(0f);
-        gun.transform.parent = null;
-        Rigidbody gunRb = gun.GetComponent<Rigidbody>();
-        gunRb.isKinematic = false;
-        Vector3 rand = new Vector3(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1));
-        gunRb.AddForce(rand * 10,ForceMode.Impulse);
+        yield return new WaitForSeconds(0);
+        PhotonNetwork.Destroy(gun);
+  
     }
     bool died;
     IEnumerator Die()
-    {
-        
+    {        
         yield return new WaitForSeconds(10);
         died = true;
         yield return new WaitForSeconds(1);
@@ -137,6 +130,5 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     void DieVoid()
     {
         PhotonNetwork.Destroy(gameObject);
-        PhotonNetwork.Destroy(gun);
     }
 }

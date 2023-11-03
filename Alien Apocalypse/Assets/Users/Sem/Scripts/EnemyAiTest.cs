@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,22 +53,32 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public bool flyingEnemy;
     public Animator anim;
     public Animator armAnim;
+    public List<Beacon> beaconlist = new List<Beacon>();
+    public HashSet<Beacon> uniqueBeacons = new HashSet<Beacon>();
     void Start()
     {
-        targetRange = 5;
+        targetRange = 10;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         agent.angularSpeed = turnSpeed;
-        origin = transform.position;
+        Beacon[] beacons = FindObjectsOfType<Beacon>();
+        for(int  i = 0; i < beacons.Length; i++)
+        {
+            int j = Random.Range(0, beacons.Length);
+            origin = beacons[i].transform.position;
+            roamRange = beacons[i].radius;
+        }
         target = transform.position;
         agent.destination = target;
         state = EnemyState.idle;
-        agent.stoppingDistance = targetRange;
+        agent.stoppingDistance = targetRange -5;
         NewTarget();
         if (flyingEnemy)
         {
             Offset();
+            
         }
+        
     }
     private float firstOffset;
     float currentOffset;
@@ -90,13 +101,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
         if (photonView.IsMine)
         {
-            if (flyingHeight > 0.1f)
-            {
-                Physics.Raycast(transform.position, -transform.up, out hit);
-                Transform flight = hit.transform;
-                Vector3 flightTransform = new Vector3(flight.position.x, flight.position.y + 10, flight.position.z);
-                transform.position = flightTransform;
-            }
             if (canAttack == false)
             {
                 timePassed += Time.deltaTime;
@@ -117,6 +121,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         agent.stoppingDistance = targetRange;
                         agent.destination = target;
                         photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
+                        Debug.Log(Vector3.Distance(transform.position, agent.destination));
                         if (Vector3.Distance(transform.position, target) <= targetRange -1)
                         {
                             NewTarget();
@@ -187,8 +192,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         Vector3 randDirection = Random.insideUnitSphere * dist;
         randDirection += origin;
         NavMesh.SamplePosition(randDirection, out navHit, roamRange, layerMask);
-        
-        return navHit.position;
+        Vector3 v = navHit.position;
+        v.y = transform.position.y;
+        return v;
     }
 
     public void NewTarget()

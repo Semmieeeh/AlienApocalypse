@@ -73,7 +73,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            photonView.RPC(nameof(Revive), RpcTarget.All);
+        }
 
+        
 
         switch (state)
         {
@@ -139,7 +144,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         //update health text object
         Health -= damage;
         lastHit = 3;
-        
+        UIDAmageManager.instance.Damage();
         if (Health <= 0)
         {
             photonView.RPC("Downed", RpcTarget.All);

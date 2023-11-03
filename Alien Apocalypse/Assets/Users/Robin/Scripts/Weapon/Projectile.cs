@@ -57,6 +57,20 @@ public class Projectile : MonoBehaviour
                             transform.GetChild(i).gameObject.SetActive(false);
                         }
                     }
+                    if (col.TryGetComponent<Movement>(out Movement m))
+                    {
+                        Vector3 dir = col.transform.position - transform.position;
+                        float force = 8 - Vector3.Distance(col.transform.position,transform.position);
+                        if(force > 8)
+                        {
+                            force = 8;
+                        }
+                        else if (force < 0)
+                        {
+                            force = 0;
+                        }
+                        m.rb.AddForce(dir * force, ForceMode.Impulse);
+                    }
                 }
 
                 exp = PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);

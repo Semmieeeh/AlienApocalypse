@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3279137058509986987}
   - component: {fileID: 2953261026652701284}
   - component: {fileID: 1526463651916446544}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 2310160505033404292}
   - component: {fileID: 9168062982144256284}
   - component: {fileID: 2690378084059544611}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 398366727667384718}
   - component: {fileID: 2677622626929330716}
   - component: {fileID: 1139472570621081409}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Jort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3279137058509986987}
@@ -337,7 +337,7 @@ MonoBehaviour:
   radius: 2
   mask:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2056
   explosion: {fileID: 4336460940360149619, guid: 634aa4487870cc646a73ee10211f0122, type: 3}
   explosionTime: 5
   hitPoint: {x: 0, y: 0, z: 0}
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 3790305192624623785}
   - component: {fileID: 3871599127955475013}
   - component: {fileID: 1472619635585528125}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Light Beams
   m_TagString: Untagged
   m_Icon: {fileID: 0}
