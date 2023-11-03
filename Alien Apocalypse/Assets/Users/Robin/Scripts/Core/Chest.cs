@@ -20,8 +20,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
 
     [Header("Prefabs")]
     public GameObject[] firearmDatas;
-    public FirearmAbility[] firearmAbilities;
-    public GameObject abilityHolder;
+    public GameObject[] firearmAbilities;
 
     public GameObject chestBeacon;
     public Transform goToPoint;
@@ -79,15 +78,17 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
             {
                 if(n == i)
                 {
-                    GameObject holder = PhotonNetwork.Instantiate(abilityHolder.name, goToPoint.position, Quaternion.identity);
+                    GameObject holder = PhotonNetwork.Instantiate(firearmAbilities[n].name, goToPoint.position, Quaternion.identity);
 
-                    if(holder.TryGetComponent<PickUpAbility>(out PickUpAbility pickUpAbility))
-                    {
-                        pickUpAbility.firearmAbility = firearmAbilities[i];
-                        opened = true;
+                    Rigidbody rb = holder.GetComponent<Rigidbody>();
+                    rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
+                    Vector3 torque = new Vector3(Random.Range(0, 0), Random.Range(0, 0), Random.Range(-2f, 2f));
+                    rb.AddTorque(torque * 5);
 
-                        return;
-                    }
+                    opened = true;
+
+                    return;
+                    
                 }
             }
         }
