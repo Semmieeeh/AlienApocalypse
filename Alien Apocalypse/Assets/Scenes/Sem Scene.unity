@@ -3443,6 +3443,17 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &908501233 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8963574793767347918, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+  m_PrefabInstance: {fileID: 1949183033}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88df28dcff5dec45bd4754da0425693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &935355572
 GameObject:
   m_ObjectHideFlags: 0
@@ -7571,6 +7582,38 @@ PrefabInstance:
     - target: {fileID: 1056066759333193778, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
       propertyPath: m_text
       value: No one online:(
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208474035615845617, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      propertyPath: selector
+      value: 
+      objectReference: {fileID: 908501233}
+    - target: {fileID: 1208474035615845617, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      propertyPath: resolutions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208474035615845617, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      propertyPath: resolutions.Array.data[0].x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208474035615845617, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      propertyPath: resolutions.Array.data[0].y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208474035615845617, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      propertyPath: resolutions.Array.data[1].x
+      value: 2560
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208474035615845617, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      propertyPath: resolutions.Array.data[1].y
+      value: 1440
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208474035615845617, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      propertyPath: resolutions.Array.data[2].x
+      value: 3840
+      objectReference: {fileID: 0}
+    - target: {fileID: 1208474035615845617, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
+      propertyPath: resolutions.Array.data[2].y
+      value: 2160
       objectReference: {fileID: 0}
     - target: {fileID: 1785515315614832558, guid: baba392b5e68e754b9faf73c0e8d232e, type: 3}
       propertyPath: m_AnchorMax.y

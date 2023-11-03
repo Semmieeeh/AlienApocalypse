@@ -109,8 +109,6 @@ public class OptionsManager : MonoBehaviour
 
     void ApplyOptions (OptionsData options )
     {
-        throw new NotImplementedException ( );
-
         var width = resolutions[options.ScreenResIndex].x;
         var heigth = resolutions[options.ScreenResIndex].y;
 
@@ -213,6 +211,8 @@ public class OptionsManager : MonoBehaviour
             File.WriteAllText (path, json);
 
             Debug.Log ($"Options saved to: {path}");
+
+            m_Options = this;
 
             Instance.OnOptionChanged ( );
         }
