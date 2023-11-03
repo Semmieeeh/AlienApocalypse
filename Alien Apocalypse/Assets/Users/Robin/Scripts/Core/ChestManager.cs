@@ -11,9 +11,9 @@ public class ChestManager : MonoBehaviourPunCallbacks
     public List<Chest> chests;
     public Chest currentChest;
 
-    public override void OnJoinedRoom()
+    public override void OnCreatedRoom()
     {
-        base.OnJoinedRoom();
+        base.OnCreatedRoom();    
 
         for(int i = 0; i < transform.childCount; i++)
         {
@@ -34,8 +34,6 @@ public class ChestManager : MonoBehaviourPunCallbacks
 
     public void New()
     {
-        photonView.RPC("NewChest", RpcTarget.All);
-
         foreach(Chest chest in chests)
         {
             if(chest == currentChest)
@@ -46,12 +44,14 @@ public class ChestManager : MonoBehaviourPunCallbacks
         }
 
         currentChest = null;
+
+        photonView.RPC("NewChest", RpcTarget.All);
     }
 
     [PunRPC]
     void NewChest()
     {
-        int randomValue = Random.Range(0, chests.Count);
+        int randomValue = Random.Range(0, chests.Count - 1);
 
         for(int i = 0; i < chests.Count; i++)
         {

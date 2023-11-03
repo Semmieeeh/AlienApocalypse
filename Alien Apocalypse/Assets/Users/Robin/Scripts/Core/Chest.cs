@@ -11,9 +11,12 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
 
     [Space]
     [Header("Spawn Chances")]
-    public float firearmChance;
-    public float firearmAbilityChance;
-    public float nothingChance;
+    public float minFirearmChance;
+    public float maxFirearmChance;
+    public float minFirearmAbilityChance;
+    public float maxFirearmAbilityChance;
+    public float minNothingChance;
+    public float maxNothingChance;
 
     [Header("Prefabs")]
     public GameObject[] firearmDatas;
@@ -35,23 +38,19 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
         if(!opened)
         {
             photonView.RPC("OpenChest", RpcTarget.All);
-            chestBeacon.SetActive(false);
-            chestManager.New();
         }
     }
 
     [PunRPC]
     void OpenChest()
     {
-        if(opened)
-        {
-            return;
-        }
+        chestBeacon.SetActive(false);
+        chestManager.New();
 
         GetComponent<Animator>().SetTrigger("Open");
         float value = Random.value;
 
-        if(value >= ((100 - firearmChance) / 100))
+        if(value >= minFirearmChance / 100 && value <= maxFirearmChance / 100)
         {
             int n = Random.Range(0, firearmDatas.Length - 1);
 
@@ -72,7 +71,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
                 }
             }
         }
-        else if(value >= ((100 - firearmAbilityChance) / 100))
+        else if(value >= minFirearmAbilityChance / 100 && value <= maxFirearmAbilityChance / 100)
         {
             int n = Random.Range(0, firearmAbilities.Length - 1);
 
@@ -92,7 +91,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
                 }
             }
         }
-        else if(value >= ((100 - nothingChance) / 100))
+        else if(value >= minNothingChance / 100 && value <= maxNothingChance / 100)
         {
             opened = true;
 
