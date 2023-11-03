@@ -26,105 +26,57 @@ MonoBehaviour:
     Protocol: 0
     EnableProtocolFallback: 1
     AuthMode: 0
-    EnableLobbyStatistics: 1
+    EnableLobbyStatistics: 0
     NetworkLogging: 1
   DevRegion: eu
-  PunLogging: 2
-  EnableSupportLogger: 1
+  PunLogging: 0
+  EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - AnimRPC
+  - Attack
+  - ClearRopeRPC
   - ClickRpc
+  - Destroy
   - DestroyRpc
   - DestroySpaceship
-  - Fire
-  - RespawnSpaceship
-  - SetNickname
-  - Update
-  - EnemyTakeDamage
-  - Damaged
-  - ReassignIdentities
-  - FindManager
-  - CleanList
-  - DrawRope
+  - DieVoid
+  - Downed
   - DrawRopeRPC
-  - ClearRopeRPC
-  - UpdateWaveStatusText
-  - CooldownForAllPlayers
-  - StartWaveForAllPlayers
-  - UpdateUIText
-  - UpdateCooldownCounter
-  - UpdateIsInCooldown
-  - UpdateIsInCooldownTwo
-  - SyncArmAnimation
-  - InstantiateProjectile
-  - Damagable
-  - Test
-  - InstantiateRaycast
-  - SyncDamage
-  - Attack
-  - TakeDamage
-  - StunEnemy
-  - StunEnemyRPC
-  - StunEnemyLocally
-  - ReactivateEnemy
-  - ReactivateOnServer
-  - SyncEnemyStates
-  - NewDestination
-  - NewTarget
-  - PullEnemy
-  - ResetEnemy
-  - StartEnemyGrapple
-  - ResetEnemyRPC
-  - RaycastRPC
-  - SetWeaponHolder
-  - SetWeapon
-  - SelectWeapon
-  - InitializeWeaponHolder
-  - ShootSound
-  - PlaySound
-  - UpdateAnimation
-  - AnimRPC
-  - SelectWeaponRPC
-  - WeaponActiveRPC
-  - WeaponInactiveRPC
+  - Fire
+  - GunRPC
+  - Island
+  - Knocked
+  - NetworkStart
+  - NewChest
   - Offset
-  - SwitchWeapon
-  - WeaponUpdate
-  - WeaponOnServer
-  - OtherWeapons
-  - SetJumpAnim
-  - Interact
-  - Destroy
+  - OpenChest
+  - PlaySound
   - Projectile
+  - ReleaseGun
+  - RespawnSpaceship
+  - Revive
+  - RPCBulletTracers
+  - SelectWeapon
+  - SetJumpAnim
+  - SetNickname
   - SetPlayerColor
-  - DealDamage
+  - SetWeapon
+  - Shader
+  - SyncArmAnimation
+  - SyncDamage
   - UpdateAlienArms
   - UpdateAlienLegs
-  - SpawnIsland
-  - IslandSpawn
-  - Island
-  - Walking
-  - JumpCheck
-  - NextCheck
   - UpdateAnim
-  - OpenChest
-  - Activate
-  - RPCBulletTracers
-  - NewChest
-  - SetChestActice
-  - SetChestActive
-  - Downed
-  - Knocked
-  - Revive
+  - UpdateAnimation
+  - UpdateCooldownCounter
   - UpdateHealth
-  - DieVoid
-  - AiSyncUpdate
-  - CheckForPlayer
-  - NetworkStart
-  - ReleaseGun
-  - GunRPC
-  - Shader
-  DisableAutoOpenWizard: 1
+  - UpdateIsInCooldown
+  - UpdateIsInCooldownTwo
+  - UpdateUIText
+  - Walking
+  - WeaponOnServer
+  DisableAutoOpenWizard: 0
   ShowSettings: 1
   DevRegionSetOnce: 1

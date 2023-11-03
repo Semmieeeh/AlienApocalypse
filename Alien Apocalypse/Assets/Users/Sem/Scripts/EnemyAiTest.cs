@@ -71,14 +71,22 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         target = transform.position;
         agent.destination = target;
         state = EnemyState.idle;
-        agent.stoppingDistance = targetRange -5;
-        NewTarget();
+        
+        
         if (flyingEnemy)
         {
             Offset();
             
         }
-        
+        if (flyingEnemy)
+        {
+            agent.stoppingDistance = 0;
+        }
+        else
+        {
+            agent.stoppingDistance = targetRange - 2;
+        }
+        NewTarget();
     }
     private float firstOffset;
     float currentOffset;
@@ -118,7 +126,14 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 {
                     case EnemyState.idle:
 
-                        agent.stoppingDistance = targetRange;
+                        if (flyingEnemy)
+                        {
+                            agent.stoppingDistance = 0;
+                        }
+                        else
+                        {
+                            agent.stoppingDistance = targetRange;
+                        }
                         agent.destination = target;
                         photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
                         Debug.Log(Vector3.Distance(transform.position, agent.destination));
