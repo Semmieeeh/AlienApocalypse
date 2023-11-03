@@ -1962,63 +1962,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1001 &1781732923
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 332736955989428488, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_Name
-      value: UFO Spawn ray
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.873449
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.82
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -8.238962
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1062533335084425307, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 38c4cc22408219c4f92ce6da05a37c2e, type: 3}
 --- !u!1001 &1795920030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3335,6 +3278,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b956722f083a9e144b45787cdc26e7dc, type: 3}
+--- !u!1001 &3520649617203480277
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2587340990502041910, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_Name
+      value: UFO Spawn ray
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.238962
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5006589722253147463, guid: 6be0493751c54c344b884369eb84322d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6be0493751c54c344b884369eb84322d, type: 3}
 --- !u!1001 &5792881292319403771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3857,7 +3857,7 @@ SceneRoots:
   - {fileID: 6411761171230039019}
   - {fileID: 335608099}
   - {fileID: 8969589211527504309}
-  - {fileID: 1781732923}
+  - {fileID: 3520649617203480277}
   - {fileID: 2525773746745250377}
   - {fileID: 935068288}
   - {fileID: 9170864771353021842}
