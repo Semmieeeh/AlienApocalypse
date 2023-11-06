@@ -9,8 +9,7 @@ public class UIFlag : UITrackable
     public float currentValue;
 
 
-    [SerializeField]
-    Image coloredBorder;
+    public Image coloredBorder;
 
     public float Progress => Mathf.InverseLerp (0, maxValue, currentValue);
 

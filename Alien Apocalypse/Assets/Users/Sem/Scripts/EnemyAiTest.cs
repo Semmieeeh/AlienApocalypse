@@ -65,8 +65,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         for(int  i = 0; i < beacons.Length; i++)
         {
             int j = Random.Range(0, beacons.Length);
-            origin = beacons[i].transform.position;
-            roamRange = beacons[i].radius;
+            origin = beacons[j].transform.position;
+            roamRange = beacons[j].radius;
         }
         target = transform.position;
         agent.destination = target;
@@ -87,6 +87,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             agent.stoppingDistance = targetRange - 2;
         }
         NewTarget();
+        anim.SetBool("Flying", flyingEnemy);
     }
     private float firstOffset;
     float currentOffset;
@@ -164,7 +165,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             agent.baseOffset = newOffset;
                         }
 
-                        if (nearestPlayer != null)
+                        if (nearestPlayer != null && agent!=null)
                         {
                             agent.destination = nearestPlayer.transform.position;
                             agent.stoppingDistance = attackRange;

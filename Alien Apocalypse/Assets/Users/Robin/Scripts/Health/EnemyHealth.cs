@@ -21,6 +21,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     UnityEvent onKill;
     UnityEvent onHit;
 
+    public bool canExplode;
     private void Start()
     {
         maxHealth = maxHealth * multiplier;
@@ -71,10 +72,12 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
             }
             dead = true;
             
-            
+            gameObject.layer = 0;
             foreach(var rigidBody in rigidBodies)
             {
-                rigidBody.isKinematic = false;               
+
+                rigidBody.isKinematic = false;
+                rigidBody.gameObject.layer = 0;
             }
             var enemyTest = GetComponent<EnemyAiTest>();
             enemyTest.anim.enabled = false;
@@ -119,19 +122,53 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         {
             PhotonNetwork.Destroy(gun);
         }
+        if(explodeObj!= null)
+        {
+            PhotonNetwork.Destroy(explodeObj);
+        }
   
     }
     bool died;
+    public GameObject explosion;
+    public GameObject explodeObj;
+    bool exploded = false;
+    GameObject exp;
     IEnumerator Die()
-    {        
+    {
+        if (exploded == false && canExplode)
+        {
+            
+            exp = PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);
+            exp.transform.parent = transform;
+            exploded = true;
+        }
         yield return new WaitForSeconds(10);
         died = true;
         yield return new WaitForSeconds(1);
-        photonView.RPC("DieVoid", RpcTarget.All);
+        if (canExplode == true)
+        {
+            
+            photonView.RPC("DieWithExplosion", RpcTarget.All, exp);
+        }
+        else
+        {
+            photonView.RPC("DieVoid", RpcTarget.All);
+        }
+        
     }
     [PunRPC]
     void DieVoid()
     {
+    
+        PhotonNetwork.Destroy(gameObject);
+    }
+    [PunRPC]
+    void DieWithExplosion(GameObject expl)
+    {
+        if (expl != null)
+        {
+            PhotonNetwork.Destroy(exp);
+        }
         PhotonNetwork.Destroy(gameObject);
     }
 }

@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Beacon : MonoBehaviour
+public class Beacon : MonoBehaviourPunCallbacks
 {
     public BeaconManager beaconManager;
 
@@ -14,6 +16,8 @@ public class Beacon : MonoBehaviour
     public List<GameObject> players;
     public List<GameObject> enemies;
 
+    [Header("Visualization")]
+    public UIFlag flag;
     public int totalScore;
 
     public int changeScorePlayer;
@@ -25,6 +29,7 @@ public class Beacon : MonoBehaviour
     void Start()
     {
         startTime = Time.time;
+        
     }
 
     void Update()
@@ -58,7 +63,9 @@ public class Beacon : MonoBehaviour
             }
         }
     }
-
+    public Color c;
+    public Color playerColor;
+    public Color enemyColor;
     void AddPoints()
     {
         if(Time.time - startTime > pointsAddedInterval)
@@ -68,28 +75,37 @@ public class Beacon : MonoBehaviour
             if(enemies.Count > 0 && players.Count == 0)
             {
                 totalScore -= changeScoreEnemy;
-
-                if(totalScore >= 100)
+                c = enemyColor;
+                if (totalScore >= 100)
                 {
                     totalScore = 100;
+                    
                 }
             }
             else if(enemies.Count == 0)
             {
                 totalScore += changeScorePlayer;
-
-                if(totalScore <= -100)
+                c = playerColor;
+                if (totalScore <= 0)
                 {
-                    totalScore = -100;
+                    totalScore = 0;
+                    
                 }
             }
 
             beaconManager.BeaconsCondition();
 
             startTime = Time.time;
+            photonView.RPC("FlagRPC", RpcTarget.All);
         }
     }
+    [PunRPC]
+    void FlagRPC()
+    {
+        flag.currentValue = totalScore;
+        flag.coloredBorder.GetComponent<Image>().color = c;
 
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

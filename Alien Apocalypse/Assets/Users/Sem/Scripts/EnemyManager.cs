@@ -111,8 +111,8 @@ public class EnemyManager : MonoBehaviourPunCallbacks
         {
             if (isInCooldown)
             {
-                waveStatusText.rectTransform.sizeDelta = new Vector2(250, 60);
-                waveStatusText.text = "Cooldown: " + cooldownCounter.ToString("F1");
+                waveStatusText.rectTransform.sizeDelta = new Vector2(350, 60);
+                waveStatusText.text = "Next Wave In: " + cooldownCounter.ToString("F1");
             }
             else
             {
@@ -180,8 +180,16 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            
-            int enemyIndex = Random.Range(0, enemiesToSpawn.Length);
+            int max;
+            if(wavesCompleted <= enemiesToSpawn.Length)
+            {
+                max = wavesCompleted.ToInt();
+            }
+            else
+            {
+                max = enemiesToSpawn.Length;
+            }
+            int enemyIndex = Random.Range(0, max);
             Vector3 v = new Vector3(Random.Range(spawnPoint.position.x + 20f, spawnPoint.position.x - 20f), spawnPoint.position.y, Random.Range(spawnPoint.position.z + 20f, spawnPoint.position.z - 20f));
 
             GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, v, spawnPoint.rotation);

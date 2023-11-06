@@ -308,11 +308,15 @@ MonoBehaviour:
     m_Bits: 2056
   players: []
   enemies: []
+  flag: {fileID: 2094053442870938366}
   totalScore: 0
-  changeScorePlayer: 5
+  changeScorePlayer: 3
   changeScoreEnemy: 2
-  pointsAddedInterval: 1
+  pointsAddedInterval: 0.5
   jort: []
+  c: {r: 0, g: 1, b: 1, a: 1}
+  playerColor: {r: 0, g: 1, b: 1, a: 1}
+  enemyColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &5648944468899488405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,11 +544,15 @@ MonoBehaviour:
     m_Bits: 2056
   players: []
   enemies: []
+  flag: {fileID: 7662546835965813289}
   totalScore: 0
-  changeScorePlayer: 5
+  changeScorePlayer: 3
   changeScoreEnemy: 2
-  pointsAddedInterval: 1
+  pointsAddedInterval: 0.5
   jort: []
+  c: {r: 0, g: 1, b: 1, a: 1}
+  playerColor: {r: 0, g: 1, b: 1, a: 1}
+  enemyColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &8033393993267343884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,6 +671,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7271578617919564412, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -703,6 +715,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7214919730286970736, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
   m_PrefabInstance: {fileID: 2661770615430695221}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7662546835965813289 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5667313914473933596, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
+  m_PrefabInstance: {fileID: 2661770615430695221}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398786012830067308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94778c1727cb1f04baa87db0399863bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6028566697778700770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -718,6 +741,10 @@ PrefabInstance:
     - target: {fileID: 4006512834590843737, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
       propertyPath: m_Name
       value: B
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006512834590843737, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5667313914473933596, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
       propertyPath: m_target
@@ -803,6 +830,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7271578617919564412, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271578617919564412, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7271578617919564412, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
+      propertyPath: m_FillClockwise
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -811,6 +850,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 9183824951672224797}
   m_SourcePrefab: {fileID: 100100000, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
+--- !u!114 &2094053442870938366 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5667313914473933596, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
+  m_PrefabInstance: {fileID: 6028566697778700770}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7219335394239562427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94778c1727cb1f04baa87db0399863bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4001815764497540754 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7214919730286970736, guid: 753201c3242c2b04a9b56b9250c3ad98, type: 3}
