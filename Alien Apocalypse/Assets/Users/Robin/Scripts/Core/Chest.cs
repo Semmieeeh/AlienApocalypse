@@ -15,13 +15,14 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
     public float maxFirearmChance;
     public float minFirearmAbilityChance;
     public float maxFirearmAbilityChance;
-    public float minNothingChance;
-    public float maxNothingChance;
+    public float minBombChance;
+    public float maxBombChance;
 
     [Header("Prefabs")]
     public GameObject[] firearmDatas;
     public GameObject[] firearmAbilities;
 
+    public GameObject bomb;
     public GameObject chestBeacon;
     public Transform goToPoint;
     public float force;
@@ -92,7 +93,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
                 }
             }
         }
-        else if(value >= minNothingChance / 100 && value <= maxNothingChance / 100)
+        else if(value >= minBombChance / 100 && value <= maxBombChance / 100)
         {
             opened = true;
 

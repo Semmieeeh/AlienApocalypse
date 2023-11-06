@@ -388,8 +388,25 @@ public class Firearm : Weapon
             Vector3 particlePoint;
             bool enemyHit = false;
 
-            Vector3 mainForward = mainCam.transform.forward * firearmData.raycastDistance;
-            Vector3 gunForward = dataHolder.muzzle.forward * firearmData.raycastDistance;
+            Vector3 mainForward;
+            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit mainHit,firearmData.raycastDistance))
+            {
+                mainForward = mainHit.point; 
+            }
+            else
+            {
+                mainForward = mainCam.transform.forward * firearmData.raycastDistance;
+            }
+
+            //Vector3 gunForward;
+            //if(Physics.Raycast(dataHolder.muzzle.position, dataHolder.muzzle.forward, out RaycastHit gunHit, firearmData.raycastDistance))
+            //{
+            //    gunForward = gunHit.point;
+            //}
+            //else
+            //{
+            //    gunForward = dataHolder.muzzle.forward * firearmData.raycastDistance;
+            //}
 
             Vector3 hitPoint = new Vector3(mainForward.x, mainForward.y, mainForward.z);
 

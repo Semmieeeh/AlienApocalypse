@@ -227,8 +227,8 @@ MonoBehaviour:
   maxFirearmChance: 30
   minFirearmAbilityChance: 31
   maxFirearmAbilityChance: 60
-  minNothingChance: 61
-  maxNothingChance: 100
+  minBombChance: 0
+  maxBombChance: 0
   firearmDatas:
   - {fileID: 5219653184509103383, guid: efa482ef1e1b6f942af2aaee8b0b14a4, type: 3}
   - {fileID: 5273557812897326287, guid: 02ae363ec03d87646bbd56b19e967e70, type: 3}
@@ -241,6 +241,7 @@ MonoBehaviour:
   - {fileID: 8316716908099149104, guid: 14103ddcfd20c2547978bd818da6b072, type: 3}
   - {fileID: 8251572185557589740, guid: cb9cb0ce804fd12428d5589163ed6fcc, type: 3}
   - {fileID: 5020060751301112928, guid: 8ddb0ac5a8a398a49aa9653523880b58, type: 3}
+  bomb: {fileID: 4336460940360149619, guid: 80e061889977e9545a72bd2186a83ba7, type: 3}
   chestBeacon: {fileID: 6880377466827833478}
   goToPoint: {fileID: 8143997828447424943}
   force: 5
