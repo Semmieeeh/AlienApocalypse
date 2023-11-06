@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016055741850976914}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe5c29c788b3f4346b9277c41f642391, type: 3}
   m_Name: 
@@ -1906,22 +1906,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3180687459858002598}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 051cf4baa4618e84abde7dc83ce82927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notis:
-  - points: 100
-    message: Nice Shot!
-  - points: 150
-    message: HEADSHOT!
-  - points: 40
-    message: Assist!
-  - points: 50
-    message: Revive
-  - points: 125
-    message: LONGSHOT!
+  notis: []
   start: 1
   manager: {fileID: 7889221854873964401}
 --- !u!1 &3253571947643181054
@@ -5251,7 +5241,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8733715626427130526}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6244523ab9b85d1408436a945293806d, type: 3}
   m_Name: 

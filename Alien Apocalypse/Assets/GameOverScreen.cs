@@ -14,6 +14,6 @@ public class GameOverScreen : MonoBehaviour
 
     public void EnableSpectatorScreen(bool active )
     {
-        deathAnimator.SetBool ("Active", active);
+        deathAnimator.gameObject.SetActive(active);
     }
 }
