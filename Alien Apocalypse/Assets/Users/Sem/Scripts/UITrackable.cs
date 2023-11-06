@@ -24,7 +24,7 @@ public class UITrackable : MonoBehaviour
         }
     }
 
-    bool useTransform;
+    bool useTransform = true;
 
     protected virtual void Update ( )
     {
