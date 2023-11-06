@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 8924734467364344224}
   - component: {fileID: 6705335063227260338}
   - component: {fileID: 3207267369725929738}
+  - component: {fileID: -186811642434816747}
   m_Layer: 12
   m_Name: Lootbox
   m_TagString: Untagged
@@ -227,8 +228,8 @@ MonoBehaviour:
   maxFirearmChance: 30
   minFirearmAbilityChance: 31
   maxFirearmAbilityChance: 60
-  minBombChance: 0
-  maxBombChance: 0
+  minBombChance: 61
+  maxBombChance: 100
   firearmDatas:
   - {fileID: 5219653184509103383, guid: efa482ef1e1b6f942af2aaee8b0b14a4, type: 3}
   - {fileID: 5273557812897326287, guid: 02ae363ec03d87646bbd56b19e967e70, type: 3}
@@ -241,14 +242,21 @@ MonoBehaviour:
   - {fileID: 8316716908099149104, guid: 14103ddcfd20c2547978bd818da6b072, type: 3}
   - {fileID: 8251572185557589740, guid: cb9cb0ce804fd12428d5589163ed6fcc, type: 3}
   - {fileID: 5020060751301112928, guid: 8ddb0ac5a8a398a49aa9653523880b58, type: 3}
-  bomb: {fileID: 4336460940360149619, guid: 80e061889977e9545a72bd2186a83ba7, type: 3}
   chestBeacon: {fileID: 6880377466827833478}
   goToPoint: {fileID: 8143997828447424943}
   force: 5
   opened: 0
-  rotSpeed: 0
-  targetRot: {x: 0, y: 0, z: 0}
-  chestLid: {fileID: 0}
+  bombDamage: 80
+  bomb: {fileID: 5871086433520475071, guid: a78da091880d33a4b9a5ea97c6bd1198, type: 3}
+  explosion: {fileID: 4336460940360149619, guid: 80e061889977e9545a72bd2186a83ba7, type: 3}
+  bombRadius: 5
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  audioSource: {fileID: -186811642434816747}
+  countDownClip: {fileID: 0}
+  explosionClip: {fileID: 0}
+  testCol: []
 --- !u!95 &5921285292115304954
 Animator:
   serializedVersion: 5
@@ -330,6 +338,102 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!82 &-186811642434816747
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3361288751020236279}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3817729553851220496
 GameObject:
   m_ObjectHideFlags: 0

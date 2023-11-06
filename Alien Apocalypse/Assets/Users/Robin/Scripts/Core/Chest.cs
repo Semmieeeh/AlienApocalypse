@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.WSA;
 
 [RequireComponent(typeof(PhotonView))]
 [RequireComponent(typeof(PhotonTransformView))]
@@ -22,16 +23,22 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
     public GameObject[] firearmDatas;
     public GameObject[] firearmAbilities;
 
-    public GameObject bomb;
     public GameObject chestBeacon;
     public Transform goToPoint;
     public float force;
     public bool opened = false;
 
-    [Header("Chest")]
-    public float rotSpeed;
-    public Vector3 targetRot;
-    public Transform chestLid;
+    [Header("Bomb")]
+    public float bombDamage;
+    public GameObject bomb;
+    public GameObject explosion;
+    public float bombRadius;
+    public LayerMask playerMask;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip countDownClip;
+    public AudioClip explosionClip;
 
     public void Interact(WeaponInputHandler handler)
     {
@@ -95,9 +102,57 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
         }
         else if(value >= minBombChance / 100 && value <= maxBombChance / 100)
         {
+            StartCoroutine(Bomb());
+
             opened = true;
 
             return;
         }
+    }
+
+    public Collider[] testCol; 
+
+    IEnumerator Bomb()
+    {
+        GameObject currentBomb = PhotonNetwork.Instantiate(bomb.name, goToPoint.position, Quaternion.identity);
+
+        Rigidbody rb = currentBomb.GetComponent<Rigidbody>();
+        rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
+        Vector3 torque = new Vector3(Random.Range(0, 0), Random.Range(0, 0), Random.Range(-2f, 2f));
+        rb.AddTorque(torque * 5);
+        
+        if(countDownClip != null)
+        {
+            audioSource.clip = countDownClip;
+            audioSource.Play();
+
+            yield return new WaitForSeconds(audioSource.clip.length);
+
+            audioSource.clip = explosionClip;
+            audioSource.Play();
+        }
+        else
+        {
+            yield return new WaitForSeconds(2);
+        }
+
+        GameObject currentExplosion = PhotonNetwork.Instantiate(explosion.name, currentBomb.transform.position, Quaternion.identity);
+        PhotonNetwork.Destroy(currentBomb);
+
+        Collider[] collider = Physics.OverlapSphere(currentBomb.transform.position, bombRadius, playerMask);
+        testCol = collider;
+
+
+        foreach(Collider col in collider)
+        {
+            if(col.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealth))
+            {
+                playerHealth.TakeDamage(bombDamage / 2);
+            }
+        }
+
+        yield return new WaitForSeconds(2);
+
+        PhotonNetwork.Destroy(currentExplosion);
     }
 }
