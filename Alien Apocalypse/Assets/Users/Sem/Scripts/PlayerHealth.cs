@@ -35,6 +35,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     private float lastHit;
     private float lastDmg;
     public GameObject spectatorCam;
+    [Header("UI")]
+    public GameObject knockedCanvas;
 
     public float Health
     {
@@ -156,7 +158,10 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         if (!godMode && !knocked)
         {
 
-            
+            GameObject canvas = PhotonNetwork.Instantiate(knockedCanvas.name, Vector3.zero, Quaternion.identity);            
+            canvas.transform.parent = GameObject.Find("DownedCanvas").transform;
+            canvas.transform.GetComponent<UIFlag>().SetTarget(transform);
+            canvasStefan = canvas;
             state = PlayerState.downed;
             c.height = height * 0.1f;
             knocked = true;
@@ -174,9 +179,14 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         }
 
     }
+    GameObject canvasStefan;
     [PunRPC]
     public void Revive()
     {
+        if (canvasStefan != null)
+        {
+            PhotonNetwork.Destroy(canvasStefan); canvasStefan = null;
+        }
         Vector3 newPos = transform.position;
         newPos.y += 5;
         transform.position = newPos;

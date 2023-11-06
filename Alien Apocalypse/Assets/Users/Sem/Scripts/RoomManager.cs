@@ -51,12 +51,13 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     }
 
-
+    public GameObject pointsManager;
     public void SpawnPlayer()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             GameObject enemy = PhotonNetwork.Instantiate(enemyManager.name, spawnPoint.position, Quaternion.identity);
+            GameObject points = PhotonNetwork.Instantiate(pointsManager.name,spawnPoint.position, Quaternion.identity);
 
         }
         

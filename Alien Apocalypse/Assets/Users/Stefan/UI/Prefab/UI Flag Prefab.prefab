@@ -205,8 +205,8 @@ MonoBehaviour:
   m_target: {fileID: 0}
   m_targetPos: {x: 0, y: 0, z: 0}
   smoothTime: 0.1
-  maxValue: 1
-  currentValue: 10
+  maxValue: 100
+  currentValue: 0
   coloredBorder: {fileID: 7271578617919564412}
 --- !u!1 &4041679626279148225
 GameObject:
@@ -273,7 +273,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A
+  m_text: 'A
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c464333698dbd2b48863c415b4cd90f0, type: 2}
   m_sharedMaterial: {fileID: -4710353662655119040, guid: c464333698dbd2b48863c415b4cd90f0, type: 2}
