@@ -89,11 +89,12 @@ Material:
     - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Color_Treshold: -0.2
+    - _Color_Treshold: -0.22
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _Distortion_Strength: 0.02
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -102,8 +103,8 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise_Scale: 205.57
-    - _Noise_Speed: 1
+    - _Noise_Scale: 80
+    - _Noise_Speed: 3
     - _Noise_Strength: 0.06
     - _OcclusionStrength: 1
     - _Offset_Influence: 0.1
@@ -119,7 +120,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Treshold_Power: 6.2
+    - _Treshold_Power: 16.8
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
@@ -131,7 +132,7 @@ Material:
     - _Noise_Speed: {r: 1, g: 1, b: 0, a: 0}
     - _Noise_UV_Speed: {r: 0.008, g: 0, b: 0, a: 0}
     - _Offset_Speed: {r: -0.001, g: 0.06, b: 0, a: 0}
-    - _Primary_Color: {r: 17.601309, g: 548.7478, b: 376.7662, a: 0.15686275}
+    - _Primary_Color: {r: 1.2598034, g: 333.85452, b: 311.96375, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &6620099683726170716
