@@ -1,7 +1,8 @@
 using UnityEngine;
-
+using UnityEngine.UI;   
 public class UITrackable : MonoBehaviour
 {
+    [Header ("Tracking setttings")]
     [SerializeField]
     private Transform m_target;
 
@@ -10,6 +11,10 @@ public class UITrackable : MonoBehaviour
 
     [SerializeField]
     protected float smoothTime;
+
+    public float alphaDst = 100;
+
+    bool alphaActive;
 
     public Vector3 TargetPos
     {
@@ -29,6 +34,8 @@ public class UITrackable : MonoBehaviour
     protected virtual void Update ( )
     {
         UpdateMarker ( );
+
+        CheckTransparency ( );
     }
     private void UpdateMarker ( )
     {
@@ -48,13 +55,48 @@ public class UITrackable : MonoBehaviour
         }
     }
 
-    public void SetTarget (Transform target )
+    protected void CheckTransparency ( )
+    {
+        Vector2 centre = new (Screen.width / 2, Screen.height / 2);
+
+        Vector2 pos = transform.position;
+
+        float dst = Vector2.Distance (centre, pos);
+
+        if ( dst <= alphaDst)
+        {
+            if ( alphaActive == true )
+                return;
+
+                SetAlpha (0.3f);
+            alphaActive = true;
+        }
+        else if ( alphaActive == true )
+        {
+            SetAlpha (1);
+            alphaActive = false;
+        }
+
+        void SetAlpha ( float alpha )
+        {
+            var graphics = transform.GetComponentsInHierarchy<Graphic> ( );
+
+            foreach ( var g in graphics )
+            {
+                var c = g.color;
+                c.a = alpha;
+                g.color = c;
+            }
+        }
+    }
+
+    public void SetTarget ( Transform target )
     {
         useTransform = true;
         m_target = target;
     }
 
-    public void SetTarget(Vector3 targetPos )
+    public void SetTarget ( Vector3 targetPos )
     {
         useTransform = false;
         m_targetPos = targetPos;
