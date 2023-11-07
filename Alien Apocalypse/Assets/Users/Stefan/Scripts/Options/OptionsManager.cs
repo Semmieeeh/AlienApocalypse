@@ -15,7 +15,7 @@ public class OptionsManager : MonoBehaviour
         get
         {
             if ( m_instance == null )
-                m_instance = FindObjectOfType<OptionsManager> ( );
+                m_instance = FindObjectOfType<OptionsManager> ( true);
             return m_instance;
         }
         set
