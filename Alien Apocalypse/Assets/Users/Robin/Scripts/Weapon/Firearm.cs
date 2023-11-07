@@ -37,6 +37,11 @@ public class Firearm : Weapon
     Vector3 raycastHitPoint;
 
     [Space]
+    [Header("Shotgun")]
+    public bool isShotgun;
+    public bool canShotgun = true;
+
+    [Space]
     [Header("Ammo")]
     public int maxAmmo;
     public int currentAmmo;
@@ -180,6 +185,14 @@ public class Firearm : Weapon
                             StartCoroutine(ProjectileMode());
                         break;
                     }
+                    case FirearmData.Firetype.shotgun:
+                    {
+                        if(CanShootShotgun())
+                        {
+                            StartCoroutine(ShotgunMode());
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -192,6 +205,7 @@ public class Firearm : Weapon
             canBurst = true;
             canSingleShoot = true;
             canProjectile = true;
+            canShotgun = true;
 
             source.pitch = 1;            
         }
@@ -286,22 +300,72 @@ public class Firearm : Weapon
         isProjectile = false;
     }
 
-    bool CanShootShotgun()
-    {
-        return true;
-    }
+    bool CanShootShotgun() => !isShotgun && canShotgun;
+
 
     IEnumerator ShotgunMode()
     {
         if(photonView.IsMine)
         {
+            isShotgun = true;
+            canShotgun = false;
 
+            events.onShooting?.Invoke();
+
+            for(int i = 0; i < firearmData.shotgunBulletsAmount; i++)
+            {
+                Vector3 direction = mainCam.transform.forward;
+                Vector3 spread = Vector3.zero;
+                spread += mainCam.transform.up * Random.Range(-1, 1);
+                spread += mainCam.transform.right * Random.Range(-1, 1);
+
+                direction += spread.normalized * Random.Range(0, 02f);
+
+                Vector3 shotgunHit;
+                if(Physics.Raycast(mainCam.transform.position, direction, out RaycastHit shotgunOut, firearmData.raycastDistance))
+                {
+                    shotgunHit = shotgunOut.point;
+                }
+                else
+                {
+                    shotgunHit = direction;
+                }
+
+                Vector3 particlePoint;
+                bool enemyHit = false;
+
+                if(Physics.Linecast(mainCam.transform.position, shotgunHit, out hit))
+                {
+                    if(hit.transform.TryGetComponent(out IDamagable damagable))
+                    {
+                        damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy, bulletForce, Camera.main.transform.forward);
+                        enemyHit = true;
+                    }
+
+                    particlePoint = hit.point;
+                }
+                else
+                {
+                    particlePoint = shotgunHit;
+                }
+
+                if(dataHolder.shootEffect != null)
+                {
+                    if(photonView.IsMine)
+                    {
+                        photonView.RPC("RPCBulletTracers", RpcTarget.All, enemyHit, particlePoint);
+                    }
+                }
+
+            }
 
             Recoil();
+            currentAmmo--;
+
+
+            yield return new WaitForSeconds(cooldown);
+            isShotgun = false;
         }
-
-
-        yield return new WaitForSeconds(cooldown);
     }
 
     public bool IsReload() => isReloading; 
@@ -436,6 +500,7 @@ public class Firearm : Weapon
             currentAmmo--;
         }
     }
+
     [PunRPC]
     void RPCBulletTracers(bool enemyHit, Vector3 particlePoint)
     {

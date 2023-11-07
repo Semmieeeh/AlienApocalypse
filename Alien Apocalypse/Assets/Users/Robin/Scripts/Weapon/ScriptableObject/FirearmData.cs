@@ -23,6 +23,7 @@ public class FirearmData : WeaponData
         burst,
         automatic,
         projectile,
+        shotgun,
     }
     public Firetype fireType;
 
@@ -47,6 +48,10 @@ public class FirearmData : WeaponData
     public GameObject projectilePrefab;
     public float projectileSpeed;
     public float radius;
+
+    [Space]
+    [Header("Shotgun")]
+    public int shotgunBulletsAmount;
 
     [Space]
     [Header("Ammo")]
