@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InformativePopupManager : MonoBehaviour
@@ -7,34 +7,50 @@ public class InformativePopupManager : MonoBehaviour
     [SerializeField]
     InformativePopup popup;
 
-    private readonly Queue<InformativePopUpType> popups = new();
+    private readonly Queue<InformativePopupData> popups = new ( );
 
-    private void Update()
+    private void Update ( )
     {
-        if (!popup.Active && popups.Count > 0)
+        if ( !popup.Active && popups.Count > 0 )
         {
-            popup.Popup(popups.Dequeue());
+            popup.Popup (popups.Dequeue ( ));
         }
     }
 
-    public void AddKillPopup()
+    public void AddKillPopup ( )
     {
-        AddPopup(InformativePopUpType.Kill);
+        AddPopup (InformativePopUpType.Kill);
     }
 
-    public void AddRevivePopup()
+    public void AddRevivePopup ( )
     {
-        AddPopup(InformativePopUpType.Revive);
+        AddPopup (InformativePopUpType.Revive);
     }
 
-    public void AddOtherPopup()
+    public void AddOtherPopup ( )
     {
-        AddPopup(InformativePopUpType.Other);
+        AddPopup (InformativePopUpType.Other);
     }
 
-    public void AddPopup(InformativePopUpType type)
+    public void AddPopup ( InformativePopUpType type )
     {
         Debug.Log ($"Added kill popup of type {type}");
-        popups.Enqueue(type);
+
+        var samePopup = popups.SingleOrDefault (p => p.type == type);
+
+        if ( samePopup != null )
+        {
+            samePopup.amount++;
+        }
+        else
+        {
+            popups.Enqueue (new InformativePopupData
+            {
+                amount = 1,
+                type = type,
+            });
+    
+        }
     }
 }
+

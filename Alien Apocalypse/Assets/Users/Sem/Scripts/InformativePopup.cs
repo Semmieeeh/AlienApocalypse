@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,9 @@ public class InformativePopup : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI messageText;
+
+    [SerializeField]
+    TextMeshProUGUI countText;
 
     [SerializeField]
     Image animationImage;
@@ -44,13 +48,17 @@ public class InformativePopup : MonoBehaviour
         }
     }
 
-    public void Popup(InformativePopUpType type)
+    public void Popup(InformativePopupData data)
     {
-        Popup(popups[(int)type]);
+        Popup(popups[(int)data.type],data.amount);
     }
 
-    void Popup(PopUpData popup)
+    void Popup(PopUpData popup, int amount)
     {
+        countText.text = $"x {amount}";
+        countText.color = popup.color;
+        countText.alpha = amount > 1 ? 1 : 0;
+
         spriteImage.sprite = popup.sprite;
         spriteImage.color = popup.color;
 
@@ -72,6 +80,11 @@ public class InformativePopup : MonoBehaviour
     } 
 }
 
+public class InformativePopupData
+{
+    public InformativePopUpType type;
+    public int amount;
+}
 public enum InformativePopUpType
 {
     Kill,
