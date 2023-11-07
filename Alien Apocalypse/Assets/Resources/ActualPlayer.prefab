@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 5463677568850874811}
   - component: {fileID: 8850839293841958532}
   - component: {fileID: 752614929192360651}
+  - component: {fileID: -3496741408671673677}
   m_Layer: 8
   m_Name: ActualPlayer
   m_TagString: Player
@@ -221,6 +222,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8251531310835535942}
+  - {fileID: -3496741408671673677}
   - {fileID: 315171561763919977}
   - {fileID: 8722467647476882838}
   - {fileID: 6413959488519386496}
@@ -745,6 +747,19 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &-3496741408671673677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228508061578831017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SmoothingDelay: 5
 --- !u!1 &328897478774925911
 GameObject:
   m_ObjectHideFlags: 0

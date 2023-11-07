@@ -2040,7 +2040,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4550993382978745296}
   - component: {fileID: 6456500423871001546}
-  - component: {fileID: 1253222060486738215}
   m_Layer: 11
   m_Name: Alien
   m_TagString: Untagged
@@ -2086,22 +2085,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1253222060486738215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4615329021597408394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &4983957952744130226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2719,6 +2702,7 @@ MonoBehaviour:
   anim: {fileID: 6456500423871001546}
   armAnim: {fileID: 7559578415454998775}
   beaconlist: []
+  isBomber: 0
 --- !u!195 &7028250540927831896
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2753,14 +2737,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
+  ObservedComponentsFoldoutOpen: 0
   Group: 0
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 5932660472288310766}
+  - {fileID: 6776610208842836813}
+  - {fileID: 7820184073888848070}
+  - {fileID: 756558591756492940}
+  - {fileID: 3122610295318662112}
+  - {fileID: 6250916238582234103}
+  - {fileID: 1589350850243978823}
+  - {fileID: 4553409197124207640}
+  - {fileID: 9150199186119042082}
+  - {fileID: 1362055205027175957}
+  - {fileID: 7705131304087652819}
+  - {fileID: 772865526273564461}
+  - {fileID: 4708035658359202712}
+  - {fileID: 8170962001982172718}
+  - {fileID: 8429622151860021022}
+  - {fileID: 5037146359090376668}
+  - {fileID: 1382600426741373341}
+  - {fileID: 3328731578528166285}
+  - {fileID: 6177541528840312721}
+  - {fileID: 1568994759260040391}
+  - {fileID: 5914590279492832334}
+  - {fileID: 223684446568052065}
+  - {fileID: 3414921060962337090}
+  - {fileID: 7356270682715358315}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

@@ -20,7 +20,6 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     public Vector3 blastDirection;
     UnityEvent onKill;
     UnityEvent onHit;
-
     public bool canExplode;
     private void Start()
     {
@@ -133,7 +132,17 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     public GameObject explodeObj;
     bool exploded = false;
     GameObject exp;
-    IEnumerator Die()
+    public void Explode()
+    {
+        photonView.RPC("ExplodeRPC", RpcTarget.All);
+    }
+    [PunRPC]
+    public void ExplodeRPC()
+    {
+        health = 0;
+        SyncDamage(10);
+    }
+    public IEnumerator Die()
     {
         if (exploded == false && canExplode)
         {

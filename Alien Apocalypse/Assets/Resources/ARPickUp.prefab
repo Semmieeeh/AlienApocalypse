@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 7341569492545022555}
   - component: {fileID: 6388469757730345764}
   - component: {fileID: 5852391839303534673}
+  - component: {fileID: 5591837281423506374}
   m_Layer: 12
   m_Name: Assault Rifle
   m_TagString: Untagged
@@ -332,6 +333,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireArm: {fileID: 0}
+--- !u!114 &5591837281423506374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5966499906188179451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &7405219091794739946
 GameObject:
   m_ObjectHideFlags: 0

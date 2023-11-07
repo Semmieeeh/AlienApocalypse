@@ -623,6 +623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8175454672262138007}
+  - component: {fileID: 2237279748221222043}
   m_Layer: 11
   m_Name: BombsPivot
   m_TagString: Untagged
@@ -647,6 +648,28 @@ Transform:
   - {fileID: 7796057760073010005}
   m_Father: {fileID: 7332978098494593169}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2237279748221222043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548260486327869922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1988019110418151301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2405,7 +2428,10 @@ MonoBehaviour:
   gun: {fileID: 0}
   r: {fileID: 2320463752309720049}
   blastDirection: {x: 0, y: 0, z: 0}
+  canExplode: 1
   hitLimb: {fileID: 0}
+  explosion: {fileID: 3201137857499991782, guid: 78df2d92cefeb9841a90bb6c2e437dc6, type: 3}
+  explodeObj: {fileID: 1548260486327869922}
 --- !u!114 &2862996086437632071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2433,17 +2459,18 @@ MonoBehaviour:
   flash: {fileID: 0}
   particleMissOffset: 0.2
   state: 0
-  attackRange: 15
+  attackRange: 1.5
   targetRange: 0
   nearestPlayer: {fileID: 0}
   canAttack: 0
-  attackSpeed: 2
-  attackDamage: 2
+  attackSpeed: 0
+  attackDamage: 50
   timePassed: 0
   flyingEnemy: 0
   anim: {fileID: 6456500423871001546}
   armAnim: {fileID: 7559578415454998775}
   beaconlist: []
+  isBomber: 1
 --- !u!195 &7028250540927831896
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2478,14 +2505,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
+  ObservedComponentsFoldoutOpen: 0
   Group: 0
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
-  - {fileID: 0}
+  - {fileID: 5932660472288310766}
+  - {fileID: 1253222060486738215}
+  - {fileID: 6776610208842836813}
+  - {fileID: 7820184073888848070}
+  - {fileID: 756558591756492940}
+  - {fileID: 3122610295318662112}
+  - {fileID: 6250916238582234103}
+  - {fileID: 1589350850243978823}
+  - {fileID: 4553409197124207640}
+  - {fileID: 9150199186119042082}
+  - {fileID: 1362055205027175957}
+  - {fileID: 7705131304087652819}
+  - {fileID: 772865526273564461}
+  - {fileID: 4708035658359202712}
+  - {fileID: 8170962001982172718}
+  - {fileID: 8429622151860021022}
+  - {fileID: 5037146359090376668}
+  - {fileID: 1382600426741373341}
+  - {fileID: 3328731578528166285}
+  - {fileID: 6177541528840312721}
+  - {fileID: 1568994759260040391}
+  - {fileID: 5914590279492832334}
+  - {fileID: 223684446568052065}
+  - {fileID: 3414921060962337090}
+  - {fileID: 7356270682715358315}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

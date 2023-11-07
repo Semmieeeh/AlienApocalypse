@@ -55,6 +55,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public Animator armAnim;
     public List<Beacon> beaconlist = new List<Beacon>();
     public HashSet<Beacon> uniqueBeacons = new HashSet<Beacon>();
+    public bool isBomber;
     void Start()
     {
         targetRange = 10;
@@ -92,7 +93,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     private float firstOffset;
     float currentOffset;
     float desiredOffset;
-    [PunRPC]
     public void Offset()
     {
         firstOffset = Random.Range(4f, 8f);
@@ -140,7 +140,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             agent.destination = target;
                         }
                         photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
-                        Debug.Log(Vector3.Distance(transform.position, agent.destination));
                         if (Vector3.Distance(transform.position, target) <= targetRange -1)
                         {
                             NewTarget();
@@ -232,7 +231,14 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         {
             if (nearestPlayer.TryGetComponent(out PlayerHealth player))
             {
-                if (nearestPlayer.TryGetComponent(out Movement m))
+                if (isBomber)
+                {
+                    EnemyHealth h = GetComponent<EnemyHealth>();
+                    player.TakeDamage(damage);
+                    h.Explode();
+                    Debug.Log("Exploded");
+                }
+                if (nearestPlayer.TryGetComponent(out Movement m) && !isBomber)
                 {
                     if (m.rb.velocity.magnitude <= 0f)
                     {

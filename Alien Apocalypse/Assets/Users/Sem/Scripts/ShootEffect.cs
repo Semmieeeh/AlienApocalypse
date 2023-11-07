@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.VFX;
-
+using Photon.Pun;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -23,7 +23,7 @@ public class ShootEffect : ParticlePlayer
 
         for ( int i = 0; i < hitPoints.Length; i++ )
         {
-            VFXShootRay ray = Instantiate (shootRayObject).GetComponent<VFXShootRay> ( );
+            VFXShootRay ray = PhotonNetwork.Instantiate (shootRayObject.name,transform.position,Quaternion.identity).GetComponent<VFXShootRay> ( );
 
             Vector3 point = hitPoints[i];
 
@@ -40,7 +40,7 @@ public class ShootEffect : ParticlePlayer
             if ( hitEnemy )
                 continue;
 
-            VisualEffect decal = Instantiate (hitDecal, hitPoints[i], Quaternion.identity).GetComponent<VisualEffect> ( );
+            VisualEffect decal = PhotonNetwork.Instantiate (hitDecal.name, hitPoints[i], Quaternion.identity).GetComponent<VisualEffect> ( );
             decal.transform.forward = normal;
             decal.Play ( );
 
@@ -53,7 +53,7 @@ public class ShootEffect : ParticlePlayer
 
         for ( int i = 0; i < hit.Length; i++ )
         {
-            VFXShootRay ray = Instantiate (shootRayObject).GetComponent<VFXShootRay> ( );
+            VFXShootRay ray = PhotonNetwork.Instantiate (shootRayObject.name,transform.position,Quaternion.identity).GetComponent<VFXShootRay> ( );
 
             Vector3 point = hit[i].point;
 
@@ -70,7 +70,7 @@ public class ShootEffect : ParticlePlayer
             if ( hit[i].transform && hit[i].transform.gameObject.layer == enemyMask )
                 continue;
 
-            VisualEffect decal = Instantiate (hitDecal, hit[i].point, Quaternion.identity).GetComponent<VisualEffect> ( );
+            VisualEffect decal = PhotonNetwork.Instantiate (hitDecal.name, hit[i].point, Quaternion.identity).GetComponent<VisualEffect> ( );
 
             decal.transform.forward = hit[i].normal;
 
@@ -81,7 +81,7 @@ public class ShootEffect : ParticlePlayer
     public virtual void Activate ( bool hitEnemy, RaycastHit hit )
     {
         Play ( );
-        VFXShootRay ray = Instantiate (shootRayObject).GetComponent<VFXShootRay> ( );
+        VFXShootRay ray = PhotonNetwork.Instantiate(shootRayObject.name, transform.position, Quaternion.identity).GetComponent<VFXShootRay> ( );
 
         Vector3 point = hit.point;
 
@@ -95,7 +95,7 @@ public class ShootEffect : ParticlePlayer
             ray.Shoot (transform.position, point);
         }
 
-        VisualEffect decal = Instantiate (hitDecal, point, Quaternion.identity).GetComponent<VisualEffect> ( );
+        VisualEffect decal = PhotonNetwork.Instantiate (hitDecal.name, point, Quaternion.identity).GetComponent<VisualEffect> ( );
 
         decal.transform.forward = hit.normal;
 
