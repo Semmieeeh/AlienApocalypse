@@ -98,6 +98,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
                 }
                 
             }
+            
             StartCoroutine(nameof(Die));
         }
         else
