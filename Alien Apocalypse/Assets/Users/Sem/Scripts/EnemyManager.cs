@@ -13,7 +13,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     public GameObject[] enemiesToSpawn;
     public int enemyIndex;
     public int check;
-    public Transform spawnPoint;
+    public Transform[] spawnPoints;
 
     public List<EnemyHealth> enemies = new List<EnemyHealth>();
 
@@ -33,22 +33,23 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     [Header("UI Element")]
     public TextMeshProUGUI waveStatusText;
     public bool startedTheWaves;
-
+    public Transform curSpawnPos;
     public float waveStartTimeCounter;
     public float cooldownCounter;
     float multiplier = 0;
 
     public void Start()
     {
-        multiplier = 1;
-        startedTheWaves = false;
+        
         waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
         if (PhotonNetwork.IsMasterClient)
         {
+            
             instance = this;
-            spawnPoint = GameObject.Find("PlayerSpawnPoint").transform;
+            multiplier = 1;
+            startedTheWaves = false;
             waveSize = 5;
-
+            curSpawnPos = spawnPoints[0];
             waveStartTimeCounter = waveStartTime;
             cooldownCounter = waveCooldown;
             if (photonView.IsMine)
@@ -168,7 +169,8 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
             cooldownCounter = waveCooldown;
             wavesCompleted++;
-            //waveSize += 5;
+            waveSize += 3 * PhotonNetwork.CurrentRoom.PlayerCount;
+            curSpawnPos = spawnPoints[Random.Range(0, spawnPoints.Length -2)].transform;
             yield return new WaitForSeconds(waveCooldown);
             multiplier = multiplier * 1.15f;
             
@@ -190,9 +192,8 @@ public class EnemyManager : MonoBehaviourPunCallbacks
                 max = enemiesToSpawn.Length;
             }
             int enemyIndex = Random.Range(0, max);
-            Vector3 v = new Vector3(Random.Range(spawnPoint.position.x + 20f, spawnPoint.position.x - 20f), spawnPoint.position.y, Random.Range(spawnPoint.position.z + 20f, spawnPoint.position.z - 20f));
-            
-            GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, v, spawnPoint.rotation);
+            transform.GetChild(4).GetComponent<UfoSpawner>().PlayParticle();
+            GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, curSpawnPos.position, curSpawnPos.rotation);
             EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
             enemyHealth.multiplier = multiplier;
             enemyObj.GetComponent<EnemyAiTest>().attackDamage = enemyObj.GetComponent<EnemyAiTest>().attackDamage * multiplier;
