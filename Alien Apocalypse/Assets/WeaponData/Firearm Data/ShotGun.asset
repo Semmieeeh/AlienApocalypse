@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f41e6957edc5f404d8109c01ae381721, type: 3}
-  m_Name: Shotgun
+  m_Name: ShotGun
   m_EditorClassIdentifier: 
   prefab: {fileID: 1996631903346195566, guid: c93644c3c015d424fa8e878e06554edf, type: 3}
   dropPrefab: {fileID: 7868003588079456259, guid: 04a4475d282aacf4ab7207d13b4f009e, type: 3}
   name: 
   info: 
-  localPlacmentPos: {x: 0, y: 0, z: 0}
+  localPlacmentPos: {x: 0.3, y: -0.28, z: 0.41}
   firearmType: 1
   fireType: 4
   baseDamage: 30
@@ -30,16 +30,18 @@ MonoBehaviour:
   projectileSpeed: 0
   radius: 0
   shotgunBulletsAmount: 12
+  xSpread: 1
+  ySpread: 1
   baseMaxAmmo: 8
   baseReloadTime: 2
   raycastDistance: 50
-  swayClamp: 0
-  smoothing: 0
+  swayClamp: 0.05
+  smoothing: 5
   camRecoilX: 0
   camRecoilY: 0
   camRecoilZ: 0
-  camSnappiness: 0
-  camReturnSpeed: 0
+  camSnappiness: 10
+  camReturnSpeed: 10
   firearmRecoilX: 0
   firearmRecoilY: 0
   firearmRecoilZ: 0

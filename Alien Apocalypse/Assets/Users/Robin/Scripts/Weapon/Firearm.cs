@@ -185,14 +185,14 @@ public class Firearm : Weapon
                             StartCoroutine(ProjectileMode());
                         break;
                     }
-                    case FirearmData.Firetype.shotgun:
-                    {
-                        if(CanShootShotgun())
-                        {
-                            StartCoroutine(ShotgunMode());
-                        }
-                        break;
-                    }
+                    //case FirearmData.Firetype.shotgun:
+                    //{
+                    //    if(CanShootShotgun())
+                    //    {
+                    //        StartCoroutine(ShotgunMode());
+                    //    }
+                    //    break;
+                    //}
                 }
             }
         }
@@ -303,70 +303,107 @@ public class Firearm : Weapon
     bool CanShootShotgun() => !isShotgun && canShotgun;
 
 
-    IEnumerator ShotgunMode()
-    {
-        if(photonView.IsMine)
-        {
-            isShotgun = true;
-            canShotgun = false;
+    //IEnumerator ShotgunMode()
+    //{
+    //    if(photonView.IsMine)
+    //    {
+    //        isShotgun = true;
+    //        canShotgun = false;
 
-            events.onShooting?.Invoke();
+    //        events.onShooting?.Invoke();
 
-            for(int i = 0; i < firearmData.shotgunBulletsAmount; i++)
-            {
-                Vector3 direction = mainCam.transform.forward;
-                Vector3 spread = Vector3.zero;
-                spread += mainCam.transform.up * Random.Range(-1, 1);
-                spread += mainCam.transform.right * Random.Range(-1, 1);
+    //        mainEnd.Clear();
+    //        hitToEnd.Clear();
+    //        mainBegin.Clear();
+    //        hitToBegin.Clear();
 
-                direction += spread.normalized * Random.Range(0, 02f);
+    //        for(int i = 0; i < firearmData.shotgunBulletsAmount; i++)
+    //        {
+    //            //Vector3 direction = mainCam.transform.forward;
+    //            //Vector3 spread = mainCam.transform.position;
+    //            //spread += mainCam.transform.up * Random.Range(-firearmData.ySpread, firearmData.ySpread);
+    //            //spread += mainCam.transform.right * Random.Range(-firearmData.xSpread, firearmData.xSpread);
 
-                Vector3 shotgunHit;
-                if(Physics.Raycast(mainCam.transform.position, direction, out RaycastHit shotgunOut, firearmData.raycastDistance))
-                {
-                    shotgunHit = shotgunOut.point;
-                }
-                else
-                {
-                    shotgunHit = direction;
-                }
+    //            //direction += spread.normalized * Random.Range(0, 02f);
 
-                Vector3 particlePoint;
-                bool enemyHit = false;
+    //            Vector3 shotgunHit;
+    //            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit shotgunOut, firearmData.raycastDistance))
+    //            {
+    //                shotgunHit = shotgunOut.point;
+    //            }
+    //            else
+    //            {
+    //                shotgunHit = mainCam.transform.forward * firearmData.raycastDistance;
+    //            }
 
-                if(Physics.Linecast(mainCam.transform.position, shotgunHit, out hit))
-                {
-                    if(hit.transform.TryGetComponent(out IDamagable damagable))
-                    {
-                        damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy, bulletForce, Camera.main.transform.forward);
-                        enemyHit = true;
-                    }
+    //            mainBegin.Add(mainCam.transform.position);
+    //            hitToBegin.Add(shotgunHit);
 
-                    particlePoint = hit.point;
-                }
-                else
-                {
-                    particlePoint = shotgunHit;
-                }
+    //            Vector3 spread = shotgunHit;
+    //            spread.x += Random.Range(-firearmData.xSpread, firearmData.xSpread);
+    //            spread.y += Random.Range(-firearmData.ySpread, firearmData.ySpread);
+    //            shotgunHit += spread.normalized;
 
-                if(dataHolder.shootEffect != null)
-                {
-                    if(photonView.IsMine)
-                    {
-                        photonView.RPC("RPCBulletTracers", RpcTarget.All, enemyHit, particlePoint);
-                    }
-                }
+    //            Vector3 particlePoint;
+    //            bool enemyHit = false;
 
-            }
-
-            Recoil();
-            currentAmmo--;
+    //            Vector3 hitPoint = new Vector3(shotgunHit.x, shotgunHit.y, shotgunHit.z);
 
 
-            yield return new WaitForSeconds(cooldown);
-            isShotgun = false;
-        }
-    }
+
+    //            if(Physics.Linecast(mainCam.transform.position, hitPoint, out hit))
+    //            {
+    //                if(hit.transform.TryGetComponent(out IDamagable damagable))
+    //                {
+    //                    damagable.Damagable(damage, events.onKillEnemy, events.onHitEnemy, bulletForce, Camera.main.transform.forward);
+    //                    enemyHit = true;
+    //                }
+
+    //                particlePoint = hit.point;
+    //            }
+    //            else
+    //            {
+    //                particlePoint = hitPoint;
+    //            }
+
+    //            if(dataHolder.shootEffect != null)
+    //            {
+    //                if(photonView.IsMine)
+    //                {
+    //                    photonView.RPC("RPCBulletTracers", RpcTarget.All, enemyHit, particlePoint);
+    //                }
+    //            }
+
+    //            mainEnd.Add(mainCam.transform.position);
+    //            hitToEnd.Add(particlePoint);
+
+    //        }
+
+    //        Recoil();
+    //        currentAmmo--;
+
+
+    //        yield return new WaitForSeconds(cooldown);
+    //        isShotgun = false;
+    //    }
+    //}
+
+    //public List<Vector3> mainEnd;
+    //public List<Vector3> hitToEnd;    
+    //public List<Vector3> mainBegin;
+    //public List<Vector3> hitToBegin;
+
+    //private void Update()
+    //{
+    //    if(mainEnd.Count > 0)
+    //    {
+    //        for(int i = 0; i < firearmData.shotgunBulletsAmount; i++)
+    //        {
+    //            Debug.DrawLine(mainEnd[i], hitToEnd[i], Color.red);
+    //            Debug.DrawLine(mainBegin[i], hitToBegin[i], Color.green);
+    //        }
+    //    }
+    //}
 
     public bool IsReload() => isReloading; 
 
@@ -453,7 +490,7 @@ public class Firearm : Weapon
             bool enemyHit = false;
 
             Vector3 mainForward;
-            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit mainHit,firearmData.raycastDistance))
+            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit mainHit, firearmData.raycastDistance))
             {
                 mainForward = mainHit.point; 
             }
