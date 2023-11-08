@@ -37,7 +37,7 @@ public class UIPowerupManager : MonoBehaviour
     {
         var powerup = activeAbilities.SingleOrDefault (ab => ab.currentAbility == ability);
 
-        if ( powerup.Equals(ability))
+        if ( powerup != null && powerup.Equals(ability))
         {
             powerup.Blink ( );
             return;
