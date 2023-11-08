@@ -15,6 +15,7 @@ public class PickUpAbility : MonoBehaviourPunCallbacks, IInteractable
         {
             handler.AddAbility(firearmAbility);
             photonView.RPC("Destroy",RpcTarget.All);
+            UIPowerupManager.Instance.OnPickupPowerup (firearmAbility);
         }
     }
 
