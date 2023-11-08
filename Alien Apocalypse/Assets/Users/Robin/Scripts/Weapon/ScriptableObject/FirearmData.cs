@@ -52,6 +52,8 @@ public class FirearmData : WeaponData
     [Space]
     [Header("Shotgun")]
     public int shotgunBulletsAmount;
+    public float xSpread;
+    public float ySpread;
 
     [Space]
     [Header("Ammo")]
