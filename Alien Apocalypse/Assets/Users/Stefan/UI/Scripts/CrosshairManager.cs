@@ -18,6 +18,9 @@ public class CrosshairManager : MonoBehaviour
     Image crosshairImage;
 
     [SerializeField]
+    Image crosshairBackground;
+
+    [SerializeField]
     float animationTime;
 
     [SerializeField]
@@ -89,6 +92,8 @@ public class CrosshairManager : MonoBehaviour
     void SetCrosshair(int index, float size )
     {
         crosshairImage.sprite = crosshair.choises[index];
+        crosshairBackground.sprite = crosshairImage.sprite;
+
         crosshairSize = size;
 
         crosshairImage.transform.localScale = Vector3.one * crosshairSize;
