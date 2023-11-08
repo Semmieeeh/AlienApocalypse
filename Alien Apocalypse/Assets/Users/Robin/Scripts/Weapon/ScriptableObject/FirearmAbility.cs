@@ -17,4 +17,7 @@ public class FirearmAbility : Ability
     public int maxAmmo;
     [Header("Decrease in %")]
     public float reloadTime;
+
+    [Header ("UI Sprite")]
+    public Sprite uiSprite;
 }
