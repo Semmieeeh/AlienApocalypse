@@ -37,6 +37,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     public GameObject spectatorCam;
     [Header("UI")]
     public GameObject knockedCanvas;
+    public GameObject specUI;
+    public GameObject deathUI;
 
     public float Health
     {
@@ -98,7 +100,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
 
                 GetComponent<DashAbility>().enabled = false;
                 GetComponent<Grappling>().enabled = false;
-                GetComponent<WallRunning>().enabled = false;
+                //GetComponent<WallRunning>().enabled = false;
                 GetComponent<SlidingAbility>().enabled = false;
                 lastDmg -= Time.deltaTime;
                 if(lastDmg < 0)
@@ -117,7 +119,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
             case PlayerState.dead:
                 GetComponent<DashAbility>().enabled = false;
                 GetComponent<Grappling>().enabled = false;
-                GetComponent<WallRunning>().enabled = false;
+                //GetComponent<WallRunning>().enabled = false;
                 GetComponent<SlidingAbility>().enabled = false;
                 GetComponent<Movement>().enabled = false;
                 GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().isSpectator = true;
@@ -192,7 +194,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         transform.position = newPos;
         GetComponent<DashAbility>().enabled = true;
         GetComponent<Grappling>().enabled = true;
-        GetComponent<WallRunning>().enabled = true;
+        //GetComponent<WallRunning>().enabled = true;
         GetComponent<SlidingAbility>().enabled = true;
         state = PlayerState.alive;
         GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().isSpectator = false;

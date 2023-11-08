@@ -158,7 +158,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         if (canExplode == true)
         {
             
-            photonView.RPC("DieWithExplosion", RpcTarget.All, exp);
+            photonView.RPC("DieWithExplosion", RpcTarget.All);
         }
         else
         {
@@ -173,9 +173,9 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         PhotonNetwork.Destroy(gameObject);
     }
     [PunRPC]
-    void DieWithExplosion(GameObject expl)
+    void DieWithExplosion()
     {
-        if (expl != null)
+        if (exp != null)
         {
             PhotonNetwork.Destroy(exp);
         }

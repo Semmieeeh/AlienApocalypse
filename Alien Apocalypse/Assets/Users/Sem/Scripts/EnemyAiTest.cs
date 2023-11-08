@@ -70,7 +70,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             roamRange = beacons[j].radius;
         }
         target = transform.position;
-        agent.destination = target;
         state = EnemyState.idle;
         
         

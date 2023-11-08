@@ -9,6 +9,7 @@ public class SpectatorMode : MonoBehaviour
     public GameObject myPlayer;
     public List<PlayerHealth> playerList = new List<PlayerHealth>();
     public HashSet<PlayerHealth> uniquePlayers = new HashSet<PlayerHealth>();
+    public GameObject specUI;
     private void Update()
     {
         PlayerHealth[] playerHealthComponents = FindObjectsOfType<PlayerHealth>();
@@ -41,23 +42,30 @@ public class SpectatorMode : MonoBehaviour
 
         if (isSpectator)
         {
-            
-            if (Input.GetMouseButtonDown(1))
+            if (playerList.Count > 1)
             {
-                if (currentPlayer + 1 <= playerList.Count)
+                playerList[currentPlayer].specUI.SetActive(true);
+                if (Input.GetMouseButtonDown(1))
                 {
-                    currentPlayer += 1;
+                    if (currentPlayer + 1 <= playerList.Count)
+                    {
+                        currentPlayer += 1;
 
+                    }
                 }
-            }
-            else if (Input.GetMouseButtonDown(0))
-            {
-                if (currentPlayer - 1 >= 1)
+                else if (Input.GetMouseButtonDown(0))
                 {
-                    currentPlayer -= 1;
+                    if (currentPlayer - 1 >= 1)
+                    {
+                        currentPlayer -= 1;
+                    }
                 }
+                Camera.main.transform.position = playerList[currentPlayer].spectatorCam.transform.position;
             }
-            Camera.main.transform.position = playerList[currentPlayer].spectatorCam.transform.position;
+            else if(playerList.Count == 1)
+            {
+                playerList[currentPlayer].deathUI.SetActive(true);
+            }
         }
         else
         {

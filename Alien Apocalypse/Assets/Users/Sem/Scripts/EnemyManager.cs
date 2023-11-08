@@ -191,7 +191,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             }
             int enemyIndex = Random.Range(0, max);
             Vector3 v = new Vector3(Random.Range(spawnPoint.position.x + 20f, spawnPoint.position.x - 20f), spawnPoint.position.y, Random.Range(spawnPoint.position.z + 20f, spawnPoint.position.z - 20f));
-
+            
             GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, v, spawnPoint.rotation);
             EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
             enemyHealth.multiplier = multiplier;
