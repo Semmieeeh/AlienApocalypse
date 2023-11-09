@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Runtime.InteropServices;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -52,12 +53,21 @@ public class Movement : MonoBehaviourPunCallbacks
     {
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
-        maxFov = Camera.main.fieldOfView + 10;
+
         startSpeed = walkSpeed;
+        
+    }
+    public void AdjustFov(OptionsManager.OptionsData data)
+    {
+        
+        normalFov = data.Fov;
+        Camera.main.fieldOfView = normalFov;
+        maxFov = Camera.main.fieldOfView + 10;
     }
     bool appliedKnocked;
     private void Update()
     {
+        OptionsManager.onOptionsChanged += AdjustFov;
         if (photonView.IsMine)
         {
             if (downed && appliedKnocked == false)
