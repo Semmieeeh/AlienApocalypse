@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     [Header("General Health Modifiers")]
     [SerializeField]
     float m_health;
-
+    public BeaconManager points;
     public float maxHealth;
     public float healthRegenAmount;
     public float minHealth;

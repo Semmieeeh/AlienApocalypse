@@ -21,6 +21,7 @@ public class UIPauseManager : MonoBehaviour
     public GameObject cam;
     public GameObject weaponInput;
     public GameObject ui;
+    public GameObject deathScreen;
     public bool Paused
     {
         get

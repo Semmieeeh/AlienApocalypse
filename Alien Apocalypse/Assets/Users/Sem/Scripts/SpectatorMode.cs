@@ -64,7 +64,15 @@ public class SpectatorMode : MonoBehaviour
             }
             else if(playerList.Count == 1)
             {
-                playerList[currentPlayer].deathUI.SetActive(true);
+                GameObject canvas = GameObject.Find("PlayerCanvas");
+                for(int i = 0; i < canvas.transform.childCount-1; i++)
+                {
+                    canvas.transform.GetChild(i).gameObject.SetActive(false);
+
+                }
+                GameObject.Find("Death Screen").GetComponent<Animator>().SetBool("Active", true);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
         }
         else
