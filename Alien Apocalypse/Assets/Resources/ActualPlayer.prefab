@@ -430,6 +430,8 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   spectatorCam: {fileID: 2115501902041892078}
   knockedCanvas: {fileID: 3251831514349748185, guid: 5b6a78780c0ecff4184833c05a2ff0a1, type: 3}
+  specUI: {fileID: 0}
+  deathUI: {fileID: 0}
   state: 0
 --- !u!114 &3544805995978173203
 MonoBehaviour:
@@ -5586,7 +5588,7 @@ PrefabInstance:
     - target: {fileID: 2291872792041277451, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
       propertyPath: firearmData
       value: 
-      objectReference: {fileID: 11400000, guid: 5c90eef29bd2a8b4a8f491c6f4842d0f, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 2291872792041277451, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
       propertyPath: events.onHitEnemy.m_PersistentCalls.m_Calls.Array.size
       value: 1
