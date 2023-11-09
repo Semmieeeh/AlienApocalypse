@@ -94,9 +94,11 @@ public static class Utilities
         return new List<T>(array);
     }
 
-    public static T Random<T>(this IList<T> collection)
+    public static T Random<T>(this IList<T> collection) 
     {
-        return collection[UnityEngine.Random.Range(0, collection.Count)];
+        if ( collection.Count <= 0 )
+            return default(T);
+        return collection[UnityEngine.Random.Range(0, collection.Count -1)];
     }
 
     /// <summary>
