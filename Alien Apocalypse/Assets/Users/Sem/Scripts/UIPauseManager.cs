@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIPauseManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class UIPauseManager : MonoBehaviour
     public GameObject player;
     public GameObject cam;
     public GameObject weaponInput;
+    public GameObject ui;
     public bool Paused
     {
         get
@@ -79,8 +81,9 @@ public class UIPauseManager : MonoBehaviour
 
     public void ToMainMenu ( )
     {
+        
         PhotonNetwork.Disconnect();
-        GameObject.Find("Complete Main Menu").SetActive(true);
+        SceneManager.LoadScene(0);
         throw new System.NotImplementedException ( );
     }
 
