@@ -169,7 +169,7 @@ public class Grappling : MonoBehaviourPunCallbacks
         {
             
             canGrapple = false;
-            
+            arm.gameObject.GetComponent<AudioSource>().Play();
             armLowerTime = maxAnimDuration;
             pointingArm = false;
             isGrappling = true;

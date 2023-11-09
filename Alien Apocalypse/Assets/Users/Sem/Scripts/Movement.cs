@@ -67,7 +67,7 @@ public class Movement : MonoBehaviourPunCallbacks
     bool appliedKnocked;
     private void Update()
     {
-        OptionsManager.onOptionsChanged += AdjustFov;
+        
         if (photonView.IsMine)
         {
             if (downed && appliedKnocked == false)
