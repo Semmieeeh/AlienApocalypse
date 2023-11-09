@@ -58,7 +58,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public bool isBomber;
     void Start()
     {
-        targetRange = 10;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         agent.angularSpeed = turnSpeed;
@@ -84,7 +83,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
         else
         {
-            agent.stoppingDistance = targetRange - 2;
+            agent.stoppingDistance = targetRange - 4;
         }
         NewTarget();
         anim.SetBool("Flying", flyingEnemy);
