@@ -302,7 +302,6 @@ public class Firearm : Weapon
 
     bool CanShootShotgun() => !isShotgun && canShotgun;
 
-
     //IEnumerator ShotgunMode()
     //{
     //    if(photonView.IsMine)
@@ -319,14 +318,14 @@ public class Firearm : Weapon
 
     //        for(int i = 0; i < firearmData.shotgunBulletsAmount; i++)
     //        {
-    //            //Vector3 direction = mainCam.transform.forward;
-    //            //Vector3 spread = mainCam.transform.position;
-    //            //spread += mainCam.transform.up * Random.Range(-firearmData.ySpread, firearmData.ySpread);
-    //            //spread += mainCam.transform.right * Random.Range(-firearmData.xSpread, firearmData.xSpread);
+    //            Vector3 direction = mainCam.transform.forward;
+    //            Vector3 spread = mainCam.transform.position;
+    //            spread += mainCam.transform.up * Random.Range(-firearmData.ySpread, firearmData.ySpread);
+    //            spread += mainCam.transform.right * Random.Range(-firearmData.xSpread, firearmData.xSpread);
 
-    //            //direction += spread.normalized * Random.Range(0, 02f);
+    //            direction += spread.normalized * Random.Range(0, 02f);
 
-    //            Vector3 shotgunHit;
+    //            Vector3 shotgunHit = mainCam.transform.forward * firearmData.raycastDistance;
     //            if(Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out RaycastHit shotgunOut, firearmData.raycastDistance))
     //            {
     //                shotgunHit = shotgunOut.point;
@@ -339,16 +338,18 @@ public class Firearm : Weapon
     //            mainBegin.Add(mainCam.transform.position);
     //            hitToBegin.Add(shotgunHit);
 
-    //            Vector3 spread = shotgunHit;
+    //            Vector3 spread = mainCam.transform.forward * firearmData.raycastDistance;
     //            spread.x += Random.Range(-firearmData.xSpread, firearmData.xSpread);
     //            spread.y += Random.Range(-firearmData.ySpread, firearmData.ySpread);
     //            shotgunHit += spread.normalized;
 
-    //            Vector3 particlePoint;
-    //            bool enemyHit = false;
+    //            mainEnd.Add(mainCam.transform.position);
+    //            hitToEnd.Add(shotgunHit);
 
     //            Vector3 hitPoint = new Vector3(shotgunHit.x, shotgunHit.y, shotgunHit.z);
 
+    //            Vector3 particlePoint;
+    //            bool enemyHit = false;
 
 
     //            if(Physics.Linecast(mainCam.transform.position, hitPoint, out hit))
@@ -389,9 +390,12 @@ public class Firearm : Weapon
     //}
 
     //public List<Vector3> mainEnd;
-    //public List<Vector3> hitToEnd;    
+    //public List<Vector3> hitToEnd;
     //public List<Vector3> mainBegin;
     //public List<Vector3> hitToBegin;
+
+    //public Vector3 mainForwatd;
+    //public Vector3 mainPos;
 
     //private void Update()
     //{
@@ -400,9 +404,18 @@ public class Firearm : Weapon
     //        for(int i = 0; i < firearmData.shotgunBulletsAmount; i++)
     //        {
     //            Debug.DrawLine(mainEnd[i], hitToEnd[i], Color.red);
+    //        }
+    //    }
+
+    //    if(mainBegin.Count > 0)
+    //    {
+    //        for(int i = 0; i < firearmData.shotgunBulletsAmount; i++)
+    //        {
     //            Debug.DrawLine(mainBegin[i], hitToBegin[i], Color.green);
     //        }
     //    }
+
+    //    Debug.DrawRay(mainCam.transform.position, mainCam.transform.forward * firearmData.raycastDistance, Color.blue);
     //}
 
     public bool IsReload() => isReloading; 
@@ -462,16 +475,6 @@ public class Firearm : Weapon
             firearmTargetPosition = new Vector3(firearmData.localPlacmentPos.x, firearmData.localPlacmentPos.y, firearmData.firearmRecoilBackUp + firearmData.localPlacmentPos.z);
         }
     }
-
-    //private void Update()
-    //{
-    //    Vector3 mainForward = mainCam.transform.forward * firearmData.raycastDistance;
-    //    Vector3 gunForward = dataHolder.muzzle.forward * firearmData.raycastDistance;
-
-    //    Vector3 hitPoint = new Vector3(mainForward.x, mainForward.y, mainForward.z);
-
-    //    Debug.DrawLine(mainCam.transform.position, hitPoint, Color.red);
-    //}
 
     void Shoot()
     {
