@@ -58,6 +58,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     public bool isBomber;
     void Start()
     {
+        targetRange = 10;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         agent.angularSpeed = turnSpeed;
