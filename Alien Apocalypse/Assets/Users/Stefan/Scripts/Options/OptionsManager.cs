@@ -597,21 +597,21 @@ public class OptionsManager : MonoBehaviour
         /// </summary>
         private OptionsData ( )
         {
-            //crosshairEffects = true;
-            //fov = 80;
-            //horizontalSens = 50;
-            //verticalSens = 50;
+            crosshairEffects = true;
+            fov = 80;
+            horizontalSens = 50;
+            verticalSens = 50;
 
-            //screenResIndex = 1;
-            //fpsIndex = 6;
-            //vSync = false;
-            //qualityIndex = 3;
-            //fullscreen = true;
+            screenResIndex = 1;
+            fpsIndex = 6;
+            vSync = false;
+            qualityIndex = 3;
+            fullscreen = true;
 
-            //mainAudioStrength = 1;
-            //soundsStrength = 1;
-            //musicStrength = 1;
-            //ambienceStrength = 1;
+            mainAudioStrength = 1;
+            soundsStrength = 1;
+            musicStrength = 1;
+            ambienceStrength = 1;
 
             Debug.LogWarning ("Created a new options save file!");
 
