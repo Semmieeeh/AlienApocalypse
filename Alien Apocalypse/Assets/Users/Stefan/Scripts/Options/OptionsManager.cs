@@ -157,7 +157,11 @@ public class OptionsManager : MonoBehaviour
         var optionType = typeof (IOption<T>);
 
         // Find all GameObjects with UISelectable component
-        var selectableObjects = GameObject.FindObjectsOfType<UISelectable> (true);
+
+        var canvas = GameObject.FindObjectOfType<Canvas> ( );
+
+        Debug.Log (canvas.name);
+        var selectableObjects = canvas.transform.GetComponentsInHierarchy<UISelectable>();
 
         var optionInstances = new List<IOption<T>> ( );
 
@@ -593,21 +597,21 @@ public class OptionsManager : MonoBehaviour
         /// </summary>
         private OptionsData ( )
         {
-            crosshairEffects = true;
-            fov = 80;
-            horizontalSens = 50;
-            verticalSens = 50;
+            //crosshairEffects = true;
+            //fov = 80;
+            //horizontalSens = 50;
+            //verticalSens = 50;
 
-            screenResIndex = 1;
-            fpsIndex = 6;
-            vSync = false;
-            qualityIndex = 3;
-            fullscreen = true;
+            //screenResIndex = 1;
+            //fpsIndex = 6;
+            //vSync = false;
+            //qualityIndex = 3;
+            //fullscreen = true;
 
-            mainAudioStrength = 1;
-            soundsStrength = 1;
-            musicStrength = 1;
-            ambienceStrength = 1;
+            //mainAudioStrength = 1;
+            //soundsStrength = 1;
+            //musicStrength = 1;
+            //ambienceStrength = 1;
 
             Debug.LogWarning ("Created a new options save file!");
 
