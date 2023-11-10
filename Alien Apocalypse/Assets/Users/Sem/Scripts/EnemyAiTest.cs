@@ -187,8 +187,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             else
                             {
                                 canChooseNew = true;
-                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
-                                photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 2);
+                                if (!flyingEnemy)
+                                {
+                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
+                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 2);
+                                }
                             }
 
                             if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
