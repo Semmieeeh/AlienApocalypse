@@ -100,6 +100,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
 
                 GetComponent<DashAbility>().enabled = false;
                 GetComponent<Grappling>().enabled = false;
+                GetComponent<Movement>().downed = true;
                 //GetComponent<WallRunning>().enabled = false;
                 GetComponent<SlidingAbility>().enabled = false;
                 lastDmg -= Time.deltaTime;
@@ -117,18 +118,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
                 break;
 
             case PlayerState.dead:
-                GetComponent<DashAbility>().enabled = false;
-                GetComponent<Grappling>().enabled = false;
-                //GetComponent<WallRunning>().enabled = false;
-                GetComponent<SlidingAbility>().enabled = false;
-                GetComponent<Movement>().enabled = false;
-                GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().isSpectator = true;
-                Debug.Log("You died");
+                photonView.RPC("Die", RpcTarget.All);
                 break;
 
         }
         if (revive)
         {
+            
             photonView.RPC("Revive",RpcTarget.All);
             revive = false;
             GetComponent<SpectatorMode>().isSpectator = false;
@@ -136,7 +132,20 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         }
     }
 
-
+    [PunRPC]
+    public void Die()
+    {
+        Health = 0;
+        state = PlayerState.dead;
+        GetComponent<Movement>().downed = true;
+        GetComponent<DashAbility>().enabled = false;
+        GetComponent<Grappling>().enabled = false;
+        //GetComponent<WallRunning>().enabled = false;
+        GetComponent<SlidingAbility>().enabled = false;
+        GetComponent<Movement>().enabled = false;
+        GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().isSpectator = true;
+        Debug.Log("You died");
+    }
     void OnHealthUpdate()
     {
         healthBar.SetValue(Health);
@@ -173,7 +182,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
             c.center = v;
             
             animator.SetTrigger("Downed");
-            GetComponent<Movement>().downed = true;
+            
             robot.transform.localPosition = new Vector3(0, 0.65f, -1f);
             animatorObj.transform.localPosition = new Vector3(0.045f, 0.658f, -0.331f);
             weapons.SetActive(false);

@@ -44,7 +44,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
         waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
         if (PhotonNetwork.IsMasterClient)
         {
-            
+            waveStartTime = 20;
             instance = this;
             multiplier = 1;
             startedTheWaves = false;
@@ -154,7 +154,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             enemiesSpawning = false;
             photonView.RPC(nameof(UpdateIsInCooldownTwo), RpcTarget.AllBuffered, enemiesSpawning);
             yield return new WaitForSeconds(waveStartTime);
-            
+            waveStartTime = 5;
             for (int i = 0; i < waveSize * PhotonNetwork.CurrentRoom.PlayerCount; i++)
             {
                 SpawnEnemies(1);

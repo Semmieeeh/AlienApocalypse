@@ -8,6 +8,6 @@ public class VolumeOnConnect : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        GetComponent<AudioSource>().volume = 1; 
+        GetComponent<AudioSource>().volume = 1;  
     }
 }

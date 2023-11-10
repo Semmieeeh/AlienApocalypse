@@ -15,6 +15,7 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
     public ParticleSystem[] partartarticles;
     public float heightOffset;
     bool active;
+    public bool sound;
 
     private void Start()
     {
@@ -51,7 +52,13 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
     [PunRPC]
     void UfoActivate()
     {
+
         StopAllCoroutines();
+        if(sound == false)
+        {
+            GetComponent<AudioSource>().Play();
+            sound = true;
+        }
         mesh.enabled = true;
         Vector3 desiredPos = new Vector3(m.curSpawnPos.position.x, m.curSpawnPos.position.y, m.curSpawnPos.position.z);
         desiredPos.y += heightOffset;
@@ -60,6 +67,7 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
     [PunRPC]
     void UfoDeactivate()
     {
+        sound = false;
         StartCoroutine(nameof(MeshAct));
         Vector3 desiredPos = transform.position;
         desiredPos.y = 500;

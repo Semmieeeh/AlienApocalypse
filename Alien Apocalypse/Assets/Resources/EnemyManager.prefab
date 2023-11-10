@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7498964088437310540}
   - component: {fileID: 7744569080803617684}
   - component: {fileID: 167180759311483873}
+  - component: {fileID: 1506430771043023770}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -79,7 +80,7 @@ MonoBehaviour:
   enemiesSpawning: 0
   waveStatusText: {fileID: 0}
   startedTheWaves: 0
-  curSpawnPos: {fileID: 0}
+  curSpawnPos: {fileID: 433465912708768153}
   waveStartTimeCounter: 0
   cooldownCounter: 0
 --- !u!114 &7744569080803617684
@@ -121,6 +122,18 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &1506430771043023770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2735682329253181900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1b86e2cc3f96f45bd9f1eaddfd46cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6745604656680241264
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +338,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6993837198820233261, guid: 0e58420e1f01d5548bf5f13bf4d3f872, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6528159322090908458}
+    - targetCorrespondingSourceObject: {fileID: 6993837198820233261, guid: 0e58420e1f01d5548bf5f13bf4d3f872, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4939807583154037505}
   m_SourcePrefab: {fileID: 100100000, guid: 0e58420e1f01d5548bf5f13bf4d3f872, type: 3}
 --- !u!198 &740388849237524488 stripped
 ParticleSystem:
@@ -355,6 +371,7 @@ MonoBehaviour:
   - {fileID: 740388849237524488}
   - {fileID: 8654457590496376448}
   heightOffset: 20
+  sound: 0
 --- !u!114 &2674267259598069935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +432,102 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &4939807583154037505
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7228978590474314141}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2df98c9d8d0af2e4290c1bc2e3859fe8, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 1
+  MaxDistance: 400
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &7466639827131051417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7116726476901833769, guid: 0e58420e1f01d5548bf5f13bf4d3f872, type: 3}

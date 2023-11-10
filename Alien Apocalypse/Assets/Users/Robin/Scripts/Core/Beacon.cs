@@ -78,8 +78,14 @@ public class Beacon : MonoBehaviourPunCallbacks
                 c = enemyColor;
                 if (totalScore >= 100)
                 {
+                    
                     totalScore = 100;
                     
+                }
+                if(totalScore <= 0)
+                {
+                    GameObject.Find("Death Screen").GetComponent<Animator>().SetBool("Active", true);
+                    FindObjectOfType<PlayerHealth>().Die();
                 }
             }
             else if(enemies.Count == 0)
@@ -88,6 +94,7 @@ public class Beacon : MonoBehaviourPunCallbacks
                 c = playerColor;
                 if (totalScore <= 0)
                 {
+                    
                     totalScore = 0;
                     
                 }
