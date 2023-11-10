@@ -366,7 +366,7 @@ public class OptionsManager : MonoBehaviour
                         9 => MainAudioStrength,
                         10 => SoundsStrength,
                         11 => MusicStrength,
-                        12 => AmbienceStrength,
+                        12 => UIStrength,
                         13 => crosshairIndex,
                         14 => crosshairSize,
                         _ => throw new IndexOutOfRangeException ( ),
@@ -582,7 +582,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
-        public float AmbienceStrength
+        public float UIStrength
         {
             get => ambienceStrength;
             set

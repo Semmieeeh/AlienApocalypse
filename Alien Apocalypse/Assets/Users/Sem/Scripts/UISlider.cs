@@ -44,6 +44,7 @@ public class UISlider : UISelectable, IOption<float>
 
     public float GetValue ( )
     {
+        Debug.Log (slider.value + "RREWGSERGSERTERSEWTREWET");
         return slider.value;
     }
 
