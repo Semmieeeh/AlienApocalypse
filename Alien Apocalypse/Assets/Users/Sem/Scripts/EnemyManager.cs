@@ -170,7 +170,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             cooldownCounter = waveCooldown;
             wavesCompleted++;
             waveSize += 3 * PhotonNetwork.CurrentRoom.PlayerCount;
-            curSpawnPos = spawnPoints[Random.Range(0, spawnPoints.Length -2)].transform;
+            curSpawnPos = spawnPoints[Random.Range(0, 3)].transform;
             yield return new WaitForSeconds(waveCooldown);
             multiplier = multiplier * 1.15f;
             
