@@ -105,6 +105,7 @@ public class OptionsManager : MonoBehaviour
     {
         onOptionsChanged?.Invoke (OptionsData.Options);
         Debug.Log ("If you see this, the optionschanged delegate has been called!");
+        Debug.Log (OptionsData.Options.ToString ( ));
     }
 
     void ApplyOptions (OptionsData options )
@@ -127,6 +128,7 @@ public class OptionsManager : MonoBehaviour
             try
             {
                 element.SetValue ((T) OptionsData.Options[element.OptionIndex]);
+                Debug.Log ($"Set value of element index ({element.OptionIndex}) to {OptionsData.Options[element.OptionIndex]}");
             }
             catch ( Exception )
             {
@@ -139,8 +141,14 @@ public class OptionsManager : MonoBehaviour
     {
         foreach ( var element in list )
         {
+            var index = element.OptionIndex;
+            var value = element.GetValue ( );
+
+
             OptionsData.Options[element.OptionIndex] = element.GetValue ( );
+            Debug.Log ($"Index ({element.OptionIndex}) has a value: {element.GetValue ( )}");
         }
+        OptionsData.Options.Save ( );
     }
 
     // Get all instances of IOption<T> attached to GameObjects with UISelectable component
@@ -374,51 +382,51 @@ public class OptionsManager : MonoBehaviour
                     switch ( index )
                     {
                         case 0:
-                            CrosshairEffects = (bool) value;
+                            crosshairEffects = (bool) value;
                             break;
                         case 1:
-                            Fov = (float) value;
+                            fov = (float) value;
                             break;
                         case 2:
-                            HorizontalSens = (float) value;
+                            horizontalSens = (float) value;
                             break;
                         case 3:
-                            VerticalSens = (float) value;
+                            verticalSens = (float) value;
                             break;
                         case 4:
-                            ScreenResIndex = (int) value;
+                            screenResIndex = (int) value;
                             break;
                         case 5:
-                            FpsIndex = (int) value;
+                            fpsIndex = (int) value;
                             break;
                         case 6:
-                            QualityIndex = (int) value;
+                            qualityIndex = (int) value;
                             break;
                         case 7:
-                            Fullscreen = (bool) value;
+                            fullscreen = (bool) value;
                             break;
                         case 8:
-                            VSync = (bool) value;
+                            vSync = (bool) value;
                             break;
                         case 9:
-                            MainAudioStrength = (float) value;
+                            mainAudioStrength = (float) value;
                             break;
                         case 10:
-                            SoundsStrength = (float) value;
+                            soundsStrength = (float) value;
                             break;
                         case 11:
-                            MusicStrength = (float) value;
+                            musicStrength = (float) value;
                             break;
                         case 12:
-                            AmbienceStrength = (float) value;
+                            ambienceStrength = (float) value;
 
                             break;
                         case 13:
-                            CrosshairIndex = (int) value;
+                            crosshairIndex = (int) value;
                             break;
 
                         case 14:
-                            CrosshairSize = (float) value;
+                            crosshairSize = (float) value;
                             break;
 
                         default:
@@ -600,6 +608,8 @@ public class OptionsManager : MonoBehaviour
             soundsStrength = 1;
             musicStrength = 1;
             ambienceStrength = 1;
+
+            Debug.LogWarning ("Created a new options save file!");
 
             Save ( );
         }
