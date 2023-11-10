@@ -97,8 +97,8 @@ public class OptionsManager : MonoBehaviour
     void SaveElementsOptionData ( )
     {
         SaveValuesOfElements (boolOptions);
-        SaveValuesOfElements (intOptions);
         SaveValuesOfElements (floatOptions);
+        SaveValuesOfElements (intOptions);
     }
 
     private void OnOptionChanged ( )
