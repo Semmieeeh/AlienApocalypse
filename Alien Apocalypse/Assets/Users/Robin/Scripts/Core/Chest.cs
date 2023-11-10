@@ -7,6 +7,28 @@ using Photon.Pun;
 [RequireComponent(typeof(PhotonTransformView))]
 public class Chest : MonoBehaviourPunCallbacks, IInteractable
 {
+    /*
+     //////* 0 => CrosshairEffects,
+       //////1 => Fov,
+       //////2 => HorizontalSens,
+       //////3 => VerticalSens,
+       //////4 => ScreenResIndex,
+       //////5 => FpsIndex,
+       //////6 => QualityIndex,
+       //////7 => Fullscreen,
+       //////8 => VSync,
+       //////9 => MainAudioStrength,
+       //////10 => SoundsStrength,
+       //////11 => MusicStrength,
+       //////12 => AmbienceStrength,
+       //////13 => crosshairIndex,
+       //////14 => crosshairSize,
+       //////_ => throw new 
+     * 
+     * 
+     * 
+     * 
+     */
     public ChestManager chestManager;
 
     [Space]
