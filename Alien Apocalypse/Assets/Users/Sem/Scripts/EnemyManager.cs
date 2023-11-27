@@ -74,61 +74,9 @@ public class EnemyManager : MonoBehaviourPunCallbacks
 
 
     }
-
-    [PunRPC]
-    public void UpdateCooldownCounter(float newCooldown)
+    private void Update()
     {
-        cooldownCounter = newCooldown;
-        waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
-    }
-    private float syncCooldownInterval = 0.05f;
-    private float lastSyncTime;
-    public void Update()
-    {
-
-
-        if (photonView.IsMine)
-        {            
-            if (PhotonNetwork.IsMasterClient)
-            {
-                cooldownCounter -= Time.deltaTime;
-                photonView.RPC(nameof(UpdateUIText), RpcTarget.All);
-                if (Time.time - lastSyncTime >= syncCooldownInterval)
-                {
-                    lastSyncTime = Time.time;
-                    photonView.RPC(nameof(UpdateCooldownCounter), RpcTarget.AllBuffered, cooldownCounter);
-                    
-
-                }
-            }
-            
-        }
-        
-    }
-    [PunRPC]
-    public void UpdateUIText()
-    {
-        if (waveStatusText != null)
-        {
-            if (isInCooldown)
-            {
-                waveStatusText.rectTransform.sizeDelta = new Vector2(350, 60);
-                waveStatusText.text = "Next Wave In: " + cooldownCounter.ToString("F1");
-            }
-            else
-            {
-                waveStatusText.rectTransform.sizeDelta = new Vector2(300, 60);
-                waveStatusText.text = "Wave Start: " + cooldownCounter.ToString("F1");
-            }
-
-            if (cooldownCounter <= 0 && enemiesSpawning == true)
-            {
-                if (waveStatusText != null)
-                {
-                    waveStatusText.text = "Enemies Spawning";
-                }
-            }
-        }
+        cooldownCounter -= Time.deltaTime;
     }
     [PunRPC]
     public void UpdateIsInCooldown(bool newValue)

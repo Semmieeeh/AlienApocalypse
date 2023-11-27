@@ -56,6 +56,14 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         photonView.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);
         photonView.RPC("SetPlayerColor", RpcTarget.All);
         gameObject.tag = "Player";
+        if(!TryGetComponent<Rigidbody>(out Rigidbody rb))
+        {
+            Rigidbody rig = gameObject.AddComponent<Rigidbody>();
+            rig = GetComponent<Rigidbody>();
+            rig.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            rig.interpolation = RigidbodyInterpolation.Interpolate;
+            rig.freezeRotation = true;
+        }
     }
 
     [PunRPC]

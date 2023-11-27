@@ -53,7 +53,7 @@ public class Movement : MonoBehaviourPunCallbacks
     {
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
-
+        PhotonNetwork.SerializationRate = 20;
         startSpeed = walkSpeed;
         
     }
@@ -108,26 +108,29 @@ public class Movement : MonoBehaviourPunCallbacks
             return false;
         }
     }
+    float time;
+    float interval = 0.1f;
     public void ArmAnimCheck()
     {
-        
-        if(sprinting && input.magnitude > 0.5f)
+        time += Time.deltaTime;
+        if (time > interval)
         {
-            photonView.RPC("AnimRPC", RpcTarget.All, 2);
-            
-        }
+            if (sprinting && input.magnitude > 0.5f)
+            {
+                photonView.RPC("AnimRPC", RpcTarget.All, 2);
 
-        if(!sprinting && input.magnitude > 0.5f )
-        {
-            photonView.RPC("AnimRPC", RpcTarget.All, 1);
-        }
-        
-        if(input.magnitude < 0.5f)
-        {
-            photonView.RPC("AnimRPC", RpcTarget.All, 0);
-        }
+            }
 
-        
+            if (!sprinting && input.magnitude > 0.5f)
+            {
+                photonView.RPC("AnimRPC", RpcTarget.All, 1);
+            }
+
+            if (input.magnitude < 0.5f)
+            {
+                photonView.RPC("AnimRPC", RpcTarget.All, 0);
+            }            
+        }  
     }
     [PunRPC]
     public void AnimRPC(int i)
@@ -135,9 +138,6 @@ public class Movement : MonoBehaviourPunCallbacks
         armAnim.SetInteger("ArmState", i);
         armAnim.SetBool("Jumping", grounded);
         armAnim.SetBool("Moving", IsMoving());
-        
-
-
     }
     [PunRPC]
     void Knocked()
@@ -222,7 +222,7 @@ public class Movement : MonoBehaviourPunCallbacks
                 if (jumping && !downed)
                 {
                     rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
-                    anim.SetTrigger("Jump");
+                    
                 }
                 else if (input.magnitude > 0.5f)
                 {
@@ -302,7 +302,7 @@ public class Movement : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            photonView.RPC("SetJumpAnim", RpcTarget.All, grounded);
+            
             if (!grounded && jumped == false)
             {
                 jumped = true;
@@ -328,6 +328,7 @@ public class Movement : MonoBehaviourPunCallbacks
                 walkState = 0;
                 photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards,false);
             }
+            photonView.RPC("SetJumpAnim", RpcTarget.All,grounded);
         }
     }
    [PunRPC]
@@ -345,8 +346,9 @@ public class Movement : MonoBehaviourPunCallbacks
     [PunRPC]
     void SetJumpAnim(bool b)
     {
-        anim.SetBool("Grounded", b);
+        anim.SetBool("Grounded",b);
         armAnim.SetBool("Jumping", b);
     }
 
+    
 }

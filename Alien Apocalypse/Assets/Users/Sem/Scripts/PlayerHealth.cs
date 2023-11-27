@@ -65,6 +65,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     void Start()
     {
         lastDmg = 3;
+        rb = GetComponent<Rigidbody>();
         robotPos = robot.transform.localPosition;
         otherPos = animatorObj.transform.localPosition;
         height = c.height;
@@ -72,6 +73,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         maxHealth = 100;
         Health = maxHealth;
         state = PlayerState.alive;
+        PhotonNetwork.SerializationRate = 20;
+        PhotonNetwork.SendRate = 30;
     }
 
     // Update is called once per frame
@@ -81,9 +84,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         {
             photonView.RPC(nameof(Revive), RpcTarget.All);
         }
-
-        
-
         switch (state)
         {
             
@@ -151,7 +151,35 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         healthBar.SetValue(Health);
         photonView.RPC("UpdateHealth", RpcTarget.All, Health);
     }
+    Rigidbody rb;
+    Vector3 networkPosition;
+    Quaternion networkRotation;
+    private void FixedUpdate()
+    {
+        if (!photonView.IsMine)
+        {
+            rb.position = Vector3.MoveTowards(rb.position, networkPosition, Time.fixedDeltaTime);
+            rb.rotation = Quaternion.RotateTowards(rb.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+        }
+    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(this.rb.position);
+            stream.SendNext(this.rb.rotation);
+            stream.SendNext(this.rb.velocity);
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkRotation = (Quaternion)stream.ReceiveNext();
+            rb.velocity = (Vector3)stream.ReceiveNext();
 
+            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
+            networkPosition += (this.rb.velocity * lag);
+        }
+    }
     public void TakeDamage(float damage)
     {
         //update health text object
