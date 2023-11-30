@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -12,6 +13,14 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField]
     GameObject mainMenu, playSection, settingsSection,controlsSection, creditsSection, quitSection;
+
+    [SerializeField]
+    Material transition;
+
+    [SerializeField]
+    float transitionTime;
+
+    float currentTransitionTime;
 
     public UIPopup Popup
     {
@@ -36,7 +45,11 @@ public class MainMenu : MonoBehaviour
 
     private void Update ( )
     {
-        Debug.Log (PlayerName.NickName);
+        if(currentTransitionTime <= transitionTime)
+            currentTransitionTime += Time.deltaTime;
+
+        transition.SetFloat ("_Progress", Mathf.InverseLerp (0, transitionTime, currentTransitionTime));
+
     }
     public void PopupMessage(string description)
     {
@@ -79,12 +92,16 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    private void ToggleSection(GameObject toEnable)
+
+
+    private async void ToggleSection(GameObject toEnable)
     {
         var menus = new[]
         {
             mainMenu, playSection, settingsSection, controlsSection, creditsSection, quitSection
         };
+
+        await Task.Delay ( Mathf.RoundToInt(transitionTime / 2 * 1000));
 
         for (int i = 0; i < menus.Length; i++)
         {
