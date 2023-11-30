@@ -2798,7 +2798,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5375016426746748510}
-  - component: {fileID: 6516042150687062557}
   - component: {fileID: 6107837123547481083}
   - component: {fileID: 1842779734311429588}
   - component: {fileID: 974514304632590948}
@@ -2827,28 +2826,6 @@ Transform:
   - {fileID: 8783936696886340848}
   m_Father: {fileID: 8643766560232350041}
   m_LocalEulerAnglesHint: {x: -68.786, y: 127.605, z: -300.473}
---- !u!114 &6516042150687062557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6101855443315125917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 0
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!82 &6107837123547481083
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3676,6 +3653,7 @@ GameObject:
   - component: {fileID: 5641062512635061077}
   - component: {fileID: 7614992401982183327}
   - component: {fileID: 5514600773744489883}
+  - component: {fileID: 8585879037735286754}
   m_Layer: 11
   m_Name: Alien Blaster Pistol
   m_TagString: Untagged
@@ -3773,6 +3751,22 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &8585879037735286754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8263295312938792522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &9122372183336142014
 GameObject:
   m_ObjectHideFlags: 0
@@ -4026,7 +4020,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8103323928623272692, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

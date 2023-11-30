@@ -63,6 +63,8 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
             rig.collisionDetectionMode = CollisionDetectionMode.Continuous;
             rig.interpolation = RigidbodyInterpolation.Interpolate;
             rig.freezeRotation = true;
+            rig.mass = 0.5f;
+            rig.drag = 0.5f;
         }
     }
 

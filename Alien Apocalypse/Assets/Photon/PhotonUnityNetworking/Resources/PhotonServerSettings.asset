@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: eu
+  DevRegion: 
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -41,16 +41,18 @@ MonoBehaviour:
   - Destroy
   - DestroyRpc
   - DestroySpaceship
+  - Die
   - DieVoid
+  - DieWithExplosion
   - Downed
   - DrawRopeRPC
+  - ExplodeRPC
   - Fire
+  - FlagRPC
   - GunRPC
   - Island
   - Knocked
-  - NetworkStart
   - NewChest
-  - Offset
   - OpenChest
   - PlaySound
   - Projectile
@@ -66,25 +68,17 @@ MonoBehaviour:
   - Shader
   - SyncArmAnimation
   - SyncDamage
+  - UfoActivate
+  - UfoDeactivate
   - UpdateAlienArms
   - UpdateAlienLegs
   - UpdateAnim
   - UpdateAnimation
-  - UpdateCooldownCounter
   - UpdateHealth
   - UpdateIsInCooldown
   - UpdateIsInCooldownTwo
-  - UpdateUIText
   - Walking
   - WeaponOnServer
-  - FlagRPC
-  - FlagColor
-  - DieWithExplosion
-  - ReleaseRPC
-  - ExplodeRPC
-  - UfoActivate
-  - UfoDeactivate
-  - Die
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
-  DevRegionSetOnce: 1
+  ShowSettings: 0
+  DevRegionSetOnce: 0

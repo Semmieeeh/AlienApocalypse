@@ -146,7 +146,8 @@ public class Movement : MonoBehaviourPunCallbacks
     }
     private void OnTriggerStay(Collider other)
     {
-        grounded = other.gameObject.tag == "Ground";
+        grounded = other.gameObject.tag == "Ground" || other.gameObject.tag == "Wall";
+        
         
     }
     public void StopWhenNoInput()

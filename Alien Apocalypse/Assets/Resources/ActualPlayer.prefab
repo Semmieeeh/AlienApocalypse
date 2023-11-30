@@ -174,7 +174,7 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 1
+  observableSearch: 2
   ObservedComponents:
   - {fileID: 8251531310835535942}
   - {fileID: -3496741408671673677}
@@ -406,7 +406,7 @@ MonoBehaviour:
   downedSpeed: 8
   maxVelocityChange: 20
   turnSpeed: 0
-  slowDownForce: 5
+  slowDownForce: 10
   stopTime: 0
   stopped: 0
   fallSpeed: 0
@@ -3453,7 +3453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1909738542824555061}
   - component: {fileID: 720840883297555111}
-  - component: {fileID: 4027912322418584436}
+  - component: {fileID: 7059645938182162407}
   m_Layer: 9
   m_Name: WeaponInput
   m_TagString: Untagged
@@ -3574,7 +3574,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   anim: {fileID: 438766639739593481}
---- !u!114 &4027912322418584436
+--- !u!114 &7059645938182162407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5656,6 +5656,14 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4805483315868363733, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4805483315868363733, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
+      propertyPath: ObservedComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5671873309723062681, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5696,7 +5704,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 285309867741825628, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5908,6 +5917,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4805483315868363733, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5671873309723062681, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5948,7 +5961,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 285309867741825628, guid: 1c0e30e7d63a79a44903b6b2457c9540, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
