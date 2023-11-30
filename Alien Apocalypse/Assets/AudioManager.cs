@@ -5,11 +5,14 @@ using static UnityEngine.Rendering.DebugUI;
 public class AudioManager : MonoBehaviour
 {
     public AudioMixer uiMixer, masterMixer, SFXMixer, musicMixer;
-
-    // Start is called before the first frame update
-    void Start ( )
+    private void OnEnable ( )
     {
-        OptionsManager.onOptionsChanged += UpdateAudioOptions;
+        OptionsManager.OnOptionsChanged += UpdateAudioOptions;
+    }
+
+    private void OnDisable ( )
+    {
+        OptionsManager.OnOptionsChanged -= UpdateAudioOptions;
     }
 
     void UpdateAudioOptions ( OptionsManager.OptionsData data )

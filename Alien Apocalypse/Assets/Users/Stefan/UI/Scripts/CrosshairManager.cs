@@ -76,12 +76,12 @@ public class CrosshairManager : MonoBehaviour
 
     private void OnEnable ( )
     {
-        OptionsManager.onOptionsChanged += SetCrosshair;
+        OptionsManager.OnOptionsChanged += SetCrosshair;
     }
 
     private void OnDisable ( )
     {
-        OptionsManager.onOptionsChanged -= SetCrosshair;
+        OptionsManager.OnOptionsChanged -= SetCrosshair;
     }
 
     public void SetCrosshair (OptionsManager.OptionsData options )

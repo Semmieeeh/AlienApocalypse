@@ -124,7 +124,10 @@ public class UISelectable : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
 
         TriesClicking = true;
 
-        PlaySound(interactionSoundEffects.OnClickEnter);
+        interactionEvents.OnPointerDown.Invoke ( );
+
+
+        PlaySound (interactionSoundEffects.OnClickEnter);
 
         for (int i = 0; i < DerivedSelectables.Length; i++)
         {
@@ -148,6 +151,9 @@ public class UISelectable : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
 
         TriesClicking = false;
         PlaySound(interactionSoundEffects.OnClickExit);
+
+        interactionEvents.OnPointerUp.Invoke( );
+
         for (int i = 0; i < DerivedSelectables.Length; i++)
         {
             DerivedSelectables[i].calledFromParent = true;
@@ -171,7 +177,9 @@ public class UISelectable : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
         Hovered = true;
         PlaySound(interactionSoundEffects.OnHoverEnter);
 
-        for (int i = 0; i < DerivedSelectables.Length; i++)
+        interactionEvents.OnHoverEnter?.Invoke ( );
+        
+        for ( int i = 0; i < DerivedSelectables.Length; i++)
         {
             DerivedSelectables[i].calledFromParent = true;
             DerivedSelectables[i].OnPointerEnter(eventData);
@@ -193,6 +201,9 @@ public class UISelectable : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
 
         Hovered = false;
         TriesClicking = false;
+
+        interactionEvents.OnHoverExit?.Invoke ( );
+
         PlaySound(interactionSoundEffects.OnHoverExit);
 
         for (int i = 0; i < DerivedSelectables.Length; i++)
@@ -218,7 +229,11 @@ public class UISelectable : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
 
         PlaySound(interactionSoundEffects.OnClick);
 
-        for (int i = 0; i < DerivedSelectables.Length; i++)
+        interactionEvents.OnPointerClick.Invoke ( );
+
+
+
+        for ( int i = 0; i < DerivedSelectables.Length; i++)
         {
             DerivedSelectables[i].calledFromParent = true;
             DerivedSelectables[i].OnPointerClick(eventData);

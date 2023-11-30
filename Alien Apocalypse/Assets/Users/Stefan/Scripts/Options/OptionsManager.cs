@@ -9,13 +9,16 @@ using UnityEngine;
 /// </summary>
 public class OptionsManager : MonoBehaviour
 {
+    public delegate void OptionsEvent ( OptionsData options );
+
     private static OptionsManager m_instance;
+
     public static OptionsManager Instance
     {
         get
         {
             if ( m_instance == null )
-                m_instance = FindObjectOfType<OptionsManager> ( true);
+                m_instance = FindObjectOfType<OptionsManager> (true);
             return m_instance;
         }
         set
@@ -24,12 +27,10 @@ public class OptionsManager : MonoBehaviour
         }
     }
 
-    public delegate void OptionsEvent ( OptionsData options );
-
     /// <summary>
     /// Event called whenever the user changed the options, containting all the data
     /// </summary>
-    public static OptionsEvent onOptionsChanged;
+    public static OptionsEvent OnOptionsChanged{ get; set; }
 
     public static OptionsData Options
     {
@@ -39,36 +40,18 @@ public class OptionsManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    UISelector selector;
-
-    [SerializeField]
-    Vector2Int[] resolutions;
-
     private List<IOption<bool>> boolOptions = new ( );
 
     private List<IOption<float>> floatOptions = new ( );
 
     private List<IOption<int>> intOptions = new ( );
 
-    bool needsUpdate;
-
     private void Start ( )
     {
         Instance = this;
 
-        onOptionsChanged += ApplyOptions;
-
         FetchOptions ( );
         SetElementsOptionData ( );
-    }
-
-
-    void FetchOptions ( )
-    {
-        boolOptions = GetOptionInstances<bool> ( ).ToList ( );
-        floatOptions = GetOptionInstances<float> ( ).ToList ( );
-        intOptions = GetOptionInstances<int> ( ).ToList ( );
     }
 
     public void OnEnable ( )
@@ -78,50 +61,51 @@ public class OptionsManager : MonoBehaviour
 
     public void OnDisable ( )
     {
-        SaveOptions ( );
-    }
-
-    public void SaveOptions ( )
-    {
         SaveElementsOptionData ( );
     }
 
-
-    void SetElementsOptionData ( )
+    private void OnOptionChanged ( )
     {
-        SetValuesOfElements (boolOptions);
-        SetValuesOfElements (floatOptions);
-        SetValuesOfElements (intOptions);
+        OnOptionsChanged?.Invoke (OptionsData.Options);
+        Debug.Log ("If you see this, the optionschanged delegate has been called!");
+        Debug.Log (OptionsData.Options.ToString ( ));
     }
 
-    void SaveElementsOptionData ( )
+    #region Saving Methods
+
+    private void SaveElementsOptionData ( )
     {
         SaveValuesOfElements (boolOptions);
         SaveValuesOfElements (floatOptions);
         SaveValuesOfElements (intOptions);
     }
 
-    private void OnOptionChanged ( )
+    private void SaveValuesOfElements<T> ( IList<IOption<T>> list )
     {
-        onOptionsChanged?.Invoke (OptionsData.Options);
-        Debug.Log ("If you see this, the optionschanged delegate has been called!");
-        Debug.Log (OptionsData.Options.ToString ( ));
+        foreach ( var element in list )
+        {
+            var index = element.OptionIndex;
+            var value = element.GetValue ( );
+
+            OptionsData.Options[index] = value;
+            Debug.Log ($"Index ({index}) has a value: {value}");
+        }
+
+        OptionsData.Options.Save ( );
     }
 
-    void ApplyOptions (OptionsData options )
+    #endregion Saving Methods
+
+    #region Setting Methods
+
+    private void SetElementsOptionData ( )
     {
-        var width = resolutions[options.ScreenResIndex].x;
-        var heigth = resolutions[options.ScreenResIndex].y;
-
-        Screen.SetResolution (width, heigth, options.Fullscreen);
-
-        int fps = /*Calculate fps*/ 0;
-        Application.targetFrameRate = fps;
-
-
+        SetValuesOfElements (boolOptions);
+        SetValuesOfElements (floatOptions);
+        SetValuesOfElements (intOptions);
     }
 
-    void SetValuesOfElements<T> ( IList<IOption<T>> list )
+    private void SetValuesOfElements<T> ( IList<IOption<T>> list )
     {
         foreach ( var element in list )
         {
@@ -137,19 +121,14 @@ public class OptionsManager : MonoBehaviour
         }
     }
 
-    void SaveValuesOfElements<T> ( IList<IOption<T>> list )
+    private void FetchOptions ( )
     {
-        foreach ( var element in list )
-        {
-            var index = element.OptionIndex;
-            var value = element.GetValue ( );
-
-
-            OptionsData.Options[element.OptionIndex] = element.GetValue ( );
-            Debug.Log ($"Index ({element.OptionIndex}) has a value: {element.GetValue ( )}");
-        }
-        OptionsData.Options.Save ( );
+        boolOptions = GetOptionInstances<bool> ( ).ToList ( );
+        floatOptions = GetOptionInstances<float> ( ).ToList ( );
+        intOptions = GetOptionInstances<int> ( ).ToList ( );
     }
+
+    #endregion Setting Methods
 
     // Get all instances of IOption<T> attached to GameObjects with UISelectable component
     private static IEnumerable<IOption<T>> GetOptionInstances<T> ( )
@@ -161,7 +140,7 @@ public class OptionsManager : MonoBehaviour
         var canvas = GameObject.FindObjectOfType<Canvas> ( );
 
         Debug.Log (canvas.name);
-        var selectableObjects = canvas.transform.GetComponentsInHierarchy<UISelectable>();
+        var selectableObjects = canvas.transform.GetComponentsInHierarchy<UISelectable> ( );
 
         var optionInstances = new List<IOption<T>> ( );
 
@@ -178,7 +157,6 @@ public class OptionsManager : MonoBehaviour
         return optionInstances;
     }
 
-
     /// <summary>
     /// Container that holds all the data for settings that can be changed. Call the Save() function on an Instance of this class to save it.
     /// The static OptionsData.Options property reads the last saved Instance of OptionsData and returns it
@@ -187,7 +165,7 @@ public class OptionsManager : MonoBehaviour
     {
         #region Saving & Loading
 
-        const string saveFileName = "Options.json";
+        private const string saveFileName = "Options.json";
 
         private static OptionsData m_Options;
 
@@ -213,7 +191,6 @@ public class OptionsManager : MonoBehaviour
             }
         }
 
-
         public void Save ( )
         {
             string path = Path.Combine (Application.persistentDataPath, saveFileName);
@@ -229,8 +206,7 @@ public class OptionsManager : MonoBehaviour
             Instance.OnOptionChanged ( );
         }
 
-        #endregion
-
+        #endregion Saving & Loading
 
         // ===== Controls =====
 
@@ -274,27 +250,24 @@ public class OptionsManager : MonoBehaviour
         [SerializeField]
         private float verticalSens;
 
-
-
-
         // ==== Video Graphics =====
 
         /// <summary>
-        /// The index of the screen resolution selector;
+        /// The index of the screen resolution resolutionSelector;
         /// </summary>
 
         [SerializeField]
         private int screenResIndex;
 
         /// <summary>
-        /// The index of the fps selector
+        /// The index of the fps resolutionSelector
         /// </summary>
 
         [SerializeField]
         private int fpsIndex;
 
         /// <summary>
-        /// The index of the quality selector
+        /// The index of the quality resolutionSelector
         /// </summary>
 
         [SerializeField]
@@ -313,8 +286,6 @@ public class OptionsManager : MonoBehaviour
 
         [SerializeField]
         private bool fullscreen;
-
-
 
         // ===== Audio =====
 
@@ -388,43 +359,56 @@ public class OptionsManager : MonoBehaviour
                         case 0:
                             crosshairEffects = (bool) value;
                             break;
+
                         case 1:
                             fov = (float) value;
                             break;
+
                         case 2:
                             horizontalSens = (float) value;
                             break;
+
                         case 3:
                             verticalSens = (float) value;
                             break;
+
                         case 4:
                             screenResIndex = (int) value;
                             break;
+
                         case 5:
                             fpsIndex = (int) value;
                             break;
+
                         case 6:
                             qualityIndex = (int) value;
                             break;
+
                         case 7:
                             fullscreen = (bool) value;
                             break;
+
                         case 8:
                             vSync = (bool) value;
                             break;
+
                         case 9:
                             mainAudioStrength = (float) value;
                             break;
+
                         case 10:
                             soundsStrength = (float) value;
                             break;
+
                         case 11:
                             musicStrength = (float) value;
                             break;
+
                         case 12:
                             ambienceStrength = (float) value;
 
                             break;
+
                         case 13:
                             crosshairIndex = (int) value;
                             break;
@@ -435,7 +419,6 @@ public class OptionsManager : MonoBehaviour
 
                         default:
                             throw new IndexOutOfRangeException ( );
-
                     }
                 }
                 catch ( Exception )
@@ -483,6 +466,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public float Fov
         {
             get => fov;
@@ -492,6 +476,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public float HorizontalSens
         {
             get => horizontalSens;
@@ -501,6 +486,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public float VerticalSens
         {
             get => verticalSens;
@@ -510,6 +496,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public int ScreenResIndex
         {
             get => screenResIndex;
@@ -519,6 +506,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public int FpsIndex
         {
             get => fpsIndex;
@@ -528,6 +516,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public int QualityIndex
         {
             get => qualityIndex;
@@ -537,6 +526,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public bool VSync
         {
             get => vSync;
@@ -546,6 +536,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public bool Fullscreen
         {
             get => fullscreen;
@@ -555,6 +546,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public float MainAudioStrength
         {
             get => mainAudioStrength;
@@ -564,6 +556,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public float SoundsStrength
         {
             get => soundsStrength;
@@ -573,6 +566,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public float MusicStrength
         {
             get => musicStrength;
@@ -582,6 +576,7 @@ public class OptionsManager : MonoBehaviour
                 Save ( );
             }
         }
+
         public float UIStrength
         {
             get => ambienceStrength;
@@ -593,7 +588,7 @@ public class OptionsManager : MonoBehaviour
         }
 
         /// <summary>
-        /// Creates the basic options 
+        /// Creates the basic options
         /// </summary>
         private OptionsData ( )
         {
@@ -613,12 +608,9 @@ public class OptionsManager : MonoBehaviour
             musicStrength = 1;
             ambienceStrength = 1;
 
-            Debug.LogWarning ("Created a new options save file!");
+            Debug.LogWarning ("Options save file overridden by new default settings!");
 
             Save ( );
         }
-
     }
-
 }
-
