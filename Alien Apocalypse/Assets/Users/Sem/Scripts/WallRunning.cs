@@ -74,7 +74,7 @@ public class WallRunning : MonoBehaviour
                     {
                         m.rb.velocity = rbVel;
                     }
-                    if (wallJumping && canWallJump)
+                    if (wallJumping && canWallJump && onWall)
                     {
                         m.rb.velocity = new Vector3(m.rb.velocity.x, m.jumpHeight, m.rb.velocity.z);
                         wallCooldown = 1;
@@ -93,17 +93,15 @@ public class WallRunning : MonoBehaviour
         {
             if (hitLeft || hitRight)
             {
-                if (m.grounded == false)
-                {
-                    anim.SetInteger("RunDirection", hitLeft ? 2 : 1);
-                    wallrunningActive = true;
-                }
-                else
-                {
-                    anim.SetInteger("RunDirection", 0);
-                    wallrunningActive = false;
-                    wallrunGravity = startingMass;
-                }
+                anim.SetInteger("RunDirection", hitLeft ? 2 : 1);
+                wallrunningActive = true;
+                
+            }
+            else
+            {
+                anim.SetInteger("RunDirection", 0);
+                wallrunningActive = false;
+                wallrunGravity = startingMass;
             }
         }
         else if(m == null)
@@ -127,7 +125,7 @@ public class WallRunning : MonoBehaviour
     }
     public void OnTriggerStay(Collider other)
     {
-        if (unlockedSkill && !m.grounded && other.gameObject.tag == "Wall")
+        if (unlockedSkill && other.gameObject.tag == "Wall")
         {
             if (canWallJump)
             {

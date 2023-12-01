@@ -51,10 +51,11 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         if (pv.IsMine)
         {
+            armLowerTime = .1f;
             playerCam = Camera.main.transform;
             player = gameObject.transform;
-            idleStrength = 4;
-            minDamperStrength = 1f;
+            idleStrength = 2;
+            minDamperStrength = .5f;
             maxAnimDuration = 0.17f;
             animDuration = maxAnimDuration;
             canGrapple = true;

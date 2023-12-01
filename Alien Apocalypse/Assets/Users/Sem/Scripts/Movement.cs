@@ -27,6 +27,7 @@ public class Movement : MonoBehaviourPunCallbacks
 
     [Header("Ground check")]
     public bool grounded = false;
+    public LayerMask mask;
     public Vector2 input;
     public Rigidbody rb;
     public float damage = 25;
@@ -47,10 +48,13 @@ public class Movement : MonoBehaviourPunCallbacks
     public Animator anim;
     public Animator armAnim;
     public int armState;
+    bool animgrounded;
 
     float startSpeed;
+    WallRunning wr;
     private void Start()
     {
+        wr = GetComponent<WallRunning>();
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
         PhotonNetwork.SerializationRate = 20;
@@ -65,9 +69,14 @@ public class Movement : MonoBehaviourPunCallbacks
         maxFov = Camera.main.fieldOfView + 10;
     }
     bool appliedKnocked;
+    RaycastHit hit;
+    float animtime;
+    float animinterval = 0.1f;
     private void Update()
     {
-        
+        grounded = Physics.Raycast(transform.position, -transform.up, out hit, 1.05f,mask);
+        animgrounded = Physics.Raycast(transform.position, -transform.up, out hit, 1.5f, mask);
+        Debug.DrawRay(transform.position,-transform.up, Color.yellow);
         if (photonView.IsMine)
         {
             if (downed && appliedKnocked == false)
@@ -92,8 +101,13 @@ public class Movement : MonoBehaviourPunCallbacks
             Physics.IgnoreLayerCollision(3, 11, true);
             StopWhenNoInput();
             FovChange();
-            AnimationCheck();
-            ArmAnimCheck();
+            
+            animtime += Time.deltaTime;
+            if (animtime >= animinterval)
+            {
+                AnimationCheck();
+                ArmAnimCheck();
+            }
         }
     }
     
@@ -143,13 +157,7 @@ public class Movement : MonoBehaviourPunCallbacks
     void Knocked()
     {
         armAnim.SetTrigger("Knocked");
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        grounded = other.gameObject.tag == "Ground" || other.gameObject.tag == "Wall";
-        
-        
-    }
+    }   
     public void StopWhenNoInput()
     {
         stopTime -= Time.deltaTime;
@@ -274,7 +282,6 @@ public class Movement : MonoBehaviourPunCallbacks
 
             }
 
-            grounded = false;
         }
     }
 
@@ -329,7 +336,7 @@ public class Movement : MonoBehaviourPunCallbacks
                 walkState = 0;
                 photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards,false);
             }
-            photonView.RPC("SetJumpAnim", RpcTarget.All,grounded);
+            photonView.RPC("SetJumpAnim", RpcTarget.All, animgrounded);
         }
     }
    [PunRPC]

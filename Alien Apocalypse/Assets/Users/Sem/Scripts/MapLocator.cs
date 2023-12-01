@@ -21,7 +21,6 @@ public class MapLocator : MonoBehaviour
         // Ensure that the UI element and world camera are assigned
         if (uiElement == null)
         {
-            Debug.LogError("UI element or world camera not assigned.");
             return;
         }
 

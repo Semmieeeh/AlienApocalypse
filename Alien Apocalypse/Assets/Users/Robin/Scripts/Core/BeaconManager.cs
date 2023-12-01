@@ -37,13 +37,5 @@ public class BeaconManager : MonoBehaviour
             }
         }
 
-        if(enemyScore == -100 * beacons.Count)
-        {
-
-        }
-        else if(playerScore == 100 * beacons.Count)
-        {
-
-        }
     }
 }

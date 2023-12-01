@@ -237,6 +237,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 {
                     EnemyHealth h = GetComponent<EnemyHealth>();
                     player.TakeDamage(damage);
+                    HitIndicatorManager.Instance.AddTarget(transform);
                     h.Explode();
                     Debug.Log("Exploded");
                 }
@@ -252,6 +253,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         j.y += 0.4f;
                         bulletTracer.Activate(true, j);
                         player.TakeDamage(damage);
+                        HitIndicatorManager.Instance.AddTarget(transform);
                         canAttack = false;
                         Debug.Log("Hit!");
                     }
@@ -267,6 +269,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         {
                             photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                             player.TakeDamage(damage);
+                            HitIndicatorManager.Instance.AddTarget(transform);
                             Vector3 v = player.transform.position;
                             bulletTracer.Activate(true, v);
                             Debug.Log("Hit By Chance!");

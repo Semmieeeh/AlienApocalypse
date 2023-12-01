@@ -16,7 +16,7 @@ public class DashAbility : MonoBehaviourPunCallbacks
     {
         rb = GetComponent<Rigidbody>();
         maxDashCooldown = 3;
-        dashAmount = 40;
+        dashAmount = 15;
         multiplier = 1;
     }
     void Update()
@@ -38,14 +38,7 @@ public class DashAbility : MonoBehaviourPunCallbacks
         {
             if (dashCooldown <= 0)
             {
-                if (rb.velocity.magnitude < 5)
-                {
-                    dashAmount = 40 * multiplier;
-                }
-                else
-                {
-                    dashAmount = 40 * multiplier;
-                }
+                dashAmount = dashAmount * multiplier;
 
                 float velBeforeStop = rb.velocity.magnitude;
                 rb.velocity = Vector3.zero;

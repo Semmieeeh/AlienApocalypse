@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Photon.Pun;
 
-public class PUN2_RigidbodySync : MonoBehaviourPun, IPunObservable
+public class KankerMultiplayerfixix : MonoBehaviourPun, IPunObservable
 {
 
     Rigidbody r;

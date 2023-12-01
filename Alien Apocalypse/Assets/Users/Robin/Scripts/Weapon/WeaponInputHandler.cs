@@ -32,14 +32,17 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     {
         photonView.RPC("SetWeapon", RpcTarget.All);
     }
-
+    float time; float interval = 0.1f;
     void Update()
     {
         if (photonView.IsMine)
         {
             photonView.RPC(nameof(SelectWeapon), RpcTarget.All);
-            UpdateAnimations();
-
+            time += Time.deltaTime;
+            if(time > interval)
+            {
+                UpdateAnimations();
+            }
             InputWeapon();
         }     
     }

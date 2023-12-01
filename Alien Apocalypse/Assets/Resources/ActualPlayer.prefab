@@ -46,7 +46,6 @@ GameObject:
   - component: {fileID: 6379292182470151516}
   - component: {fileID: 82527624328025671}
   - component: {fileID: 8251531310835535942}
-  - component: {fileID: -3496741408671673677}
   - component: {fileID: 3467118283910098738}
   - component: {fileID: 4433556998246218802}
   - component: {fileID: 5019608760934574488}
@@ -57,6 +56,8 @@ GameObject:
   - component: {fileID: 5463677568850874811}
   - component: {fileID: 8850839293841958532}
   - component: {fileID: 752614929192360651}
+  - component: {fileID: 2374303156162224983}
+  - component: {fileID: 7548672759783259592}
   m_Layer: 8
   m_Name: ActualPlayer
   m_TagString: Player
@@ -177,13 +178,9 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8251531310835535942}
-  - {fileID: -3496741408671673677}
-  - {fileID: 7395019837602399260}
-  - {fileID: 3089739112596174217}
+  - {fileID: 2374303156162224983}
+  - {fileID: 7548672759783259592}
   - {fileID: 8411175152538871426}
-  - {fileID: 3980046417389085488}
-  - {fileID: 3115058804422966336}
-  - {fileID: 8790791855778418569}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -203,19 +200,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
---- !u!114 &-3496741408671673677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228508061578831017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SmoothingDelay: 5
 --- !u!114 &3467118283910098738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,7 +334,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.2964477, z: 0.1}
+  m_Size: {x: 0.001, y: 0.2964477, z: 0.001}
   m_Center: {x: 0, y: -0.95292854, z: 0}
 --- !u!114 &5019608760934574488
 MonoBehaviour:
@@ -414,6 +398,9 @@ MonoBehaviour:
   sprinting: 0
   jumping: 0
   grounded: 0
+  mask:
+    serializedVersion: 2
+    m_Bits: 65527
   input: {x: 0, y: 0}
   rb: {fileID: 0}
   damage: 25
@@ -705,6 +692,31 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &2374303156162224983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228508061578831017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SmoothingDelay: 5
+--- !u!114 &7548672759783259592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228508061578831017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d4ba53ae7c1ee4698e23ac0768038d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &328897478774925911
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,7 +2610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2482580717306232266}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: GunTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2852,7 +2864,7 @@ GameObject:
   - component: {fileID: 5188144596211883601}
   - component: {fileID: 5183120573045576786}
   - component: {fileID: 8008593346757163689}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3020,7 +3032,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!1 &4580842844756019791
 GameObject:
   m_ObjectHideFlags: 0
@@ -4777,7 +4789,7 @@ GameObject:
   - component: {fileID: 7375433505412804644}
   - component: {fileID: 5905650843338407809}
   - component: {fileID: 8507829037513247563}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Grappling Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5163,6 +5175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1264871314502632112}
   - component: {fileID: 7395019837602399260}
+  - component: {fileID: 118918063727744068}
   m_Layer: 0
   m_Name: RobotPivot
   m_TagString: Untagged
@@ -5202,6 +5215,33 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &118918063727744068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8780093168035667644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 7395019837602399260}
+  - {fileID: 3089739112596174217}
+  - {fileID: 3980046417389085488}
+  - {fileID: 3115058804422966336}
+  - {fileID: 8790791855778418569}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8819640572174202450
 GameObject:
   m_ObjectHideFlags: 0
