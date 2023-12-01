@@ -18,6 +18,7 @@ public class HitIndicatorManager : MonoBehaviour
     {
         Instance = this;
     }
+
     public void AddTarget(Transform target )
     {
         foreach ( var indicator in hitIndicators )
