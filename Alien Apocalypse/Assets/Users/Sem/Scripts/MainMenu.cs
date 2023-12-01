@@ -48,7 +48,8 @@ public class MainMenu : MonoBehaviour
         if(currentTransitionTime <= transitionTime)
             currentTransitionTime += Time.deltaTime;
 
-        transition.SetFloat ("_Progress", Mathf.InverseLerp (0, transitionTime, currentTransitionTime));
+        if(transition)
+            transition.SetFloat ("_Progress", Mathf.InverseLerp (0, transitionTime, currentTransitionTime));
 
     }
     public void PopupMessage(string description)
@@ -101,6 +102,7 @@ public class MainMenu : MonoBehaviour
             mainMenu, playSection, settingsSection, controlsSection, creditsSection, quitSection
         };
 
+        currentTransitionTime = 0;
         await Task.Delay ( Mathf.RoundToInt(transitionTime / 2 * 1000));
 
         for (int i = 0; i < menus.Length; i++)
