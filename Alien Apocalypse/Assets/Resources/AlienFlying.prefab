@@ -2754,6 +2754,8 @@ GameObject:
   - component: {fileID: 7028250540927831896}
   - component: {fileID: 5932660472288310766}
   - component: {fileID: 7427756792574962229}
+  - component: {fileID: 673972474520481221}
+  - component: {fileID: -7670821906260349081}
   m_Layer: 11
   m_Name: AlienFlying
   m_TagString: Untagged
@@ -2792,7 +2794,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 0
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
@@ -3034,6 +3036,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &673972474520481221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456765229888051616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SmoothingDelay: 5
+--- !u!114 &-7670821906260349081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456765229888051616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d4ba53ae7c1ee4698e23ac0768038d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5758550126324249979
 GameObject:
   m_ObjectHideFlags: 0
@@ -3144,6 +3171,7 @@ GameObject:
   - component: {fileID: 974514304632590948}
   - component: {fileID: 8599921488963043135}
   - component: {fileID: 2247408262058376366}
+  - component: {fileID: 5183590816463950400}
   m_Layer: 11
   m_Name: AlienBlasterPivot
   m_TagString: Untagged
@@ -3348,6 +3376,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.09999999, y: 0.14711538, z: 0.13046582}
   m_Center: {x: -0.0000044028043, y: -0.06493291, z: 0.08290877}
+--- !u!114 &5183590816463950400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6101855443315125917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6234854697820298254
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,6 +3410,7 @@ GameObject:
   - component: {fileID: 7665879085888719121}
   - component: {fileID: 5586252582263635419}
   - component: {fileID: 4803602132780994168}
+  - component: {fileID: 1359925518923280282}
   m_Layer: 11
   m_Name: Jetpack
   m_TagString: Untagged
@@ -3529,6 +3580,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1359925518923280282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6234854697820298254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6965762728340215032
 GameObject:
   m_ObjectHideFlags: 0

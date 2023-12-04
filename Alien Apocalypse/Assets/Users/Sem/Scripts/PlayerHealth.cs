@@ -73,8 +73,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         maxHealth = 100;
         Health = maxHealth;
         state = PlayerState.alive;
-        PhotonNetwork.SerializationRate = 20;
-        PhotonNetwork.SendRate = 30;
+        PhotonNetwork.SerializationRate = 15;
+        PhotonNetwork.SendRate = 15;
     }
 
     // Update is called once per frame
@@ -158,12 +158,19 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine)
         {
-            rb.position = Vector3.MoveTowards(rb.position, networkPosition, Time.fixedDeltaTime);
-            rb.rotation = Quaternion.RotateTowards(rb.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+            if (rb != null)
+            {
+                rb.position = Vector3.MoveTowards(rb.position, networkPosition, Time.fixedDeltaTime);
+                rb.rotation = Quaternion.RotateTowards(rb.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
+            }
         }
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        if (rb == null)
+        {
+            return;
+        }
         if (stream.IsWriting)
         {
             stream.SendNext(this.rb.position);

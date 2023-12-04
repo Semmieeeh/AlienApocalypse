@@ -99,9 +99,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         attackRange += agent.baseOffset;
     }
     bool canChooseNew;
+    float time;
+    float interval = 0.1f;
     void Update()
     {
-        
+        time += Time.deltaTime;
         if (canChooseNew == true)
         {
             NewTarget();
@@ -138,7 +140,10 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         {
                             agent.destination = target;
                         }
-                        photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
+                        if (time >= interval)
+                        {
+                            photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
+                        }
                         if (Vector3.Distance(transform.position, target) <= targetRange -1)
                         {
                             NewTarget();
@@ -170,8 +175,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                             if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
-                                photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
-                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
+                                if (time >= interval)
+                                {
+                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
+                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
+                                }
 
                                 Quaternion targetRotation = CalculateRotationToPlayer();
                                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
@@ -189,8 +197,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                                 canChooseNew = true;
                                 if (!flyingEnemy)
                                 {
-                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
-                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 2);
+                                    if(time>= interval)
+                                    {
+                                        photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
+                                        photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 2);
+                                    }
                                 }
                             }
 

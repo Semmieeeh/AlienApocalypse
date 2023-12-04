@@ -58,7 +58,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
 
-            GameObject enemy = PhotonNetwork.Instantiate(enemyManager.name, Vector3.zero, Quaternion.identity);
+            //GameObject enemy = Instantiate(enemyManager, Vector3.zero, Quaternion.identity);
             GameObject pointsMan = PhotonNetwork.Instantiate(pointsManager.name,spawnPoint.position, Quaternion.identity);
             GameObject van = PhotonNetwork.Instantiate(vanObj.name, new Vector3(2, 0.4f, -22f),Quaternion.identity);
 
@@ -68,7 +68,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         GameObject player = playerPrefab.transform.GetChild(0).gameObject;
         player.GetComponent<PlayerSetup>().IsLocalPlayer();
         player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.AllBuffered, nickname);
-        //GameObject isl = PhotonNetwork.Instantiate(island.name, islandPos.position, islandPos.rotation);
 
     }
     
