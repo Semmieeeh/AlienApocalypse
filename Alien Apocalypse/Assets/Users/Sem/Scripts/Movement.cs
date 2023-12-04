@@ -113,9 +113,16 @@ public class Movement : MonoBehaviourPunCallbacks
     
     bool IsMoving()
     {
-        if (input.magnitude >0.5f)
+        if (photonView.IsMine)
         {
-            return true;
+            if (input.magnitude > 0.5f)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
@@ -150,7 +157,7 @@ public class Movement : MonoBehaviourPunCallbacks
     public void AnimRPC(int i)
     {
         armAnim.SetInteger("ArmState", i);
-        armAnim.SetBool("Jumping", grounded);
+        armAnim.SetBool("Jumping", animgrounded);
         armAnim.SetBool("Moving", IsMoving());
     }
     [PunRPC]
