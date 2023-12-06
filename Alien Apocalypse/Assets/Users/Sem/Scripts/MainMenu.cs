@@ -7,7 +7,6 @@ public class MainMenu : MonoBehaviour
 {
     public static MainMenu Instance;
 
-
     [SerializeField]
     UIPopup m_Popup;
 
