@@ -24,6 +24,9 @@ public class GrappleRope : MonoBehaviourPunCallbacks
         spring.SetTarget(0);
     }
 
+    public float time;
+    float cooldown = 0.1f;
+    bool executed;
     private void Update()
     {
         if (!pv.IsMine)
@@ -34,22 +37,25 @@ public class GrappleRope : MonoBehaviourPunCallbacks
         if (grapplingGun.isGrappling)
         {
             Vector3 grapplePoint = grapplingGun.GetGrapplePoint();
-            pv.RPC("DrawRopeRPC", RpcTarget.All, grapplePoint);
+            DrawRopeRPC(grapplePoint);
+            executed = true;
         }
         else
         {
-            pv.RPC("ClearRopeRPC", RpcTarget.All);
+            ClearRopeRPC();
+            executed = false;
         }
+            
+            
+        
     }
-
-    [PunRPC]
+    
     public void DrawRopeRPC(Vector3 grapplePoint)
     {
         // Handle rope drawing based on grapplePoint
         UpdateRope(grapplePoint);
     }
 
-    [PunRPC]
     public void ClearRopeRPC()
     {
         // Clear the rope's appearance

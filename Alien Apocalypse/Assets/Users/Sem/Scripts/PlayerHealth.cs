@@ -86,7 +86,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         }
         switch (state)
         {
-            
+
             case PlayerState.alive:
                 
                 lastHit -= Time.deltaTime;

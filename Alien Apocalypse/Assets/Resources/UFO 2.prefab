@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 394414161265304631}
   - component: {fileID: 1471721650582443695}
   - component: {fileID: 7803752567169862713}
-  - component: {fileID: 7775696464295566634}
   - component: {fileID: 8502167448174613761}
   - component: {fileID: 3045259298672392421}
   m_Layer: 0
@@ -133,6 +132,8 @@ MonoBehaviour:
   - {fileID: 5290238346038280320}
   heightOffset: 20
   sound: 0
+  time: 0
+  interval: 0.2
 --- !u!114 &1471721650582443695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,27 +174,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!95 &7775696464295566634
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6134467112851937181}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7d450853585d2e742bf659ce9f5f4d57, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!82 &8502167448174613761
 AudioSource:
   m_ObjectHideFlags: 0

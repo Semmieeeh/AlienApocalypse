@@ -41,7 +41,7 @@ namespace Photon.Pun.UtilityScripts
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-            if (stream.IsWriting)
+            if (stream.IsWriting && PhotonNetwork.IsMasterClient)
             {
                 //We own this player: send the others our data
                 stream.SendNext(transform.position);

@@ -25,6 +25,7 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
     private void Update()
     {
         UfoBehaviour();
+
         Vector3 v = new Vector3(0,200,0);
         transform.Rotate(v * Time.deltaTime);
     }
@@ -35,24 +36,38 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
             partartarticles[i].Play();
         }
     }
+    public float time;
+    public float interval = 0.2f;
+    Vector3 desiredPos;
+    bool executed;
     void UfoBehaviour()
     {
+        MoveUfo();
         if (m.enemiesSpawning == false && m.cooldownCounter <5)
         {
-            if(m.cooldownCounter > 0)
+            if(m.cooldownCounter > 0 && executed == true)
             {
                 photonView.RPC("UfoActivate", RpcTarget.All);
+                executed = false;
+                
             }
         }
-        else if(m.cooldownCounter >5)
+        else if(m.cooldownCounter > 5 && executed == false)
         {
             photonView.RPC("UfoDeactivate", RpcTarget.All);
+            executed = true;
         }
+    }
+    public void MoveUfo()
+    {
+        
+        transform.position = Vector3.Lerp(transform.position, desiredPos, moveSpeed * Time.deltaTime);
     }
     [PunRPC]
     void UfoActivate()
     {
-
+        desiredPos = new Vector3(m.curSpawnPos.position.x, m.curSpawnPos.position.y, m.curSpawnPos.position.z);
+        desiredPos.y += heightOffset;
         StopAllCoroutines();
         if(sound == false)
         {
@@ -60,18 +75,15 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
             sound = true;
         }
         mesh.enabled = true;
-        Vector3 desiredPos = new Vector3(m.curSpawnPos.position.x, m.curSpawnPos.position.y, m.curSpawnPos.position.z);
-        desiredPos.y += heightOffset;
-        transform.position = Vector3.Lerp(transform.position, desiredPos, moveSpeed * Time.deltaTime);
+        
     }
     [PunRPC]
     void UfoDeactivate()
     {
         sound = false;
         StartCoroutine(nameof(MeshAct));
-        Vector3 desiredPos = transform.position;
+        desiredPos = transform.position;
         desiredPos.y = 500;
-        transform.position = Vector3.Lerp(transform.position,desiredPos, moveSpeed * Time.deltaTime);
     }
     public IEnumerator MeshAct()
     {

@@ -43,7 +43,6 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     {
         GameObject u = PhotonNetwork.Instantiate(ufo.name, new Vector3(0, 500, 0), Quaternion.identity);
         u.transform.parent = gameObject.transform;
-        waveStatusText = GameObject.Find("WaveText").gameObject.GetComponent<TextMeshProUGUI>();
         waveStartTime = 20;
         instance = this;
         multiplier = 1;

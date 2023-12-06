@@ -98,7 +98,7 @@ public class UIPauseManager : MonoBehaviour
         player.GetComponent<SlidingAbility>().enabled = !paused;
         player.GetComponent<GrappleRope>().enabled = !paused;
         weaponInput.GetComponent<WeaponInputHandler>().enabled = !paused;
-        Camera.main.GetComponent<MouseLook>().enabled = !paused;
+        cam.GetComponent<MouseLook>().enabled = !paused;
 
         m_inOptions = false;
 

@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 752614929192360651}
   - component: {fileID: 2374303156162224983}
   - component: {fileID: 7548672759783259592}
+  - component: {fileID: -4623176618017619680}
   m_Layer: 8
   m_Name: ActualPlayer
   m_TagString: Player
@@ -414,6 +415,7 @@ MonoBehaviour:
   anim: {fileID: 7411710092504330217}
   armAnim: {fileID: 438766639739593481}
   armState: 0
+  animinterval: 0.1
 --- !u!114 &5784425872097716805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -583,6 +585,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  time: 0
 --- !u!120 &752614929192360651
 LineRenderer:
   serializedVersion: 2
@@ -712,6 +715,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d4ba53ae7c1ee4698e23ac0768038d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4623176618017619680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228508061578831017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d06466c03d263624786afa88b52928b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statsWindowOn: 1
+  statsOn: 1
+  healthStatsVisible: 0
+  trafficStatsOn: 1
+  buttonsOn: 0
+  statsRect:
+    serializedVersion: 2
+    x: 872
+    y: 322.2
+    width: 200
+    height: 350
+  WindowId: 100
 --- !u!1 &328897478774925911
 GameObject:
   m_ObjectHideFlags: 0

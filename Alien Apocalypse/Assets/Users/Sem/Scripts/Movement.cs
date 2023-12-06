@@ -71,12 +71,11 @@ public class Movement : MonoBehaviourPunCallbacks
     bool appliedKnocked;
     RaycastHit hit;
     float animtime;
-    float animinterval = 0.1f;
+    public float animinterval = 0.1f;
     private void Update()
     {
         grounded = Physics.Raycast(transform.position, -transform.up, out hit, 1.05f,mask);
         animgrounded = Physics.Raycast(transform.position, -transform.up, out hit, 1.5f, mask);
-        Debug.DrawRay(transform.position,-transform.up, Color.yellow);
         if (photonView.IsMine)
         {
             if (downed && appliedKnocked == false)
@@ -103,10 +102,12 @@ public class Movement : MonoBehaviourPunCallbacks
             FovChange();
             
             animtime += Time.deltaTime;
+            time += Time.deltaTime;
             if (animtime >= animinterval)
             {
                 AnimationCheck();
                 ArmAnimCheck();
+                animtime = 0;
             }
         }
     }
@@ -131,26 +132,29 @@ public class Movement : MonoBehaviourPunCallbacks
     }
     float time;
     float interval = 0.1f;
+    int animInt;
     public void ArmAnimCheck()
     {
-        time += Time.deltaTime;
+        
         if (time > interval)
         {
+            
             if (sprinting && input.magnitude > 0.5f)
             {
-                photonView.RPC("AnimRPC", RpcTarget.All, 2);
-
+                
+                animInt = 2;
             }
 
             if (!sprinting && input.magnitude > 0.5f)
             {
-                photonView.RPC("AnimRPC", RpcTarget.All, 1);
+                animInt = 1;
             }
 
             if (input.magnitude < 0.5f)
             {
-                photonView.RPC("AnimRPC", RpcTarget.All, 0);
-            }            
+                animInt = 0;
+            }
+            photonView.RPC("AnimRPC", RpcTarget.All, animInt);
         }  
     }
     [PunRPC]
@@ -225,11 +229,16 @@ public class Movement : MonoBehaviourPunCallbacks
             if (input.y < 0)
             {
                 walkingBackwards = true;
-                photonView.RPC("Walking", RpcTarget.All);
+                
             }
             else
             {
                 walkingBackwards = false;
+                
+            }
+
+            if (animtime > animinterval)
+            {
                 photonView.RPC("Walking", RpcTarget.All);
             }
 
@@ -329,20 +338,19 @@ public class Movement : MonoBehaviourPunCallbacks
             if (sprinting && input.magnitude > 0.5f && grounded)
             {
                 walkState = 2;
-                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards, false);
             }
 
             if (!sprinting && input.magnitude > 0.5f && grounded)
             {
                 walkState = 1;
-                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards,false);
             }
 
             if (input.magnitude < 0.5f && grounded)
             {
                 walkState = 0;
-                photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards,false);
+                
             }
+            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards, false);
             photonView.RPC("SetJumpAnim", RpcTarget.All, animgrounded);
         }
     }

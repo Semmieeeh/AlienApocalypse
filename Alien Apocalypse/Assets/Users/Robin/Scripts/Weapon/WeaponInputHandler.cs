@@ -30,14 +30,14 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        photonView.RPC("SetWeapon", RpcTarget.All);
+        SetWeapon();
     }
     float time; float interval = 0.1f;
     void Update()
     {
         if (photonView.IsMine)
         {
-            photonView.RPC(nameof(SelectWeapon), RpcTarget.All);
+            SelectWeapon();
             time += Time.deltaTime;
             if(time > interval)
             {
@@ -87,7 +87,6 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
     void SelectWeapon()
     {
         scrollNum += Input.mouseScrollDelta.y;
@@ -177,7 +176,6 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
     void SetWeapon()
     {
         for(int i = 0; i < weaponSlots.Count; i++)
