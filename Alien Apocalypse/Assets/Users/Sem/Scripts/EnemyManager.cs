@@ -42,6 +42,10 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     public void Start()
     {
         GameObject u = PhotonNetwork.Instantiate(ufo.name, new Vector3(0, 500, 0), Quaternion.identity);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            u.GetComponent<UfoSpawner>().enabled = true;
+        }
         u.transform.parent = gameObject.transform;
         waveStartTime = 20;
         instance = this;
