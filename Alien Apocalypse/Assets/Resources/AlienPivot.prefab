@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 6357047464034611178}
   - component: {fileID: 3778120333002067583}
   - component: {fileID: 8153540734814029544}
-  - component: {fileID: 8429622151860021022}
-  - component: {fileID: 5037146359090376668}
   m_Layer: 11
   m_Name: spine.006
   m_TagString: Untagged
@@ -146,38 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 10
   parent: {fileID: 6342635429818818792}
---- !u!114 &8429622151860021022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 281508434369846496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &5037146359090376668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 281508434369846496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &360930589514476660
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,8 +381,6 @@ GameObject:
   - component: {fileID: 5729644088431608550}
   - component: {fileID: 1096622544123282343}
   - component: {fileID: 6299773384148178026}
-  - component: {fileID: 6177541528840312721}
-  - component: {fileID: 1568994759260040391}
   m_Layer: 11
   m_Name: upper_arm.R
   m_TagString: Untagged
@@ -550,38 +514,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.7
   parent: {fileID: 6342635429818818792}
---- !u!114 &6177541528840312721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949693259398678433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &1568994759260040391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949693259398678433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &1503638657873297739
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,8 +559,6 @@ GameObject:
   - component: {fileID: 4519243009845155224}
   - component: {fileID: 4841725067310617943}
   - component: {fileID: 7288450219737993544}
-  - component: {fileID: 3414921060962337090}
-  - component: {fileID: 7356270682715358315}
   m_Layer: 11
   m_Name: forearm.R
   m_TagString: Untagged
@@ -762,38 +692,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.7
   parent: {fileID: 6342635429818818792}
---- !u!114 &3414921060962337090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988019110418151301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &7356270682715358315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1988019110418151301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &2018745249035029020
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,8 +768,6 @@ GameObject:
   - component: {fileID: 1324279831543344522}
   - component: {fileID: 4728903118434641615}
   - component: {fileID: 8037876248143792855}
-  - component: {fileID: 4708035658359202712}
-  - component: {fileID: 8170962001982172718}
   m_Layer: 11
   m_Name: spine.003
   m_TagString: Untagged
@@ -1006,38 +902,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   parent: {fileID: 6342635429818818792}
---- !u!114 &4708035658359202712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2454574066657472164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &8170962001982172718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2454574066657472164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &2628409260727729320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,8 +1073,6 @@ GameObject:
   - component: {fileID: 7067262665663158704}
   - component: {fileID: 1875042889700167206}
   - component: {fileID: 1106001101323170854}
-  - component: {fileID: 1589350850243978823}
-  - component: {fileID: 4553409197124207640}
   m_Layer: 11
   m_Name: thigh.R
   m_TagString: Untagged
@@ -1344,38 +1206,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.5
   parent: {fileID: 6342635429818818792}
---- !u!114 &1589350850243978823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3358461074363841755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &4553409197124207640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3358461074363841755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &3674478207147094704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,8 +1387,6 @@ GameObject:
   - component: {fileID: 8537590733729535166}
   - component: {fileID: 4650945441987430686}
   - component: {fileID: 2509646250599230595}
-  - component: {fileID: 5914590279492832334}
-  - component: {fileID: 223684446568052065}
   m_Layer: 11
   m_Name: forearm.L
   m_TagString: Untagged
@@ -1692,38 +1520,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.7
   parent: {fileID: 6342635429818818792}
---- !u!114 &5914590279492832334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4117335626130515852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &223684446568052065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4117335626130515852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &4195884130027967763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2033,8 +1829,6 @@ GameObject:
   - component: {fileID: 3717043095212384712}
   - component: {fileID: 8674544501757463561}
   - component: {fileID: 6565586670046090951}
-  - component: {fileID: 3122610295318662112}
-  - component: {fileID: 6250916238582234103}
   m_Layer: 11
   m_Name: thigh.L
   m_TagString: Untagged
@@ -2168,38 +1962,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.5
   parent: {fileID: 6342635429818818792}
---- !u!114 &3122610295318662112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983957952744130226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &6250916238582234103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983957952744130226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &5032546653906867034
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,8 +1974,6 @@ GameObject:
   - component: {fileID: 6645753729773799235}
   - component: {fileID: 8820255314321557675}
   - component: {fileID: 7366787923293751477}
-  - component: {fileID: 7820184073888848070}
-  - component: {fileID: 756558591756492940}
   m_Layer: 11
   m_Name: spine
   m_TagString: Untagged
@@ -2303,38 +2063,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   parent: {fileID: 6342635429818818792}
---- !u!114 &7820184073888848070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5032546653906867034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &756558591756492940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5032546653906867034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &5096812973538092448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,28 +2286,28 @@ MonoBehaviour:
   - {fileID: 5932660472288310766}
   - {fileID: 1253222060486738215}
   - {fileID: 6776610208842836813}
-  - {fileID: 7820184073888848070}
-  - {fileID: 756558591756492940}
-  - {fileID: 3122610295318662112}
-  - {fileID: 6250916238582234103}
-  - {fileID: 1589350850243978823}
-  - {fileID: 4553409197124207640}
-  - {fileID: 9150199186119042082}
-  - {fileID: 1362055205027175957}
-  - {fileID: 7705131304087652819}
-  - {fileID: 772865526273564461}
-  - {fileID: 4708035658359202712}
-  - {fileID: 8170962001982172718}
-  - {fileID: 8429622151860021022}
-  - {fileID: 5037146359090376668}
-  - {fileID: 1382600426741373341}
-  - {fileID: 3328731578528166285}
-  - {fileID: 6177541528840312721}
-  - {fileID: 1568994759260040391}
-  - {fileID: 5914590279492832334}
-  - {fileID: 223684446568052065}
-  - {fileID: 3414921060962337090}
-  - {fileID: 7356270682715358315}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -3110,8 +2838,6 @@ GameObject:
   - component: {fileID: 6794885251206365858}
   - component: {fileID: 5290400853296705190}
   - component: {fileID: 6191194504275119425}
-  - component: {fileID: 1382600426741373341}
-  - component: {fileID: 3328731578528166285}
   m_Layer: 11
   m_Name: upper_arm.L
   m_TagString: Untagged
@@ -3245,38 +2971,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.7
   parent: {fileID: 6342635429818818792}
---- !u!114 &1382600426741373341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7659168067474699618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &3328731578528166285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7659168067474699618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &7858250260373536504
 GameObject:
   m_ObjectHideFlags: 0
@@ -3321,8 +3015,6 @@ GameObject:
   - component: {fileID: 1077364805597947462}
   - component: {fileID: 297317625917123450}
   - component: {fileID: 1295647213749305504}
-  - component: {fileID: 9150199186119042082}
-  - component: {fileID: 1362055205027175957}
   m_Layer: 11
   m_Name: shin.L
   m_TagString: Untagged
@@ -3456,38 +3148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.5
   parent: {fileID: 6342635429818818792}
---- !u!114 &9150199186119042082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7924075614128736851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &1362055205027175957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7924075614128736851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &8072792312269693736
 GameObject:
   m_ObjectHideFlags: 0
@@ -3501,8 +3161,6 @@ GameObject:
   - component: {fileID: 2472891430103302581}
   - component: {fileID: 5876165574964321370}
   - component: {fileID: 341891979837628742}
-  - component: {fileID: 7705131304087652819}
-  - component: {fileID: 772865526273564461}
   m_Layer: 11
   m_Name: shin.R
   m_TagString: Untagged
@@ -3636,38 +3294,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 0.5
   parent: {fileID: 6342635429818818792}
---- !u!114 &7705131304087652819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8072792312269693736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
-  m_TeleportEnabled: 0
-  m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &772865526273564461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8072792312269693736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!1 &8263295312938792522
 GameObject:
   m_ObjectHideFlags: 0
