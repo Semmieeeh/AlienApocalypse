@@ -161,7 +161,6 @@ public class Movement : MonoBehaviourPunCallbacks
     public void AnimRPC(int i)
     {
         armAnim.SetInteger("ArmState", i);
-        armAnim.SetBool("Jumping", animgrounded);
         armAnim.SetBool("Moving", IsMoving());
     }
     [PunRPC]

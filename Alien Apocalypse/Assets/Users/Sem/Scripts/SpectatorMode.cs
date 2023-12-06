@@ -77,10 +77,7 @@ public class SpectatorMode : MonoBehaviour
         }
         else
         {
-            if (Camera.main.transform.localPosition != Vector3.zero)
-            {
-                Camera.main.transform.localPosition = Vector3.zero;
-            }
+            
         }
 
 

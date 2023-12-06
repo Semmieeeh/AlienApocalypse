@@ -67,7 +67,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         GameObject playerPrefab = PhotonNetwork.Instantiate(prefabs[PhotonNetwork.CurrentRoom.PlayerCount-1].name, spawnPoint.position, spawnPoint.transform.rotation);
         GameObject player = playerPrefab.transform.GetChild(0).gameObject;
         player.GetComponent<PlayerSetup>().IsLocalPlayer();
-        player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.AllBuffered, nickname);
+        player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.All, nickname);
 
     }
     

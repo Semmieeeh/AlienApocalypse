@@ -87,7 +87,7 @@ public class Grappling : MonoBehaviourPunCallbacks
                     damperStrength = minDamperStrength;
                     grappleStrength = idleStrength;
                     LiftArm();
-                    pv.RPC("SyncArmAnimation", RpcTarget.Others, 1);
+                    pv.RPC("SyncArmAnimation", RpcTarget.All, 1);
                 }
 
                 if (!Input.GetButton("Grapple") && !isGrappling && !pointingArm && !canGrapple)
@@ -110,7 +110,7 @@ public class Grappling : MonoBehaviourPunCallbacks
                     if (Input.GetButtonDown("Grapple") || (joint != null && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance))
                     {
                         StopGrapple();
-                        pv.RPC(nameof(SyncArmAnimation), RpcTarget.Others, 0);
+                        pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 0);
                     }
 
                     if (childOfPoint == null || grapplePointParent == null)

@@ -38,15 +38,12 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             SelectWeapon();
-            time += Time.deltaTime;
-            if(time > interval)
-            {
-                UpdateAnimations();
-            }
+            
             InputWeapon();
         }     
     }
 
+    [PunRPC]
     public void UpdateAnimations()
     {
         if (selectedWeapon != null)
@@ -110,6 +107,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                             if(selectedWeapon.transform.childCount > 0)
                             {
                                 selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
+                                photonView.RPC("UpdateAnimations", RpcTarget.All);
                             }
                         }
                     }
@@ -125,6 +123,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     if(selectedWeapon.transform.GetChild(0) != null)
                     {
                         selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
+                        photonView.RPC("UpdateAnimations", RpcTarget.All);
                     }
 
                     selectedWeapon.mainCam = mainCam;
@@ -134,8 +133,9 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     selectedWeapon.mainCam = null;
                     selectedWeapon.recoilObject = null;
-
+                    
                     selectedWeapon = null;
+                    photonView.RPC("UpdateAnimations", RpcTarget.All);
                 }
             }
 
