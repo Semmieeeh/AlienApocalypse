@@ -3002,7 +3002,7 @@ GameObject:
   - component: {fileID: 7403250673344105571}
   - component: {fileID: 3980046417389085488}
   - component: {fileID: 5176680239764464236}
-  - component: {fileID: 2838333765112286876}
+  - component: {fileID: 4979784911864679475}
   m_Layer: 0
   m_Name: PivotArms
   m_TagString: Untagged
@@ -3053,7 +3053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
+  m_SynchronizePosition: 0
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
@@ -3077,12 +3077,12 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3980046417389085488}
-  - {fileID: 2838333765112286876}
+  - {fileID: 4979784911864679475}
   - {fileID: 8790791855778418569}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &2838333765112286876
+--- !u!114 &4979784911864679475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3091,10 +3091,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4486246761162048866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
+  m_Script: {fileID: 11500000, guid: 86d4ba53ae7c1ee4698e23ac0768038d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SmoothingDelay: 5
 --- !u!1 &4580842844756019791
 GameObject:
   m_ObjectHideFlags: 0
