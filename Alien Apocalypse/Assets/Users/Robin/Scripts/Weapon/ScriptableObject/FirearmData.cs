@@ -100,4 +100,7 @@ public class FirearmData : WeaponData
     public AudioClip shootSound;
     public AudioClip reloadSound;
 
+    [Header ("UI")]
+    public Sprite weaponSprite;
+
 }

@@ -126,6 +126,9 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                         photonView.RPC("UpdateAnimations", RpcTarget.All);
                     }
 
+                    AmmoCounter.Instance.SetWeaponData(nextFirearm.firearmData,nextFirearm );
+
+
                     selectedWeapon.mainCam = mainCam;
                     selectedWeapon.recoilObject = recoil;
                 }
@@ -135,6 +138,9 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     selectedWeapon.recoilObject = null;
                     
                     selectedWeapon = null;
+
+                    AmmoCounter.Instance.SetNoWeapon ( );
+
                     photonView.RPC("UpdateAnimations", RpcTarget.All);
                 }
             }

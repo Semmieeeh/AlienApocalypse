@@ -30,7 +30,7 @@ public class HitIndicator : MonoBehaviour
         if ( !inited )
         {
             inited = true;
-            targetGraphic.material = new (targetGraphic.material);
+            //targetGraphic.material = new (targetGraphic.material);
         }
 
         this.target = target;

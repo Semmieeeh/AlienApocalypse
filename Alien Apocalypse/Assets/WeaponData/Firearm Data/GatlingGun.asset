@@ -29,6 +29,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 8097077941979880184, guid: 0f4ae3b2ff2cdf8439e7b232772dd2b9, type: 3}
   projectileSpeed: 10
   radius: 5
+  shotgunBulletsAmount: 0
+  xSpread: 0
+  ySpread: 0
   baseMaxAmmo: 200
   baseReloadTime: 3
   raycastDistance: 1000
@@ -51,3 +54,4 @@ MonoBehaviour:
   weaponInt: 5
   shootSound: {fileID: 8300000, guid: cf1d44e1de90ccf4db2445390765d8c3, type: 3}
   reloadSound: {fileID: 0}
+  weaponSprite: {fileID: 21300000, guid: 794f2b5a1882b2c4a818649cd8940299, type: 3}

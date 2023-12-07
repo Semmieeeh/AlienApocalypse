@@ -220,12 +220,14 @@ public class Firearm : Weapon
             isSingleShoting = true;
             canSingleShoot = false;
 
-            events.onShooting?.Invoke();
 
-            events.onSingleShot?.Invoke();
 
             Shoot();
             Recoil();
+
+            events.onSingleShot?.Invoke(
+                );
+            events.onShooting?.Invoke();
 
             yield return new WaitForSeconds(cooldown);
             isSingleShoting = false;
@@ -246,12 +248,13 @@ public class Firearm : Weapon
                 if (currentAmmo <= 0)
                     break;
 
+                Recoil();
+                Shoot();
+
                 events.onShooting?.Invoke();
 
                 events.onBurst?.Invoke();
 
-                Shoot();
-                Recoil();
 
                 yield return new WaitForSeconds(firearmData.baseTimeBetweenBurst);
             }
@@ -268,13 +271,15 @@ public class Firearm : Weapon
         if (photonView.IsMine)
         {           
             // OnShooting will always be called if CanShoot is true and doesn't regard the FireType
-            events.onShooting?.Invoke();
 
             // OnAutomatic will be called every time a projectile is fired; The FireType has to be Automatic
-            events.onAutomatic?.Invoke();
 
             Shoot();
             Recoil();
+
+            events.onAutomatic?.Invoke ( );
+
+            events.onShooting?.Invoke();
 
             timeSinceLastShot = Time.time;
             
@@ -290,9 +295,14 @@ public class Firearm : Weapon
             isProjectile = true;
             canProjectile = false;
 
+
+
+            currentAmmo--;
+
             events.onShooting?.Invoke();
 
             photonView.RPC(nameof(Projectile), RpcTarget.All);
+
             Recoil();
         }
 
@@ -580,7 +590,6 @@ public class Firearm : Weapon
                 pro.InitialzieEvent(events.onHitEnemy, events.onKillEnemy);
             }
 
-            currentAmmo--;
         }
     }
 
