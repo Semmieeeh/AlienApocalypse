@@ -109,7 +109,7 @@ namespace Photon.Pun.UtilityScripts
             GUILayout.Label(total);
             GUILayout.Label(elapsedTime);
             GUILayout.Label(average);
-
+            
             if (this.buttonsOn)
             {
                 GUILayout.BeginHorizontal();

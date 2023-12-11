@@ -110,7 +110,11 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     }
     bool canChooseNew;
     float time;
-    float interval = 0.1f;
+    public float interval;
+    int armInt;
+    int legInt;
+    bool inRange;
+    public bool doAnim;
     private void Update()
     {
 
@@ -127,9 +131,18 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             NewTarget();
             canChooseNew = false;
         }
+        if(doAnim == true && !flyingEnemy && time >=interval)
+        {
+            photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, legInt);
+            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, armInt, null, inRange);
+            doAnim = false;
+        }
         switch (state)
         {
             case EnemyState.idle:
+                inRange = false;
+                legInt = 1;
+                armInt = 0;
 
                 switch (type)
                 {
@@ -165,7 +178,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         break;
                     case EnemyType.HEAVY:
 
-                        agent.stoppingDistance = targetRange;
+                        agent.stoppingDistance = targetRange;                       
                         if (Vector3.Distance(transform.position, target) <= targetRange - 1)
                         {
                             NewTarget();
@@ -179,6 +192,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
             case EnemyState.chasing:
 
+                legInt = 2;
+                
+
                 switch (type)
                 {
                     case EnemyType.FLYING:
@@ -190,31 +206,23 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                             if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
-                                if (time >= interval)
-                                {
-                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
-                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
-                                }
-
+                                inRange = true;
                                 Quaternion targetRotation = CalculateRotationToPlayer();
                                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
                                 if (canAttack == true)
                                 {
-
+                                    doAnim = true;
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
 
                                 }
 
                             }
+                            else
+                            {
+                                armInt = 1;
+                            }
                         }
-
-
-
-
-
-
-
 
 
 
@@ -241,22 +249,22 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                             if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
-                                if (time >= interval)
-                                {
-                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
-                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
-                                }
-
+                                inRange = true;
+                                legInt = 0;
                                 Quaternion targetRotation = CalculateRotationToPlayer();
                                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
                                 if (canAttack == true)
                                 {
-
+                                    doAnim = true;
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
 
                                 }
 
+                            }
+                            else
+                            {
+                                armInt = 1;
                             }
                         }
 
@@ -269,7 +277,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         }
                         break;
                     case EnemyType.BOMBER:
-
+                        armInt = 2;
+                        legInt = 2;
                         if (nearestPlayer != null && agent != null)
                         {
                             agent.destination = nearestPlayer.transform.position;
@@ -277,22 +286,21 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                             if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
-                                if (time >= interval)
-                                {
-                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
-                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
-                                }
-
+                                inRange = true;
                                 Quaternion targetRotation = CalculateRotationToPlayer();
                                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
                                 if (canAttack == true)
                                 {
-
+                                    doAnim = true;
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
 
                                 }
 
+                            }
+                            else
+                            {
+                                armInt = 1;
                             }
                         }
 
@@ -305,7 +313,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         }
                         break;
                     case EnemyType.HEAVY:
-
+                        armInt = 2;
+                        legInt = 2;
                         if (nearestPlayer != null && agent != null)
                         {
                             agent.destination = nearestPlayer.transform.position;
@@ -313,22 +322,21 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                             if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
-                                if (time >= interval)
-                                {
-                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
-                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
-                                }
-
+                                inRange = true;
                                 Quaternion targetRotation = CalculateRotationToPlayer();
                                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
                                 if (canAttack == true)
                                 {
-
+                                    doAnim = true;
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
 
                                 }
 
+                            }
+                            else
+                            {
+                                armInt = 1;
                             }
                         }
 
@@ -376,34 +384,33 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         {
             if (nearestPlayer.TryGetComponent(out PlayerHealth player) && nearestPlayer.TryGetComponent(out Movement m))
             {
+                source.clip = clips[0];
+                source.Play();
+                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                canAttack = false;
                 switch (type)
                 {
                     case EnemyType.WALKING:
                         if (m.rb.velocity.magnitude <= 0f)
                         {
-                            source.clip = clips[0];
-                            source.Play();
-                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                            
                             flash.Play();
                             Vector3 j = player.transform.position;
                             j.y += 0.4f;
                             bulletTracer.Activate(true, j);
                             player.TakeDamage(damage);
                             HitIndicatorManager.Instance.AddTarget(transform);
-                            canAttack = false;
                             Debug.Log("Hit!");
                         }
                         else if (m.rb.velocity.magnitude > 0f)
                         {
-                            source.clip = clips[0];
-                            source.Play();
-                            canAttack = false;
+                            
+                            
                             flash.Play();
                             int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
                             Debug.Log(k);
                             if (k < 5)
                             {
-                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                                 player.TakeDamage(damage);
                                 HitIndicatorManager.Instance.AddTarget(transform);
                                 Vector3 v = player.transform.position;
@@ -412,7 +419,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             }
                             else
                             {
-                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                                 Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
                                 v *= 10;
                                 bulletTracer.Activate(true, v);
@@ -426,29 +432,22 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                         if (m.rb.velocity.magnitude <= 0f)
                         {
-                            source.clip = clips[0];
-                            source.Play();
-                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                            
                             flash.Play();
                             Vector3 j = player.transform.position;
                             j.y += 0.4f;
                             bulletTracer.Activate(true, j);
                             player.TakeDamage(damage);
                             HitIndicatorManager.Instance.AddTarget(transform);
-                            canAttack = false;
                             Debug.Log("Hit!");
                         }
                         else if (m.rb.velocity.magnitude > 0f)
-                        {
-                            source.clip = clips[0];
-                            source.Play();
-                            canAttack = false;
+                        {                            
                             flash.Play();
                             int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
                             Debug.Log(k);
                             if (k < 5)
                             {
-                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                                 player.TakeDamage(damage);
                                 HitIndicatorManager.Instance.AddTarget(transform);
                                 Vector3 v = player.transform.position;
@@ -457,7 +456,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             }
                             else
                             {
-                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
                                 Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
                                 v *= 10;
                                 bulletTracer.Activate(true, v);
@@ -488,6 +486,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
+    bool animExecuted;
     public void CheckForPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -509,15 +508,22 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                     nearestPlayer = player;
                     if (nearestPlayer.GetComponent<PlayerHealth>().state == PlayerState.alive)
                     {
-                        state = EnemyState.chasing;
+                        if(state != EnemyState.chasing)
+                        {
+                            state = EnemyState.chasing;
+                            doAnim = true;
+                        }
                     }
 
                 }
             }
             else
             {
-                state = EnemyState.idle;
-
+                if(state != EnemyState.idle)
+                {
+                    state = EnemyState.idle;
+                    doAnim = true;
+                }
             }
         }
     } 

@@ -46,7 +46,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     float time;
     private void Update()
     {
-        photonView.RPC("Shader", RpcTarget.All);
+        //photonView.RPC("Shader", RpcTarget.All);
 
     }
     [PunRPC]
@@ -118,14 +118,14 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     IEnumerator GunRPC()
     {
         yield return new WaitForSeconds(0);
-        if (gun != null)
-        {
-            PhotonNetwork.Destroy(gun);
-        }
-        if(explodeObj!= null)
-        {
-            PhotonNetwork.Destroy(explodeObj);
-        }
+        //if (gun != null)
+        //{
+        //    PhotonNetwork.Destroy(gun);
+        //}
+        //if(explodeObj!= null)
+        //{
+        //    PhotonNetwork.Destroy(explodeObj);
+        //}
   
     }
     bool died;

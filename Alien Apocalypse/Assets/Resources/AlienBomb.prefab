@@ -2253,8 +2253,6 @@ GameObject:
   - component: {fileID: 6953253778805580192}
   - component: {fileID: 5932660472288310766}
   - component: {fileID: 7427756792574962229}
-  - component: {fileID: 3927886067848729369}
-  - component: {fileID: -8886513537682215082}
   m_Layer: 11
   m_Name: AlienBomb
   m_TagString: Untagged
@@ -2328,6 +2326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce9130991c3d3c469a970563ddb9e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 2
   moveSpeed: 5
   turnSpeed: 1000
   roamRange: 100
@@ -2342,8 +2341,6 @@ MonoBehaviour:
   bulletTracer: {fileID: 0}
   flash: {fileID: 0}
   particleMissOffset: 0.2
-  type: 2
-  state: 0
   attackRange: 1.5
   targetRange: 0
   nearestPlayer: {fileID: 0}
@@ -2356,6 +2353,8 @@ MonoBehaviour:
   armAnim: {fileID: 7559578415454998775}
   beaconlist: []
   isBomber: 1
+  interval: 0
+  doAnim: 0
 --- !u!195 &7028250540927831896
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2537,31 +2536,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3927886067848729369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SmoothingDelay: 5
---- !u!114 &-8886513537682215082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86d4ba53ae7c1ee4698e23ac0768038d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5758550126324249979
 GameObject:
   m_ObjectHideFlags: 0

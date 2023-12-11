@@ -31,6 +31,9 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     {
         movement.enabled = true;
         GetComponent<WallRunning>().enabled = true;
+        GetComponent<SlidingAbility>().enabled = true;
+        GetComponent<Grappling>().enabled = true;
+        GetComponent<DashAbility>().enabled = true;
         number = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         uiVanStefan.SetActive(true);
         weapon.layer = 7;

@@ -42,7 +42,7 @@ public class GrappleRope : MonoBehaviourPunCallbacks
             executed = true;
             cleared = false;
         }
-        else if(cleared == false)
+        else
         {
             ClearRope();
             cleared = true;
@@ -52,13 +52,13 @@ public class GrappleRope : MonoBehaviourPunCallbacks
 
 
     }
-    
+
     public void DrawRope(Vector3 grapplePoint)
     {
         // Handle rope drawing based on grapplePoint
         UpdateRope(grapplePoint);
     }
-   
+
 
     // Implement the UpdateRope and ClearRope methods to update the LineRenderer appropriately
     private void UpdateRope(Vector3 grapplePoint)
@@ -102,7 +102,7 @@ public class GrappleRope : MonoBehaviourPunCallbacks
     private void ClearRope()
     {
         currentGrapplePosition = grapplingGun.gunTip.position;
-        if(spring == null || lr == null)
+        if (spring == null || lr == null)
         {
             return;
         }
