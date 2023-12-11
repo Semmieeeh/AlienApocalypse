@@ -174,7 +174,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 if(firearm.firearmData == null)
                 {
                     firearm.firearmData = firearmData;
-                    photonView.RPC("SetWeapon", RpcTarget.All);
+                    SetWeapon();
 
                     return;
                 }
@@ -193,6 +193,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     if(firearm.firearmData != null)
                     {
                         GameObject weapon = PhotonNetwork.Instantiate(firearm.firearmData.prefab.name, transform.position, transform.rotation);
+                        
 
                         weapon.transform.parent = weaponSlots[i].transform;
 

@@ -27,6 +27,7 @@ public class GrappleRope : MonoBehaviourPunCallbacks
     public float time;
     float cooldown = 0.1f;
     bool executed;
+    bool cleared;
     private void Update()
     {
         if (!pv.IsMine)
@@ -37,30 +38,27 @@ public class GrappleRope : MonoBehaviourPunCallbacks
         if (grapplingGun.isGrappling)
         {
             Vector3 grapplePoint = grapplingGun.GetGrapplePoint();
-            DrawRopeRPC(grapplePoint);
+            DrawRope(grapplePoint);
             executed = true;
+            cleared = false;
         }
-        else
+        else if(cleared == false)
         {
-            ClearRopeRPC();
+            ClearRope();
+            cleared = true;
             executed = false;
         }
-            
-            
-        
+
+
+
     }
     
-    public void DrawRopeRPC(Vector3 grapplePoint)
+    public void DrawRope(Vector3 grapplePoint)
     {
         // Handle rope drawing based on grapplePoint
         UpdateRope(grapplePoint);
     }
-
-    public void ClearRopeRPC()
-    {
-        // Clear the rope's appearance
-        ClearRope();
-    }
+   
 
     // Implement the UpdateRope and ClearRope methods to update the LineRenderer appropriately
     private void UpdateRope(Vector3 grapplePoint)

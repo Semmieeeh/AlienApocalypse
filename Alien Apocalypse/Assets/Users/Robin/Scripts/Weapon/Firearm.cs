@@ -129,6 +129,7 @@ public class Firearm : Weapon
             }
             source.spatialBlend = 0;
             currentAmmo = maxAmmo;
+            AmmoCounter.Instance.SetWeaponData(firearmData, this);
         }
     }
 
@@ -225,8 +226,7 @@ public class Firearm : Weapon
             Shoot();
             Recoil();
 
-            events.onSingleShot?.Invoke(
-                );
+            events.onSingleShot?.Invoke();
             events.onShooting?.Invoke();
 
             yield return new WaitForSeconds(cooldown);

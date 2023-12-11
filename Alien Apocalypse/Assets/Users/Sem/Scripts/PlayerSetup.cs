@@ -30,6 +30,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     public void IsLocalPlayer()
     {
         movement.enabled = true;
+        GetComponent<WallRunning>().enabled = true;
         number = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         uiVanStefan.SetActive(true);
         weapon.layer = 7;

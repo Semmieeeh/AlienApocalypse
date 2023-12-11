@@ -12,6 +12,7 @@ using static PlayerHealth;
 public class EnemyAiTest : MonoBehaviourPunCallbacks
 {
     [Header("Ai Modifiers")]
+    public EnemyType type;
     public float moveSpeed;
     public float turnSpeed;
     private NavMeshAgent agent;
@@ -41,7 +42,16 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         idle,
         chasing
     }
-    public EnemyState state;
+    public enum EnemyType
+    {
+        FLYING,
+        WALKING,
+        BOMBER,
+        HEAVY,
+
+    }
+    
+    EnemyState state;
     public float attackRange;
     public float targetRange;
     public GameObject nearestPlayer;
@@ -101,74 +111,79 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     bool canChooseNew;
     float time;
     float interval = 0.1f;
-    void Update()
+    private void Update()
     {
+
         time += Time.deltaTime;
+        timePassed += Time.deltaTime;
+        CheckForPlayer();
+        if (timePassed > attackSpeed)
+        {
+            canAttack = true;
+            timePassed = Random.Range(-attackSpeed, attackSpeed);
+        }
         if (canChooseNew == true)
         {
             NewTarget();
             canChooseNew = false;
         }
-        if (photonView.IsMine)
+        switch (state)
         {
-            if (canAttack == false)
-            {
-                timePassed += Time.deltaTime;
-            }
+            case EnemyState.idle:
 
-            if (timePassed > attackSpeed)
-            {
-                canAttack = true;
-                timePassed = Random.Range(-attackSpeed, attackSpeed);
-            }
-            if (photonView.IsMine)
-            {
-                CheckForPlayer();
-                switch (state)
+                switch (type)
                 {
-                    case EnemyState.idle:
-
-                        if (flyingEnemy)
-                        {
-                            agent.stoppingDistance = 0;
-                        }
-                        else
-                        {
-                            agent.stoppingDistance = targetRange;
-                        }
-                        if (agent != null)
-                        {
-                            agent.destination = target;
-                        }
-                        if (time >= interval)
-                        {
-                            photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 1);
-                        }
-                        if (Vector3.Distance(transform.position, target) <= targetRange -1)
+                    case EnemyType.FLYING:
+                        currentOffset = agent.baseOffset;
+                        float newOffset = Mathf.Lerp(currentOffset, firstOffset, Time.deltaTime * moveSpeed / 4);
+                        agent.baseOffset = newOffset;
+                        agent.stoppingDistance = 0;
+                        if (Vector3.Distance(transform.position, target) <= targetRange - 1)
                         {
                             NewTarget();
 
                         }
-                        if (flyingEnemy)
+                        break;
+                    case EnemyType.WALKING:
+                        agent.stoppingDistance = targetRange;
+                        if (Vector3.Distance(transform.position, target) <= targetRange - 1)
                         {
-                            currentOffset = agent.baseOffset;
-                            float newOffset = Mathf.Lerp(currentOffset, firstOffset, Time.deltaTime * moveSpeed/4);
-                            agent.baseOffset = newOffset;
+                            NewTarget();
+
+                        }
+
+                        break;
+                    case EnemyType.BOMBER:
+                        agent.stoppingDistance = targetRange;
+                        if (Vector3.Distance(transform.position, target) <= targetRange - 1)
+                        {
+                            NewTarget();
+
+                        }
+
+
+                        break;
+                    case EnemyType.HEAVY:
+
+                        agent.stoppingDistance = targetRange;
+                        if (Vector3.Distance(transform.position, target) <= targetRange - 1)
+                        {
+                            NewTarget();
+
                         }
                         break;
+                }
 
-                    case EnemyState.chasing:
 
-                        if (flyingEnemy)
-                        {
-                            
-                            currentOffset = agent.baseOffset;
-                            desiredOffset = nearestPlayer.transform.position.y + firstOffset;
-                            float newOffset = Mathf.Lerp(currentOffset, desiredOffset, Time.deltaTime * moveSpeed / 4);
-                            agent.baseOffset = newOffset;
-                        }
+                break;
 
-                        if (nearestPlayer != null && agent!=null)
+            case EnemyState.chasing:
+
+                switch (type)
+                {
+                    case EnemyType.FLYING:
+
+                        if (nearestPlayer != null && agent != null)
                         {
                             agent.destination = nearestPlayer.transform.position;
                             agent.stoppingDistance = attackRange;
@@ -192,30 +207,145 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                                 }
 
                             }
-                            else
-                            {
-                                canChooseNew = true;
-                                if (!flyingEnemy)
-                                {
-                                    if(time>= interval)
-                                    {
-                                        photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 1, null, false);
-                                        photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 2);
-                                    }
-                                }
-                            }
+                        }
 
-                            if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+
+
+
+
+
+
+
+
+
+                            currentOffset = agent.baseOffset;
+                        desiredOffset = nearestPlayer.transform.position.y + firstOffset;
+                        float newOffset = Mathf.Lerp(currentOffset, desiredOffset, Time.deltaTime * moveSpeed / 4);
+                        agent.baseOffset = newOffset;
+
+                        if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+                        {
+                            canChooseNew = true;
+                            state = EnemyState.idle;
+
+
+                        }
+
+                        break;
+                    case EnemyType.WALKING:
+
+                        if (nearestPlayer != null && agent != null)
+                        {
+                            agent.destination = nearestPlayer.transform.position;
+                            agent.stoppingDistance = attackRange;
+
+                            if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
                             {
-                                state = EnemyState.idle;
+                                if (time >= interval)
+                                {
+                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
+                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
+                                }
+
+                                Quaternion targetRotation = CalculateRotationToPlayer();
+                                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+                                if (canAttack == true)
+                                {
+
+                                    photonView.RPC("Attack", RpcTarget.All, attackDamage);
+
+                                }
 
                             }
                         }
+
+                        if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+                        {
+                            canChooseNew = true;
+                            state = EnemyState.idle;
+
+
+                        }
+                        break;
+                    case EnemyType.BOMBER:
+
+                        if (nearestPlayer != null && agent != null)
+                        {
+                            agent.destination = nearestPlayer.transform.position;
+                            agent.stoppingDistance = attackRange;
+
+                            if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
+                            {
+                                if (time >= interval)
+                                {
+                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
+                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
+                                }
+
+                                Quaternion targetRotation = CalculateRotationToPlayer();
+                                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+                                if (canAttack == true)
+                                {
+
+                                    photonView.RPC("Attack", RpcTarget.All, attackDamage);
+
+                                }
+
+                            }
+                        }
+
+                        if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+                        {
+                            canChooseNew = true;
+                            state = EnemyState.idle;
+
+
+                        }
+                        break;
+                    case EnemyType.HEAVY:
+
+                        if (nearestPlayer != null && agent != null)
+                        {
+                            agent.destination = nearestPlayer.transform.position;
+                            agent.stoppingDistance = attackRange;
+
+                            if (Vector3.Distance(transform.position, nearestPlayer.transform.position) < attackRange)
+                            {
+                                if (time >= interval)
+                                {
+                                    photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, 0);
+                                    photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, 0, null, true);
+                                }
+
+                                Quaternion targetRotation = CalculateRotationToPlayer();
+                                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+                                if (canAttack == true)
+                                {
+
+                                    photonView.RPC("Attack", RpcTarget.All, attackDamage);
+
+                                }
+
+                            }
+                        }
+
+                        if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+                        {
+                            canChooseNew = true;
+                            state = EnemyState.idle;
+
+
+                        }
                         break;
                 }
-            }
+
+            break;
         }
     }
+    
 
     public Vector3 NewDestination(Vector3 origin, float dist, int layerMask)
     {
@@ -240,62 +370,120 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Attack(float damage)
     {
+        EnemyHealth h = GetComponent<EnemyHealth>();
+
         if (nearestPlayer != null)
         {
-            if (nearestPlayer.TryGetComponent(out PlayerHealth player))
+            if (nearestPlayer.TryGetComponent(out PlayerHealth player) && nearestPlayer.TryGetComponent(out Movement m))
             {
-                if (isBomber)
+                switch (type)
                 {
-                    EnemyHealth h = GetComponent<EnemyHealth>();
-                    player.TakeDamage(damage);
-                    HitIndicatorManager.Instance.AddTarget(transform);
-                    h.Explode();
-                    Debug.Log("Exploded");
-                }
-                if (nearestPlayer.TryGetComponent(out Movement m) && !isBomber)
-                {
-                    if (m.rb.velocity.magnitude <= 0f)
-                    {
-                        source.clip = clips[0];
-                        source.Play();
-                        photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
-                        flash.Play();
-                        Vector3 j = player.transform.position;
-                        j.y += 0.4f;
-                        bulletTracer.Activate(true, j);
-                        player.TakeDamage(damage);
-                        HitIndicatorManager.Instance.AddTarget(transform);
-                        canAttack = false;
-                        Debug.Log("Hit!");
-                    }
-                    else if (m.rb.velocity.magnitude > 0f)
-                    {
-                        source.clip = clips[0];
-                        source.Play();
-                        canAttack = false;
-                        flash.Play();
-                        int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
-                        Debug.Log(k);
-                        if (k < 5)
+                    case EnemyType.WALKING:
+                        if (m.rb.velocity.magnitude <= 0f)
                         {
+                            source.clip = clips[0];
+                            source.Play();
                             photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                            flash.Play();
+                            Vector3 j = player.transform.position;
+                            j.y += 0.4f;
+                            bulletTracer.Activate(true, j);
                             player.TakeDamage(damage);
                             HitIndicatorManager.Instance.AddTarget(transform);
-                            Vector3 v = player.transform.position;
-                            bulletTracer.Activate(true, v);
-                            Debug.Log("Hit By Chance!");
+                            canAttack = false;
+                            Debug.Log("Hit!");
                         }
-                        else
+                        else if (m.rb.velocity.magnitude > 0f)
                         {
-                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
-                            Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
-                            v *= 10;
-                            bulletTracer.Activate(true, v);
-                            Debug.Log("Missed!");
+                            source.clip = clips[0];
+                            source.Play();
+                            canAttack = false;
+                            flash.Play();
+                            int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
+                            Debug.Log(k);
+                            if (k < 5)
+                            {
+                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                                player.TakeDamage(damage);
+                                HitIndicatorManager.Instance.AddTarget(transform);
+                                Vector3 v = player.transform.position;
+                                bulletTracer.Activate(true, v);
+                                Debug.Log("Hit By Chance!");
+                            }
+                            else
+                            {
+                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                                Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
+                                v *= 10;
+                                bulletTracer.Activate(true, v);
+                                Debug.Log("Missed!");
+                            }
+
                         }
 
-                    }
+                        break;
+                    case EnemyType.FLYING:
+
+                        if (m.rb.velocity.magnitude <= 0f)
+                        {
+                            source.clip = clips[0];
+                            source.Play();
+                            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                            flash.Play();
+                            Vector3 j = player.transform.position;
+                            j.y += 0.4f;
+                            bulletTracer.Activate(true, j);
+                            player.TakeDamage(damage);
+                            HitIndicatorManager.Instance.AddTarget(transform);
+                            canAttack = false;
+                            Debug.Log("Hit!");
+                        }
+                        else if (m.rb.velocity.magnitude > 0f)
+                        {
+                            source.clip = clips[0];
+                            source.Play();
+                            canAttack = false;
+                            flash.Play();
+                            int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
+                            Debug.Log(k);
+                            if (k < 5)
+                            {
+                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                                player.TakeDamage(damage);
+                                HitIndicatorManager.Instance.AddTarget(transform);
+                                Vector3 v = player.transform.position;
+                                bulletTracer.Activate(true, v);
+                                Debug.Log("Hit By Chance!");
+                            }
+                            else
+                            {
+                                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                                Vector3 v = new Vector3(Random.Range(player.transform.position.x - particleMissOffset, player.transform.position.x + particleMissOffset), Random.Range(player.transform.position.y - particleMissOffset, player.transform.position.y + particleMissOffset), Random.Range(player.transform.position.z - particleMissOffset, player.transform.position.z + particleMissOffset));
+                                v *= 10;
+                                bulletTracer.Activate(true, v);
+                                Debug.Log("Missed!");
+                            }
+
+                        }
+
+                        break;
+                    case EnemyType.HEAVY:
+                        player.TakeDamage(damage);
+                        HitIndicatorManager.Instance.AddTarget(transform);
+                        Debug.Log("Punched");
+                        //punch anim
+                        break;
+                    case EnemyType.BOMBER:
+                        
+                        player.TakeDamage(damage);
+                        HitIndicatorManager.Instance.AddTarget(transform);
+                        h.Explode();
+                        Debug.Log("Exploded");
+                        break;
+
                 }
+
+
             }
         }
     }
