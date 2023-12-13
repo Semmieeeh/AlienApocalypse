@@ -10,31 +10,39 @@ public class ChestManager : MonoBehaviourPunCallbacks
     public List<Chest> chests;
     public Chest currentChest;
     public Chest oldChest;
-
+    int j;
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-
-        if (PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
         {
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                GameObject chestInst = PhotonNetwork.Instantiate(chestPrefab.name, transform.GetChild(i).transform.localPosition, transform.GetChild(i).transform.localRotation);
-
-                chestInst.gameObject.SetActive(false);
-                chestInst.transform.parent = transform.GetChild(i).transform;
-
-                if (chestInst.TryGetComponent<Chest>(out Chest chest))
-                {
-                    chests.Add(chest);
-                    chest.chestManager = this;
-                }
-            }
-
-            photonView.RPC("NewChest", RpcTarget.All);
+            photonView.RPC("ChestInitialize", RpcTarget.All);
         }
     }
 
+    [PunRPC]
+    public void ChestInitialize()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject chestInst = PhotonNetwork.Instantiate(chestPrefab.name, transform.GetChild(i).transform.localPosition, transform.GetChild(i).transform.localRotation);
+
+            chestInst.gameObject.SetActive(false);
+            chestInst.transform.parent = transform.GetChild(i).transform;
+
+            if (chestInst.TryGetComponent<Chest>(out Chest chest))
+            {
+                chests.Add(chest);
+                chest.chestManager = this;
+            }
+            j++;
+            if (j > 100)
+            {
+                break;
+            }
+        }
+        photonView.RPC("NewChest", RpcTarget.All);
+    }
     public void New()
     {
         photonView.RPC("NewChest", RpcTarget.All);

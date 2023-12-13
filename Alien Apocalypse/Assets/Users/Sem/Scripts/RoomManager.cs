@@ -53,6 +53,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public GameObject pointsManager;
     public GameObject vanObj;
+    public GameObject chests;
     public void SpawnPlayer()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -61,6 +62,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             //GameObject enemy = Instantiate(enemyManager, Vector3.zero, Quaternion.identity);
             GameObject pointsMan = PhotonNetwork.Instantiate(pointsManager.name,spawnPoint.position, Quaternion.identity);
             GameObject van = PhotonNetwork.Instantiate(vanObj.name, new Vector3(2, 0.4f, -22f),Quaternion.identity);
+            //GameObject chest = PhotonNetwork.Instantiate(chests.name, new Vector3(0,0,0),Quaternion.identity);
 
         }
         
