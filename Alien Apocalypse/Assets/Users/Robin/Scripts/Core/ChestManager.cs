@@ -11,25 +11,28 @@ public class ChestManager : MonoBehaviourPunCallbacks
     public Chest currentChest;
     public Chest oldChest;
 
-    public override void OnCreatedRoom()
+    public override void OnJoinedRoom()
     {
-        base.OnCreatedRoom();    
+        base.OnJoinedRoom();
 
-        for(int i = 0; i < transform.childCount; i++)
+        if (PhotonNetwork.IsMasterClient)
         {
-            GameObject chestInst = PhotonNetwork.Instantiate(chestPrefab.name, transform.GetChild(i).transform.localPosition, transform.GetChild(i).transform.localRotation);
-
-            chestInst.gameObject.SetActive(false);
-            chestInst.transform.parent = transform.GetChild(i).transform;
-
-            if(chestInst.TryGetComponent<Chest>(out Chest chest))
+            for (int i = 0; i < transform.childCount; i++)
             {
-                chests.Add(chest);
-                chest.chestManager = this;
-            }
-        }
+                GameObject chestInst = PhotonNetwork.Instantiate(chestPrefab.name, transform.GetChild(i).transform.localPosition, transform.GetChild(i).transform.localRotation);
 
-        photonView.RPC("NewChest", RpcTarget.All);
+                chestInst.gameObject.SetActive(false);
+                chestInst.transform.parent = transform.GetChild(i).transform;
+
+                if (chestInst.TryGetComponent<Chest>(out Chest chest))
+                {
+                    chests.Add(chest);
+                    chest.chestManager = this;
+                }
+            }
+
+            photonView.RPC("NewChest", RpcTarget.All);
+        }
     }
 
     public void New()
