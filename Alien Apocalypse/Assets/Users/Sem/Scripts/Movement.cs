@@ -349,28 +349,20 @@ public class Movement : MonoBehaviourPunCallbacks
                 walkState = 0;
                 
             }
-            photonView.RPC("UpdateAnimation", RpcTarget.All, walkState, walkingBackwards, false);
-            photonView.RPC("SetJumpAnim", RpcTarget.All, animgrounded);
+            anim.SetBool("WalkingBackwards", walkingBackwards);
+            anim.SetInteger("WalkState", walkState);
+            anim.SetBool("Downed", downed);
+            anim.SetBool("Grounded", animgrounded);
+            armAnim.SetBool("Jumping", animgrounded);
         }
     }
-   [PunRPC]
-    public void UpdateAnimation(int state, bool walkingBackwards,bool down)
-    {
-        anim.SetBool("WalkingBackwards", walkingBackwards);
-        anim.SetInteger("WalkState", state);
-        anim.SetBool("Downed", down);
-    }
+   
     [PunRPC]
     private void Walking()
     {
         anim.SetBool("WalkingBackwards", walkingBackwards);
     }
-    [PunRPC]
-    void SetJumpAnim(bool b)
-    {
-        anim.SetBool("Grounded",b);
-        armAnim.SetBool("Jumping", b);
-    }
+    
 
     
 }
