@@ -51,7 +51,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
         instance = this;
         multiplier = 1;
         startedTheWaves = false;
-        waveSize = 5;
+        waveSize = 1;
         curSpawnPos = spawnPoints[0];
         waveStartTimeCounter = waveStartTime;
         cooldownCounter = waveCooldown;
@@ -83,7 +83,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             waveStartTime = 5;
             for (int i = 0; i < waveSize * PhotonNetwork.CurrentRoom.PlayerCount; i++)
             {
-                //SpawnEnemies(1);
+                SpawnEnemies(1);
                 enemiesSpawning = true;
                 yield return new WaitForSeconds(spawnSpeed);
             }
@@ -92,7 +92,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             enemiesSpawning = false;
             cooldownCounter = waveCooldown;
             wavesCompleted++;
-            waveSize += 3 * PhotonNetwork.CurrentRoom.PlayerCount;
+            //waveSize += 3 * PhotonNetwork.CurrentRoom.PlayerCount;
             curSpawnPos = spawnPoints[Random.Range(0, 3)].transform;
             yield return new WaitForSeconds(waveCooldown);
             multiplier = multiplier * 1.15f;
