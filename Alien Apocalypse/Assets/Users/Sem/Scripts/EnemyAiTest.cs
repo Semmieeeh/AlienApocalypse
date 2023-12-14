@@ -134,8 +134,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
         if(doAnim == true && !flyingEnemy && time >=interval)
         {
-            photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, legInt);
-            photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, armInt, null, inRange);
+            //photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, legInt);
+            //photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, armInt, null, inRange);
             doAnim = false;
             time = 0;
         }
