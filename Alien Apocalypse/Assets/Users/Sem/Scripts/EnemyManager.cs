@@ -83,7 +83,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             waveStartTime = 5;
             for (int i = 0; i < waveSize * PhotonNetwork.CurrentRoom.PlayerCount; i++)
             {
-                SpawnEnemies(1);
+                //SpawnEnemies(1);
                 enemiesSpawning = true;
                 yield return new WaitForSeconds(spawnSpeed);
             }
