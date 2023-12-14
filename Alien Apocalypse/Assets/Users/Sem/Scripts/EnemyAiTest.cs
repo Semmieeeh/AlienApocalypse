@@ -69,6 +69,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     void Start()
     {
         targetRange = 10;
+        interval = 0.2f;
         agent = GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
         agent.angularSpeed = turnSpeed;
@@ -136,6 +137,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, legInt);
             photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, armInt, null, inRange);
             doAnim = false;
+            time = 0;
         }
         switch (state)
         {
