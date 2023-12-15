@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun.Demo.Cockpit;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class VFXShootRay : MonoBehaviour
 {
     [SerializeField]
@@ -10,13 +10,21 @@ public class VFXShootRay : MonoBehaviour
     [SerializeField]
     float duration;
 
+    [SerializeField]
+    bool moveToTarget = true;
+
+    [SerializeField]
+    bool dampenRay;
+
     float timer;
 
     Vector3 endPos;
-    public float Progress{
+    public float Progress
+    {
         get => Mathf.InverseLerp (duration, 0, timer);
     }
 
+    bool inited;
     private void Start ( )
     {
         linerenderer = GetComponent<LineRenderer> ( );
@@ -37,23 +45,37 @@ public class VFXShootRay : MonoBehaviour
         this.endPos = endPos;
 
         linerenderer.widthMultiplier *= 2;
+        inited = true;
     }
 
     private void Update ( )
     {
-        //linerenderer.material.SetFloat ("_Progress", Progress);
+        if ( !inited )
+            return;
+
+        Debug.Log ("he hu");
+
+        if(dampenRay)
+            linerenderer.sharedMaterial.SetFloat ("_Progress", Progress);
 
         timer += Time.deltaTime;
 
-
-        var newEndpos = Vector3.Lerp (endPos, linerenderer.GetPosition (1), Progress * Time.deltaTime);
-
-        linerenderer.SetPosition (0, newEndpos);
-
-        if (timer >= duration )
+        if ( moveToTarget )
         {
 
-            Destroy (gameObject);
+            var newEndpos = Vector3.Lerp (endPos, linerenderer.GetPosition (1), Progress * Time.deltaTime);
+
+            linerenderer.SetPosition (0, newEndpos);
+        }
+
+        if ( timer >= duration )
+        {
+            if ( Application.isPlaying )
+                Destroy (gameObject);
+            else
+            {
+                DestroyImmediate (gameObject);
+            }
         }
     }
 }

@@ -2383,6 +2383,81 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2379565836009326996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4194075173146051130}
+  - component: {fileID: 1655163477449345099}
+  - component: {fileID: 6265639400145988384}
+  m_Layer: 0
+  m_Name: Shoot Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4194075173146051130
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2379565836009326996}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3739929099288799027}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 571.1, y: -336.03885}
+  m_SizeDelta: {x: 48.2532, y: 48.2532}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1655163477449345099
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2379565836009326996}
+  m_CullTransparentMesh: 1
+--- !u!114 &6265639400145988384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2379565836009326996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: be788ecf51a8ee4449fcacc3781a7303, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2638502331663222539
 GameObject:
   m_ObjectHideFlags: 0
@@ -4658,6 +4733,7 @@ RectTransform:
   - {fileID: 4966761775761220360}
   - {fileID: 4802875640198548168}
   - {fileID: 6461048980300082276}
+  - {fileID: 4194075173146051130}
   - {fileID: 128762164700100177}
   m_Father: {fileID: 7067027993836274629}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4681,8 +4757,12 @@ MonoBehaviour:
   currentAmmoText: {fileID: 3190822955163518512}
   maxAmmoText: {fileID: 7140193638257011176}
   weaponImage: {fileID: 2892944034422524073}
+  shootEffect: {fileID: 6265639400145988384}
   fireRateParent: {fileID: 128762164700100177}
   scaleSpeed: 0.1
+  shootSpeed: 0.03
+  imageMovetime: 0.1
+  imageMoveAmount: {x: 30, y: 0, z: 0}
   fullClipColor: {r: 0.7568628, g: 0.9960785, b: 0.9921569, a: 1}
   emptyClipColor: {r: 0.7924528, g: 0.24969736, b: 0.24969736, a: 1}
   reloadPulseSpeed: 10

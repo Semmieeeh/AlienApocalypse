@@ -17,7 +17,7 @@ public class AmmoCounter : MonoBehaviour
     TextMeshProUGUI maxAmmoText;
 
     [SerializeField]
-    Image weaponImage;
+    Image weaponImage, shootEffect;
 
     [SerializeField]
     Transform fireRateParent;
@@ -27,12 +27,23 @@ public class AmmoCounter : MonoBehaviour
     float scaleSpeed = 0.1f;
 
     [SerializeField]
+    float shootSpeed;
+
+    [SerializeField]
+    float imageMovetime;
+
+    [SerializeField]
+    Vector3 imageMoveAmount;
+
+    [SerializeField]
     Color fullClipColor, emptyClipColor;
 
     [SerializeField]
     float reloadPulseSpeed = 2;
 
     Vector3 ammoCountScaleVelocity;
+
+    Vector3 imageMoveVelocity;
 
     Color reloadingColor;
 
@@ -42,14 +53,23 @@ public class AmmoCounter : MonoBehaviour
 
     private Firearm actualWeapon;
 
+    float shootVelocity;
+
+    Vector3 imgBasePos;
+
+    
+
     private void Awake ( )
     {
         Instance = this;
+        imgBasePos = weaponImage.transform.position;
     }
 
     private void Update ( )
     {
         UpdateCounterSize ( );
+
+        UpdateWeaponImage ( );
 
         if(reloading)
             UpdateReloadingAnimation ( );
@@ -59,6 +79,12 @@ public class AmmoCounter : MonoBehaviour
     void OnShoot ( )
     {
         currentAmmoText.transform.localScale = Vector3.one * 1.2f;
+
+        weaponImage.transform.position = imgBasePos + imageMoveAmount;
+
+        var c = shootEffect.color;
+        c.a = 1;
+        shootEffect.color = c;
 
         //TODO: Play UI Shoot effect
 
@@ -85,6 +111,21 @@ public class AmmoCounter : MonoBehaviour
         s = Vector3.SmoothDamp (s, Vector3.one, ref ammoCountScaleVelocity, scaleSpeed);
 
         currentAmmoText.transform.localScale = s;
+    }
+
+    void UpdateWeaponImage ( )
+    {
+        var pos = weaponImage.transform.position;
+
+        pos = Vector3.SmoothDamp (pos,imgBasePos,ref imageMoveVelocity, imageMovetime );
+
+        weaponImage.transform.position = pos;
+
+        var c = shootEffect.color;
+
+        c.a = Mathf.SmoothDamp(c.a,0,ref shootVelocity, shootSpeed);
+
+        shootEffect.color = c;
     }
 
     void UpdateReloadingAnimation ( )

@@ -8,7 +8,13 @@ public class DestroyParticle : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitForSeconds(time);
-        Destroy(gameObject);
+
+        if(Application.isPlaying)
+            Destroy(gameObject);
+        else
+        {
+            DestroyImmediate (gameObject);
+        }
     }
 
 
