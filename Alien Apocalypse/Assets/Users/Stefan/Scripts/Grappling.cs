@@ -13,7 +13,7 @@ public class Grappling : MonoBehaviourPunCallbacks
     private Vector3 grapplePoint;
     public LayerMask whatIsGrappleable;
     public Transform gunTip, playerCam, player;
-    private float maxDistance = 100f;
+    public  float maxDistance;
     private SpringJoint joint;
     public bool isGrappling = false;
     public float grappleStrength;

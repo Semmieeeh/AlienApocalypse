@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillTree : MonoBehaviour
+public class Skill : MonoBehaviour
 {
-    
+    public SkillTree skillTree;
 }
