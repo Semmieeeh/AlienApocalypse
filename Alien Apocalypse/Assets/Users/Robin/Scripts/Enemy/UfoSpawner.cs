@@ -24,6 +24,10 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
     }
     private void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         UfoBehaviour();
 
         Vector3 v = new Vector3(0,200,0);

@@ -63,7 +63,6 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         if(!TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
             Rigidbody rig = gameObject.AddComponent<Rigidbody>();
-            rig = GetComponent<Rigidbody>();
             rig.collisionDetectionMode = CollisionDetectionMode.Continuous;
             rig.interpolation = RigidbodyInterpolation.Interpolate;
             rig.freezeRotation = true;
