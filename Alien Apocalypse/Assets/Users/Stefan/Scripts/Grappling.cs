@@ -87,7 +87,7 @@ public class Grappling : MonoBehaviourPunCallbacks
                     damperStrength = minDamperStrength;
                     grappleStrength = idleStrength;
                     LiftArm();
-                    pv.RPC("SyncArmAnimation", RpcTarget.All, 1);
+                    SyncArmAnimation(1);
                 }
 
                 if (!Input.GetButton("Grapple") && !isGrappling && !pointingArm && !canGrapple)
@@ -110,7 +110,7 @@ public class Grappling : MonoBehaviourPunCallbacks
                     if (Input.GetButtonDown("Grapple") || (joint != null && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance))
                     {
                         StopGrapple();
-                        pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 0);
+                        SyncArmAnimation(0);
                     }
 
                     if (childOfPoint == null || grapplePointParent == null)
@@ -150,7 +150,7 @@ public class Grappling : MonoBehaviourPunCallbacks
             {
                 StartGrapple();
                 arm.SetInteger("FireState", 2);
-                pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 2);
+                SyncArmAnimation(2);
             }            
 
         }
@@ -160,7 +160,7 @@ public class Grappling : MonoBehaviourPunCallbacks
             canGrapple = true;
             armLowerTime = maxAnimDuration;
             arm.SetInteger("FireState", 2);
-            pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 2);
+            SyncArmAnimation(2);
         }
     }
 

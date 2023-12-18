@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f41e6957edc5f404d8109c01ae381721, type: 3}
+  m_Name: SMG
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5659022227595200098, guid: c8739db55766e6447959d899a5b8608d, type: 3}
+  dropPrefab: {fileID: 150391087232160138, guid: 5508d8062e7ba5e43825426c8ce1388c, type: 3}
+  name: 
+  info: 
+  localPlacmentPos: {x: 0.26, y: -0.21, z: 0.45}
+  firearmType: 0
+  fireType: 2
+  baseDamage: 25
+  baseCooldown: 0
+  rotationAmount: 0
+  bulletForce: 10
+  baseBurstAmount: 5
+  baseTimeBetweenBurst: 0.2
+  baseFireRate: 1200
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 0
+  radius: 0
+  shotgunBulletsAmount: 0
+  xSpread: 0
+  ySpread: 0
+  baseMaxAmmo: 21
+  baseReloadTime: 0.9165
+  raycastDistance: 1000
+  swayClamp: 0.015
+  smoothing: 5
+  camRecoilX: -3
+  camRecoilY: -0.2
+  camRecoilZ: -0.2
+  camSnappiness: 10
+  camReturnSpeed: 5
+  firearmRecoilX: -2.5
+  firearmRecoilY: 0
+  firearmRecoilZ: 0
+  firearmSnappiness: 10
+  firearmReturnSpeed: 20
+  firearmRecoilBackUp: -0.6
+  backUpSnappiness: 20
+  backUpReturnSpeed: 30
+  anim: {fileID: 7400000, guid: dc9b060edcc7ec94bb1e987d701aea09, type: 2}
+  weaponInt: 2
+  shootSound: {fileID: 8300000, guid: d65ea7a3f1db09c4e80bf188344efcb7, type: 3}
+  reloadSound: {fileID: 8300000, guid: e4b722335ae79dd498ac686cc172a8a5, type: 3}
+  weaponSprite: {fileID: 21300000, guid: bf6cf55eb79dc2d45a4086cdfe8db8ce, type: 3}

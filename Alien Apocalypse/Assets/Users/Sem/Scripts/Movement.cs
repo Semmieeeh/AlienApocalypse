@@ -167,28 +167,14 @@ public class Movement : MonoBehaviourPunCallbacks
     }   
     public void StopWhenNoInput()
     {
-        stopTime -= Time.deltaTime;
-        if (input.magnitude < 0.5f && grounded && stopped == false)
-        {
-            stopTime = 1;
-            stopped = true;
-        }
-
-        if (stopTime > 0)
+        
+        if (rb.velocity.magnitude > 0.2f && input.magnitude<0.5f && grounded)
         {
             Vector3 oppositeForce = -rb.velocity.normalized * slowDownForce;
             rb.AddForce(oppositeForce);
         }
 
-        if (stopTime > 0 && rb.velocity.magnitude < 0.1f)
-        {
-            stopTime = 0;
-        }
-
-        if (stopTime > 0 && rb.velocity.magnitude > 0.1f && stopped == false)
-        {
-            stopTime = 0;
-        }
+        
     }
 
     private void FovChange()

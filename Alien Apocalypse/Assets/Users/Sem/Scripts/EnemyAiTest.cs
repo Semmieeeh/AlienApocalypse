@@ -214,7 +214,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                                 if (canAttack == true)
                                 {
-                                    doAnim = true;
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
 
                                 }
@@ -270,12 +269,15 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             }
                         }
 
-                        if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+                        if (nearestPlayer != null)
                         {
-                            canChooseNew = true;
-                            state = EnemyState.idle;
+                            if (nearestPlayer.GetComponent<PlayerHealth>().knocked == true)
+                            {
+                                canChooseNew = true;
+                                state = EnemyState.idle;
 
 
+                            }
                         }
                         break;
                     case EnemyType.BOMBER:
@@ -384,6 +386,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
         if (nearestPlayer != null)
         {
+            Rigidbody rb = nearestPlayer.GetComponent<Rigidbody>();
             if (nearestPlayer.TryGetComponent(out PlayerHealth player) && nearestPlayer.TryGetComponent(out Movement m))
             {
                 source.clip = clips[0];
@@ -393,7 +396,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                 switch (type)
                 {
                     case EnemyType.WALKING:
-                        if (m.rb.velocity.magnitude <= 0f)
+                        if (rb.velocity.magnitude <= 0f)
                         {
                             
                             flash.Play();
@@ -404,7 +407,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             HitIndicatorManager.Instance.AddTarget(transform);
                             Debug.Log("Hit!");
                         }
-                        else if (m.rb.velocity.magnitude > 0f)
+                        else if (rb.velocity.magnitude > 0f)
                         {
                             
                             
@@ -432,7 +435,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         break;
                     case EnemyType.FLYING:
 
-                        if (m.rb.velocity.magnitude <= 0f)
+                        if (rb.velocity.magnitude <= 0f)
                         {
                             
                             flash.Play();
@@ -443,10 +446,10 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             HitIndicatorManager.Instance.AddTarget(transform);
                             Debug.Log("Hit!");
                         }
-                        else if (m.rb.velocity.magnitude > 0f)
+                        else if (rb.velocity.magnitude > 0f)
                         {                            
                             flash.Play();
-                            int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
+                            int k = Random.Range(0, rb.velocity.magnitude.ToInt());
                             Debug.Log(k);
                             if (k < 5)
                             {
@@ -493,7 +496,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float nearestDistance = float.MaxValue;
-        nearestPlayer = null;
 
         foreach (GameObject player in players)
         {
@@ -513,9 +515,13 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                         if(state != EnemyState.chasing)
                         {
                             state = EnemyState.chasing;
-                            doAnim = true;
                         }
                     }
+
+                }
+                else
+                {
+                    nearestPlayer = null;
 
                 }
             }
