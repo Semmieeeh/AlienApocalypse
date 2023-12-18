@@ -1594,28 +1594,28 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: WalkingBackwards
   - Type: 3
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: WalkState
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Grounded
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Jump
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Sliding
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Downed
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Revived
   m_SynchronizeLayers:
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!1 &1556875311490227867
 GameObject:
@@ -2726,28 +2726,28 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 3
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: WeaponState
   - Type: 3
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: ArmState
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Moving
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Jumping
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: NextAnim
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Revived
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: Knocked
   m_SynchronizeLayers:
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!1 &3537301083843929236
 GameObject:
@@ -4268,10 +4268,10 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 3
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: FireState
   m_SynchronizeLayers:
-  - SynchronizeType: 2
+  - SynchronizeType: 1
     LayerIndex: 0
 --- !u!1 &6459948167630690748
 GameObject:

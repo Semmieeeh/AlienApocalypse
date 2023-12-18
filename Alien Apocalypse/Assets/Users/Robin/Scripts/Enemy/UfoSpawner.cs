@@ -31,6 +31,11 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
     }
     public void PlayParticle()
     {
+        photonView.RPC("ParticleRPC", RpcTarget.All);
+    }
+    [PunRPC]
+    void ParticleRPC()
+    {
         for (int i = 0; i < partartarticles.Length; i++)
         {
             partartarticles[i].Play();
@@ -47,14 +52,15 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
         {
             if(m.cooldownCounter > 0 && executed == true)
             {
-                photonView.RPC("UfoActivate", RpcTarget.All);
+                UfoActivate();
                 executed = false;
                 
             }
         }
-        else if(m.cooldownCounter > 5 && executed == false)
+
+        if(m.cooldownCounter > 5 && executed == false)
         {
-            photonView.RPC("UfoDeactivate", RpcTarget.All);
+            UfoDeactivate();
             executed = true;
         }
     }
@@ -63,7 +69,6 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
         
         transform.position = Vector3.Lerp(transform.position, desiredPos, moveSpeed * Time.deltaTime);
     }
-    [PunRPC]
     void UfoActivate()
     {
         desiredPos = new Vector3(m.curSpawnPos.position.x, m.curSpawnPos.position.y, m.curSpawnPos.position.z);
@@ -77,7 +82,6 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
         mesh.enabled = true;
         
     }
-    [PunRPC]
     void UfoDeactivate()
     {
         sound = false;

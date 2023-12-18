@@ -556,6 +556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8175454672262138007}
   - component: {fileID: 606356482855481088}
+  - component: {fileID: 2627549454673492260}
   m_Layer: 11
   m_Name: BombsPivot
   m_TagString: Untagged
@@ -572,7 +573,7 @@ Transform:
   m_GameObject: {fileID: 1548260486327869922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.00125, z: -0}
+  m_LocalPosition: {x: 0, y: 0.00006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -676,6 +677,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2627549454673492260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548260486327869922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1988019110418151301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,6 +1466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8490647720566573664}
   - component: {fileID: 7559578415454998775}
+  - component: {fileID: 1890298208161591804}
   m_Layer: 11
   m_Name: Arms
   m_TagString: Untagged
@@ -1488,6 +1512,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1890298208161591804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4100563993314068707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 1
+    Name: Attack
+  - Type: 3
+    SynchronizeType: 1
+    Name: WalkState
+  - Type: 4
+    SynchronizeType: 1
+    Name: InRange
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &4117335626130515852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1772,6 +1823,7 @@ GameObject:
   - component: {fileID: 6456500423871001546}
   - component: {fileID: 1253222060486738215}
   - component: {fileID: 1880853468949831869}
+  - component: {fileID: 6357159071552462725}
   m_Layer: 11
   m_Name: Alien
   m_TagString: Untagged
@@ -1929,6 +1981,30 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6357159071552462725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4615329021597408394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 3
+    SynchronizeType: 1
+    Name: WalkState
+  - Type: 4
+    SynchronizeType: 1
+    Name: Flying
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &4983957952744130226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,13 +2383,14 @@ MonoBehaviour:
   - {fileID: 7067262665663158704}
   - {fileID: 2472891430103302581}
   knockBack: 0
-  gun: {fileID: 0}
+  gun: {fileID: 1548260486327869922}
   r: {fileID: 2320463752309720049}
   blastDirection: {x: 0, y: 0, z: 0}
   canExplode: 1
   hitLimb: {fileID: 0}
   explosion: {fileID: 3201137857499991782, guid: 78df2d92cefeb9841a90bb6c2e437dc6, type: 3}
   explodeObj: {fileID: 1548260486327869922}
+  anim: {fileID: 0}
 --- !u!114 &2862996086437632071
 MonoBehaviour:
   m_ObjectHideFlags: 0

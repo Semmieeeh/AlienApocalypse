@@ -27,8 +27,11 @@ public class KankerMultiplayerfixix : MonoBehaviourPun, IPunObservable
             //We own this player: send the others our data
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
-            stream.SendNext(r.velocity);
-            stream.SendNext(r.angularVelocity);
+            if (r != null)
+            {
+                stream.SendNext(r.velocity);
+                stream.SendNext(r.angularVelocity);
+            }
         }
         else
         {
@@ -50,8 +53,11 @@ public class KankerMultiplayerfixix : MonoBehaviourPun, IPunObservable
             //Update Object position and Rigidbody parameters
             transform.position = Vector3.Lerp(transform.position, latestPos, Time.deltaTime * 5);
             transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, Time.deltaTime * 5);
-            r.velocity = velocity;
-            r.angularVelocity = angularVelocity;
+            if (r != null)
+            {
+                r.velocity = velocity;
+                r.angularVelocity = angularVelocity;
+            }
         }
     }
 

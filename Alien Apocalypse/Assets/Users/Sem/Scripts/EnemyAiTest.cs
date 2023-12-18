@@ -125,20 +125,20 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         if (timePassed > attackSpeed)
         {
             canAttack = true;
-            timePassed = Random.Range(-attackSpeed, attackSpeed);
+            
+        }
+        else
+        {
+            canAttack = false;
         }
         if (canChooseNew == true)
         {
             NewTarget();
             canChooseNew = false;
         }
-        if(doAnim == true && !flyingEnemy && time >=interval)
-        {
-            //photonView.RPC(nameof(UpdateAlienLegs), RpcTarget.All, legInt);
-            //photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, armInt, null, inRange);
-            doAnim = false;
-            time = 0;
-        }
+        UpdateAlienLegs(legInt);
+        UpdateAlienArms(armInt, null, inRange);
+
         switch (state)
         {
             case EnemyState.idle:
@@ -330,9 +330,8 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                                 if (canAttack == true)
                                 {
-                                    doAnim = true;
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
-
+                                    canAttack = false;
                                 }
 
                             }
@@ -380,6 +379,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Attack(float damage)
     {
+        timePassed = Random.Range(-attackSpeed, attackSpeed);
         EnemyHealth h = GetComponent<EnemyHealth>();
 
         if (nearestPlayer != null)
@@ -388,7 +388,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
             {
                 source.clip = clips[0];
                 source.Play();
-                photonView.RPC(nameof(UpdateAlienArms), RpcTarget.All, null, "Attack", null);
+                UpdateAlienArms(0, "Attack", true);
                 canAttack = false;
                 switch (type)
                 {

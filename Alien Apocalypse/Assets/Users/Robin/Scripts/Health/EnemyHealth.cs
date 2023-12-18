@@ -85,13 +85,11 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
 
             if (hitLimb != null)
             {
-                photonView.RPC(nameof(ReleaseGun), RpcTarget.All);
                 hitLimb.AddForce(blastDirection * knockBack, ForceMode.Impulse);
                 
             }
             else
             {
-                photonView.RPC(nameof(ReleaseGun), RpcTarget.All);
                 foreach (var rigidBody in rigidBodies)
                 {
                     rigidBody.AddForce(blastDirection * knockBack, ForceMode.Impulse);          
@@ -108,26 +106,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
                 onHit?.Invoke();
             }
         }
-    }
-    [PunRPC]
-    private void ReleaseGun()
-    {
-        StartCoroutine(nameof(GunRPC));
-    }
-    [PunRPC]
-    IEnumerator GunRPC()
-    {
-        yield return new WaitForSeconds(0);
-        //if (gun != null)
-        //{
-        //    PhotonNetwork.Destroy(gun);
-        //}
-        //if(explodeObj!= null)
-        //{
-        //    PhotonNetwork.Destroy(explodeObj);
-        //}
-  
-    }
+    } 
     bool died;
     public GameObject explosion;
     public GameObject explodeObj;
@@ -143,17 +122,23 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         health = 0;
         SyncDamage(10);
     }
+    public Animator anim;
     public IEnumerator Die()
     {
+        PhotonNetwork.Destroy(gun);
+        
+        
         if (exploded == false && canExplode)
         {
             
             exp = PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);
+            
             exp.transform.parent = transform;
             exploded = true;
         }
         yield return new WaitForSeconds(10);
         died = true;
+        anim.SetBool("Dead", died);
         yield return new WaitForSeconds(1);
         if (canExplode == true)
         {
@@ -168,8 +153,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     }
     [PunRPC]
     void DieVoid()
-    {
-    
+    {    
         PhotonNetwork.Destroy(gameObject);
     }
     [PunRPC]
@@ -178,6 +162,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         if (exp != null)
         {
             PhotonNetwork.Destroy(exp);
+            
         }
         PhotonNetwork.Destroy(gameObject);
     }

@@ -103,12 +103,8 @@ public class Movement : MonoBehaviourPunCallbacks
             
             animtime += Time.deltaTime;
             time += Time.deltaTime;
-            if (animtime >= animinterval)
-            {
-                AnimationCheck();
-                ArmAnimCheck();
-                animtime = 0;
-            }
+            AnimationCheck();
+            ArmAnimCheck();
         }
     }
     
@@ -154,7 +150,8 @@ public class Movement : MonoBehaviourPunCallbacks
             {
                 animInt = 0;
             }
-            photonView.RPC("AnimRPC", RpcTarget.All, animInt);
+            //photonView.RPC("AnimRPC", RpcTarget.All, animInt);
+            AnimRPC(animInt);
         }  
     }
     [PunRPC]
@@ -238,7 +235,8 @@ public class Movement : MonoBehaviourPunCallbacks
 
             if (animtime > animinterval)
             {
-                photonView.RPC("Walking", RpcTarget.All);
+                //photonView.RPC("Walking", RpcTarget.All);
+                Walking();
             }
 
             if (grounded)

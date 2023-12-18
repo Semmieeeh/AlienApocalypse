@@ -17,16 +17,18 @@ public class DamageParent : MonoBehaviourPunCallbacks, IDamagable
 
     public void Damagable(float damage, UnityEvent onKill, UnityEvent onHit, float bulletForce, Vector3 blastDir)
     {
-        DealDamage(damage * damageMultiplier ,onKill,onHit,bulletForce,blastDir);
-        parent.hitLimb = GetComponent<Rigidbody>();
+
+        parent.hitLimb = rb;
         parent.knockBack = bulletForce;
         parent.blastDirection = blastDir;
+        DealDamage(damage * damageMultiplier, onKill, onHit, bulletForce, blastDir);
     }
 
     public void DealDamage(float damage,UnityEvent onKill,UnityEvent onhit,float bulletforce,Vector3 blastDir)
     {
-        parent.Damagable(damage, onKill , onhit, bulletforce,blastDir);
+        
         parent.hitLimb = GetComponent<Rigidbody>();
+        parent.Damagable(damage, onKill, onhit, bulletforce, blastDir);
     }
     
 }
