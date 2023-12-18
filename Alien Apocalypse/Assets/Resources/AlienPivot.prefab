@@ -1312,6 +1312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8490647720566573664}
   - component: {fileID: 7559578415454998775}
+  - component: {fileID: 4555572919557590350}
   m_Layer: 11
   m_Name: Arms
   m_TagString: Untagged
@@ -1357,6 +1358,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4555572919557590350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4100563993314068707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 9
+    SynchronizeType: 1
+    Name: Attack
+  - Type: 3
+    SynchronizeType: 1
+    Name: WalkState
+  - Type: 4
+    SynchronizeType: 1
+    Name: InRange
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &4117335626130515852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,6 +1670,7 @@ GameObject:
   - component: {fileID: 6456500423871001546}
   - component: {fileID: 1253222060486738215}
   - component: {fileID: 3617699072334163821}
+  - component: {fileID: 5459737165534366334}
   m_Layer: 11
   m_Name: Alien
   m_TagString: Untagged
@@ -1799,6 +1828,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5459737165534366334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4615329021597408394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 3
+    SynchronizeType: 1
+    Name: WalkState
+  - Type: 4
+    SynchronizeType: 1
+    Name: Flying
+  - Type: 4
+    SynchronizeType: 1
+    Name: Dead
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &4983957952744130226
 GameObject:
   m_ObjectHideFlags: 0
