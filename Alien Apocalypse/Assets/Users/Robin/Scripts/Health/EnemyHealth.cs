@@ -65,11 +65,11 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
 
         if(health <= 0)
         {
-            if (!dead)
-            {
-                onKill?.Invoke();
-            }
             dead = true;
+
+
+            onKill?.Invoke();
+            
             
             gameObject.layer = 0;
             foreach(var rigidBody in rigidBodies)

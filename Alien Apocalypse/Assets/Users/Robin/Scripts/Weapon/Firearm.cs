@@ -80,7 +80,6 @@ public class Firearm : Weapon
 
     [Space]
     [Header("Firearm Events")]
-    [HideInInspector]
     public FirearmEvents events;
 
     public override void StartWeapon()
