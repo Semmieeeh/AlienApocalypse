@@ -11,18 +11,18 @@ public class PickUpAbility : MonoBehaviourPunCallbacks, IInteractable
     
     public void Interact(WeaponInputHandler handler)
     {
-        if(firearmAbility != null)
-        {
-            handler.AddAbility(firearmAbility);
-            photonView.RPC("Destroy",RpcTarget.All);
-            UIPowerupManager.Instance.OnPickupPowerup (firearmAbility);
-        }
+        //if(firearmAbility != null)
+        //{
+        //    handler.AddAbility(firearmAbility);
+        //    photonView.RPC("Destroy",RpcTarget.All);
+        //    UIPowerupManager.Instance.OnPickupPowerup (firearmAbility);
+        //}
     }
 
-    [PunRPC]
-    void Destroy()
-    {
-        PhotonNetwork.Destroy(gameObject);
-    }
+    //[PunRPC]
+    //void Destroy()
+    //{
+    //    PhotonNetwork.Destroy(gameObject);
+    //}
 
 }
