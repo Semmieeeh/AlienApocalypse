@@ -138,17 +138,17 @@ public class Firearm : Weapon
         if (photonView.IsMine)
         {
             // Damage increase in Percentage
-            this.damage *= 1 + (damage / 100);
+            this.damage *= 1 + (damage);
             // Cooldown decrease in Percentage
-            this.cooldown *= 1 - (cooldown / 100);
+            this.cooldown *= 1 - (cooldown);
             // Burst Amount added by Adding
             this.burstAmount += burstAmount;
             // Fire Rate increased in Percentage
-            this.fireRate *= 1 + (fireRate / 100);
+            this.fireRate *= 1 + (fireRate);
             // Max Ammo increase by Adding
             this.maxAmmo += maxAmmo;
             // Reload Time decreased in Percentage
-            this.reloadTime *= 1 - (reloadTime / 100);
+            this.reloadTime *= 1 - (reloadTime);
         }
     }
 

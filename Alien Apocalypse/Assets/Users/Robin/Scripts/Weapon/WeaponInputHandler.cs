@@ -10,9 +10,6 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     public Camera mainCam;
     public GameObject recoil;
 
-    [Header("Ability")]
-    public List<FirearmAbility> weaponAbilities;
-
     [Header("Weapon")]
     public GameObject weaponHolder;
     public Weapon selectedWeapon;
@@ -28,10 +25,15 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     public Animator anim;
     private GameObject previousWeapon;
 
+    [Header("Modifier")]
+    public float damageModifier;
+    public int damageLevel;
+
     void Start()
     {
         SetWeapon();
     }
+
     float time; float interval = 0.1f;
     void Update()
     {
@@ -200,7 +202,10 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                         weapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                         weapon.transform.localScale = new Vector3(1, 1, 1);
 
-                        SetAbility();
+                        for(int j = 0; i < damageLevel; j++)
+                        {
+                            firearm.ModifyWeaponData(damageModifier, 0, 0, 0, 0, 0);
+                        }
 
                         firearm.events = events;
 
@@ -238,9 +243,10 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         }
     }
 
-    public void AddAbility(FirearmAbility firearmAbility)
+    public void SetAbility(float damage, int damageLevel)
     {
-        weaponAbilities.Add(firearmAbility);
+        damageModifier = damage;
+        this.damageLevel = damageLevel;
 
         for(int i = 0; i < weaponSlots.Count; i++)
         {
@@ -248,24 +254,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
             {
                 if(weaponSlots[i].TryGetComponent<Firearm>(out Firearm firearm))
                 {
-                    firearm.ModifyWeaponData(firearmAbility.damage, firearmAbility.cooldown, firearmAbility.burstAmount, firearmAbility.fireRate, firearmAbility.maxAmmo, firearmAbility.reloadTime); ;
-                }
-            }
-        }
-    }
-
-    void SetAbility()
-    {
-        for(int i = 0; i < weaponSlots.Count; i++)
-        {
-            if(weaponSlots[i].transform.childCount > 0)
-            {
-                if(weaponSlots[i].TryGetComponent<Firearm>(out Firearm firearm))
-                {
-                    for(int j = 0; j < weaponAbilities.Count; j++)
-                    {
-                        firearm.ModifyWeaponData(weaponAbilities[j].damage, weaponAbilities[j].cooldown, weaponAbilities[j].burstAmount, weaponAbilities[j].fireRate, weaponAbilities[j].maxAmmo, weaponAbilities[j].reloadTime); ;
-                    }
+                    firearm.ModifyWeaponData(damage, 0, 0, 0, 0, 0);
                 }
             }
         }

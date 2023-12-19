@@ -70,7 +70,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         otherPos = animatorObj.transform.localPosition;
         height = c.height;
         minHealth = 0;
-        maxHealth = 100;
         Health = maxHealth;
         state = PlayerState.alive;
         PhotonNetwork.SerializationRate = 15;
