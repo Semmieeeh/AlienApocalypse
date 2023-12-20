@@ -19,19 +19,24 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        m = transform.parent.GetComponent<EnemyManager>();
-        mesh = GetComponent<MeshRenderer>();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            
+            m = transform.parent.GetComponent<EnemyManager>();
+            mesh = GetComponent<MeshRenderer>();
+        }
+        
     }
     private void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            return;
-        }
-        UfoBehaviour();
+            UfoBehaviour();
 
-        Vector3 v = new Vector3(0,200,0);
-        transform.Rotate(v * Time.deltaTime);
+            Vector3 v = new Vector3(0, 200, 0);
+            transform.Rotate(v * Time.deltaTime);
+        }
+        
     }
     public void PlayParticle()
     {

@@ -889,7 +889,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: New Bool
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -2557,7 +2560,6 @@ GameObject:
   - component: {fileID: 6953253778805580192}
   - component: {fileID: 5932660472288310766}
   - component: {fileID: 7427756792574962229}
-  - component: {fileID: 1088429601513214813}
   m_Layer: 11
   m_Name: AlienFlying
   m_TagString: Untagged
@@ -2617,9 +2619,10 @@ MonoBehaviour:
   blastDirection: {x: 0, y: 0, z: 0}
   canExplode: 1
   hitLimb: {fileID: 0}
+  flyingAnim: {fileID: 0}
   explosion: {fileID: 3201137857499991782, guid: 78df2d92cefeb9841a90bb6c2e437dc6, type: 3}
   explodeObj: {fileID: 6234854697820298254}
-  anim: {fileID: 0}
+  anim: {fileID: 5140942016257671065}
 --- !u!114 &2862996086437632071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2822,19 +2825,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1088429601513214813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SmoothingDelay: 5
 --- !u!1 &5758550126324249979
 GameObject:
   m_ObjectHideFlags: 0

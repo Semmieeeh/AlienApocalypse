@@ -21,8 +21,8 @@ public class BeaconManager : MonoBehaviour
 
     public void BeaconsCondition()
     {
-        int enemyScore = 0;
-        int playerScore = 0;
+        float enemyScore = 0;
+        float playerScore = 0;
 
 
         for(int i = 0; i < beacons.Count; i++)

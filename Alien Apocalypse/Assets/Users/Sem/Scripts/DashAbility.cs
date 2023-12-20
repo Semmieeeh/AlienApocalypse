@@ -16,7 +16,6 @@ public class DashAbility : MonoBehaviourPunCallbacks
     {
         rb = GetComponent<Rigidbody>();
         maxDashCooldown = 3;
-        dashAmount = 15;
         multiplier = 1;
     }
     void Update()
@@ -31,7 +30,7 @@ public class DashAbility : MonoBehaviourPunCallbacks
             }
         }
     }
-
+    public float maxDashAmount;
     public void Dash()
     {
         if (photonView.IsMine)
@@ -42,6 +41,10 @@ public class DashAbility : MonoBehaviourPunCallbacks
 
                 float velBeforeStop = rb.velocity.magnitude;
                 rb.velocity = Vector3.zero;
+                if(velBeforeStop + dashAmount > maxDashAmount)
+                {
+                    velBeforeStop = maxDashAmount - dashAmount;
+                }
                 this.rb.AddForce(Camera.main.transform.forward * (velBeforeStop + dashAmount), ForceMode.Impulse);
                 dashCooldown = maxDashCooldown;
                 UIAbility.cooldown = maxDashCooldown;

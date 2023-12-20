@@ -110,7 +110,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         attackRange += agent.baseOffset;
     }
     bool canChooseNew;
-    float time;
     public float interval;
     int armInt;
     int legInt;
@@ -119,10 +118,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     private void Update()
     {
 
-        time += Time.deltaTime;
-        timePassed += Time.deltaTime;
+        
         CheckForPlayer();
-        if (timePassed > attackSpeed)
+        if (timePassed >= attackSpeed)
         {
             canAttack = true;
             
@@ -130,7 +128,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         else
         {
             canAttack = false;
+            timePassed += Time.deltaTime;
         }
+
         if (canChooseNew == true)
         {
             NewTarget();
@@ -214,7 +214,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                                 if (canAttack == true)
                                 {
+                                    timePassed = Random.Range(-attackSpeed, attackSpeed);
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                                    canAttack = false;
 
                                 }
 
@@ -257,8 +259,10 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                                 if (canAttack == true)
                                 {
-                                    doAnim = true;
+                                    canAttack = false;
+                                    timePassed = Random.Range(-attackSpeed, attackSpeed);
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                                    
 
                                 }
 
@@ -296,8 +300,9 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                                 if (canAttack == true)
                                 {
-                                    doAnim = true;
+                                    timePassed = Random.Range(-attackSpeed, attackSpeed);
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                                    canAttack = false;
 
                                 }
 
@@ -332,6 +337,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
 
                                 if (canAttack == true)
                                 {
+                                    timePassed = Random.Range(-attackSpeed, attackSpeed);
                                     photonView.RPC("Attack", RpcTarget.All, attackDamage);
                                     canAttack = false;
                                 }
@@ -381,18 +387,18 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
     [PunRPC]
     public void Attack(float damage)
     {
-        timePassed = Random.Range(-attackSpeed, attackSpeed);
+        
         EnemyHealth h = GetComponent<EnemyHealth>();
-
+        canAttack = false;
         if (nearestPlayer != null)
         {
             Rigidbody rb = nearestPlayer.GetComponent<Rigidbody>();
-            if (nearestPlayer.TryGetComponent(out PlayerHealth player) && nearestPlayer.TryGetComponent(out Movement m))
+            if (nearestPlayer.TryGetComponent(out PlayerHealth player))
             {
                 source.clip = clips[0];
                 source.Play();
                 UpdateAlienArms(0, "Attack", true);
-                canAttack = false;
+                
                 switch (type)
                 {
                     case EnemyType.WALKING:
@@ -412,7 +418,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                             
                             
                             flash.Play();
-                            int k = Random.Range(0, m.rb.velocity.magnitude.ToInt());
+                            int k = Random.Range(0, rb.velocity.magnitude.ToInt());
                             Debug.Log(k);
                             if (k < 5)
                             {
@@ -491,7 +497,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
-    bool animExecuted;
     public void CheckForPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -536,7 +541,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     } 
 
-    [PunRPC]
     private void UpdateAlienArms(int state, string attackTrigger, bool inRange)
     {
         armAnim.SetInteger("WalkState",state);
@@ -544,7 +548,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         armAnim.SetBool("InRange", inRange);
     }
 
-    [PunRPC]
     void UpdateAlienLegs(int i)
     {
         anim.SetInteger("WalkState", i);

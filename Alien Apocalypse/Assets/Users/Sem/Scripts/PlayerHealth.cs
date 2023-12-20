@@ -164,37 +164,18 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
             }
         }
     }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (rb == null)
-        {
-            return;
-        }
-        if (stream.IsWriting)
-        {
-            stream.SendNext(this.rb.position);
-            stream.SendNext(this.rb.rotation);
-            stream.SendNext(this.rb.velocity);
-        }
-        else
-        {
-            networkPosition = (Vector3)stream.ReceiveNext();
-            networkRotation = (Quaternion)stream.ReceiveNext();
-            rb.velocity = (Vector3)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
-            networkPosition += (this.rb.velocity * lag);
-        }
-    }
     public void TakeDamage(float damage)
     {
         //update health text object
-        Health -= damage;
-        lastHit = 3;
-        UIDAmageManager.instance.Damage();
-        if (Health <= 0)
+        if (photonView.IsMine)
         {
-            photonView.RPC("Downed", RpcTarget.All);
+            Health -= damage;
+            lastHit = 3;
+            UIDAmageManager.instance.Damage();
+            if (Health <= 0)
+            {
+                photonView.RPC("Downed", RpcTarget.All);
+            }
         }
     }
     [PunRPC]
@@ -225,6 +206,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
 
     }
     GameObject canvasStefan;
+    public WeaponInputHandler weapon;
     [PunRPC]
     public void Revive()
     {
@@ -232,6 +214,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Destroy(canvasStefan); canvasStefan = null;
         }
+        weapon.SetWeapon();
         Vector3 newPos = transform.position;
         newPos.y += 5;
         transform.position = newPos;

@@ -24,7 +24,7 @@ public class OptionsApplier : MonoBehaviour
 
         QualitySettings.SetQualityLevel (options.QualityIndex);
 
-        Screen.SetResolution (width, heigth, options.Fullscreen);
+        //Screen.SetResolution (width, heigth, options.Fullscreen);
         Application.targetFrameRate = fps;
         QualitySettings.vSyncCount = options.VSync ? 1 : 0;
 

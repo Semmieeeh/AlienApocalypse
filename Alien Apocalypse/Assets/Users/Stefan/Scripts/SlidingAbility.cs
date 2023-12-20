@@ -52,7 +52,8 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
                     float scale = originalScale;
                     uiAbility.Activate();
                     uiAbility.cooldown = slideCooldownMax;
-                    photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
+                    //photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
+                    UpdateAnim(scale, false, 0f);
                     isSliding = false;
                 }
             }
@@ -62,7 +63,8 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
     private void StartSlide()
     {
         float scale = c.height * slideScale;
-        photonView.RPC("UpdateAnim", RpcTarget.All, scale, true, centerOffset);
+        //photonView.RPC("UpdateAnim", RpcTarget.All, scale, true, centerOffset);
+        UpdateAnim(scale,true, centerOffset);
         slideCooldown = slideCooldownMax;
         if (movement.input.magnitude > 0.5f)
         {
@@ -98,7 +100,8 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
             uiAbility.Activate();
             uiAbility.cooldown = slideCooldownMax;
             float scale = originalScale;
-            photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
+            //photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
+            UpdateAnim(scale, false, 0f);
             isSliding = false;
         }
     }

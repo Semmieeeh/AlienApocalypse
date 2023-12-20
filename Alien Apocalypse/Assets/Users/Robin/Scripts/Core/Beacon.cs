@@ -18,10 +18,10 @@ public class Beacon : MonoBehaviourPunCallbacks
 
     [Header("Visualization")]
     public UIFlag flag;
-    public int totalScore;
+    public float totalScore;
 
-    public int changeScorePlayer;
-    public int changeScoreEnemy;
+    public float changeScorePlayer;
+    public float changeScoreEnemy;
     public float pointsAddedInterval;
 
     float startTime;

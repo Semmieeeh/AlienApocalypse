@@ -109,7 +109,8 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                             if(selectedWeapon.transform.childCount > 0)
                             {
                                 selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
-                                photonView.RPC("UpdateAnimations", RpcTarget.All);
+                                //photonView.RPC("UpdateAnimations", RpcTarget.All);
+                                UpdateAnimations();
                             }
                         }
                     }
@@ -125,7 +126,8 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                     if(selectedWeapon.transform.GetChild(0) != null)
                     {
                         selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
-                        photonView.RPC("UpdateAnimations", RpcTarget.All);
+                        //photonView.RPC("UpdateAnimations", RpcTarget.All);
+                        UpdateAnimations();
                     }
 
                     AmmoCounter.Instance.SetWeaponData(nextFirearm.firearmData,nextFirearm );
@@ -143,7 +145,8 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
 
                     AmmoCounter.Instance.SetNoWeapon ( );
 
-                    photonView.RPC("UpdateAnimations", RpcTarget.All);
+                    //photonView.RPC("UpdateAnimations", RpcTarget.All);
+                    UpdateAnimations();
                 }
             }
 
@@ -184,7 +187,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
         }
     }
 
-    void SetWeapon()
+    public void SetWeapon()
     {
         for(int i = 0; i < weaponSlots.Count; i++)
         {

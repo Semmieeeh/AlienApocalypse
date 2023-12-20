@@ -14,12 +14,15 @@ public class ChestManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        if (!PhotonNetwork.IsMasterClient)
+        
+    }
+    private void Start()
+    {
+        if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("ChestInitialize", RpcTarget.All);
         }
     }
-
     [PunRPC]
     public void ChestInitialize()
     {

@@ -34,11 +34,15 @@ public class GrappleRope : MonoBehaviourPunCallbacks
         {
             return;
         }
-
+        time += Time.deltaTime;
         if (grapplingGun.isGrappling)
         {
             Vector3 grapplePoint = grapplingGun.GetGrapplePoint();
             DrawRope(grapplePoint);
+            if (time >= cooldown)
+            {
+                photonView.RPC("DrawRope", RpcTarget.Others,grapplePoint);
+            }
             executed = true;
             cleared = false;
         }
