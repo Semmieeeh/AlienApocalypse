@@ -10,6 +10,7 @@ public class SpectatorMode : MonoBehaviour
     public List<PlayerHealth> playerList = new List<PlayerHealth>();
     public HashSet<PlayerHealth> uniquePlayers = new HashSet<PlayerHealth>();
     public GameObject specUI;
+    public GameObject deathScreen;
     private void Update()
     {
         PlayerHealth[] playerHealthComponents = FindObjectsOfType<PlayerHealth>();
@@ -65,12 +66,8 @@ public class SpectatorMode : MonoBehaviour
             else if(playerList.Count == 1)
             {
                 GameObject canvas = GameObject.Find("PlayerCanvas");
-                for(int i = 0; i < canvas.transform.childCount-1; i++)
-                {
-                    canvas.transform.GetChild(i).gameObject.SetActive(false);
-
-                }
-                GameObject.Find("Death Screen").GetComponent<Animator>().SetBool("Active", true);
+                canvas.transform.GetChild(5).gameObject.SetActive(true);
+                
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }

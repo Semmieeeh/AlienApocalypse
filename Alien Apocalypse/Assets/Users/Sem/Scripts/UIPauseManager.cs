@@ -82,7 +82,6 @@ public class UIPauseManager : MonoBehaviour
     {
         
         SceneManager.LoadScene(0);
-        throw new System.NotImplementedException ( );
     }
 
 

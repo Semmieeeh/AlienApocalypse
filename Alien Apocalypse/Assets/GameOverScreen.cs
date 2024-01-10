@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameOverScreen : MonoBehaviour
 {
     [SerializeField]
-    Animator deathAnimator, spectatorAnimator;
+    public Animator deathAnimator, spectatorAnimator;
 
     public void EnableGameOverScreen (bool active)
     {
