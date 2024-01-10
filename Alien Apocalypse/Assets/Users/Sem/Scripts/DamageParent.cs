@@ -1,11 +1,10 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-public class DamageParent : MonoBehaviourPunCallbacks, IDamagable
+public class DamageParent : MonoBehaviour, IDamagable
 {
     public float damageMultiplier;
     public EnemyHealth parent;

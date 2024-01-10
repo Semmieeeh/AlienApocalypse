@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 using UnityEngine.VFX;
 
-public class Children : MonoBehaviourPunCallbacks
+public class Children : MonoBehaviour
 {
 
     public GameObject[] objects;
@@ -12,19 +11,16 @@ public class Children : MonoBehaviourPunCallbacks
     public GameObject particlePivot;
     private void Start()
     {
-        if (photonView.IsMine)
+        foreach (GameObject obj in objects)
         {
-            foreach (GameObject obj in objects)
-            {
-                obj.layer = 7;
-            }
-
-            if (particlePivot != null)
-            {
-                particlePivot.transform.localPosition = Vector3.zero;
-            }
+            obj.layer = 7;
         }
-        
+
+        if (particlePivot != null)
+        {
+            particlePivot.transform.localPosition = Vector3.zero;
+        }
+
     }
 
 }

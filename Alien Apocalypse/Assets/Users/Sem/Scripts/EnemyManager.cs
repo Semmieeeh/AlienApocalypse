@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 
-public class EnemyManager : MonoBehaviourPunCallbacks
+public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
     public bool canSpawn = true;
@@ -36,36 +35,29 @@ public class EnemyManager : MonoBehaviourPunCallbacks
     public Transform curSpawnPos;
     public float waveStartTimeCounter;
     public float cooldownCounter;
-    float multiplier = 0;
+    public float multiplier;
     public GameObject ufo;
 
     public void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
+        GameObject u = Instantiate(ufo, new Vector3(0, 500, 0), Quaternion.identity);
+        u.GetComponent<UfoSpawner>().enabled = true;
+        u.transform.parent = gameObject.transform;
+        waveStartTime = 20;
+        instance = this;
+        startedTheWaves = false;
+        waveSize = 1;
+        curSpawnPos = spawnPoints[0];
+        waveStartTimeCounter = waveStartTime;
+        cooldownCounter = waveCooldown;
+        if (startedTheWaves == false)
         {
-            GameObject u = PhotonNetwork.Instantiate(ufo.name, new Vector3(0, 500, 0), Quaternion.identity);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                u.GetComponent<UfoSpawner>().enabled = true;
-            }
-            u.transform.parent = gameObject.transform;
-            waveStartTime = 20;
-            instance = this;
-            multiplier = 1;
-            startedTheWaves = false;
-            waveSize = 1;
-            curSpawnPos = spawnPoints[0];
-            waveStartTimeCounter = waveStartTime;
-            cooldownCounter = waveCooldown;
-            if (startedTheWaves == false && PhotonNetwork.CurrentRoom.PlayerCount > 0)
-            {
-                wavesStarted = true;
-                isInCooldown = true;
-                enemiesSpawning = false;
-                StartCoroutine(nameof(StartEnemyWaves));
-                startedTheWaves = true;
-                Debug.Log("Started waves");
-            }
+            wavesStarted = true;
+            isInCooldown = true;
+            enemiesSpawning = false;
+            StartCoroutine(nameof(StartEnemyWaves));
+            startedTheWaves = true;
+            Debug.Log("Started waves");
         }
 
 
@@ -84,9 +76,9 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             enemiesSpawning = false;
             yield return new WaitForSeconds(waveStartTime);
             waveStartTime = 5;
-            for (int i = 0; i < waveSize * PhotonNetwork.CurrentRoom.PlayerCount; i++)
+            for (int i = 0; i < waveSize; i++)
             {
-                photonView.RPC("SpawnEnemies", RpcTarget.All, 1);
+                SpawnEnemies(1);
                 enemiesSpawning = true;
                 yield return new WaitForSeconds(spawnSpeed);
             }
@@ -95,7 +87,7 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             enemiesSpawning = false;
             cooldownCounter = waveCooldown;
             wavesCompleted++;
-            waveSize += 3 * PhotonNetwork.CurrentRoom.PlayerCount;
+            waveSize += 3;
             curSpawnPos = spawnPoints[Random.Range(0, 3)].transform;
             yield return new WaitForSeconds(waveCooldown);
             multiplier = multiplier * 1.15f;
@@ -103,31 +95,27 @@ public class EnemyManager : MonoBehaviourPunCallbacks
             
         }
     }
-    [PunRPC]
     public void SpawnEnemies(int enemyCount)
     {
-        if(PhotonNetwork.IsMasterClient)
+        for (int i = 0; i < enemyCount; i++)
         {
-            for (int i = 0; i < enemyCount; i++)
+            int max;
+            if (wavesCompleted <= enemiesToSpawn.Length)
             {
-                int max;
-                if (wavesCompleted <= enemiesToSpawn.Length)
-                {
-                    max = wavesCompleted.ToInt();
-                }
-                else
-                {
-                    max = enemiesToSpawn.Length;
-                }
-                int enemyIndex = Random.Range(0, max);
-                transform.GetChild(4).GetComponent<UfoSpawner>().PlayParticle();
-                GameObject enemyObj = PhotonNetwork.Instantiate(enemiesToSpawn[enemyIndex].name, curSpawnPos.position, curSpawnPos.rotation);
-                EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
-                enemyHealth.multiplier = multiplier;
-                enemyObj.GetComponent<EnemyAiTest>().attackDamage = enemyObj.GetComponent<EnemyAiTest>().attackDamage * multiplier;
-
-                enemyHealth.instance = this;
+                max = wavesCompleted.ToInt();
             }
+            else
+            {
+                max = enemiesToSpawn.Length;
+            }
+            int enemyIndex = Random.Range(0, max);
+            transform.GetChild(4).GetComponent<UfoSpawner>().PlayParticle();
+            GameObject enemyObj = Instantiate(enemiesToSpawn[enemyIndex], curSpawnPos.position, curSpawnPos.rotation);
+            EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
+            enemyHealth.multiplier = multiplier;
+            enemyObj.GetComponent<EnemyAiTest>().attackDamage = enemyObj.GetComponent<EnemyAiTest>().attackDamage * multiplier;
+
+            enemyHealth.instance = this;
         }
     }
 }

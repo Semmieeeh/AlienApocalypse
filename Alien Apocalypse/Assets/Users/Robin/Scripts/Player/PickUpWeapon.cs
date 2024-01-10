@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 
-public class PickUpWeapon : MonoBehaviourPunCallbacks, IInteractable
+public class PickUpWeapon : MonoBehaviour, IInteractable
 {
     public FirearmData firearmData;
 
@@ -16,7 +15,7 @@ public class PickUpWeapon : MonoBehaviourPunCallbacks, IInteractable
             {
                 handler.AddWeapon(firearmData);
                 
-                PhotonNetwork.Destroy(gameObject);
+                Destroy(gameObject);
             }
         }
     }

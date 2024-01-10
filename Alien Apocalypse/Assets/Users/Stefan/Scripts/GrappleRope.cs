@@ -1,7 +1,6 @@
-using Photon.Pun;
 using UnityEngine;
 
-public class GrappleRope : MonoBehaviourPunCallbacks
+public class GrappleRope : MonoBehaviour
 {
     private Spring spring;
     private LineRenderer lr;
@@ -14,11 +13,9 @@ public class GrappleRope : MonoBehaviourPunCallbacks
     public float waveCount;
     public float waveHeight;
     public AnimationCurve affectCurve;
-    PhotonView pv;
 
     private void Start()
     {
-        pv = GetComponent<PhotonView>();
         lr = GetComponent<LineRenderer>();
         spring = new Spring();
         spring.SetTarget(0);
@@ -30,10 +27,7 @@ public class GrappleRope : MonoBehaviourPunCallbacks
     bool cleared;
     private void Update()
     {
-        if (!pv.IsMine)
-        {
-            return;
-        }
+        
         time += Time.deltaTime;
         if (grapplingGun.isGrappling)
         {
@@ -41,7 +35,7 @@ public class GrappleRope : MonoBehaviourPunCallbacks
             DrawRope(grapplePoint);
             if (time >= cooldown)
             {
-                photonView.RPC("DrawRope", RpcTarget.Others,grapplePoint);
+                DrawRope(grapplePoint);
             }
             executed = true;
             cleared = false;

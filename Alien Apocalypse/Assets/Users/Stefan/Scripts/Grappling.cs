@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Grappling : MonoBehaviourPunCallbacks
+public class Grappling : MonoBehaviour
 {
     public bool unlockedSkill;
     private Vector3 grapplePoint;
@@ -34,7 +33,6 @@ public class Grappling : MonoBehaviourPunCallbacks
     public GameObject armObj;
     public bool canGrapple;
     public Animator arm;
-    PhotonView pv;
     public bool inRange;
     public float pullStrength;
     public float stunTime;
@@ -42,94 +40,78 @@ public class Grappling : MonoBehaviourPunCallbacks
     public UIAbility ui;
     
 
-    private void Awake()
-    {
-        pv = GetComponent<PhotonView>();
-    }
-
     public void Start()
     {
-        if (pv.IsMine)
-        {
-            armLowerTime = .1f;
-            playerCam = Camera.main.transform;
-            player = gameObject.transform;
-            idleStrength = 2;
-            minDamperStrength = .5f;
-            maxAnimDuration = 0.17f;
-            animDuration = maxAnimDuration;
-            canGrapple = true;
-        }
+        armLowerTime = .1f;
+        playerCam = Camera.main.transform;
+        player = gameObject.transform;
+        idleStrength = 2;
+        minDamperStrength = .5f;
+        maxAnimDuration = 0.17f;
+        animDuration = maxAnimDuration;
+        canGrapple = true;
     }
 
     void Update()
     {
 
         abilityCooldown -= Time.deltaTime;
-        if (pv.IsMine && playerCam != null)
+
+        if (playerCam != null)
         {
             inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
-        }
-        if (pv.IsMine)
-        {
 
-            if (pv.IsMine && playerCam != null)
+            if (pointingArm)
             {
-                inRange = Physics.Raycast(playerCam.position, playerCam.forward, out hit, maxDistance, whatIsGrappleable);
+                armLowerTime -= Time.deltaTime;
+            }
 
-                if (pointingArm)
+            if (Input.GetButton("Grapple") && !isGrappling && !pointingArm && canGrapple)
+            {
+                damperStrength = minDamperStrength;
+                grappleStrength = idleStrength;
+                LiftArm();
+                SyncArmAnimation(1);
+            }
+
+            if (!Input.GetButton("Grapple") && !isGrappling && !pointingArm && !canGrapple)
+            {
+                canGrapple = true;
+            }
+
+            if (armLowerTime <= 0 && !Input.GetButton("Grapple") && !isGrappling)
+            {
+                CheckForRayCast();
+            }
+
+            if (isGrappling)
+            {
+                if (joint != null)
                 {
-                    armLowerTime -= Time.deltaTime;
+                    joint.maxDistance -= retractionSpeed;
                 }
 
-                if (Input.GetButton("Grapple") && !isGrappling && !pointingArm && canGrapple)
+                if (Input.GetButtonDown("Grapple") || (joint != null && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance))
                 {
-                    damperStrength = minDamperStrength;
-                    grappleStrength = idleStrength;
-                    LiftArm();
-                    SyncArmAnimation(1);
+                    StopGrapple();
+                    SyncArmAnimation(0);
                 }
 
-                if (!Input.GetButton("Grapple") && !isGrappling && !pointingArm && !canGrapple)
+                if (childOfPoint == null || grapplePointParent == null)
                 {
-                    canGrapple = true;
+                    StopGrapple();
                 }
 
-                if (armLowerTime <= 0 && !Input.GetButton("Grapple") && !isGrappling)
+                if (childOfPoint != null && grapplePointParent != null && grapplePoint != null && joint != null)
                 {
-                    CheckForRayCast();
-                }
-
-                if (isGrappling)
-                {
-                    if (joint != null)
-                    {
-                        joint.maxDistance -= retractionSpeed;
-                    }
-
-                    if (Input.GetButtonDown("Grapple") || (joint != null && Vector3.Distance(player.position, grapplePoint) <= joint.minDistance))
-                    {
-                        StopGrapple();
-                        SyncArmAnimation(0);
-                    }
-
-                    if (childOfPoint == null || grapplePointParent == null)
-                    {
-                        StopGrapple();
-                    }
-
-                    if (childOfPoint != null && grapplePointParent != null && grapplePoint != null && joint != null)
-                    {
-                        childOfPoint.transform.parent = grapplePointParent.transform;
-                        grapplePoint = childOfPoint.transform.position;
-                        joint.connectedAnchor = grapplePoint;
-                    }
+                    childOfPoint.transform.parent = grapplePointParent.transform;
+                    grapplePoint = childOfPoint.transform.position;
+                    joint.connectedAnchor = grapplePoint;
                 }
             }
         }
     }
 
-    [PunRPC]
     public void SyncArmAnimation(int animationState)
     {
         arm.SetInteger("FireState", animationState);
@@ -139,7 +121,8 @@ public class Grappling : MonoBehaviourPunCallbacks
     {
         arm.SetInteger("FireState", 1);
         pointingArm = true;
-        pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 1);
+        //pv.RPC(nameof(SyncArmAnimation), RpcTarget.All, 1);
+        SyncArmAnimation(1);
     }
 
     public void CheckForRayCast()

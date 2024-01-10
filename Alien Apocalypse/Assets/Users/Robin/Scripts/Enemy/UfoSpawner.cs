@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 
-public class UfoSpawner : MonoBehaviourPunCallbacks
+public class UfoSpawner : MonoBehaviour
 {
     public GameObject ufoPrefab;
     public float moveSpeed;
@@ -19,30 +18,22 @@ public class UfoSpawner : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            
-            m = transform.parent.GetComponent<EnemyManager>();
-            mesh = GetComponent<MeshRenderer>();
-        }
-        
+        m = transform.parent.GetComponent<EnemyManager>();
+        mesh = GetComponent<MeshRenderer>();
+
     }
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            UfoBehaviour();
+        UfoBehaviour();
 
-            Vector3 v = new Vector3(0, 200, 0);
-            transform.Rotate(v * Time.deltaTime);
-        }
-        
+        Vector3 v = new Vector3(0, 200, 0);
+        transform.Rotate(v * Time.deltaTime);
+
     }
     public void PlayParticle()
     {
-        photonView.RPC("ParticleRPC", RpcTarget.All);
+        ParticleRPC();
     }
-    [PunRPC]
     void ParticleRPC()
     {
         for (int i = 0; i < partartarticles.Length; i++)

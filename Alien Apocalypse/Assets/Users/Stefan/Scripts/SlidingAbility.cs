@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Net;
 using UnityEngine;
-using Photon.Pun;
 using UnityEngine.UIElements;
 
-public class SlidingAbility : MonoBehaviourPunCallbacks
+public class SlidingAbility : MonoBehaviour
 {
     public float slideScale;
     public float slideForce;
@@ -34,28 +33,25 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (photonView.IsMine)
+        if (movement == null)
         {
-            if (movement == null)
+            movement = GetComponent<Movement>();
+        }
+        slideCooldown -= Time.deltaTime;
+        if (movement != null)
+        {
+            if (Input.GetKey(KeyCode.LeftControl) && !isSliding && slideCooldown <= 0 && movement.grounded)
             {
-                movement = GetComponent<Movement>();
+                StartSlide();
             }
-            slideCooldown -= Time.deltaTime;
-            if (movement != null)
+            else if (Input.GetKeyUp(KeyCode.LeftControl) && isSliding == true)
             {
-                if (Input.GetKey(KeyCode.LeftControl) && !isSliding && slideCooldown <= 0 && movement.grounded)
-                {
-                    StartSlide();
-                }
-                else if (Input.GetKeyUp(KeyCode.LeftControl) && isSliding == true)
-                {
-                    float scale = originalScale;
-                    uiAbility.Activate();
-                    uiAbility.cooldown = slideCooldownMax;
-                    //photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
-                    UpdateAnim(scale, false, 0f);
-                    isSliding = false;
-                }
+                float scale = originalScale;
+                uiAbility.Activate();
+                uiAbility.cooldown = slideCooldownMax;
+                //photonView.RPC("UpdateAnim", RpcTarget.All, scale, false, 0f);
+                UpdateAnim(scale, false, 0f);
+                isSliding = false;
             }
         }
     }
@@ -105,7 +101,6 @@ public class SlidingAbility : MonoBehaviourPunCallbacks
             isSliding = false;
         }
     }
-    [PunRPC]
     void UpdateAnim(float scale,bool b,float centerHeight)
     {
         c.height = scale;

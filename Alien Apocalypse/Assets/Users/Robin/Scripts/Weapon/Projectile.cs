@@ -1,13 +1,9 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using WebSocketSharp;
 
-[RequireComponent(typeof(PhotonView))]
-[RequireComponent(typeof(PhotonTransformView))]
 public class Projectile : MonoBehaviour
 {
     [Header("Projectile Data")]
@@ -73,7 +69,7 @@ public class Projectile : MonoBehaviour
                     }
                 }
 
-                exp = PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);
+                exp = Instantiate(explosion, transform.position, Quaternion.identity);
 
                 DestroyGameObject();
             }
@@ -81,7 +77,7 @@ public class Projectile : MonoBehaviour
 
         if(Time.time - startTime > timeToDestroy)
         {
-            PhotonNetwork.Destroy(gameObject);
+            Destroy(gameObject);
         }
 
         lastPos = transform.position;
@@ -89,13 +85,13 @@ public class Projectile : MonoBehaviour
 
     void DestroyGameObject()
     {
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
         Invoke(nameof(DestroyGameObject), 5);
 
     }
     private void DestroyExp()
     {
-        PhotonNetwork.Destroy(exp);
+        Destroy(exp);
     }
 
     public void InitializeProjectile(float projectileDamage, float projectileSpeed, float radius, Vector3 lastPos, Vector3 hitPoint)

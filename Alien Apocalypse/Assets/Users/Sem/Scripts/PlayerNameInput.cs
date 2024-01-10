@@ -1,24 +1,23 @@
 #define while 
 
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PlayerNameInput : MonoBehaviour, INicknameCallback
+public class PlayerNameInput : MonoBehaviour
 {
     [SerializeField]
     TMP_InputField input;
     public RoomManager roomManager;
     private void OnEnable ( )
     {
-        PlayerName.AddListener( this );
+        //PlayerName.AddListener( this );
     }
 
     private void OnDisable ( )
     {
-        PlayerName.RemoveListener( this );
+        //PlayerName.RemoveListener( this );
     }
 
     public void OnNickNameChanged(string name )
@@ -28,7 +27,7 @@ public class PlayerNameInput : MonoBehaviour, INicknameCallback
 
     public void SetNickName (string name)
     {
-        PhotonNetwork.NickName = name;
+        //PhotonNetwork.NickName = name;
         roomManager.nickname = name;
     }
 }

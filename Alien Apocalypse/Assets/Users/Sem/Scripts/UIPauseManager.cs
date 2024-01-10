@@ -1,5 +1,3 @@
-using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -83,7 +81,6 @@ public class UIPauseManager : MonoBehaviour
     public void ToMainMenu ( )
     {
         
-        PhotonNetwork.Disconnect();
         SceneManager.LoadScene(0);
         throw new System.NotImplementedException ( );
     }

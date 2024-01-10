@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-[RequireComponent(typeof(PhotonView))]
-[RequireComponent(typeof(PhotonTransformView))]
-public class Chest : MonoBehaviourPunCallbacks, IInteractable
+public class Chest : MonoBehaviour, IInteractable
 {
     /*
      //////* 0 => CrosshairEffects,
@@ -65,11 +62,10 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
     {
         if(!opened)
         {
-            photonView.RPC("OpenChest", RpcTarget.All);
+            OpenChest();
         }
     }
 
-    [PunRPC]
     void OpenChest()
     {
         chestBeacon.SetActive(false);
@@ -86,7 +82,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
             {
                 if(n == i)
                 {
-                    GameObject gun = PhotonNetwork.Instantiate(firearmDatas[i].name, goToPoint.position, Quaternion.identity);
+                    GameObject gun = Instantiate(firearmDatas[i], goToPoint.position, Quaternion.identity);
 
                     Rigidbody rb = gun.GetComponent<Rigidbody>();
                     rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
@@ -107,7 +103,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
             {
                 if(n == i)
                 {
-                    GameObject holder = PhotonNetwork.Instantiate(firearmAbilities[n].name, goToPoint.position, Quaternion.identity);
+                    GameObject holder = Instantiate(firearmAbilities[n], goToPoint.position, Quaternion.identity);
 
                     Rigidbody rb = holder.GetComponent<Rigidbody>();
                     rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
@@ -135,7 +131,7 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
 
     IEnumerator Bomb()
     {
-        GameObject currentBomb = PhotonNetwork.Instantiate(bomb.name, goToPoint.position, Quaternion.identity);
+        GameObject currentBomb = Instantiate(bomb, goToPoint.position, Quaternion.identity);
 
         Rigidbody rb = currentBomb.GetComponent<Rigidbody>();
         rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
@@ -157,8 +153,8 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
             yield return new WaitForSeconds(2);
         }
 
-        GameObject currentExplosion = PhotonNetwork.Instantiate(explosion.name, currentBomb.transform.position, Quaternion.identity);
-        PhotonNetwork.Destroy(currentBomb);
+        GameObject currentExplosion = Instantiate(explosion, currentBomb.transform.position, Quaternion.identity);
+        Destroy(currentBomb);
 
         Collider[] collider = Physics.OverlapSphere(currentBomb.transform.position, bombRadius, playerMask);
         testCol = collider;
@@ -174,6 +170,6 @@ public class Chest : MonoBehaviourPunCallbacks, IInteractable
 
         yield return new WaitForSeconds(2);
 
-        PhotonNetwork.Destroy(currentExplosion);
+        Destroy(currentExplosion);
     }
 }

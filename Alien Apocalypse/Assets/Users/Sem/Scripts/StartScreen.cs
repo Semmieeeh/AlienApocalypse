@@ -1,11 +1,9 @@
-using Photon.Pun;
-using Photon.Realtime;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class StartScreen : MonoBehaviourPunCallbacks
+public class StartScreen : MonoBehaviour
 {
     [SerializeField]
     GameObject loadingScreen;
@@ -35,183 +33,39 @@ public class StartScreen : MonoBehaviourPunCallbacks
     [SerializeField]
     TextMeshProUGUI roomsText, populationText;
 
-    List<RoomDisplay> roomUIs = new ( );
+    //List<RoomDisplay> roomUIs = new ( );
 
 
 
-    private List<RoomInfo> rooms = new ( );
 
     /// <summary>
     /// Tries to connect to server
     /// </summary>
     public void Connect ( )
     {
-        currentTimeOut = 0;
-        gameObject.SetActive (true);
-        SetLoadingScreen ("Connecting...");
+        //currentTimeOut = 0;
+        //gameObject.SetActive (true);
+        //SetLoadingScreen ("Connecting...");
 
-        PhotonNetwork.ConnectUsingSettings ( );
+        //PhotonNetwork.ConnectUsingSettings ( );
     }
 
     private void Update ( )
     {
-        if ( !foundLobbies)
-        {
-            currentTimeOut += Time.deltaTime;
-
-            if ( currentTimeOut >= maxTimeOut )
-            {
-                Popup ("Server Timeout!", "Cannot establish connection to server under specific time!", true);
-            }
-        }
-
-        if ( PhotonNetwork.InLobby )
-        {
-            SetPopulationText (PhotonNetwork.CountOfPlayers);
-        }
+        
     }
 
-    /// <summary>
-    /// Callback function whenever the player succesfully connected to the server
-    /// </summary>
-    public override void OnConnectedToMaster ( )
-    {
-        SetLoadingScreen ("Finding lobbies...");
-        PhotonNetwork.JoinLobby ( );
-    }
+    
 
-    public async void Disconnect ( )
-    {
-        SetLoadingScreen ("Disconnecting...");
+    
 
-        if ( PhotonNetwork.InLobby )
-        {
-            PhotonNetwork.LeaveLobby ( );
-            await Task.WhenAll (LeftLobby ( ));
-
-        }
+    
+   
 
 
-        if ( PhotonNetwork.IsConnected )
-        {
-            Debug.Log ("Disconnecting");
+    
 
-            PhotonNetwork.Disconnect ();
-        }
-    }
-
-    public async Task LeftLobby()
-    {
-        while ( PhotonNetwork.InLobby )
-        {
-            await Task.Yield ( );
-        }
-    }
-
-    public override void OnDisconnected ( DisconnectCause cause )
-    {
-        Debug.Log ("Disconnected");
-
-        // Check if disconnection is intentional
-        switch ( cause )
-        {
-            case DisconnectCause.None:
-            case DisconnectCause.DisconnectByServerLogic:
-            case DisconnectCause.DisconnectByClientLogic:
-            case DisconnectCause.ApplicationQuit:
-                // => The player intentionally disconnected
-                break;
-
-            default:
-                // => The player disconnected unintentionally 
-                Popup ("Disconnected!", $"Disconnected from server! cause : {cause}", true);
-                break;
-        }
-        MainMenu.Instance.ToMainMenu ( );
-
-    }
-    public override void OnJoinRoomFailed ( System.Int16 returnCode, System.String message )
-    {
-        Popup ("Join room Failed!", $"Failed to join room: {message}, return code: {returnCode}", false);
-    }
-
-
-    public override void OnRoomListUpdate ( List<RoomInfo> roomList )
-    {
-        if ( rooms.Count <= 0 )
-        {
-            rooms = roomList;
-        }
-        else
-        {
-            foreach ( var room in roomList )
-            {
-                for ( int i = 0; i < rooms.Count; i++ )
-                {
-                    if ( rooms[i].Name == room.Name )
-                    {
-                        List<RoomInfo> newList = rooms;
-
-
-                        if ( room.RemovedFromList )
-                        {
-                            newList.Remove (newList[i]);
-                        }
-                        else
-                        {
-                            newList[i] = room;
-                        }
-                        rooms = newList;
-                    }
-                }
-            }
-        }
-
-        OnLobbiesFound ( );
-
-        UpdateRoomUI ( );
-
-        Debug.Log ("Room list updated!");
-    }
-
-    public void OnLobbiesFound ( )
-    {
-        ToggleLoadingScreen (false);
-
-        foundLobbies = true;
-
-    }
-
-    void UpdateRoomUI ( )
-    {
-        foreach ( var roomUI in roomUIs )
-        {
-            Destroy (roomUI.gameObject);
-        }
-
-        roomUIs.Clear();
-
-        roomsText.text = rooms.Count == 1? "1 Lobby" : $"{rooms.Count} Lobbies";
-
-        SetPopulationText (PhotonNetwork.CountOfPlayers);
-
-        if(rooms.Count <= 0 )
-        {
-            noOneOnline.SetActive (true);
-            return;
-        }
-
-
-        noOneOnline.SetActive (false);
-
-        for(int i = 0; i < rooms.Count; i++ )
-        {
-            RoomDisplay display = Instantiate (roomPrefab, roomsParent).GetComponent<RoomDisplay> ( );
-            roomUIs.Add (display);
-
-            display.SetServer (rooms[i]);
-        }
-    }
+   
     
     public void SetPopulationText(int pop )
     {

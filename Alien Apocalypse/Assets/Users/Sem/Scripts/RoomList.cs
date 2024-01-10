@@ -1,110 +1,109 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
-using TMPro;
-using System.Runtime.CompilerServices;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class RoomList : MonoBehaviourPunCallbacks
-{
-    public static RoomList instance;
-    [Header("UI")]
-    public Transform roomlistParent;
-    public GameObject roomlistButton;
-    public GameObject roomManagerGameObject;
-    public RoomManager roomManager;
-    public List<RoomInfo> rooms = new List<RoomInfo>();
-    public void Awake()
-    {
-        instance = this;
-    }
-    IEnumerator Start()
-    {
-        if (PhotonNetwork.InRoom)
-        {
-            PhotonNetwork.LeaveRoom();
-            PhotonNetwork.Disconnect();
-        }
-        yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
+//using TMPro;
+//using System.Runtime.CompilerServices;
 
-
-        PhotonNetwork.ConnectUsingSettings();
-
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        base.OnConnectedToMaster();
-
-        PhotonNetwork.JoinLobby();
-    }
-
-    public void ChangeRoomToCreateName(string roomName)
-    {
-        roomManager.roomNameToJoin = roomName;
-    }
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        base.OnRoomListUpdate(roomList);
-
-        if (rooms.Count <= 0)
-        {
-            rooms = roomList;
-        }
-        else
-        {
-            foreach (var room in rooms)
-            {
-                for(int i = 0; i <rooms.Count; i++)
-                {
-                    if (rooms[i].Name == room.Name)
-                    {
-                        List<RoomInfo> newList = rooms;
+//public class RoomList : MonoBehaviour
+//{
+//    public static RoomList instance;
+//    [Header("UI")]
+//    public Transform roomlistParent;
+//    public GameObject roomlistButton;
+//    public GameObject roomManagerGameObject;
+//    public RoomManager roomManager;
+//    public List<RoomInfo> rooms = new List<RoomInfo>();
+//    public void Awake()
+//    {
+//        instance = this;
+//    }
+//    IEnumerator Start()
+//    {
+//        if (PhotonNetwork.InRoom)
+//        {
+//            PhotonNetwork.LeaveRoom();
+//            PhotonNetwork.Disconnect();
+//        }
+//        yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
 
 
-                        if (room.RemovedFromList)
-                        {
-                            newList.Remove(newList[i]);
-                        }
-                        else
-                        {
-                            newList[i] = room;
-                        }
-                        rooms = newList;
-                    }
-                }
-            }
-        }
+//        PhotonNetwork.ConnectUsingSettings();
 
-        UpdateUI();
-    }
+//    }
+
+//    public override void OnConnectedToMaster()
+//    {
+//        base.OnConnectedToMaster();
+
+//        PhotonNetwork.JoinLobby();
+//    }
+
+//    public void ChangeRoomToCreateName(string roomName)
+//    {
+//        roomManager.roomNameToJoin = roomName;
+//    }
+//    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+//    {
+//        base.OnRoomListUpdate(roomList);
+
+//        if (rooms.Count <= 0)
+//        {
+//            rooms = roomList;
+//        }
+//        else
+//        {
+//            foreach (var room in rooms)
+//            {
+//                for(int i = 0; i <rooms.Count; i++)
+//                {
+//                    if (rooms[i].Name == room.Name)
+//                    {
+//                        List<RoomInfo> newList = rooms;
+
+
+//                        if (room.RemovedFromList)
+//                        {
+//                            newList.Remove(newList[i]);
+//                        }
+//                        else
+//                        {
+//                            newList[i] = room;
+//                        }
+//                        rooms = newList;
+//                    }
+//                }
+//            }
+//        }
+
+//        UpdateUI();
+//    }
 
 
 
-    void UpdateUI()
-    {
-        foreach(Transform roomItem in roomlistParent)
-        {
-            Destroy(roomItem.gameObject);
-        }
+//    void UpdateUI()
+//    {
+//        foreach(Transform roomItem in roomlistParent)
+//        {
+//            Destroy(roomItem.gameObject);
+//        }
 
-        foreach(var room in rooms)
-        {
-            GameObject roomItem = Instantiate(roomlistButton, roomlistParent);
-            RoomItemButton bt = roomItem.GetComponent<RoomItemButton>();
-            bt.roomName = room.Name;
-            bt.text1.text = room.Name;
-            bt.text2.text = room.PlayerCount + "/4";
+//        foreach(var room in rooms)
+//        {
+//            GameObject roomItem = Instantiate(roomlistButton, roomlistParent);
+//            RoomItemButton bt = roomItem.GetComponent<RoomItemButton>();
+//            bt.roomName = room.Name;
+//            bt.text1.text = room.Name;
+//            bt.text2.text = room.PlayerCount + "/4";
 
             
-        }
-    }
+//        }
+//    }
 
 
-    public void JoinRoomByName(string name)
-    {
-        roomManager.roomNameToJoin = name;
-        roomManager.JoinRoomButton();
-    }
-}
+//    public void JoinRoomByName(string name)
+//    {
+//        roomManager.roomNameToJoin = name;
+//        //roomManager.JoinRoomButton();
+//    }
+//}

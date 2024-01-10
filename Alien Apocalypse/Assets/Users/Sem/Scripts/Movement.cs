@@ -1,10 +1,9 @@
-using Photon.Pun;
 using System.Runtime.InteropServices;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Movement : MonoBehaviourPunCallbacks
+public class Movement : MonoBehaviour
 {
     [Header("Speed modifiers")]
     public float walkSpeed = 20f;
@@ -57,7 +56,6 @@ public class Movement : MonoBehaviourPunCallbacks
         wr = GetComponent<WallRunning>();
         rb = GetComponent<Rigidbody>();
         normalFov = Camera.main.fieldOfView;
-        PhotonNetwork.SerializationRate = 20;
         startSpeed = walkSpeed;
         
     }
@@ -76,50 +74,40 @@ public class Movement : MonoBehaviourPunCallbacks
     {
         grounded = Physics.Raycast(transform.position, -transform.up, out hit, 1.05f,mask);
         animgrounded = Physics.Raycast(transform.position, -transform.up, out hit, 1.5f, mask);
-        if (photonView.IsMine)
+        if (downed && appliedKnocked == false)
         {
-            if (downed && appliedKnocked == false)
-            {
-                photonView.RPC("Knocked", RpcTarget.All);
-                walkSpeed = downedSpeed;
-                appliedKnocked = false;
+            Knocked();
+            walkSpeed = downedSpeed;
+            appliedKnocked = false;
 
-            }
-            else if (!downed)
-            {
-                walkSpeed = startSpeed;
-            }
-            if (rb == null)
-            {
-                rb = GetComponent<Rigidbody>();
-            }
-            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            input.Normalize();
-            sprinting = Input.GetButton("Sprint") && !downed && input.magnitude > 0.5f;
-            jumping = Input.GetButton("Jump");
-            Physics.IgnoreLayerCollision(3, 11, true);
-            StopWhenNoInput();
-            FovChange();
-            
-            animtime += Time.deltaTime;
-            time += Time.deltaTime;
-            AnimationCheck();
-            ArmAnimCheck();
         }
+        else if (!downed)
+        {
+            walkSpeed = startSpeed;
+        }
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        input.Normalize();
+        sprinting = Input.GetButton("Sprint") && !downed && input.magnitude > 0.5f;
+        jumping = Input.GetButton("Jump");
+        Physics.IgnoreLayerCollision(3, 11, true);
+        StopWhenNoInput();
+        FovChange();
+
+        animtime += Time.deltaTime;
+        time += Time.deltaTime;
+        AnimationCheck();
+        ArmAnimCheck();
     }
     
     bool IsMoving()
     {
-        if (photonView.IsMine)
+        if (input.magnitude > 0.5f)
         {
-            if (input.magnitude > 0.5f)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
         else
         {
@@ -154,13 +142,11 @@ public class Movement : MonoBehaviourPunCallbacks
             AnimRPC(animInt);
         }  
     }
-    [PunRPC]
     public void AnimRPC(int i)
     {
         armAnim.SetInteger("ArmState", i);
         armAnim.SetBool("Moving", IsMoving());
     }
-    [PunRPC]
     void Knocked()
     {
         armAnim.SetTrigger("Knocked");
@@ -179,106 +165,99 @@ public class Movement : MonoBehaviourPunCallbacks
 
     private void FovChange()
     {
-        if (photonView.IsMine)
+        if (sprinting && input.magnitude > 0.5f)
         {
-            if (sprinting && input.magnitude > 0.5f)
+            if (Camera.main.fieldOfView < maxFov)
             {
-                if (Camera.main.fieldOfView < maxFov)
-                {
-                    float fovChange = Mathf.Lerp(curFov, normalFov + rb.velocity.magnitude, Time.deltaTime * 5);
-                    Camera.main.fieldOfView = fovChange;
-                }
+                float fovChange = Mathf.Lerp(curFov, normalFov + rb.velocity.magnitude, Time.deltaTime * 5);
+                Camera.main.fieldOfView = fovChange;
             }
-            else
-            {
-                if (Camera.main.fieldOfView != normalFov && grounded)
-                {
-                    float fovChange = Mathf.Lerp(curFov, normalFov, Time.deltaTime * 5);
-                    Camera.main.fieldOfView = fovChange;
-                }
-            }
-
-            curFov = Camera.main.fieldOfView;
         }
+        else
+        {
+            if (Camera.main.fieldOfView != normalFov && grounded)
+            {
+                float fovChange = Mathf.Lerp(curFov, normalFov, Time.deltaTime * 5);
+                Camera.main.fieldOfView = fovChange;
+            }
+        }
+
+        curFov = Camera.main.fieldOfView;
     }
     
    
 
     private void FixedUpdate()
     {
-        if (photonView.IsMine)
+        if (input.y < 0)
         {
-            if (input.y < 0)
+            walkingBackwards = true;
+
+        }
+        else
+        {
+            walkingBackwards = false;
+
+        }
+
+        if (animtime > animinterval)
+        {
+            //photonView.RPC("Walking", RpcTarget.All);
+            Walking();
+        }
+
+        if (grounded)
+        {
+            if (jumping && !downed)
             {
-                walkingBackwards = true;
-                
+                rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
+
+            }
+            else if (input.magnitude > 0.5f)
+            {
+                rb.AddForce(CalculateMovement(sprinting ? sprintSpeed : walkSpeed), ForceMode.Force);
+                stopped = false;
+            }
+        }
+
+        if (!grounded && input.magnitude > 0.5f)
+        {
+            rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * airMultiplier : walkSpeed * airMultiplier), ForceMode.Force);
+            stopped = false;
+        }
+        float maxSpeed = 75f;
+        if (wallrunUnlocked == true)
+        {
+            if (rb.velocity.y < -0.5f && wallRunning == false)
+            {
+                fallSpeed += Time.deltaTime;
+                Vector3 extraForceDirection = Vector3.down;
+                if (rb.velocity.magnitude <= maxSpeed)
+                {
+                    rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
+                }
             }
             else
             {
-                walkingBackwards = false;
-                
-            }
-
-            if (animtime > animinterval)
-            {
-                //photonView.RPC("Walking", RpcTarget.All);
-                Walking();
-            }
-
-            if (grounded)
-            {
-                if (jumping && !downed)
-                {
-                    rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
-                    
-                }
-                else if (input.magnitude > 0.5f)
-                {
-                    rb.AddForce(CalculateMovement(sprinting ? sprintSpeed : walkSpeed), ForceMode.Force);
-                    stopped = false;
-                }
-            }
-
-            if (!grounded && input.magnitude > 0.5f)
-            {
-                rb.AddForce(CalculateMovement(sprinting ? sprintSpeed * airMultiplier : walkSpeed * airMultiplier), ForceMode.Force);
-                stopped = false;
-            }
-            float maxSpeed = 75f;
-            if (wallrunUnlocked == true)
-            {
-                if (rb.velocity.y < -0.5f && wallRunning == false)
-                {
-                    fallSpeed += Time.deltaTime;
-                    Vector3 extraForceDirection = Vector3.down;
-                    if (rb.velocity.magnitude <= maxSpeed)
-                    {
-                        rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
-                    }
-                }
-                else
-                {
-                    fallSpeed = 0;
-
-                }
+                fallSpeed = 0;
 
             }
-            else if (wallrunUnlocked == false)
-            {
-                if (rb.velocity.y < -0.5f)
-                {
-                    fallSpeed += Time.deltaTime;
-                    Vector3 extraForceDirection = Vector3.down;
-                    if (rb.velocity.magnitude <= maxSpeed)
-                    {
-                        rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
-                    }
-                }
-                else
-                {
-                    fallSpeed = 0;
-                }
 
+        }
+        else if (wallrunUnlocked == false)
+        {
+            if (rb.velocity.y < -0.5f)
+            {
+                fallSpeed += Time.deltaTime;
+                Vector3 extraForceDirection = Vector3.down;
+                if (rb.velocity.magnitude <= maxSpeed)
+                {
+                    rb.AddForce(extraForceDirection * 10 * fallSpeed, ForceMode.Acceleration);
+                }
+            }
+            else
+            {
+                fallSpeed = 0;
             }
 
         }
@@ -307,41 +286,36 @@ public class Movement : MonoBehaviourPunCallbacks
     bool jumped;
     public void AnimationCheck()
     {
-        if (photonView.IsMine)
+        if (!grounded && jumped == false)
         {
-            
-            if (!grounded && jumped == false)
-            {
-                jumped = true;
-            }
-            else if (grounded && jumped == true)
-            {
-                jumped = false;
-            }
-            if (sprinting && input.magnitude > 0.5f && grounded)
-            {
-                walkState = 2;
-            }
-
-            if (!sprinting && input.magnitude > 0.5f && grounded)
-            {
-                walkState = 1;
-            }
-
-            if (input.magnitude < 0.5f && grounded)
-            {
-                walkState = 0;
-                
-            }
-            anim.SetBool("WalkingBackwards", walkingBackwards);
-            anim.SetInteger("WalkState", walkState);
-            anim.SetBool("Downed", downed);
-            anim.SetBool("Grounded", animgrounded);
-            armAnim.SetBool("Jumping", animgrounded);
+            jumped = true;
         }
+        else if (grounded && jumped == true)
+        {
+            jumped = false;
+        }
+        if (sprinting && input.magnitude > 0.5f && grounded)
+        {
+            walkState = 2;
+        }
+
+        if (!sprinting && input.magnitude > 0.5f && grounded)
+        {
+            walkState = 1;
+        }
+
+        if (input.magnitude < 0.5f && grounded)
+        {
+            walkState = 0;
+
+        }
+        anim.SetBool("WalkingBackwards", walkingBackwards);
+        anim.SetInteger("WalkState", walkState);
+        anim.SetBool("Downed", downed);
+        anim.SetBool("Grounded", animgrounded);
+        armAnim.SetBool("Jumping", animgrounded);
     }
    
-    [PunRPC]
     private void Walking()
     {
         anim.SetBool("WalkingBackwards", walkingBackwards);

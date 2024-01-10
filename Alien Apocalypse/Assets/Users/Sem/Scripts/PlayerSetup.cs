@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 using TMPro;
 using System.Linq;
 
-public class PlayerSetup : MonoBehaviourPunCallbacks
+public class PlayerSetup : MonoBehaviour
 {
     public Movement movement;
     public Material[] playerColors;
@@ -34,7 +33,6 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         GetComponent<SlidingAbility>().enabled = true;
         GetComponent<Grappling>().enabled = true;
         GetComponent<DashAbility>().enabled = true;
-        number = PhotonNetwork.CurrentRoom.PlayerCount - 1;
         uiVanStefan.SetActive(true);
         weapon.layer = 7;
         gameObject.layer = 3;
@@ -57,8 +55,6 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         Vector3 v = new Vector3(0,0,0);
         GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().enabled = true;
         GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().myPlayer = gameObject;
-        photonView.RPC("SetNickname", RpcTarget.All, PhotonNetwork.NickName);
-        photonView.RPC("SetPlayerColor", RpcTarget.All);
         gameObject.tag = "Player";
         if(!TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
@@ -71,7 +67,6 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
     public void SetNickname(string name)
     {
         nickname = name;
@@ -90,7 +85,6 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
     public void SetPlayerColor()
     {
         //playerBody.GetComponent<Renderer>().material = playerColors[number];

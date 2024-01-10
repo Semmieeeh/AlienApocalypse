@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 
-public class Weapon : MonoBehaviourPunCallbacks
+public class Weapon : MonoBehaviour
 {
     [Header("References")]
     public Camera mainCam;

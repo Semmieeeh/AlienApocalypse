@@ -1,30 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class ActiveOnServer : MonoBehaviourPunCallbacks
+public class ActiveOnServer : MonoBehaviour
 {
     public GameObject[] otherWeapons;
     public GameObject targetWeapon;
     private void Update()
     {
-        if (photonView.IsMine)
-        {
-            photonView.RPC("WeaponOnServer", RpcTarget.All);
-        }
+        WeaponOnServer();
     }
 
-    [PunRPC]
     void WeaponOnServer()
     {
-        if (photonView.IsMine)
+        gameObject.SetActive(true);
+        foreach (GameObject weapon in otherWeapons)
         {
-            gameObject.SetActive(true);
-            foreach (GameObject weapon in otherWeapons)
-            {
-                weapon.SetActive(false);
-            }
+            weapon.SetActive(false);
         }
     }
 }

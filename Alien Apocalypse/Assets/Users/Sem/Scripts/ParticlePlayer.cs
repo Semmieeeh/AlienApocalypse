@@ -1,11 +1,10 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.VFX;
 
-public class ParticlePlayer : MonoBehaviourPunCallbacks
+public class ParticlePlayer : MonoBehaviour
 {
     [SerializeField]
     VisualEffect[] effects;

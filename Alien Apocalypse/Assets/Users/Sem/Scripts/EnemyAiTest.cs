@@ -1,6 +1,4 @@
 using JetBrains.Annotations;
-using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +7,7 @@ using UnityEngine.Rendering;
 using UnityEngine.VFX;
 using static PlayerHealth;
 
-public class EnemyAiTest : MonoBehaviourPunCallbacks
+public class EnemyAiTest : MonoBehaviour
 {
     [Header("Ai Modifiers")]
     public EnemyType type;
@@ -215,7 +213,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                                 if (canAttack == true)
                                 {
                                     timePassed = Random.Range(-attackSpeed, attackSpeed);
-                                    photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                                    Attack(attackDamage);
                                     canAttack = false;
 
                                 }
@@ -261,8 +259,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                                 {
                                     canAttack = false;
                                     timePassed = Random.Range(-attackSpeed, attackSpeed);
-                                    photonView.RPC("Attack", RpcTarget.All, attackDamage);
-                                    
+                                    Attack(attackDamage);
 
                                 }
 
@@ -301,7 +298,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                                 if (canAttack == true)
                                 {
                                     timePassed = Random.Range(-attackSpeed, attackSpeed);
-                                    photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                                    Attack(attackDamage);
                                     canAttack = false;
 
                                 }
@@ -338,7 +335,7 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
                                 if (canAttack == true)
                                 {
                                     timePassed = Random.Range(-attackSpeed, attackSpeed);
-                                    photonView.RPC("Attack", RpcTarget.All, attackDamage);
+                                    Attack(attackDamage);
                                     canAttack = false;
                                 }
 
@@ -384,7 +381,6 @@ public class EnemyAiTest : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
     public void Attack(float damage)
     {
         

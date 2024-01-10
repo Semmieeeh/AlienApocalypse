@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Photon.Pun;
 
-public class WeaponInputHandler : MonoBehaviourPunCallbacks
+public class WeaponInputHandler : MonoBehaviour
 {
     [Header("Recoil")]
     public Camera mainCam;
@@ -28,24 +27,20 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
     [Header("Modifier")]
     public float damageModifier;
     public int damageLevel;
+    public float switchTime = 0.5f;
 
     void Start()
     {
         SetWeapon();
     }
 
-    float time; float interval = 0.1f;
     void Update()
     {
-        if (photonView.IsMine)
-        {
-            SelectWeapon();
-            
-            InputWeapon();
-        }     
+        SelectWeapon();
+        switchTime -=Time.deltaTime;
+        InputWeapon();
     }
 
-    [PunRPC]
     public void UpdateAnimations()
     {
         if (selectedWeapon != null)
@@ -97,7 +92,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
             {
                 if(selectedWeapon.transform.TryGetComponent<Firearm>(out Firearm currentFirearm))
                 {
-                    if(currentFirearm.IsReload() == true)
+                    if(currentFirearm.IsReload() == true || switchTime >0f)
                     {
                         scrollNum = oldScrollNum;
                         return;
@@ -110,6 +105,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                             {
                                 selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
                                 //photonView.RPC("UpdateAnimations", RpcTarget.All);
+                                switchTime = 0.5f;
                                 UpdateAnimations();
                             }
                         }
@@ -197,7 +193,7 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
                 {
                     if(firearm.firearmData != null)
                     {
-                        GameObject weapon = PhotonNetwork.Instantiate(firearm.firearmData.prefab.name, transform.position, transform.rotation);
+                        GameObject weapon = Instantiate(firearm.firearmData.prefab, transform.position, transform.rotation);
                         
 
                         weapon.transform.parent = weaponSlots[i].transform;
@@ -271,8 +267,8 @@ public class WeaponInputHandler : MonoBehaviourPunCallbacks
             {
                 if(currentFirearm.firearmData != null)
                 {
-                    PhotonNetwork.Destroy(selectedWeapon.transform.GetChild(0).gameObject);
-                    GameObject gun = PhotonNetwork.Instantiate(currentFirearm.firearmData.dropPrefab.name, transform.position, Camera.main.transform.rotation);
+                    Destroy(selectedWeapon.transform.GetChild(0).gameObject);
+                    GameObject gun = Instantiate(currentFirearm.firearmData.dropPrefab, transform.position, Camera.main.transform.rotation);
                     
                     Rigidbody rb = gun.GetComponent<Rigidbody>();
                     rb.AddForce(Camera.main.transform.forward * 5,ForceMode.Impulse);

@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Beacon : MonoBehaviourPunCallbacks
+public class Beacon : MonoBehaviour
 {
     public BeaconManager beaconManager;
 
@@ -103,10 +102,9 @@ public class Beacon : MonoBehaviourPunCallbacks
             beaconManager.BeaconsCondition();
 
             startTime = Time.time;
-            photonView.RPC("FlagRPC", RpcTarget.All);
+            FlagRPC();
         }
     }
-    [PunRPC]
     void FlagRPC()
     {
         flag.currentValue = totalScore;

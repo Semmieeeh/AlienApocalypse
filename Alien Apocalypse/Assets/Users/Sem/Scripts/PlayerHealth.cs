@@ -1,11 +1,10 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
-public class PlayerHealth : MonoBehaviourPunCallbacks
+public class PlayerHealth : MonoBehaviour
 {
     [Header("General Health Modifiers")]
     [SerializeField]
@@ -72,8 +71,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         minHealth = 0;
         Health = maxHealth;
         state = PlayerState.alive;
-        PhotonNetwork.SerializationRate = 15;
-        PhotonNetwork.SendRate = 15;
     }
 
     // Update is called once per frame
@@ -81,7 +78,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            photonView.RPC(nameof(Revive), RpcTarget.All);
+            Revive();
         }
         switch (state)
         {
@@ -117,21 +114,20 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
                 break;
 
             case PlayerState.dead:
-                photonView.RPC("Die", RpcTarget.All);
+                Die();
                 break;
 
         }
         if (revive)
         {
             
-            photonView.RPC("Revive",RpcTarget.All);
+            Revive();
             revive = false;
             GetComponent<SpectatorMode>().isSpectator = false;
 
         }
     }
 
-    [PunRPC]
     public void Die()
     {
         Health = 0;
@@ -148,43 +144,29 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     void OnHealthUpdate()
     {
         healthBar.SetValue(Health);
-        photonView.RPC("UpdateHealth", RpcTarget.All, Health);
+        UpdateHealth(Health);
     }
     Rigidbody rb;
     Vector3 networkPosition;
     Quaternion networkRotation;
-    private void FixedUpdate()
-    {
-        if (!photonView.IsMine)
-        {
-            if (rb != null)
-            {
-                rb.position = Vector3.MoveTowards(rb.position, networkPosition, Time.fixedDeltaTime);
-                rb.rotation = Quaternion.RotateTowards(rb.rotation, networkRotation, Time.fixedDeltaTime * 100.0f);
-            }
-        }
-    }
+    
     public void TakeDamage(float damage)
     {
         //update health text object
-        if (photonView.IsMine)
+        Health -= damage;
+        lastHit = 3;
+        UIDAmageManager.instance.Damage();
+        if (Health <= 0)
         {
-            Health -= damage;
-            lastHit = 3;
-            UIDAmageManager.instance.Damage();
-            if (Health <= 0)
-            {
-                photonView.RPC("Downed", RpcTarget.All);
-            }
+            Downed();
         }
     }
-    [PunRPC]
     public void Downed()
     {
         if (!godMode && !knocked)
         {
 
-            GameObject canvas = PhotonNetwork.Instantiate(knockedCanvas.name, Vector3.zero, Quaternion.identity);            
+            GameObject canvas = Instantiate(knockedCanvas, Vector3.zero, Quaternion.identity);            
             canvas.transform.parent = GameObject.Find("DownedCanvas").transform;
             canvas.transform.GetComponent<UIFlag>().SetTarget(transform);
             canvasStefan = canvas;
@@ -207,12 +189,11 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     }
     GameObject canvasStefan;
     public WeaponInputHandler weapon;
-    [PunRPC]
     public void Revive()
     {
         if (canvasStefan != null)
         {
-            PhotonNetwork.Destroy(canvasStefan); canvasStefan = null;
+            Destroy(canvasStefan); canvasStefan = null;
         }
         weapon.SetWeapon();
         Vector3 newPos = transform.position;
@@ -241,7 +222,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         animatorObj.transform.localPosition = otherPos;
         weapons.SetActive(true);
     }
-    [PunRPC]
     public void UpdateHealth(float h)
     {
         Health = h;

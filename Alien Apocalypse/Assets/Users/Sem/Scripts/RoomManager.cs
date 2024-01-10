@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
-using Photon.Pun.UtilityScripts;
 
-public class RoomManager : MonoBehaviourPunCallbacks
+public class RoomManager : MonoBehaviour
 {
     public GameObject[] prefabs;
     public GameObject enemyManager;
@@ -19,7 +16,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public GameObject nicknameUI;
     public string roomNameToJoin;
     public bool spawnedEnemy = false;
-    public RoomList roomList;
     public GameObject island;
     public Transform islandPos;
 
@@ -33,44 +29,44 @@ public class RoomManager : MonoBehaviourPunCallbacks
         nickname = name;
     }
 
-    public void JoinRoomButton()
-    {
-        Debug.Log("Connecting...");
-        RoomOptions options = new RoomOptions();
-        options.MaxPlayers = 4;
-        PhotonNetwork.JoinOrCreateRoom(roomNameToJoin, options, null);
-    }
+    
     
 
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-        Debug.Log("We're in a room!");
-        SpawnPlayer();
-        gameObject.SetActive(false);
-
-    }
+    
 
     public GameObject pointsManager;
     public GameObject vanObj;
     public GameObject chests;
+    float difficulty;
+    public void Easy()
+    {
+        difficulty = 0.6f;
+        SpawnPlayer();
+
+    }
+    public void Medium()
+    {
+        difficulty = 1;
+        SpawnPlayer();
+
+    }
+    public void Hard()
+    {
+        difficulty = 1.4f;
+        SpawnPlayer();
+    }
     public void SpawnPlayer()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-
-            GameObject enemy = PhotonNetwork.Instantiate(enemyManager.name, Vector3.zero, Quaternion.identity);
-            GameObject pointsMan = PhotonNetwork.Instantiate(pointsManager.name,spawnPoint.position, Quaternion.identity);
-            GameObject van = PhotonNetwork.Instantiate(vanObj.name, new Vector3(2, 0.4f, -22f),Quaternion.identity);
-            GameObject chest = PhotonNetwork.Instantiate(chests.name, new Vector3(0,0,0),Quaternion.identity);
-
-        }
-        
-        GameObject playerPrefab = PhotonNetwork.Instantiate(prefabs[PhotonNetwork.CurrentRoom.PlayerCount-1].name, spawnPoint.position, spawnPoint.transform.rotation);
+        EnemyManager enemy = Instantiate(enemyManager, Vector3.zero, Quaternion.identity).GetComponent<EnemyManager>();
+        enemy.multiplier = difficulty;
+        GameObject pointsMan = Instantiate(pointsManager, spawnPoint.position, Quaternion.identity);
+        GameObject van = Instantiate(vanObj, new Vector3(2, 0.4f, -22f), Quaternion.identity);
+        GameObject chest = Instantiate(chests, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject playerPrefab = Instantiate(prefabs[0], spawnPoint.position, spawnPoint.transform.rotation);
         GameObject player = playerPrefab.transform.GetChild(0).gameObject;
         player.GetComponent<PlayerSetup>().IsLocalPlayer();
-        player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.All, nickname);
-
+        //player.GetComponent<PhotonView>().RPC("SetNickname", RpcTarget.All, nickname);
+        gameObject.SetActive(false);
     }
     
 }

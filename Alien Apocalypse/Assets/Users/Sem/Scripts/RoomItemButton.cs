@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 using TMPro;
 
 public class RoomItemButton : MonoBehaviour
@@ -11,6 +10,6 @@ public class RoomItemButton : MonoBehaviour
 
     public void OnButtonPressed()
     {
-        RoomList.instance.JoinRoomByName(roomName);
+
     }
 }

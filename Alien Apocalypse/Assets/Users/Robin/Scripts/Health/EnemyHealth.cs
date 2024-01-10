@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Photon.Pun;
 using UnityEngine.AI;
 
-public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
+public class EnemyHealth : MonoBehaviour, IDamagable
 {
     public EnemyManager instance;
     public float health;
@@ -25,11 +24,8 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     {
         maxHealth = maxHealth * multiplier;
         health = maxHealth;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            GetComponent<NavMeshAgent>().enabled = true;
-            GetComponent<EnemyAiTest>().enabled = true;
-        }
+        GetComponent<NavMeshAgent>().enabled = true;
+        GetComponent<EnemyAiTest>().enabled = true;
         
     }
 
@@ -40,7 +36,7 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         this.onKill = onKill;
         this.onHit = onHit;
         blastDirection = blastDir;
-        photonView.RPC(nameof(SyncDamage), RpcTarget.All, damage);
+        SyncDamage(damage);
     }
     bool dead;
     float time;
@@ -49,7 +45,6 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         //photonView.RPC("Shader", RpcTarget.All);
 
     }
-    [PunRPC]
     public void Shader()
     {
         if (died == true)
@@ -58,7 +53,6 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
             r.material.SetFloat("_Dead", time);
         }
     }
-    [PunRPC]
     public void SyncDamage(float damage)
     {
         health -= damage;
@@ -114,9 +108,8 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     GameObject exp;
     public void Explode()
     {
-        photonView.RPC("ExplodeRPC", RpcTarget.All);
+        ExplodeRPC();
     }
-    [PunRPC]
     public void ExplodeRPC()
     {
         health = 0;
@@ -125,13 +118,13 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
     public Animator anim;
     public IEnumerator Die()
     {
-        PhotonNetwork.Destroy(gun);
+        Destroy(gun);
         
         
         if (exploded == false && canExplode)
         {
             
-            exp = PhotonNetwork.Instantiate(explosion.name, transform.position, Quaternion.identity);
+            exp = Instantiate(explosion, transform.position, Quaternion.identity);
             
             exp.transform.parent = transform;
             exploded = true;
@@ -142,28 +135,27 @@ public class EnemyHealth : MonoBehaviourPunCallbacks, IDamagable
         yield return new WaitForSeconds(1);
         if (canExplode == true)
         {
-            
-            photonView.RPC("DieWithExplosion", RpcTarget.All);
+            DieWithExplosion();
         }
         else
         {
-            photonView.RPC("DieVoid", RpcTarget.All);
+            DieVoid();
         }
         
     }
-    [PunRPC]
     void DieVoid()
-    {    
-        PhotonNetwork.Destroy(gameObject);
+    {
+        //gettingShotBy.GetComponent<PlayerXP>().AddXp(xpAmount);
+        Destroy(gameObject);
+        
     }
-    [PunRPC]
     void DieWithExplosion()
     {
         if (exp != null)
         {
-            PhotonNetwork.Destroy(exp);
+            Destroy(exp);
             
         }
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
     }
 }

@@ -1,34 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 
-public class ChestManager : MonoBehaviourPunCallbacks
+public class ChestManager : MonoBehaviour
 {
     public GameObject chestPrefab;
     public List<Chest> chests;
     public Chest currentChest;
     public Chest oldChest;
     int j;
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-        
-    }
+   
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("ChestInitialize", RpcTarget.All);
-        }
+        ChestInitialize();
     }
-    [PunRPC]
     public void ChestInitialize()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            GameObject chestInst = PhotonNetwork.Instantiate(chestPrefab.name, transform.GetChild(i).transform.localPosition, transform.GetChild(i).transform.localRotation);
+            GameObject chestInst = Instantiate(chestPrefab, transform.GetChild(i).transform.localPosition, transform.GetChild(i).transform.localRotation);
 
             chestInst.gameObject.SetActive(false);
             chestInst.transform.parent = transform.GetChild(i).transform;
@@ -44,28 +35,28 @@ public class ChestManager : MonoBehaviourPunCallbacks
                 break;
             }
         }
-        photonView.RPC("NewChest", RpcTarget.All);
+        NewChest();
     }
     public void New()
     {
-        photonView.RPC("NewChest", RpcTarget.All);
+        NewChest();
+
     }
 
-    [PunRPC]
     void NewChest()
     {
         for(int i = 0; i < chests.Count; i++)
         {
             if(chests[i] == oldChest)
             {
-                GameObject newChest = PhotonNetwork.Instantiate(chestPrefab.name, chests[i].transform.position, chests[i].transform.rotation);
+                GameObject newChest = Instantiate(chestPrefab, chests[i].transform.position, chests[i].transform.rotation);
 
                 newChest.gameObject.SetActive(false);
                 newChest.transform.parent = chests[i].transform.parent;
 
                 if(newChest.TryGetComponent<Chest>(out Chest chest1))
                 {
-                    PhotonNetwork.Destroy(chests[i].gameObject);
+                    Destroy(chests[i].gameObject);
 
                     chests[i] = chest1;
                     chest1.chestManager = this;
