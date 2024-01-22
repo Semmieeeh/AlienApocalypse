@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5009454829140837519}
   - component: {fileID: 5990654626558955664}
   - component: {fileID: 8085135176714629998}
-  - component: {fileID: 8103323928623272692}
   m_Layer: 0
   m_Name: Shoot Ray(Cyan)
   m_TagString: Untagged
@@ -150,27 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63c0246f02bf8c445bdb0f265e10182a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linerenderer: {fileID: 0}
+  linerenderer: {fileID: 5990654626558955664}
   duration: 0.3
---- !u!114 &8103323928623272692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8251439570758105850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  moveToTarget: 1
+  dampenRay: 0

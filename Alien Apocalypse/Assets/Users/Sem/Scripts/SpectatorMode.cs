@@ -66,7 +66,7 @@ public class SpectatorMode : MonoBehaviour
             else if(playerList.Count == 1)
             {
                 GameObject canvas = GameObject.Find("PlayerCanvas");
-                canvas.transform.GetChild(5).gameObject.SetActive(true);
+                canvas.transform.GetChild(4).gameObject.SetActive(true);
                 
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;

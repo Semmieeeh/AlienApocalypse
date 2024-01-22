@@ -9,7 +9,7 @@ public class Firearm : Weapon
     [Header("General")]
     public FirearmData firearmData;
     public DataHolder dataHolder;
-
+    public bool isShooting;
     public float damage;
     public float cooldown;
 
@@ -144,6 +144,7 @@ public class Firearm : Weapon
     {
         if (CanShoot())
         {
+            isShooting = true;
             switch (firearmData.fireType)
             {
                 case FirearmData.Firetype.singleShot:
@@ -188,7 +189,7 @@ public class Firearm : Weapon
         canSingleShoot = true;
         canProjectile = true;
         canShotgun = true;
-
+        isShooting = false;
         switch (firearmData.firearmType)
         {
             case FirearmData.FirearmType.gatlingGun:

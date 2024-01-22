@@ -87,6 +87,15 @@ public class UIPauseManager : MonoBehaviour
 
     void OnPauseStateChanged(bool paused )
     {
+        float t;
+        if (!paused)
+        {
+            t = 1;
+        }
+        else
+        {
+            t = 0;
+        }
         pauseMenu.SetActive (paused);
         player.GetComponent<Movement>().enabled = !paused;
         player.GetComponent<Grappling>().enabled = !paused;
@@ -95,7 +104,7 @@ public class UIPauseManager : MonoBehaviour
         player.GetComponent<GrappleRope>().enabled = !paused;
         weaponInput.GetComponent<WeaponInputHandler>().enabled = !paused;
         cam.GetComponent<MouseLook>().enabled = !paused;
-
+        Time.timeScale = t;
         m_inOptions = false;
 
         optionsMenu.SetActive (false);

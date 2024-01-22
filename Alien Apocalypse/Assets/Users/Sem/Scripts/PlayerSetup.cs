@@ -36,10 +36,7 @@ public class PlayerSetup : MonoBehaviour
         uiVanStefan.SetActive(true);
         weapon.layer = 7;
         gameObject.layer = 3;
-        foreach (var part in playerParts)
-        {
-            part.layer = 13;
-        }
+        
         specCam.gameObject.SetActive(false);
         specCam.name = "SpecCam";
         //Destroy(specCam);
@@ -50,8 +47,6 @@ public class PlayerSetup : MonoBehaviour
         nicknameTextObject.SetActive(false);
         StartCoroutine(nameof(WaitForEnemyObj));
         inputObject.SetActive(true);
-        rot.enabled = true;
-        rot2.enabled = true;
         Vector3 v = new Vector3(0,0,0);
         GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().enabled = true;
         GameObject.Find("SpectatorManager").GetComponent<SpectatorMode>().myPlayer = gameObject;

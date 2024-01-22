@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour, IDamagable
 {
+    public bool isGiant;
+    public bool isEnclave;
     public EnemyManager instance;
     public float health;
     public float maxHealth;
@@ -22,10 +24,17 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public bool canExplode;
     private void Start()
     {
+
         maxHealth = maxHealth * multiplier;
         health = maxHealth;
-        GetComponent<NavMeshAgent>().enabled = true;
-        GetComponent<EnemyAiTest>().enabled = true;
+        if (!isEnclave)
+        {
+            GetComponent<NavMeshAgent>().enabled = true;
+        }
+        if(TryGetComponent<EnemyAiTest>(out EnemyAiTest e))
+        {
+            e.enabled = true;
+        }
         
     }
 
@@ -42,7 +51,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     float time;
     private void Update()
     {
-        //photonView.RPC("Shader", RpcTarget.All);
+        Shader();
 
     }
     public void Shader()
@@ -72,10 +81,12 @@ public class EnemyHealth : MonoBehaviour, IDamagable
                 rigidBody.isKinematic = false;
                 rigidBody.gameObject.layer = 0;
             }
-            var enemyTest = GetComponent<EnemyAiTest>();
-            enemyTest.anim.enabled = false;
-            enemyTest.armAnim.enabled = false;
-            enemyTest.enabled = false;
+            if(TryGetComponent<EnemyAiTest>(out EnemyAiTest enemyTest))
+            {
+                enemyTest.anim.enabled = false;
+                enemyTest.armAnim.enabled = false;
+                enemyTest.enabled = false;
+            }            
 
             if (hitLimb != null)
             {
@@ -118,31 +129,64 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public Animator anim;
     public IEnumerator Die()
     {
-        Destroy(gun);
-        
-        
-        if (exploded == false && canExplode)
+        if (!isGiant && !isEnclave)
         {
-            
-            exp = Instantiate(explosion, transform.position, Quaternion.identity);
-            
-            exp.transform.parent = transform;
-            exploded = true;
+            Destroy(gun);
+            if(transform.GetChild(0).TryGetComponent<Animator>(out Animator anim))
+            {
+                anim.enabled = false;
+            }
+
+            if (exploded == false && canExplode)
+            {
+
+                exp = Instantiate(explosion, transform.position, Quaternion.identity);
+
+                exp.transform.parent = transform;
+                exploded = true;
+            }
+            yield return new WaitForSeconds(10);
+            died = true;
+            anim.SetBool("Dead", died);
+            yield return new WaitForSeconds(1);
+            if (canExplode == true)
+            {
+                DieWithExplosion();
+            }
+            else
+            {
+                DieVoid();
+            }
         }
-        yield return new WaitForSeconds(10);
-        died = true;
-        anim.SetBool("Dead", died);
-        yield return new WaitForSeconds(1);
-        if (canExplode == true)
+        else if(isGiant)
         {
-            DieWithExplosion();
+            int random = Random.Range(1, 4);
+            for(int i = 0; i <random; i++)
+            {
+                GameObject blob = Instantiate(enemyBlobs, spawnPos.position, spawnPos.rotation);
+                Vector3 torque = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+                Rigidbody rb = blob.GetComponent<Rigidbody>();
+                rb.AddTorque(torque * 2, ForceMode.Impulse);
+                rb.AddForce(transform.up * 10, ForceMode.Impulse);
+                rb.AddForce(transform.forward * 4, ForceMode.Impulse);
+
+                Quaternion rot = spawnPos.rotation;
+                rot.y += 90;
+                spawnPos.rotation = rot;
+            }
+            
+
+            Destroy(gameObject);
         }
-        else
+        else if(isEnclave)
         {
-            DieVoid();
+            Destroy(gameObject);
         }
         
     }
+    public Transform spawnPos;
+
+    public GameObject enemyBlobs;
     void DieVoid()
     {
         //gettingShotBy.GetComponent<PlayerXP>().AddXp(xpAmount);
@@ -157,5 +201,13 @@ public class EnemyHealth : MonoBehaviour, IDamagable
             
         }
         Destroy(gameObject);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isEnclave && collision.gameObject.tag == "Ground")
+        {
+            GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<GiantAi>().enabled = true;
+        }
     }
 }

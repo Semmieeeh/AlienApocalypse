@@ -72,6 +72,7 @@ public class Movement : MonoBehaviour
     public float animinterval = 0.1f;
     private void Update()
     {
+        FovChange();
         grounded = Physics.Raycast(transform.position, -transform.up, out hit, 1.05f,mask);
         animgrounded = Physics.Raycast(transform.position, -transform.up, out hit, 1.5f, mask);
         if (downed && appliedKnocked == false)
@@ -95,7 +96,7 @@ public class Movement : MonoBehaviour
         jumping = Input.GetButton("Jump");
         Physics.IgnoreLayerCollision(3, 11, true);
         StopWhenNoInput();
-        FovChange();
+        
 
         animtime += Time.deltaTime;
         time += Time.deltaTime;
@@ -138,15 +139,9 @@ public class Movement : MonoBehaviour
             {
                 animInt = 0;
             }
-            //photonView.RPC("AnimRPC", RpcTarget.All, animInt);
-            AnimRPC(animInt);
         }  
     }
-    public void AnimRPC(int i)
-    {
-        armAnim.SetInteger("ArmState", i);
-        armAnim.SetBool("Moving", IsMoving());
-    }
+    
     void Knocked()
     {
         armAnim.SetTrigger("Knocked");
@@ -163,10 +158,11 @@ public class Movement : MonoBehaviour
         
     }
 
-    private void FovChange()
+    public void FovChange()
     {
-        if (sprinting && input.magnitude > 0.5f)
+        if (sprinting && input.magnitude > 0.5f || input.magnitude >0.5f && grounded == false)
         {
+            Debug.Log("Increasing fov");
             if (Camera.main.fieldOfView < maxFov)
             {
                 float fovChange = Mathf.Lerp(curFov, normalFov + rb.velocity.magnitude, Time.deltaTime * 5);
@@ -175,6 +171,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            Debug.Log("Decreasing fov");
             if (Camera.main.fieldOfView != normalFov && grounded)
             {
                 float fovChange = Mathf.Lerp(curFov, normalFov, Time.deltaTime * 5);
@@ -313,7 +310,7 @@ public class Movement : MonoBehaviour
         anim.SetInteger("WalkState", walkState);
         anim.SetBool("Downed", downed);
         anim.SetBool("Grounded", animgrounded);
-        armAnim.SetBool("Jumping", animgrounded);
+        //armAnim.SetBool("Jumping", animgrounded);
     }
    
     private void Walking()

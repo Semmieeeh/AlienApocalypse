@@ -87,7 +87,7 @@ public class EnemyManager : MonoBehaviour
             enemiesSpawning = false;
             cooldownCounter = waveCooldown;
             wavesCompleted++;
-            waveSize += 3;
+            waveSize += 2;
             curSpawnPos = spawnPoints[Random.Range(0, 3)].transform;
             yield return new WaitForSeconds(waveCooldown);
             multiplier = multiplier * 1.15f;
@@ -112,9 +112,16 @@ public class EnemyManager : MonoBehaviour
             transform.GetChild(4).GetComponent<UfoSpawner>().PlayParticle();
             GameObject enemyObj = Instantiate(enemiesToSpawn[enemyIndex], curSpawnPos.position, curSpawnPos.rotation);
             EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
-            enemyHealth.multiplier = multiplier;
-            enemyObj.GetComponent<EnemyAiTest>().attackDamage = enemyObj.GetComponent<EnemyAiTest>().attackDamage * multiplier;
 
+            enemyHealth.multiplier = multiplier;
+            if(enemyObj.TryGetComponent<EnemyAiTest>(out EnemyAiTest test))
+            {
+                test.attackDamage = test.attackDamage * multiplier;
+            }
+            if(enemyObj.TryGetComponent<GiantAi>(out GiantAi ai))
+            {
+                ai.attackDamage = ai.attackDamage * multiplier;
+            }
             enemyHealth.instance = this;
         }
     }

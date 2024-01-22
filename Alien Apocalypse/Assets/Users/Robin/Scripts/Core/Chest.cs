@@ -165,6 +165,8 @@ public class Chest : MonoBehaviour, IInteractable
             if(col.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealth))
             {
                 playerHealth.TakeDamage(bombDamage / 2);
+                Vector3 exp = playerHealth.gameObject.transform.position - transform.position;
+                playerHealth.gameObject.GetComponent<Rigidbody>().AddForce(exp * 15, ForceMode.Impulse);
             }
         }
 

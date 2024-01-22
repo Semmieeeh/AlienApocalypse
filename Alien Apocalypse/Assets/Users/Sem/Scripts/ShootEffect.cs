@@ -104,12 +104,6 @@ public class ShootEffect : ParticlePlayer
             ray.Shoot (transform.position, point);
         }
 
-        VisualEffect decal = Instantiate(hitDecal, point, Quaternion.identity).GetComponent<VisualEffect> ( );
-
-        decal.transform.forward = hit.normal;
-
-        decal.Play ( );
-
 
     }
 }

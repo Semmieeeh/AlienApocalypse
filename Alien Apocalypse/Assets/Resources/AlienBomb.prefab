@@ -556,7 +556,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8175454672262138007}
   - component: {fileID: 606356482855481088}
-  - component: {fileID: 2627549454673492260}
   m_Layer: 11
   m_Name: BombsPivot
   m_TagString: Untagged
@@ -677,28 +676,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2627549454673492260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548260486327869922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &1988019110418151301
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,7 +1443,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8490647720566573664}
   - component: {fileID: 7559578415454998775}
-  - component: {fileID: 1890298208161591804}
   m_Layer: 11
   m_Name: Arms
   m_TagString: Untagged
@@ -1512,33 +1488,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1890298208161591804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4100563993314068707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 9
-    SynchronizeType: 1
-    Name: Attack
-  - Type: 3
-    SynchronizeType: 1
-    Name: WalkState
-  - Type: 4
-    SynchronizeType: 1
-    Name: InRange
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
 --- !u!1 &4117335626130515852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1821,9 +1770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4550993382978745296}
   - component: {fileID: 6456500423871001546}
-  - component: {fileID: 1253222060486738215}
   - component: {fileID: 1880853468949831869}
-  - component: {fileID: 6357159071552462725}
   m_Layer: 11
   m_Name: Alien
   m_TagString: Untagged
@@ -1869,22 +1816,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1253222060486738215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4615329021597408394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!82 &1880853468949831869
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1981,33 +1912,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6357159071552462725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4615329021597408394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 3
-    SynchronizeType: 1
-    Name: WalkState
-  - Type: 4
-    SynchronizeType: 1
-    Name: Flying
-  - Type: 4
-    SynchronizeType: 0
-    Name: Dead
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
 --- !u!1 &4983957952744130226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,8 +2233,6 @@ GameObject:
   - component: {fileID: 6342635429818818792}
   - component: {fileID: 2862996086437632071}
   - component: {fileID: 7028250540927831896}
-  - component: {fileID: 6953253778805580192}
-  - component: {fileID: 5932660472288310766}
   - component: {fileID: 7427756792574962229}
   m_Layer: 11
   m_Name: AlienBomb
@@ -2391,7 +2293,6 @@ MonoBehaviour:
   blastDirection: {x: 0, y: 0, z: 0}
   canExplode: 1
   hitLimb: {fileID: 0}
-  flyingAnim: {fileID: 0}
   explosion: {fileID: 3201137857499991782, guid: 78df2d92cefeb9841a90bb6c2e437dc6, type: 3}
   explodeObj: {fileID: 1548260486327869922}
   anim: {fileID: 0}
@@ -2458,49 +2359,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6953253778805580192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 2
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 5932660472288310766}
-  - {fileID: 0}
-  - {fileID: 1253222060486738215}
-  - {fileID: 6357159071552462725}
-  - {fileID: 1890298208161591804}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &5932660472288310766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!82 &7427756792574962229
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3277,7 +3135,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0857941f461e6204ba70c401b3fb8c41, type: 2}
+  - {fileID: 2100000, guid: c6a9f832b5c75884d8dcb49cb8dbf728, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

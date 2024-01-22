@@ -1312,7 +1312,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8490647720566573664}
   - component: {fileID: 7559578415454998775}
-  - component: {fileID: 4555572919557590350}
   m_Layer: 11
   m_Name: Arms
   m_TagString: Untagged
@@ -1358,33 +1357,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4555572919557590350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4100563993314068707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 9
-    SynchronizeType: 1
-    Name: Attack
-  - Type: 3
-    SynchronizeType: 1
-    Name: WalkState
-  - Type: 4
-    SynchronizeType: 1
-    Name: InRange
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
 --- !u!1 &4117335626130515852
 GameObject:
   m_ObjectHideFlags: 0
@@ -1668,9 +1640,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4550993382978745296}
   - component: {fileID: 6456500423871001546}
-  - component: {fileID: 1253222060486738215}
   - component: {fileID: 3617699072334163821}
-  - component: {fileID: 5459737165534366334}
   m_Layer: 11
   m_Name: Alien
   m_TagString: Untagged
@@ -1716,22 +1686,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1253222060486738215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4615329021597408394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!82 &3617699072334163821
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1828,33 +1782,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5459737165534366334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4615329021597408394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 3
-    SynchronizeType: 1
-    Name: WalkState
-  - Type: 4
-    SynchronizeType: 1
-    Name: Flying
-  - Type: 4
-    SynchronizeType: 1
-    Name: Dead
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
 --- !u!1 &4983957952744130226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2176,8 +2103,6 @@ GameObject:
   - component: {fileID: 6342635429818818792}
   - component: {fileID: 2862996086437632071}
   - component: {fileID: 7028250540927831896}
-  - component: {fileID: 6953253778805580192}
-  - component: {fileID: 5932660472288310766}
   - component: {fileID: 7427756792574962229}
   m_Layer: 11
   m_Name: AlienPivot
@@ -2214,6 +2139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312aa3e02c5a7934e88396f6e2bba2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGiant: 0
+  isEnclave: 0
   instance: {fileID: 0}
   health: 0
   maxHealth: 100
@@ -2241,6 +2168,8 @@ MonoBehaviour:
   explosion: {fileID: 0}
   explodeObj: {fileID: 0}
   anim: {fileID: 548638505341882792}
+  spawnPos: {fileID: 0}
+  enemyBlobs: {fileID: 0}
 --- !u!114 &2862996086437632071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2304,49 +2233,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6953253778805580192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 2
-  OwnershipTransfer: 0
-  observableSearch: 0
-  ObservedComponents:
-  - {fileID: 5932660472288310766}
-  - {fileID: 1253222060486738215}
-  - {fileID: 5459737165534366334}
-  - {fileID: 1902819606663004938}
-  - {fileID: 4555572919557590350}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &5932660472288310766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456765229888051616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!82 &7427756792574962229
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2551,7 +2437,6 @@ GameObject:
   - component: {fileID: 6107837123547481083}
   - component: {fileID: 1842779734311429588}
   - component: {fileID: 974514304632590948}
-  - component: {fileID: 25078304391704636}
   m_Layer: 11
   m_Name: AlienBlasterPivot
   m_TagString: Untagged
@@ -2714,29 +2599,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &25078304391704636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6101855443315125917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 8585879037735286754}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &6965762728340215032
 GameObject:
   m_ObjectHideFlags: 0
@@ -3281,7 +3143,6 @@ GameObject:
   - component: {fileID: 5641062512635061077}
   - component: {fileID: 7614992401982183327}
   - component: {fileID: 5514600773744489883}
-  - component: {fileID: 8585879037735286754}
   m_Layer: 11
   m_Name: Alien Blaster Pistol
   m_TagString: Untagged
@@ -3374,27 +3235,11 @@ MonoBehaviour:
   playOnStart: 0
   playRandom: 0
   randomTimer: 0
-  shootRayObject: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+  shootRayObject: {fileID: 8251439570758105850, guid: cdbc98eaccec0d141b91c90006471b9d, type: 3}
   hitDecal: {fileID: 6875792023608083753, guid: 07d5d1a964f7cbe4680cdc9561cc5368, type: 3}
   enemyMask:
     serializedVersion: 2
     m_Bits: 0
---- !u!114 &8585879037735286754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8263295312938792522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
 --- !u!1 &9122372183336142014
 GameObject:
   m_ObjectHideFlags: 0
@@ -3406,7 +3251,6 @@ GameObject:
   - component: {fileID: 2067503177576769229}
   - component: {fileID: 2320463752309720049}
   - component: {fileID: 548638505341882792}
-  - component: {fileID: 1902819606663004938}
   m_Layer: 11
   m_Name: Standaard Alien
   m_TagString: Untagged
@@ -3449,7 +3293,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c7ab54569d4da0249a6fbba5fdac938a, type: 2}
+  - {fileID: 2100000, guid: c6a9f832b5c75884d8dcb49cb8dbf728, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3532,27 +3376,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1902819606663004938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9122372183336142014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowLayerWeightsInspector: 1
-  ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 1
-    Name: Dead
-  m_SynchronizeLayers:
-  - SynchronizeType: 1
-    LayerIndex: 0
 --- !u!1001 &3134630567206081664
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3571,11 +3394,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3957002279545363425, guid: 435e22109720e4043a4d6b3b9bfd4f63, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4730236359138944491, guid: 435e22109720e4043a4d6b3b9bfd4f63, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8874615929406534381, guid: 435e22109720e4043a4d6b3b9bfd4f63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3680,6 +3503,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8085135176714629998, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+      propertyPath: linerenderer
+      value: 
+      objectReference: {fileID: 7946176469701044266}
     - target: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
       propertyPath: m_Name
       value: Shoot Ray(Cyan)
@@ -3690,7 +3517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251439570758105850, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8103323928623272692, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
@@ -3698,6 +3525,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+--- !u!120 &7946176469701044266 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 5990654626558955664, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}
+  m_PrefabInstance: {fileID: 4424058493506549946}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8710033571220290613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5009454829140837519, guid: 55e1cdaea5c15d44abca0923c6ecea01, type: 3}

@@ -29,11 +29,6 @@ public class RoomManager : MonoBehaviour
         nickname = name;
     }
 
-    
-    
-
-    
-
     public GameObject pointsManager;
     public GameObject vanObj;
     public GameObject chests;

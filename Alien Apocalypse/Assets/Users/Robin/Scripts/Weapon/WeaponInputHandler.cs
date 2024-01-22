@@ -41,19 +41,7 @@ public class WeaponInputHandler : MonoBehaviour
         InputWeapon();
     }
 
-    public void UpdateAnimations()
-    {
-        if (selectedWeapon != null)
-        {
-            anim.SetInteger("WeaponState", selectedWeapon.gameObject.GetComponent<Firearm>().weaponInt);
-            anim.SetTrigger("NextAnim");
-        }
-        else
-        {
-            anim.SetInteger("WeaponState", 0);
-            anim.SetTrigger("NextAnim");
-        }
-    }
+    
     void InputWeapon()
     {
         if(selectedWeapon != null)
@@ -106,7 +94,6 @@ public class WeaponInputHandler : MonoBehaviour
                                 selectedWeapon.transform.GetChild(0).gameObject.SetActive(false);
                                 //photonView.RPC("UpdateAnimations", RpcTarget.All);
                                 switchTime = 0.5f;
-                                UpdateAnimations();
                             }
                         }
                     }
@@ -123,7 +110,6 @@ public class WeaponInputHandler : MonoBehaviour
                     {
                         selectedWeapon.transform.GetChild(0).gameObject.SetActive(true);
                         //photonView.RPC("UpdateAnimations", RpcTarget.All);
-                        UpdateAnimations();
                     }
 
                     AmmoCounter.Instance.SetWeaponData(nextFirearm.firearmData,nextFirearm );
@@ -142,7 +128,6 @@ public class WeaponInputHandler : MonoBehaviour
                     AmmoCounter.Instance.SetNoWeapon ( );
 
                     //photonView.RPC("UpdateAnimations", RpcTarget.All);
-                    UpdateAnimations();
                 }
             }
 

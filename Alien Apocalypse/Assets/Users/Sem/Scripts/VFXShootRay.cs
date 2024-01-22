@@ -62,7 +62,7 @@ public class VFXShootRay : MonoBehaviour
         if ( moveToTarget )
         {
 
-            var newEndpos = Vector3.Lerp (endPos, linerenderer.GetPosition (1), Progress * Time.deltaTime);
+            var newEndpos = Vector3.Lerp (endPos, linerenderer.GetPosition (1), Progress * Time.deltaTime/100);
 
             linerenderer.SetPosition (0, newEndpos);
         }

@@ -80,6 +80,10 @@ public class PlayerHealth : MonoBehaviour
         {
             Revive();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Health = maxHealth;
+        }
         switch (state)
         {
 
