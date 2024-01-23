@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class SkillTree : MonoBehaviour
 {
     [Header("References")]
+    public static SkillTree instance;
     public PlayerHealth playerHealth;
     public WeaponInputHandler weaponInputHandler;
 
@@ -17,7 +18,7 @@ public class SkillTree : MonoBehaviour
 
     [Header("Level Data")]
     public int currentLevel;
-    public float currentExperince;
+    public float currentExperience;
 
     public int standardExpNeeded;
     public float expModifier;
@@ -30,13 +31,13 @@ public class SkillTree : MonoBehaviour
     public int potentialLevelWeaponHandeling = 0;
 
     [Header("Levels Stuff")]
-    public int armourPlating;
+    public int armourPlatingLvl;
     public float healthModifier;
 
-    public int reassembling;
+    public int reassemblingLvl;
     public float regenModifier;
 
-    public int weaponHandeling;
+    public int weaponHandelingLvl;
     public float damageModifier;
 
     [Header("Ability Data")]
@@ -44,14 +45,21 @@ public class SkillTree : MonoBehaviour
 
     [Header("UI")]
     public TMP_Text currentLevelText;
+    public string currentLevelString;
+    [Space]
     public TMP_Text currentExpText;
+    public string currentExpString;
+    [Space]
     public TMP_Text expNeededText;
+    public string expNeededString;
 
     private void Start()
     {
-        currentLevelText.text = $"Lvl: {currentLevel}";
-        currentExpText.text = $"Exp: {currentExperince}";
-        expNeededText.text = $"Cost: {0}";
+        instance = this;
+
+        currentLevelText.text = $"{currentLevelString} {currentLevel}";
+        currentExpText.text = $"{currentExpString} {currentExperience}";
+        expNeededText.text = $"{expNeededForLevelUp} {0}";
     }
 
     void Update()
@@ -74,29 +82,27 @@ public class SkillTree : MonoBehaviour
         }
     }
 
-    public void AddExp(float exp)
+    public static void AddExp(float exp)
     {
-        currentExperince += exp;
-        currentExpText.text = $"Exp: {currentExpText}";
+        instance.currentExperience += exp;
+        instance.currentExpText.text = $"{instance.currentExpString} {instance.currentExpText}";
     }
 
     public void ApplyLevelUp()
     {
-        if(currentExperince >= expNeededForLevelUp)
+        if(currentExperience >= expNeededForLevelUp)
         {
-            Debug.Log("Level Up");
-
             currentLevel += levelUps;
-            currentExperince -= expNeededForLevelUp;
+            currentExperience -= expNeededForLevelUp;
             
-            armourPlating += potentialLevelArmour;
-            playerHealth.maxHealth *= (healthModifier + 1);
+            armourPlatingLvl += potentialLevelArmour;
+            //playerHealth.maxHealth *= (healthModifier + 1);
 
-            reassembling += potentialLevelReassembly;
-            playerHealth.healthRegenAmount *= regenModifier + 1;
+            reassemblingLvl += potentialLevelReassembly;
+            //playerHealth.healthRegenAmount *= regenModifier + 1;
 
-            weaponHandeling += potentialLevelWeaponHandeling;
-            weaponInputHandler.SetAbility(damageModifier, weaponHandeling);
+            weaponHandelingLvl += potentialLevelWeaponHandeling;
+            //weaponInputHandler.SetAbility(damageModifier, weaponHandeling);
 
             levelUps = 0;
             expNeededForLevelUp = 0;
@@ -105,45 +111,28 @@ public class SkillTree : MonoBehaviour
             potentialLevelReassembly = 0;
             potentialLevelWeaponHandeling = 0;
 
-            currentLevelText.text = $"Lvl: {currentLevel}";
-            currentExpText.text = $"Exp: {currentExperince}";
-            expNeededText.text = $"Cost: {0}";
+            currentLevelText.text = $"{currentLevelString} {currentLevel}";
+            currentExpText.text = $"{currentExpString} {currentExperience}";
+            expNeededText.text = $"{expNeededString} {0}";
         }
     }
 
     public void ArmourLevel(int num)
     {
-        levelUps += num;
-
-        if(levelUps <= 0)
-        {
-            levelUps = 0;
-        }
-
-        expNeededForLevelUp = 0;
-        for(int i = 0; i < levelUps; i++)
-        {
-            expNeededForLevelUp += (standardExpNeeded * ((currentLevel + levelUps) * expModifier + 1));
-        }
-
         potentialLevelArmour += num;
 
         if(potentialLevelArmour < 0)
         {
             potentialLevelArmour = 0;
         }
-
-        currentLevelText.text = $"Lvl: {currentLevel} > {currentLevel + levelUps}";
-        expNeededText.text = $"Cost: {expNeededForLevelUp}";
-    }
-
-    public void RegenLevel(int num)
-    {
-        levelUps += num;
-
-        if(levelUps <= 0)
+        else
         {
-            levelUps = 0;
+            levelUps += num;
+
+            if(levelUps <= 0)
+            {
+                levelUps = 0;
+            }
         }
 
         expNeededForLevelUp = 0;
@@ -152,24 +141,26 @@ public class SkillTree : MonoBehaviour
             expNeededForLevelUp += (standardExpNeeded * ((currentLevel + levelUps) * expModifier + 1));
         }
 
+        currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
+        expNeededText.text = $"{expNeededString} {expNeededForLevelUp}";
+    }
+
+    public void RegenLevel(int num)
+    {
         potentialLevelReassembly += num;
 
         if(potentialLevelReassembly < 0)
         {
             potentialLevelReassembly = 0;
         }
-
-        currentLevelText.text = $"Lvl: {currentLevel} > {currentLevel + levelUps}";
-        expNeededText.text = $"Cost: {expNeededForLevelUp}";
-    }
-
-    public void HandelingLevel(int num)
-    {
-        levelUps += num;
-
-        if(levelUps <= 0)
+        else
         {
-            levelUps = 0;
+            levelUps += num;
+
+            if(levelUps <= 0)
+            {
+                levelUps = 0;
+            }
         }
 
         expNeededForLevelUp = 0;
@@ -178,14 +169,40 @@ public class SkillTree : MonoBehaviour
             expNeededForLevelUp += (standardExpNeeded * ((currentLevel + levelUps) * expModifier + 1));
         }
 
+        currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
+        expNeededText.text = $"{expNeededString}  {expNeededForLevelUp}";
+    }
+
+    public void HandelingLevel(int num)
+    {
         potentialLevelWeaponHandeling += num;
 
         if(potentialLevelWeaponHandeling < 0)
         {
             potentialLevelWeaponHandeling = 0;
         }
+        else
+        {
+            levelUps += num;
 
-        currentLevelText.text = $"Lvl: {currentLevel} > {currentLevel + levelUps}";
-        expNeededText.text = $"Cost: {expNeededForLevelUp}";
+            if(levelUps <= 0)
+            {
+                levelUps = 0;
+            }
+        }        
+
+        expNeededForLevelUp = 0;
+        for(int i = 0; i < levelUps; i++)
+        {
+            expNeededForLevelUp += (standardExpNeeded * ((currentLevel + levelUps) * expModifier + 1));
+        }
+
+        currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
+        expNeededText.text = $"{expNeededString}  {expNeededForLevelUp}";
+    }
+
+    public void Ability()
+    {
+
     }
 }

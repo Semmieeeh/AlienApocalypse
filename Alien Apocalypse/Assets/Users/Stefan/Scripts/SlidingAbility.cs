@@ -20,6 +20,8 @@ public class SlidingAbility : MonoBehaviour
     public float slideCooldownMax;
     public UIAbility uiAbility;
 
+    public bool unlockedSkill;
+
     private void Start()
     {
 
@@ -42,7 +44,10 @@ public class SlidingAbility : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.LeftControl) && !isSliding && slideCooldown <= 0 && movement.grounded)
             {
-                StartSlide();
+                if(unlockedSkill == true)
+                {
+                    StartSlide();
+                }
             }
             else if (Input.GetKeyUp(KeyCode.LeftControl) && isSliding == true)
             {
