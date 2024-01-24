@@ -16,12 +16,11 @@ public class Skill : MonoBehaviour
 
     public void UnlockSkill()
     {
-        if(unlocked)
+        if(unlocked && skillTree.abilityPoints >= 1)
         {
             if(dash != null)
             {
-                dash.unlockedSkill = true;
-                
+                dash.unlockedSkill = true;   
             }
             else if(wall != null)
             {
@@ -41,6 +40,8 @@ public class Skill : MonoBehaviour
                 nextSkill.unlocked = true;
             }
             Debug.Log("Unlocked " + gameObject.name);
+            skillTree.abilityPoints--;
+            skillTree.abilityPointsText.text = $"{skillTree.abilityPOintsString} {skillTree.abilityPoints}";
         }
     }
 }

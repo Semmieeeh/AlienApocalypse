@@ -41,9 +41,12 @@ public class SkillTree : MonoBehaviour
     public float damageModifier;
 
     [Header("Ability Data")]
-    public int abilityPoints;
+    public float abilityPoints;
 
     [Header("UI")]
+    public TMP_Text abilityPointsText;
+    public string abilityPOintsString;
+    [Space]
     public TMP_Text currentLevelText;
     public string currentLevelString;
     [Space]
@@ -52,14 +55,29 @@ public class SkillTree : MonoBehaviour
     [Space]
     public TMP_Text expNeededText;
     public string expNeededString;
+    [Space]
+    public TMP_Text armourLvlText;
+    public string armourLvlString;
+    [Space]
+    public TMP_Text reassemblingLvlText;
+    public string reassemblingLvlString;
+    [Space]
+    public TMP_Text weaponHandelingLvlText;
+    public string weaponHandelingLvlString;
 
     private void Start()
     {
         instance = this;
 
+        abilityPointsText.text = $"{abilityPOintsString} {abilityPoints}";
+
         currentLevelText.text = $"{currentLevelString} {currentLevel}";
         currentExpText.text = $"{currentExpString} {currentExperience}";
-        expNeededText.text = $"{expNeededForLevelUp} {0}";
+        expNeededText.text = $"{expNeededString} {0}";
+
+        armourLvlText.text = $"{armourLvlString} {armourPlatingLvl}";
+        reassemblingLvlText.text = $"{reassemblingLvlString} {reassemblingLvl}";
+        weaponHandelingLvlText.text = $"{weaponHandelingLvlString} {weaponHandelingLvl}";
     }
 
     void Update()
@@ -88,6 +106,12 @@ public class SkillTree : MonoBehaviour
         instance.currentExpText.text = $"{instance.currentExpString} {instance.currentExpText}";
     }
 
+    public static void AddAbilityPoint(float point)
+    {
+        instance.abilityPoints += point;
+        instance.abilityPointsText.text = $"{instance.abilityPOintsString} {instance.abilityPoints}";
+    }
+
     public void ApplyLevelUp()
     {
         if(currentExperience >= expNeededForLevelUp)
@@ -114,6 +138,10 @@ public class SkillTree : MonoBehaviour
             currentLevelText.text = $"{currentLevelString} {currentLevel}";
             currentExpText.text = $"{currentExpString} {currentExperience}";
             expNeededText.text = $"{expNeededString} {0}";
+
+            armourLvlText.text = $"{armourLvlString} {armourPlatingLvl}";
+            reassemblingLvlText.text = $"{reassemblingLvlString} {reassemblingLvl}";
+            weaponHandelingLvlText.text = $"{weaponHandelingLvlString} {weaponHandelingLvl}";
         }
     }
 
@@ -141,8 +169,28 @@ public class SkillTree : MonoBehaviour
             expNeededForLevelUp += (standardExpNeeded * ((currentLevel + levelUps) * expModifier + 1));
         }
 
-        currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
-        expNeededText.text = $"{expNeededString} {expNeededForLevelUp}";
+        if(levelUps == 0)
+        {
+            currentLevelText.text = $"{currentLevelString} {currentLevel}";
+            currentExpText.text = $"{currentExpString} {currentExperience}";
+            expNeededText.text = $"{expNeededString} {expNeededForLevelUp}";
+
+        }
+        else
+        {
+            currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
+            currentExpText.text = $"{currentExpString} {currentExperience} > {currentExperience - expNeededForLevelUp}";
+            expNeededText.text = $"{expNeededString} {expNeededForLevelUp}";
+        }
+
+        if(potentialLevelArmour == 0)
+        {
+            armourLvlText.text = $"{armourLvlString} {armourPlatingLvl}";
+        }
+        else
+        {
+            armourLvlText.text = $"{armourLvlString} {armourPlatingLvl} > {armourPlatingLvl + potentialLevelArmour}";
+        }
     }
 
     public void RegenLevel(int num)
@@ -169,8 +217,28 @@ public class SkillTree : MonoBehaviour
             expNeededForLevelUp += (standardExpNeeded * ((currentLevel + levelUps) * expModifier + 1));
         }
 
-        currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
-        expNeededText.text = $"{expNeededString}  {expNeededForLevelUp}";
+        if(levelUps == 0)
+        {
+            currentLevelText.text = $"{currentLevelString} {currentLevel}";
+            currentExpText.text = $"{currentExpString} {currentExperience}";
+            expNeededText.text = $"{expNeededString} {expNeededForLevelUp}";
+
+        }
+        else
+        {
+            currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
+            currentExpText.text = $"{currentExpString} {currentExperience} > {currentExperience - expNeededForLevelUp}";
+            expNeededText.text = $"{expNeededString} {expNeededForLevelUp}";
+        }
+
+        if(potentialLevelReassembly == 0)
+        {
+            reassemblingLvlText.text = $"{reassemblingLvlString} {reassemblingLvl}";
+        }
+        else
+        {
+            reassemblingLvlText.text = $"{reassemblingLvlString} {reassemblingLvl} > {reassemblingLvl + potentialLevelReassembly}";
+        }
     }
 
     public void HandelingLevel(int num)
@@ -197,8 +265,28 @@ public class SkillTree : MonoBehaviour
             expNeededForLevelUp += (standardExpNeeded * ((currentLevel + levelUps) * expModifier + 1));
         }
 
-        currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
-        expNeededText.text = $"{expNeededString}  {expNeededForLevelUp}";
+        if(levelUps == 0)
+        {
+            currentLevelText.text = $"{currentLevelString} {currentLevel}";
+            currentExpText.text = $"{currentExpString} {currentExperience}";
+            expNeededText.text = $"{expNeededString} {expNeededForLevelUp}";
+
+        }
+        else
+        {
+            currentLevelText.text = $"{currentLevelString} {currentLevel} > {currentLevel + levelUps}";
+            currentExpText.text = $"{currentExpString} {currentExperience} > {currentExperience - expNeededForLevelUp}";
+            expNeededText.text = $"{expNeededString} {expNeededForLevelUp}";
+        }
+
+        if(potentialLevelWeaponHandeling == 0)
+        {
+            weaponHandelingLvlText.text = $"{weaponHandelingLvlString} {weaponHandelingLvl}";
+        }
+        else
+        {
+            weaponHandelingLvlText.text = $"{weaponHandelingLvlString} {weaponHandelingLvl} > {weaponHandelingLvl + potentialLevelWeaponHandeling}";
+        }
     }
 
     public void Ability()
