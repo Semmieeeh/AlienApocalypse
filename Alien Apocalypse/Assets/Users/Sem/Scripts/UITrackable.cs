@@ -39,14 +39,12 @@ public class UITrackable : MonoBehaviour
     }
     private void UpdateMarker ( )
     {
-        // Calculate the screen position of the world center
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint (TargetPos);
-
         // Check if the position is in front of the camera
-        if ( Vector3.Dot (( TargetPos - Utilities.Camera.transform.position ).normalized, Utilities.Camera.transform.forward) > 0 )
+
+        if ( Utilities.Camera != null && Vector3.Dot (( TargetPos - Utilities.Camera.transform.position ).normalized, Utilities.Camera.transform.forward) > 0 )
         {
             // Set the UI element's anchored position to the screen position
-            transform.position = screenPosition;
+            transform.position = Utilities.Camera.WorldToScreenPoint(TargetPos);
         }
         else
         {

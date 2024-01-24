@@ -8092,6 +8092,7 @@ MonoBehaviour:
   myPlayer: {fileID: 0}
   playerList: []
   specUI: {fileID: 0}
+  deathScreen: {fileID: 0}
 --- !u!4 &1492579877
 Transform:
   m_ObjectHideFlags: 0
@@ -77417,6 +77418,10 @@ PrefabInstance:
     - target: {fileID: 8291696554910505370, guid: 3b2458fc02d394f4aa9b5b50020be916, type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8291696554910505370, guid: 3b2458fc02d394f4aa9b5b50020be916, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8947529661381189820, guid: 3b2458fc02d394f4aa9b5b50020be916, type: 3}
       propertyPath: m_AnchoredPosition.y

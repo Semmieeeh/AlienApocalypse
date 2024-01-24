@@ -110,14 +110,7 @@ public class MainMenu : MonoBehaviour
 
             if (m == null) continue;
 
-            if (m == toEnable)
-            {
-                m.SetActive(true);
-            }
-            else
-            {
-                m.SetActive(false);
-            }
+            m.SetActive(m == toEnable);
         }
     }
 }

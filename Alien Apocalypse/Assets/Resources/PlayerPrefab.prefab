@@ -4267,6 +4267,7 @@ MonoBehaviour:
   slideCooldown: 0
   slideCooldownMax: 3
   uiAbility: {fileID: 2867779147924349076}
+  unlockedSkill: 0
 --- !u!114 &4959833862358588300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17276,7 +17277,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 81.78003, y: -54.989998}
+  m_AnchoredPosition: {x: 677, y: -508.19354}
   m_SizeDelta: {x: 300.0294, y: 6.9832}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8541205588226949351
@@ -23545,7 +23546,7 @@ MonoBehaviour:
   input: 9
   holder: {fileID: 8152341744751283602}
   currentLevel: 0
-  currentExperince: 1000
+  currentExperience: 0
   standardExpNeeded: 100
   expModifier: 0.1
   expNeededForLevelUp: 0
@@ -23553,16 +23554,19 @@ MonoBehaviour:
   potentialLevelArmour: 0
   potentialLevelReassembly: 0
   potentialLevelWeaponHandeling: 0
-  armourPlating: 0
+  armourPlatingLvl: 0
   healthModifier: 0.6
-  reassembling: 0
+  reassemblingLvl: 0
   regenModifier: 0.3
-  weaponHandeling: 0
+  weaponHandelingLvl: 0
   damageModifier: 0.4
   abilityPoints: 0
   currentLevelText: {fileID: 8640925788014318738}
+  currentLevelString: 
   currentExpText: {fileID: 5342194451441740119}
+  currentExpString: 
   expNeededText: {fileID: 8798843592380711123}
+  expNeededString: 
 --- !u!1 &5921479639787400869
 GameObject:
   m_ObjectHideFlags: 0
