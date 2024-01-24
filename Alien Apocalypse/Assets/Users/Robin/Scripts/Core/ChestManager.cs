@@ -37,10 +37,10 @@ public class ChestManager : MonoBehaviour
         }
         NewChest();
     }
+
     public void New()
     {
         NewChest();
-
     }
 
     void NewChest()

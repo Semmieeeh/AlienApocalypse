@@ -4,42 +4,30 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour, IInteractable
 {
-    /*
-     //////* 0 => CrosshairEffects,
-       //////1 => Fov,
-       //////2 => HorizontalSens,
-       //////3 => VerticalSens,
-       //////4 => ScreenResIndex,
-       //////5 => FpsIndex,
-       //////6 => QualityIndex,
-       //////7 => Fullscreen,
-       //////8 => VSync,
-       //////9 => MainAudioStrength,
-       //////10 => SoundsStrength,
-       //////11 => MusicStrength,
-       //////12 => UIStrength,
-       //////13 => crosshairIndex,
-       //////14 => crosshairSize,
-       //////_ => throw new 
-     * 
-     * 
-     * 
-     * 
-     */
     public ChestManager chestManager;
 
     [Space]
     [Header("Spawn Chances")]
-    public float minFirearmChance;
-    public float maxFirearmChance;
-    public float minFirearmAbilityChance;
-    public float maxFirearmAbilityChance;
-    public float minBombChance;
-    public float maxBombChance;
+    public float firearmChance;
+    public float abilityPointChance;
+    public float bombChance;
 
-    [Header("Prefabs")]
-    public GameObject[] firearmDatas;
-    public GameObject[] firearmAbilities;
+    [Header("Firearms")]
+    public GameObject[] firearms;
+
+
+    //[Space]
+    //[Header("Spawn Chances")]
+    //public float minFirearmChance;
+    //public float maxFirearmChance;
+    //public float minFirearmAbilityChance;
+    //public float maxFirearmAbilityChance;
+    //public float minBombChance;
+    //public float maxBombChance;
+
+    //[Header("Prefabs")]
+    //public GameObject[] firearmDatas;
+    //public GameObject[] firearmAbilities;
 
     public GameObject chestBeacon;
     public Transform goToPoint;
@@ -63,67 +51,47 @@ public class Chest : MonoBehaviour, IInteractable
         if(!opened)
         {
             OpenChest();
+
+            chestBeacon.SetActive(false);
+            GetComponent<Animator>().SetTrigger("Open");
+            chestManager.New();
+
+            opened = true;
         }
     }
 
     void OpenChest()
     {
-        chestBeacon.SetActive(false);
-        chestManager.New();
+        float random = Random.Range(0, 101);
 
-        GetComponent<Animator>().SetTrigger("Open");
-        float value = Random.value;
-
-        if(value >= minFirearmChance / 100 && value <= maxFirearmChance / 100)
+        if(random < abilityPointChance)
         {
-            int n = Random.Range(0, firearmDatas.Length - 1);
+            SkillTree.AddAbilityPoint(0.25f);
+        }
+        else if(random < abilityPointChance + bombChance)
+        {
+            StartCoroutine(Bomb());
 
-            for(int i = 0; i < firearmDatas.Length; i++)
+            return;
+        }
+        else if(random <= firearmChance)
+        {
+            int n = Random.Range(0, firearms.Length - 1);
+
+            for(int i = 0; i < firearms.Length; i++)
             {
                 if(n == i)
                 {
-                    GameObject gun = Instantiate(firearmDatas[i], goToPoint.position, Quaternion.identity);
+                    GameObject gun = Instantiate(firearms[i], goToPoint.position, Quaternion.identity);
 
                     Rigidbody rb = gun.GetComponent<Rigidbody>();
                     rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
                     Vector3 torque = new Vector3(Random.Range(0, 0), Random.Range(0, 0), Random.Range(-2f, 2f));
                     rb.AddTorque(torque * 5);
 
-                    opened = true;
-
                     return;
                 }
             }
-        }
-        else if(value >= minFirearmAbilityChance / 100 && value <= maxFirearmAbilityChance / 100)
-        {
-            int n = Random.Range(0, firearmAbilities.Length - 1);
-
-            for(int i = 0; i < firearmAbilities.Length; i++)
-            {
-                if(n == i)
-                {
-                    GameObject holder = Instantiate(firearmAbilities[n], goToPoint.position, Quaternion.identity);
-
-                    Rigidbody rb = holder.GetComponent<Rigidbody>();
-                    rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
-                    Vector3 torque = new Vector3(Random.Range(0, 0), Random.Range(0, 0), Random.Range(-2f, 2f));
-                    rb.AddTorque(torque * 5);
-
-                    opened = true;
-
-                    return;
-                    
-                }
-            }
-        }
-        else if(value >= minBombChance / 100 && value <= maxBombChance / 100)
-        {
-            StartCoroutine(Bomb());
-
-            opened = true;
-
-            return;
         }
     }
 
@@ -137,7 +105,7 @@ public class Chest : MonoBehaviour, IInteractable
         rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
         Vector3 torque = new Vector3(Random.Range(0, 0), Random.Range(0, 0), Random.Range(-2f, 2f));
         rb.AddTorque(torque * 5);
-        
+
         if(countDownClip != null)
         {
             audioSource.clip = countDownClip;
