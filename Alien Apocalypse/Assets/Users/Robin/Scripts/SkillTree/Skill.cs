@@ -12,11 +12,12 @@ public class Skill : MonoBehaviour
     public Grappling grappling;
 
     public bool unlocked;
+    public bool used;
     public Skill nextSkill;
 
     public void UnlockSkill()
     {
-        if(unlocked && skillTree.abilityPoints >= 1)
+        if(unlocked && skillTree.abilityPoints >= 1 && used == false)
         {
             if(dash != null)
             {
@@ -40,6 +41,7 @@ public class Skill : MonoBehaviour
                 nextSkill.unlocked = true;
             }
             Debug.Log("Unlocked " + gameObject.name);
+            used = true;
             skillTree.abilityPoints--;
             skillTree.abilityPointsText.text = $"{skillTree.abilityPOintsString} {skillTree.abilityPoints}";
         }
