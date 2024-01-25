@@ -85,7 +85,7 @@ MonoBehaviour:
   reassemblingLvlText: {fileID: 4003589360518371788}
   reassemblingLvlString: 'Reassembly:'
   weaponHandelingLvlText: {fileID: 1536898646669340732}
-  weaponHandelingLvlString: 'Weapon Handeling:'
+  weaponHandelingLvlString: 'Weapon Handling:'
 --- !u!1 &75929168043856350
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +441,7 @@ MonoBehaviour:
   slide: {fileID: 0}
   grappling: {fileID: 0}
   unlocked: 0
+  used: 0
   nextSkill: {fileID: 4092541444752105204}
 --- !u!222 &1763278795553393315
 CanvasRenderer:
@@ -1967,6 +1968,7 @@ MonoBehaviour:
   slide: {fileID: 0}
   grappling: {fileID: 0}
   unlocked: 0
+  used: 0
   nextSkill: {fileID: 0}
 --- !u!222 &4347045372646447461
 CanvasRenderer:
@@ -3908,6 +3910,7 @@ MonoBehaviour:
   slide: {fileID: 0}
   grappling: {fileID: 0}
   unlocked: 1
+  used: 0
   nextSkill: {fileID: 3288807112197949043}
 --- !u!222 &7170372718334752792
 CanvasRenderer:
@@ -5826,6 +5829,7 @@ MonoBehaviour:
   slide: {fileID: 0}
   grappling: {fileID: 0}
   unlocked: 0
+  used: 0
   nextSkill: {fileID: 1581045177813034892}
 --- !u!222 &4330879754055167654
 CanvasRenderer:
