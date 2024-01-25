@@ -170,6 +170,7 @@ public class SkillTree : MonoBehaviour
                 for(int i = 0; i < potentialLevelReassembly; i++)
                 {
                     playerHealth.healthRegenAmount *= regenModifier + 1;
+                    playerHealth.TakeDamage(1f);
                 }
             }
 

@@ -148,6 +148,7 @@ public class PlayerHealth : MonoBehaviour
     void OnHealthUpdate()
     {
         healthBar.SetValue(Health);
+        healthBar.maxValue = maxHealth;
         UpdateHealth(Health);
     }
     Rigidbody rb;
