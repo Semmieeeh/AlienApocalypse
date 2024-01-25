@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -44,6 +45,27 @@ public class UIPauseManager : MonoBehaviour
             m_Paused = value;
 
             OnPauseStateChanged (m_Paused );
+            HandleFreezeScreen ( );
+
+        }
+    }
+
+    private bool _freezeScreen;
+
+    public bool FreezeScreen
+    {
+        get
+        {
+            return _freezeScreen;
+        }
+        set
+        {
+            if ( value == _freezeScreen )
+                return;
+            _freezeScreen = value;
+
+            HandleFreezeScreen ( );
+
         }
     }
 
@@ -61,6 +83,7 @@ public class UIPauseManager : MonoBehaviour
                 return;
             m_inOptions = value;
 
+            HandleFreezeScreen ( );
             OnOptionsStateChanged (m_inOptions );
         }
     }
@@ -96,11 +119,15 @@ public class UIPauseManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-
-    void OnPauseStateChanged(bool paused )
+    void HandleFreezeScreen ( )
     {
+        bool freeze = FreezeScreen || Paused;
+
+        Debug.Log (FreezeScreen);
+        Debug.Log (Paused);
+
         float t;
-        if (!paused)
+        if ( !freeze )
         {
             t = 1;
         }
@@ -108,16 +135,21 @@ public class UIPauseManager : MonoBehaviour
         {
             t = 0;
         }
-        pauseMenu.SetActive (paused);
-        player.GetComponent<Movement>().enabled = !paused;
-        player.GetComponent<Grappling>().enabled = !paused;
-        player.GetComponent<DashAbility>().enabled = !paused;
-        player.GetComponent<SlidingAbility>().enabled = !paused;
-        player.GetComponent<GrappleRope>().enabled = !paused;
-        weaponInput.GetComponent<WeaponInputHandler>().enabled = !paused;
-        cam.GetComponent<MouseLook>().enabled = !paused;
+        player.GetComponent<Movement> ( ).enabled = !freeze;
+        player.GetComponent<Grappling> ( ).enabled = !freeze;
+        player.GetComponent<DashAbility> ( ).enabled = !freeze;
+        player.GetComponent<SlidingAbility> ( ).enabled = !freeze;
+        player.GetComponent<GrappleRope> ( ).enabled = !freeze;
+        weaponInput.GetComponent<WeaponInputHandler> ( ).enabled = !freeze;
+        cam.GetComponent<MouseLook> ( ).enabled = !freeze;
         Time.timeScale = t;
+    }
+
+    void OnPauseStateChanged(bool paused )
+    {
+        
         m_inOptions = false;
+        pauseMenu.SetActive (paused);
 
         optionsMenu.SetActive (false);
 

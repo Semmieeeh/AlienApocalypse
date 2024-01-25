@@ -83,6 +83,7 @@ public class SkillTree : MonoBehaviour
         weaponHandelingLvlText.text = $"{weaponHandelingLvlString} {weaponHandelingLvl}";
     }
 
+
     void Update()
     {
         if(Input.GetKeyDown(input))
@@ -97,7 +98,7 @@ public class SkillTree : MonoBehaviour
 
                 if(UIPauseManager.Instance != null)
                 {
-                    UIPauseManager.Instance.Paused = true;
+                    UIPauseManager.Instance.FreezeScreen = true;
                 }
             }
             else if(active)
@@ -107,7 +108,7 @@ public class SkillTree : MonoBehaviour
 
                 if(UIPauseManager.Instance != null)
                 {
-                    UIPauseManager.Instance.Paused = false;
+                    UIPauseManager.Instance.FreezeScreen = false;
                 }
             }
         }
@@ -125,6 +126,14 @@ public class SkillTree : MonoBehaviour
         }
     }
 
+    public void fREEZEsCEREN ( )
+    {
+        UIPauseManager.Instance.FreezeScreen = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        Cursor.visible = false;
+
+    }
     public static void AddExp(float exp)
     {
         instance.currentExperience += exp;
