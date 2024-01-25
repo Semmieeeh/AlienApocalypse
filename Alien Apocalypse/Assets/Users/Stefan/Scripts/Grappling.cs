@@ -54,6 +54,11 @@ public class Grappling : MonoBehaviour
 
     void Update()
     {
+        if(unlockedSkill == false)
+        {
+            return;
+        }
+
 
         abilityCooldown -= Time.deltaTime;
 
