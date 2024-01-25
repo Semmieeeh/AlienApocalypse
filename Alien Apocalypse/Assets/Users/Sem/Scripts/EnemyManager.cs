@@ -108,7 +108,14 @@ public class EnemyManager : MonoBehaviour
             {
                 max = enemiesToSpawn.Length;
             }
-            int enemyIndex = Random.Range(0, max);
+            if(wavesCompleted > 8)
+            {
+                int enemyIndex = Random.Range(6, max);
+            }
+            else
+            {
+                int enemyIndex = Random.Range(0, max);
+            }
             transform.GetChild(4).GetComponent<UfoSpawner>().PlayParticle();
             GameObject enemyObj = Instantiate(enemiesToSpawn[enemyIndex], curSpawnPos.position, curSpawnPos.rotation);
             EnemyHealth enemyHealth = enemyObj.GetComponent<EnemyHealth>();
