@@ -153,14 +153,35 @@ public class SkillTree : MonoBehaviour
             currentLevel += levelUps;
             currentExperience -= expNeededForLevelUp;
             
-            armourPlatingLvl += potentialLevelArmour;
-            playerHealth.maxHealth *= (healthModifier + 1);
+            if(potentialLevelArmour > 0)
+            {
+                armourPlatingLvl += potentialLevelArmour;
 
-            reassemblingLvl += potentialLevelReassembly;
-            playerHealth.healthRegenAmount *= regenModifier + 1;
+                for(int i = 0; i < potentialLevelArmour; i++)
+                {
+                    playerHealth.maxHealth *= (healthModifier + 1);
+                }
+            }
 
-            weaponHandelingLvl += potentialLevelWeaponHandeling;
-            weaponInputHandler.SetAbility(damageModifier, -1);
+            if(potentialLevelReassembly > 0)
+            {
+                reassemblingLvl += potentialLevelReassembly;
+
+                for(int i = 0; i < potentialLevelReassembly; i++)
+                {
+                    playerHealth.healthRegenAmount *= regenModifier + 1;
+                }
+            }
+
+            if(potentialLevelWeaponHandeling > 0)
+            {
+                weaponHandelingLvl += potentialLevelWeaponHandeling;
+
+                for(int i = 0; i < potentialLevelWeaponHandeling; i++)
+                {
+                    weaponInputHandler.SetAbility(damageModifier, -1);
+                }   
+            }
 
             levelUps = 0;
             expNeededForLevelUp = 0;
