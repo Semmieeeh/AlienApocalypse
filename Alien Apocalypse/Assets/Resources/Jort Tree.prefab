@@ -509,7 +509,7 @@ MonoBehaviour:
     OnClickEnter: {fileID: 0}
     OnClickExit: {fileID: 0}
     OnClick: {fileID: 0}
-  m_Interactable: 1
+  m_Interactable: 0
   m_deriveFromParentSelectable: 0
   m_Hovered: 0
   m_textField: {fileID: 0}
@@ -519,7 +519,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0, g: 1, b: 1, a: 1}
     m_ClickedColor: {r: 0.3437522, g: 0.6698113, b: 0.6698113, a: 1}
     m_SelectedColor: {r: 0, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0.7176471}
+    m_DisabledColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 0.5882353}
   hoveredScale: {x: 1, y: 1, z: 1}
   m_theme: 0
   m_textAlignment: 1
@@ -537,6 +537,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6650625846411707771}
+        m_TargetAssemblyTypeName: UISelectable, Assembly-CSharp
+        m_MethodName: set_Interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &619421622042465672
 GameObject:
@@ -2036,7 +2048,7 @@ MonoBehaviour:
     OnClickEnter: {fileID: 0}
     OnClickExit: {fileID: 0}
     OnClick: {fileID: 0}
-  m_Interactable: 1
+  m_Interactable: 0
   m_deriveFromParentSelectable: 0
   m_Hovered: 0
   m_textField: {fileID: 0}
@@ -2046,7 +2058,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0, g: 1, b: 1, a: 1}
     m_ClickedColor: {r: 0.3437522, g: 0.6698113, b: 0.6698113, a: 1}
     m_SelectedColor: {r: 0, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0.7176471}
+    m_DisabledColor: {r: 0.43529412, g: 0.43529412, b: 0.43529412, a: 0.5882353}
   hoveredScale: {x: 1, y: 1, z: 1}
   m_theme: 0
   m_textAlignment: 1
@@ -4007,6 +4019,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7232048765992161583}
+        m_TargetAssemblyTypeName: UISelectable, Assembly-CSharp
+        m_MethodName: set_Interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &5443981002468231776
 GameObject:
   m_ObjectHideFlags: 0
@@ -5897,7 +5921,7 @@ MonoBehaviour:
     OnClickEnter: {fileID: 0}
     OnClickExit: {fileID: 0}
     OnClick: {fileID: 0}
-  m_Interactable: 1
+  m_Interactable: 0
   m_deriveFromParentSelectable: 0
   m_Hovered: 0
   m_textField: {fileID: 0}
@@ -5907,7 +5931,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0, g: 1, b: 1, a: 1}
     m_ClickedColor: {r: 0.3437522, g: 0.6698113, b: 0.6698113, a: 1}
     m_SelectedColor: {r: 0, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0.7176471}
+    m_DisabledColor: {r: 0.43529412, g: 0.43529412, b: 0.43529412, a: 0.5882353}
   hoveredScale: {x: 1, y: 1, z: 1}
   m_theme: 0
   m_textAlignment: 1
@@ -5925,4 +5949,16 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 465448015282328133}
+        m_TargetAssemblyTypeName: UISelectable, Assembly-CSharp
+        m_MethodName: set_Interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
