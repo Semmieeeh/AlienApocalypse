@@ -5,6 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class UIPauseManager : MonoBehaviour
 {
+    private static UIPauseManager m_instance;
+
+    public static UIPauseManager Instance
+    {
+        get
+        {
+            if ( m_instance == null )
+                m_instance = FindObjectOfType<UIPauseManager> ( );
+            return m_instance;
+        }
+
+    }
     [SerializeField]
     KeyCode pauseKey = KeyCode.Escape;
 
