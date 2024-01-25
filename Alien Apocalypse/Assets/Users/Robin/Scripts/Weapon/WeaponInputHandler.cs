@@ -229,8 +229,11 @@ public class WeaponInputHandler : MonoBehaviour
 
     public void SetAbility(float damage, int damageLevel)
     {
-        damageModifier = damage;
-        this.damageLevel = damageLevel;
+        if(damageLevel  >= 0)
+        {
+            damageModifier = damage;
+            this.damageLevel = damageLevel;
+        }
 
         for(int i = 0; i < weaponSlots.Count; i++)
         {

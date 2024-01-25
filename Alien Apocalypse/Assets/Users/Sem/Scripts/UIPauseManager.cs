@@ -38,7 +38,7 @@ public class UIPauseManager : MonoBehaviour
         {
             return m_Paused;
         }
-        private set
+        set
         {
             if(value == m_Paused) return;
             m_Paused = value;

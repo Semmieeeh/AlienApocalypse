@@ -67,14 +67,15 @@ public class Chest : MonoBehaviour, IInteractable
         if(random < abilityPointChance)
         {
             SkillTree.AddAbilityPoint(0.25f);
+            Debug.Log("Chest: Skill Point");
         }
         else if(random < abilityPointChance + bombChance)
         {
             StartCoroutine(Bomb());
-
+            Debug.Log("Chest: Bomb");
             return;
         }
-        else if(random <= firearmChance)
+        else
         {
             int n = Random.Range(0, firearms.Length - 1);
 
@@ -88,6 +89,8 @@ public class Chest : MonoBehaviour, IInteractable
                     rb.AddForce(goToPoint.forward * force, ForceMode.Impulse);
                     Vector3 torque = new Vector3(Random.Range(0, 0), Random.Range(0, 0), Random.Range(-2f, 2f));
                     rb.AddTorque(torque * 5);
+
+                    Debug.Log("Chest: Bomb");
 
                     return;
                 }

@@ -30,7 +30,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6488513261819387808}
-  - {fileID: 5603562140631395623}
   m_Father: {fileID: 6397910821316797598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -54,6 +53,8 @@ MonoBehaviour:
   weaponInputHandler: {fileID: 0}
   grappling: {fileID: 0}
   input: 9
+  expInput: 112
+  abiltyInput: 108
   holder: {fileID: 1938356771866668909}
   currentLevel: 0
   currentExperience: 0
@@ -417,9 +418,9 @@ RectTransform:
   - {fileID: 1396180380056764762}
   m_Father: {fileID: 612299116505474503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 249.34274, y: -119.1442}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3288807112197949043
@@ -439,7 +440,7 @@ MonoBehaviour:
   wall: {fileID: 0}
   slide: {fileID: 0}
   grappling: {fileID: 0}
-  unlocked: 1
+  unlocked: 0
   nextSkill: {fileID: 4092541444752105204}
 --- !u!222 &1763278795553393315
 CanvasRenderer:
@@ -568,9 +569,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 612299116505474503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 249.34274, y: -275.3605}
   m_SizeDelta: {x: 4.3618, y: 41.9842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7766327917366933298
@@ -643,9 +644,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 612299116505474503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 249.34274, y: -171.2163}
   m_SizeDelta: {x: 4.3618, y: 41.9842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8679566809116326252
@@ -1420,12 +1421,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1931573252277929094}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3737818861255478060}
+  m_Father: {fileID: 6488513261819387808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1485,7 +1486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6488513261819387808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1498,6 +1499,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6351054764632024289}
+  - {fileID: 5603562140631395623}
   - {fileID: 5386142997563863212}
   - {fileID: 3821072036529916534}
   - {fileID: 5375195751550763457}
@@ -1941,9 +1944,9 @@ RectTransform:
   - {fileID: 6366235911441494435}
   m_Father: {fileID: 612299116505474503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 249.34274, y: -327.4326}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1581045177813034892
@@ -1963,7 +1966,7 @@ MonoBehaviour:
   wall: {fileID: 0}
   slide: {fileID: 0}
   grappling: {fileID: 0}
-  unlocked: 1
+  unlocked: 0
   nextSkill: {fileID: 0}
 --- !u!222 &4347045372646447461
 CanvasRenderer:
@@ -3311,9 +3314,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 612299116505474503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 249.34274, y: -67.0721}
   m_SizeDelta: {x: 4.3618, y: 41.9842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &907890996517215750
@@ -3882,9 +3885,9 @@ RectTransform:
   - {fileID: 2589786550193339128}
   m_Father: {fileID: 612299116505474503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 249.34274, y: -15}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4726163206090197257
@@ -4026,12 +4029,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5443981002468231776}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6397910821316797598}
+  m_Father: {fileID: 6488513261819387808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5285,7 +5288,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6351054764632024289}
   - {fileID: 3737818861255478060}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5801,9 +5803,9 @@ RectTransform:
   - {fileID: 5501413902959385100}
   m_Father: {fileID: 612299116505474503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 249.34274, y: -223.28839}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4092541444752105204
@@ -5823,7 +5825,7 @@ MonoBehaviour:
   wall: {fileID: 0}
   slide: {fileID: 0}
   grappling: {fileID: 0}
-  unlocked: 1
+  unlocked: 0
   nextSkill: {fileID: 1581045177813034892}
 --- !u!222 &4330879754055167654
 CanvasRenderer:

@@ -14,6 +14,9 @@ public class SkillTree : MonoBehaviour
 
     [Header("Other")]
     public KeyCode input;
+    public KeyCode expInput;
+    public KeyCode abiltyInput;
+
     public GameObject holder;
 
     [Header("Level Data")]
@@ -91,19 +94,41 @@ public class SkillTree : MonoBehaviour
             {
                 Cursor.lockState = CursorLockMode.Confined;
                 Cursor.visible = true;
+
+                if(UIPauseManager.Instance != null)
+                {
+                    UIPauseManager.Instance.Paused = true;
+                }
             }
             else if(active)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+
+                if(UIPauseManager.Instance != null)
+                {
+                    UIPauseManager.Instance.Paused = false;
+                }
             }
+        }
+
+        if(Input.GetKeyDown(expInput))
+        {
+            currentExperience += 1000;
+            currentExpText.text = $"{currentExpString} {currentExperience}";
+        }        
+
+        if(Input.GetKeyDown(abiltyInput))
+        {
+            abilityPoints += 5;
+            abilityPointsText.text = $"{abilityPOintsString} {abilityPoints}";
         }
     }
 
     public static void AddExp(float exp)
     {
         instance.currentExperience += exp;
-        instance.currentExpText.text = $"{instance.currentExpString} {instance.currentExpText}";
+        instance.currentExpText.text = $"{instance.currentExpString} {instance.currentExperience}";
     }
 
     public static void AddAbilityPoint(float point)
@@ -120,13 +145,13 @@ public class SkillTree : MonoBehaviour
             currentExperience -= expNeededForLevelUp;
             
             armourPlatingLvl += potentialLevelArmour;
-            //playerHealth.maxHealth *= (healthModifier + 1);
+            playerHealth.maxHealth *= (healthModifier + 1);
 
             reassemblingLvl += potentialLevelReassembly;
-            //playerHealth.healthRegenAmount *= regenModifier + 1;
+            playerHealth.healthRegenAmount *= regenModifier + 1;
 
             weaponHandelingLvl += potentialLevelWeaponHandeling;
-            //weaponInputHandler.SetAbility(damageModifier, weaponHandeling);
+            weaponInputHandler.SetAbility(damageModifier, -1);
 
             levelUps = 0;
             expNeededForLevelUp = 0;

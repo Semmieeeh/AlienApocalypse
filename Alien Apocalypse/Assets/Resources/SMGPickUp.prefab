@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 674866257973726000}
   - component: {fileID: 6222574771649159656}
-  - component: {fileID: 1735531280121722565}
-  - component: {fileID: 3505430771878846578}
   - component: {fileID: 4192465420562253156}
   - component: {fileID: 4468845448771371848}
   m_Layer: 12
@@ -50,46 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa99fed348d4fa4096fdd640768a1b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firearmData: {fileID: 11400000, guid: f34b405885a1a684495d412898c876b5, type: 2}
---- !u!114 &1735531280121722565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150391087232160138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 3505430771878846578}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &3505430771878846578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150391087232160138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
+  firearmData: {fileID: 11400000, guid: 2a61ee6c9bd1f274ab0dc5df25ca30e2, type: 2}
 --- !u!65 &4192465420562253156
 BoxCollider:
   m_ObjectHideFlags: 0
