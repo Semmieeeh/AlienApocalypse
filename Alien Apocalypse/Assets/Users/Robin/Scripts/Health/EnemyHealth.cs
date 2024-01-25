@@ -189,7 +189,7 @@ public class EnemyHealth : MonoBehaviour, IDamagable
     public GameObject enemyBlobs;
     void DieVoid()
     {
-        //gettingShotBy.GetComponent<PlayerXP>().AddXp(xpAmount);
+        SkillTree.AddExp(xpAmount);
         Destroy(gameObject);
         
     }

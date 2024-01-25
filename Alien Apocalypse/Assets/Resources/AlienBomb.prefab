@@ -2269,11 +2269,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312aa3e02c5a7934e88396f6e2bba2ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGiant: 0
+  isEnclave: 0
   instance: {fileID: 0}
   health: 0
   maxHealth: 40
   gettingShotBy: {fileID: 0}
-  xpAmount: 0
+  xpAmount: 125
   multiplier: 1
   rigidBodies:
   - {fileID: 8820255314321557675}
@@ -2296,6 +2298,8 @@ MonoBehaviour:
   explosion: {fileID: 3201137857499991782, guid: 78df2d92cefeb9841a90bb6c2e437dc6, type: 3}
   explodeObj: {fileID: 1548260486327869922}
   anim: {fileID: 0}
+  spawnPos: {fileID: 0}
+  enemyBlobs: {fileID: 0}
 --- !u!114 &2862996086437632071
 MonoBehaviour:
   m_ObjectHideFlags: 0
