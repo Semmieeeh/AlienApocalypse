@@ -125,14 +125,29 @@ public class UIPauseManager : MonoBehaviour
 
         Debug.Log (FreezeScreen);
         Debug.Log (Paused);
-
         float t;
-        if ( !freeze )
+        if (!Paused)
         {
+            foreach (AudioSource a in GameObject.FindObjectsOfType<AudioSource>())
+            {
+
+                if (a.time > 0)
+                {
+                    a.Play();
+                }
+
+            }
             t = 1;
+
         }
         else
         {
+            foreach (AudioSource a in GameObject.FindObjectsOfType<AudioSource>())
+            {
+
+                a.Pause();
+            }
+
             t = 0;
         }
         player.GetComponent<Movement> ( ).enabled = !freeze;
